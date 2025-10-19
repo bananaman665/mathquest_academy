@@ -101,36 +101,36 @@ export default async function ProfilePage() {
       {/* Main Content */}
       <div className="flex-1 md:ml-64 w-full">
         <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-          <div className="max-w-5xl mx-auto px-6 py-4">
+          <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
             <h1 className="text-2xl font-black text-gray-900">Profile</h1>
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-6 py-8 pb-24 md:pb-8">
+        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8">
           {/* Profile Header */}
-          <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 mb-8 text-white">
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <User className="w-12 h-12 text-blue-600" />
+          <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 md:p-8 mb-8 text-white">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <User className="w-10 h-10 md:w-12 md:h-12 text-blue-600" />
               </div>
-              <div className="flex-1">
-                <h2 className="text-3xl font-black mb-2">{user.firstName || 'Student'} {user.lastName || ''}</h2>
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-black mb-2">{user.firstName || 'Student'} {user.lastName || ''}</h2>
                 <p className="text-blue-100 mb-3">Level {dbUser.currentLevel} • {rank} Rank</p>
-                <div className="flex items-center gap-4">
-                  <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl">
-                    <p className="text-sm font-semibold">Total XP</p>
-                    <p className="text-2xl font-black">{dbUser.totalXP}</p>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-4">
+                  <div className="bg-white/20 backdrop-blur-sm px-3 py-2 md:px-4 md:py-2 rounded-xl">
+                    <p className="text-xs md:text-sm font-semibold">Total XP</p>
+                    <p className="text-xl md:text-2xl font-black">{dbUser.totalXP}</p>
                   </div>
-                  <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-2">
-                    <p className="text-sm font-semibold">Day Streak</p>
+                  <div className="bg-white/20 backdrop-blur-sm px-3 py-2 md:px-4 md:py-2 rounded-xl flex items-center gap-2">
+                    <p className="text-xs md:text-sm font-semibold">Day Streak</p>
                     <div className="flex items-center gap-1">
-                      <p className="text-2xl font-black">{dbUser.streak || 0}</p>
-                      <Flame className="w-5 h-5" />
+                      <p className="text-xl md:text-2xl font-black">{dbUser.streak || 0}</p>
+                      <Flame className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
                   </div>
-                  <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl">
-                    <p className="text-sm font-semibold">Lessons</p>
-                    <p className="text-2xl font-black">{lessonsCompleted}</p>
+                  <div className="bg-white/20 backdrop-blur-sm px-3 py-2 md:px-4 md:py-2 rounded-xl">
+                    <p className="text-xs md:text-sm font-semibold">Lessons</p>
+                    <p className="text-xl md:text-2xl font-black">{lessonsCompleted}</p>
                   </div>
                 </div>
               </div>
