@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Award, TrendingUp, Calendar, Flame, BookOpen, Zap, Star, Crown } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
+import BottomNav from '@/components/BottomNav'
 
 export default async function ProfilePage() {
   const user = await currentUser()
@@ -43,8 +44,8 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Left Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 fixed h-full flex flex-col">
+      {/* Left Sidebar - Hidden on mobile */}
+      <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 fixed h-full flex-col">
         <div className="p-6">
           <Link href="/dashboard" className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
@@ -98,14 +99,14 @@ export default async function ProfilePage() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 ml-64">
+      <div className="flex-1 md:ml-64 w-full">
         <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
           <div className="max-w-5xl mx-auto px-6 py-4">
             <h1 className="text-2xl font-black text-gray-900">Profile</h1>
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-6 py-8">
+        <main className="max-w-6xl mx-auto px-6 py-8 pb-24 md:pb-8">
           {/* Profile Header */}
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 mb-8 text-white">
             <div className="flex items-center gap-6">
@@ -312,6 +313,9 @@ export default async function ProfilePage() {
           </div>
         </main>
       </div>
+
+      {/* Bottom Navigation for Mobile */}
+      <BottomNav currentPage="profile" />
     </div>
   )
 }
