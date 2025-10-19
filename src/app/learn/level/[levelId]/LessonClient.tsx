@@ -93,7 +93,11 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
 
   const handleSubmit = () => {
     let correct = false
-    if (currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'audio' || currentQuestion.type === 'mini-game') {
+    if (currentQuestion.type === 'multiple-choice' || 
+        currentQuestion.type === 'audio' || 
+        currentQuestion.type === 'mini-game' ||
+        currentQuestion.type === 'number-sequence' ||
+        currentQuestion.type === 'visual-count') {
       correct = selectedAnswer === currentQuestion.correctAnswer
     } else if (currentQuestion.type === 'tap-select') {
       correct = JSON.stringify(multiSelected.sort()) === JSON.stringify((currentQuestion.tapCorrect || []).sort())
