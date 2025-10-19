@@ -95,7 +95,7 @@ export default function PlacementTestClient() {
                 <h3 className="text-lg font-bold text-gray-900 mb-3">What is this?</h3>
                 <p className="text-gray-700">
                   This quick test will help us understand your current math skills and place you at the right level. 
-                  Don't worry - there's no pressure! Just do your best.
+                  Don&apos;t worry - there&apos;s no pressure! Just do your best.
                 </p>
               </div>
 

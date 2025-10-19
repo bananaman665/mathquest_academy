@@ -74,7 +74,7 @@ export default function LevelCompletePage() {
             Level Complete! 🎉
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Amazing work! You're getting better at math!
+            Amazing work! You&apos;re getting better at math!
           </p>
 
           {/* Stats Grid */}
