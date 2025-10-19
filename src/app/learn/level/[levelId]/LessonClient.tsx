@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles } from 'lucide-react'
@@ -83,7 +83,7 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
   }
 
   // Sequence drag handler
-  const handleSequenceDrag = (result: any) => {
+  const handleSequenceDrag = (result: DropResult) => {
     if (!result.destination) return
     const items = Array.from(sequenceOrder)
     const [removed] = items.splice(result.source.index, 1)
