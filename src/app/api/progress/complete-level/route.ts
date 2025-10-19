@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { updateUserStreak } from '@/lib/streak'
 
 const prisma = new PrismaClient()
 
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
     const newTotalXP = user.totalXP + xp
     const newCurrentLevel = Math.max(user.currentLevel, levelId + 1) // Unlock next level
 
+    // Update user progress
     await prisma.user.update({
       where: { id: userId },
       data: {
@@ -46,14 +48,18 @@ export async function POST(request: NextRequest) {
         currentLevel: newCurrentLevel,
         questionsAnswered: { increment: total },
         correctAnswers: { increment: correct },
-        lastActiveAt: new Date(),
       }
     })
+
+    // Update streak (this also updates lastActiveAt)
+    const updatedUser = await updateUserStreak(userId)
 
     return NextResponse.json({ 
       success: true, 
       newXP: newTotalXP,
-      unlockedLevel: newCurrentLevel 
+      unlockedLevel: newCurrentLevel,
+      streak: updatedUser.streak,
+      longestStreak: updatedUser.longestStreak
     })
   } catch (error) {
     console.error('Error saving progress:', error)

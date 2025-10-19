@@ -16,6 +16,8 @@ export default function LevelCompletePage() {
 
   const [showConfetti, setShowConfetti] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [streak, setStreak] = useState<number | null>(null)
+  const [showStreakAnimation, setShowStreakAnimation] = useState(false)
 
   useEffect(() => {
     // Hide confetti after animation
@@ -46,6 +48,13 @@ export default function LevelCompletePage() {
         } else {
           const data = await response.json()
           console.log('Progress saved:', data)
+          
+          // Update streak display
+          if (data.streak !== undefined) {
+            setStreak(data.streak)
+            setShowStreakAnimation(true)
+            setTimeout(() => setShowStreakAnimation(false), 3000)
+          }
         }
       } catch (error) {
         console.error('Error saving progress:', error)
@@ -129,6 +138,23 @@ export default function LevelCompletePage() {
               </>
             )}
           </div>
+
+          {/* Streak Notification */}
+          {showStreakAnimation && streak !== null && (
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-6 mb-8 animate-bounce">
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-4xl">🔥</span>
+                <div>
+                  <h3 className="text-xl font-bold text-orange-700">
+                    {streak === 1 ? 'Streak Started!' : `${streak} Day Streak!`}
+                  </h3>
+                  <p className="text-orange-600">
+                    {streak === 1 ? 'Come back tomorrow to keep it going!' : 'Keep learning every day!'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Action Buttons */}
           <div className="space-y-4">

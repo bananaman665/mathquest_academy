@@ -6,6 +6,7 @@ import { UserButton } from '@clerk/nextjs'
 import { PrismaClient } from '@prisma/client'
 import MobileSidebar from '@/components/MobileSidebar'
 import BottomNav from '@/components/BottomNav'
+import { checkStreakExpiration } from '@/lib/streak'
 
 const prisma = new PrismaClient()
 
@@ -302,6 +303,12 @@ export default async function LearnPage() {
         totalXP: 0,
       }
     })
+  }
+
+  // Check and update streak expiration
+  const updatedUser = await checkStreakExpiration(user.id)
+  if (updatedUser) {
+    dbUser = updatedUser
   }
 
   // For now, we'll consider levels < currentLevel as completed
