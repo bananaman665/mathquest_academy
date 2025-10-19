@@ -61,7 +61,7 @@ export interface LevelData {
   introduction: {
     title: string;
     content: string[];
-    examples: any[];
+    examples: Array<{ number: string; visual: string; word: string }>;
   };
   questions: Question[];
 }

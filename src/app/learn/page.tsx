@@ -9,6 +9,14 @@ import BottomNav from '@/components/BottomNav'
 
 const prisma = new PrismaClient()
 
+// Type definitions
+type Level = {
+  id: number;
+  title: string;
+  xp: number;
+  status?: 'locked' | 'current' | 'completed';
+}
+
 // Level definitions
 const units = [
   {
@@ -166,7 +174,7 @@ function getLevelStatus(levelId: number, userCurrentLevel: number, completedLeve
   }
 }
 
-function LevelTile({ level, position }: { level: any, position: 'left' | 'center' | 'right' }) {
+function LevelTile({ level, position }: { level: Level, position: 'left' | 'center' | 'right' }) {
   const positionClasses = {
     left: 'md:ml-4',
     center: 'mx-auto',
