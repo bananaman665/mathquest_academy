@@ -1,0 +1,122 @@
+export interface User {
+  id: string
+  email: string
+  username?: string
+  name?: string
+  avatar?: string
+  totalXP: number
+  currentLevel: number
+  streak: number
+  longestStreak: number
+  questionsAnswered: number
+  correctAnswers: number
+  createdAt: Date
+  updatedAt: Date
+  lastActiveAt: Date
+}
+
+export interface Question {
+  id: string
+  topicId: string
+  question: string
+  questionType: QuestionType
+  difficulty: Difficulty
+  options: string[]
+  correctAnswer: string
+  explanation?: string
+  hints: string[]
+  imageUrl?: string
+  baseXP: number
+}
+
+export interface Topic {
+  id: string
+  name: string
+  description?: string
+  level: number
+  orderIndex: number
+  requiredXP: number
+}
+
+export interface UserProgress {
+  id: string
+  userId: string
+  topicId: string
+  completed: boolean
+  accuracy: number
+  totalAttempts: number
+  correctCount: number
+  lastReviewed?: Date
+  nextReview?: Date
+}
+
+export interface QuestionAttempt {
+  id: string
+  userId: string
+  questionId: string
+  sessionId?: string
+  userAnswer: string
+  isCorrect: boolean
+  timeSpent: number
+  hintsUsed: number
+  xpEarned: number
+  createdAt: Date
+}
+
+export interface LearningSession {
+  id: string
+  userId: string
+  startTime: Date
+  endTime?: Date
+  totalXP: number
+  questionsAnswered: number
+  accuracy: number
+  sessionType: SessionType
+}
+
+export interface Achievement {
+  id: string
+  name: string
+  description: string
+  icon: string
+  category: AchievementCategory
+  requirement: string
+  xpReward: number
+}
+
+export interface UserAchievement {
+  id: string
+  userId: string
+  achievementId: string
+  earnedAt: Date
+  xpEarned: number
+  achievement: Achievement
+}
+
+export enum QuestionType {
+  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
+  FILL_BLANK = 'FILL_BLANK',
+  DRAG_DROP = 'DRAG_DROP',
+  TRUE_FALSE = 'TRUE_FALSE',
+  EQUATION = 'EQUATION'
+}
+
+export enum Difficulty {
+  EASY = 'EASY',
+  MEDIUM = 'MEDIUM',
+  HARD = 'HARD'
+}
+
+export enum SessionType {
+  REGULAR = 'REGULAR',
+  BONUS_ROUND = 'BONUS_ROUND',
+  SPEED_CHALLENGE = 'SPEED_CHALLENGE',
+  REVIEW = 'REVIEW'
+}
+
+export enum AchievementCategory {
+  PROGRESS = 'PROGRESS',
+  SKILL = 'SKILL',
+  STREAK = 'STREAK',
+  SPECIAL = 'SPECIAL'
+}

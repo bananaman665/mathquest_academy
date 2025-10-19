@@ -1,0 +1,234 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User Model (Clerk ID as primary key)
+model User {
+  id            String    @id // Clerk user ID
+  email         String?   @unique
+  username      String?   @unique
+  name          String?
+  image         String?
+  
+  // Gamification
+  totalXP       Int       @default(0)
+  currentLevel  Int       @default(1)
+  streak        Int       @default(0)
+  longestStreak Int       @default(0)
+  
+  // Progress tracking
+  questionsAnswered Int   @default(0)
+  correctAnswers    Int   @default(0)
+  
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastActiveAt  DateTime  @default(now())
+  
+  // Relations
+  progress      UserProgress[]
+  achievements  UserAchievement[]
+  learningSessions LearningSession[] @relation("UserLearningSessions")
+  
+  @@map("users")
+}
+
+// Removed NextAuth models (Account, Session, VerificationToken)
+// Clerk handles all authentication, we just store user progress data
+
+// Math Topics/Levels
+model Topic {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  level       Int
+  orderIndex  Int
+  
+  // Requirements
+  requiredXP  Int    @default(0)
+  
+  // Relations
+  questions   Question[]
+  progress    UserProgress[]
+  
+  @@map("topics")
+}
+
+// Question Bank
+model Question {
+  id            String     @id @default(cuid())
+  topicId       String
+  
+  // Question content
+  question      String
+  questionType  QuestionType
+  difficulty    Difficulty
+  options       String?    // JSON string for multiple choice options (for SQLite compatibility)
+  correctAnswer String
+  explanation   String?
+  hints         String?    // JSON string for hints array (for SQLite compatibility)
+  
+  // Visual aids
+  imageUrl      String?
+  
+  // XP rewards
+  baseXP        Int        @default(10)
+  
+  // Relations
+  topic         Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  attempts      QuestionAttempt[]
+  
+  @@map("questions")
+}
+
+// User Progress per Topic
+model UserProgress {
+  id            String   @id @default(cuid())
+  userId        String
+  topicId       String
+  
+  // Progress metrics
+  completed     Boolean  @default(false)
+  accuracy      Float    @default(0)
+  totalAttempts Int      @default(0)
+  correctCount  Int      @default(0)
+  
+  // Spaced repetition
+  lastReviewed  DateTime?
+  nextReview    DateTime?
+  easeFactor    Float    @default(2.5)
+  interval      Int      @default(1)
+  repetitions   Int      @default(0)
+  
+  // Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic         Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, topicId])
+  @@map("user_progress")
+}
+
+// Individual Question Attempts
+model QuestionAttempt {
+  id           String   @id @default(cuid())
+  userId       String
+  questionId   String
+  sessionId    String?
+  
+  // Attempt details
+  userAnswer   String
+  isCorrect    Boolean
+  timeSpent    Int      // in seconds
+  hintsUsed    Int      @default(0)
+  
+  // XP earned
+  xpEarned     Int      @default(0)
+  
+  // Timestamp
+  createdAt    DateTime @default(now())
+  
+  // Relations
+  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  session      LearningSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  
+  @@map("question_attempts")
+}
+
+// Learning Sessions
+model LearningSession {
+  id            String   @id @default(cuid())
+  userId        String
+  
+  // Session details
+  startTime     DateTime @default(now())
+  endTime       DateTime?
+  totalXP       Int      @default(0)
+  questionsAnswered Int  @default(0)
+  accuracy      Float    @default(0)
+  
+  // Session type
+  sessionType   SessionType @default(REGULAR)
+  
+  // Relations
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserLearningSessions")
+  attempts      QuestionAttempt[]
+  
+  @@map("learning_sessions")
+}
+
+// Achievement System
+model Achievement {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  icon        String
+  category    AchievementCategory
+  
+  // Requirements
+  requirement String // JSON string describing requirements
+  xpReward    Int    @default(0)
+  
+  // Relations
+  users       UserAchievement[]
+  
+  @@map("achievements")
+}
+
+// User Achievements (junction table)
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  achievementId String
+  
+  // Achievement details
+  earnedAt      DateTime @default(now())
+  xpEarned      Int      @default(0)
+  
+  // Relations
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, achievementId])
+  @@map("user_achievements")
+}
+
+// Enums
+enum QuestionType {
+  MULTIPLE_CHOICE
+  FILL_BLANK
+  DRAG_DROP
+  TRUE_FALSE
+  EQUATION
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum SessionType {
+  REGULAR
+  BONUS_ROUND
+  SPEED_CHALLENGE
+  REVIEW
+}
+
+enum AchievementCategory {
+  PROGRESS
+  SKILL
+  STREAK
+  SPECIAL
+}
