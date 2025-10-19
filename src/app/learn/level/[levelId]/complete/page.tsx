@@ -107,7 +107,7 @@ export default function LevelCompletePage() {
               <>
                 <div className="text-4xl mb-2">🌟</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Perfect Score!</h3>
-                <p className="text-gray-700">You got every question right! You're a math star!</p>
+                <p className="text-gray-700">You got every question right! You&apos;re a math star!</p>
               </>
             ) : accuracy >= 80 ? (
               <>
@@ -119,13 +119,13 @@ export default function LevelCompletePage() {
               <>
                 <div className="text-4xl mb-2">👍</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Good Work!</h3>
-                <p className="text-gray-700">You're learning! Practice makes perfect!</p>
+                <p className="text-gray-700">You&apos;re learning! Practice makes perfect!</p>
               </>
             ) : (
               <>
                 <div className="text-4xl mb-2">💪</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Keep Trying!</h3>
-                <p className="text-gray-700">Don't give up! You'll get better with practice!</p>
+                <p className="text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
               </>
             )}
           </div>

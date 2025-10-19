@@ -214,7 +214,7 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
                 <BookOpen className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-4xl font-black text-white mb-3">{introduction.title}</h1>
-              <p className="text-gray-300 text-lg">Let's learn something new!</p>
+              <p className="text-gray-300 text-lg">Let&apos;s learn something new!</p>
             </div>
 
             <div className="space-y-6 mb-10">
@@ -729,7 +729,7 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
                   >{opt}</button>
                 ))}
               </div>
-              <p className="text-pink-300 mt-2">Pop every balloon labeled '2'!</p>
+              <p className="text-pink-300 mt-2">Pop every balloon labeled &apos;2&apos;!</p>
             </div>
           )}
 

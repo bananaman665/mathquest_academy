@@ -116,7 +116,7 @@ export default function PlacementTestClient() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>
-                    <span>We'll recommend the best starting level for you</span>
+                    <span>We&apos;ll recommend the best starting level for you</span>
                   </li>
                 </ul>
               </div>
@@ -126,11 +126,11 @@ export default function PlacementTestClient() {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start gap-2">
                     <span className="text-orange-600 font-bold">!</span>
-                    <span>It's okay if some questions are hard - that's expected!</span>
+                    <span>It&apos;s okay if some questions are hard - that&apos;s expected!</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-600 font-bold">!</span>
-                    <span>You can skip questions you're not sure about</span>
+                    <span>You can skip questions you&apos;re not sure about</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-orange-600 font-bold">!</span>
