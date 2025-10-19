@@ -67,88 +67,88 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4 md:p-6">
       <div className="max-w-2xl w-full">
         {/* Success Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
+        <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-12 text-center">
           {/* Trophy Icon */}
-          <div className="mb-6">
-            <div className="w-24 h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto animate-bounce">
-              <Trophy className="w-12 h-12 text-white" />
+          <div className="mb-4 md:mb-6">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto animate-bounce">
+              <Trophy className="w-10 h-10 md:w-12 md:h-12 text-white" />
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-2 md:mb-4">
             Level Complete! 🎉
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
             Amazing work! You&apos;re getting better at math!
           </p>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
             {/* XP Earned */}
-            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 border-2 border-yellow-200">
-              <Star className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-yellow-700">{xp}</div>
-              <div className="text-sm text-yellow-600 font-medium">XP Earned</div>
+            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-4 md:p-6 border-2 border-yellow-200">
+              <Star className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-2" />
+              <div className="text-2xl md:text-3xl font-bold text-yellow-700">{xp}</div>
+              <div className="text-xs md:text-sm text-yellow-600 font-medium">XP Earned</div>
             </div>
 
             {/* Correct Answers */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200">
-              <Target className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-green-700">{correct}/{total}</div>
-              <div className="text-sm text-green-600 font-medium">Correct</div>
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 md:p-6 border-2 border-green-200">
+              <Target className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-2" />
+              <div className="text-2xl md:text-3xl font-bold text-green-700">{correct}/{total}</div>
+              <div className="text-xs md:text-sm text-green-600 font-medium">Correct</div>
             </div>
 
             {/* Accuracy */}
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200">
-              <Trophy className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-blue-700">{accuracy}%</div>
-              <div className="text-sm text-blue-600 font-medium">Accuracy</div>
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-4 md:p-6 border-2 border-blue-200">
+              <Trophy className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-2" />
+              <div className="text-2xl md:text-3xl font-bold text-blue-700">{accuracy}%</div>
+              <div className="text-xs md:text-sm text-blue-600 font-medium">Accuracy</div>
             </div>
           </div>
 
           {/* Performance Message */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-5 md:p-6 mb-6 md:mb-8">
             {accuracy === 100 ? (
               <>
-                <div className="text-4xl mb-2">🌟</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Perfect Score!</h3>
-                <p className="text-gray-700">You got every question right! You&apos;re a math star!</p>
+                <div className="text-3xl md:text-4xl mb-2">🌟</div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Perfect Score!</h3>
+                <p className="text-sm md:text-base text-gray-700">You got every question right! You&apos;re a math star!</p>
               </>
             ) : accuracy >= 80 ? (
               <>
-                <div className="text-4xl mb-2">⭐</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Great Job!</h3>
-                <p className="text-gray-700">You did really well! Keep up the awesome work!</p>
+                <div className="text-3xl md:text-4xl mb-2">⭐</div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Great Job!</h3>
+                <p className="text-sm md:text-base text-gray-700">You did really well! Keep up the awesome work!</p>
               </>
             ) : accuracy >= 60 ? (
               <>
-                <div className="text-4xl mb-2">👍</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Good Work!</h3>
-                <p className="text-gray-700">You&apos;re learning! Practice makes perfect!</p>
+                <div className="text-3xl md:text-4xl mb-2">👍</div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Good Work!</h3>
+                <p className="text-sm md:text-base text-gray-700">You&apos;re learning! Practice makes perfect!</p>
               </>
             ) : (
               <>
-                <div className="text-4xl mb-2">💪</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Keep Trying!</h3>
-                <p className="text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
+                <div className="text-3xl md:text-4xl mb-2">💪</div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Keep Trying!</h3>
+                <p className="text-sm md:text-base text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
               </>
             )}
           </div>
 
           {/* Streak Notification */}
           {showStreakAnimation && streak !== null && (
-            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-6 mb-8 animate-bounce">
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-4xl">🔥</span>
-                <div>
-                  <h3 className="text-xl font-bold text-orange-700">
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-5 md:p-6 mb-6 md:mb-8 animate-bounce">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-3">
+                <span className="text-3xl md:text-4xl">🔥</span>
+                <div className="text-center md:text-left">
+                  <h3 className="text-lg md:text-xl font-bold text-orange-700">
                     {streak === 1 ? 'Streak Started!' : `${streak} Day Streak!`}
                   </h3>
-                  <p className="text-orange-600">
+                  <p className="text-sm md:text-base text-orange-600">
                     {streak === 1 ? 'Come back tomorrow to keep it going!' : 'Keep learning every day!'}
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export default function LevelCompletePage() {
           )}
 
           {/* Action Buttons */}
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <Link
               href="/learn"
               className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105"
