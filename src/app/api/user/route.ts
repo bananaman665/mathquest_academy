@@ -15,13 +15,11 @@ export async function GET() {
       select: {
         id: true,
         username: true,
-        xp: true,
-        level: true,
+        totalXP: true,
+        currentLevel: true,
         streak: true,
         longestStreak: true,
-        coins: true,
-        hasPremium: true,
-        aiTutorAccess: true,
+        isPremium: true,
         createdAt: true,
       }
     })

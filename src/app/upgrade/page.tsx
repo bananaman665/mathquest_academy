@@ -188,7 +188,7 @@ function TestimonialCard({ name, text, rating }: { name: string; text: string; r
           <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
         ))}
       </div>
-      <p className="text-gray-700 mb-4 italic">"{text}"</p>
+      <p className="text-gray-700 mb-4 italic">&ldquo;{text}&rdquo;</p>
       <p className="font-semibold text-gray-900">{name}</p>
     </div>
   )

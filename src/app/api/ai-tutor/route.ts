@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       where: { id: userId }
     })
 
-    if (!user?.hasPremium) {
+    if (!user?.isPremium) {
       return NextResponse.json({ 
         error: 'Premium feature',
         message: 'AI Tutor is a premium feature. Upgrade to access!'
