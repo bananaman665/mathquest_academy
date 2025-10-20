@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Check, X, Heart, Sparkles, ArrowRight, Target } from 'lucide-react'
 import { placementTestQuestions, calculatePlacementLevel, getPlacementTestFeedback } from '@/data/placementTest'
+import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 export default function PlacementTestClient() {
   const router = useRouter()
+  const { playCorrect, playIncorrect } = useSoundEffects()
   const [phase, setPhase] = useState<'intro' | 'test' | 'results'>('intro')
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
@@ -30,8 +32,10 @@ export default function PlacementTestClient() {
     setShowExplanation(true)
     
     if (isCorrect) {
+      playCorrect() // Play success sound
       setCorrectAnswers(prev => [...prev, currentQuestionIndex])
     } else {
+      playIncorrect() // Play error sound
       setHearts(prev => Math.max(0, prev - 1))
     }
   }

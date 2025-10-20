@@ -25,6 +25,10 @@ model User {
   streak        Int       @default(0)
   longestStreak Int       @default(0)
   
+  // Premium features
+  isPremium     Boolean   @default(false)
+  premiumUntil  DateTime?
+  
   // Progress tracking
   questionsAnswered Int   @default(0)
   correctAnswers    Int   @default(0)

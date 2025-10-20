@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles } from 'lucide-react'
 import { Question } from '@/data/questions'
+import AITutor from '@/components/AITutor'
+import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface LessonClientProps {
   levelId: number
@@ -33,6 +35,7 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
   const [equationMatched, setEquationMatched] = useState<(string | null)[]>(Array(initialAnswers.length).fill(null));
   
   const router = useRouter()
+  const { playCorrect, playIncorrect, playLevelComplete } = useSoundEffects()
   const [phase, setPhase] = useState<'intro' | 'practice'>('intro')
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
@@ -49,6 +52,8 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
   const [earnedXP, setEarnedXP] = useState(0)
   const [correctCount, setCorrectCount] = useState(0)
   const [hearts, setHearts] = useState(5)
+  const [showAITutor, setShowAITutor] = useState(false)
+  const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
 
   const currentQuestion = questions[currentQuestionIndex]
   
@@ -151,9 +156,11 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
     setIsCorrect(correct)
     setShowExplanation(true)
     if (correct) {
+      playCorrect() // Play success sound
       setEarnedXP(prev => prev + currentQuestion.xp)
       setCorrectCount(prev => prev + 1)
     } else {
+      playIncorrect() // Play error sound
       setHearts(prev => Math.max(0, prev - 1))
     }
   }
@@ -872,50 +879,68 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-6 shadow-lg">
-        <div className="max-w-5xl mx-auto flex justify-between items-center gap-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 shadow-lg">
+        <div className="max-w-5xl mx-auto">
           {!showExplanation ? (
             <>
-              <button onClick={() => handleNext()} className="px-8 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-700 transition-colors uppercase tracking-wide hover:bg-gray-100">
-                Skip
-              </button>
-              <button
-                onClick={handleSubmit}
-                disabled={
-                  currentQuestion.type === 'drag-and-drop'
-                    ? matched.some(m => !m)
-                    : currentQuestion.type === 'tap-select' || currentQuestion.type === 'highlight'
-                    ? multiSelected.length === 0
-                    : currentQuestion.type === 'fill-blank'
-                    ? blankAnswers.length === 0 || blankAnswers.some(a => !a)
-                    : currentQuestion.type === 'order-sequence'
-                    ? false // Always enabled for sequence
-                    : currentQuestion.type === 'type-answer'
-                    ? !typedAnswer.trim()
-                    : currentQuestion.type === 'match-equation'
-                    ? equationMatched.some(eq => !eq)
-                    : !selectedAnswer
-                }
-                className={`px-12 py-4 rounded-xl font-bold text-white uppercase tracking-wide transition-all duration-200 ${
-                  (currentQuestion.type === 'drag-and-drop'
-                    ? !matched.some(m => !m)
-                    : currentQuestion.type === 'tap-select' || currentQuestion.type === 'highlight'
-                    ? multiSelected.length > 0
-                    : currentQuestion.type === 'fill-blank'
-                    ? blankAnswers.length > 0 && blankAnswers.every(a => a)
-                    : currentQuestion.type === 'order-sequence'
-                    ? true // Always enabled for sequence
-                    : currentQuestion.type === 'type-answer'
-                    ? !!typedAnswer.trim()
-                    : currentQuestion.type === 'match-equation'
-                    ? !equationMatched.some(eq => !eq)
-                    : !!selectedAnswer)
-                    ? 'bg-green-500 hover:bg-green-600 shadow-lg'
-                    : 'bg-gray-300 cursor-not-allowed'
-                }`}
-              >
-                Check
-              </button>
+              {/* Mobile: Stack buttons vertically */}
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                {/* Top row on mobile: Skip and AI Tutor side by side */}
+                <div className="flex gap-2 justify-between md:justify-start">
+                  <button 
+                    onClick={() => handleNext()} 
+                    className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-700 transition-colors uppercase tracking-wide hover:bg-gray-100 text-sm"
+                  >
+                    Skip
+                  </button>
+                  <button
+                    onClick={() => setShowAITutor(true)}
+                    className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    <span>AI Tutor</span>
+                  </button>
+                </div>
+
+                {/* Bottom row on mobile: Check button full width */}
+                <button
+                  onClick={handleSubmit}
+                  disabled={
+                    currentQuestion.type === 'drag-and-drop'
+                      ? matched.some(m => !m)
+                      : currentQuestion.type === 'tap-select' || currentQuestion.type === 'highlight'
+                      ? multiSelected.length === 0
+                      : currentQuestion.type === 'fill-blank'
+                      ? blankAnswers.length === 0 || blankAnswers.some(a => !a)
+                      : currentQuestion.type === 'order-sequence'
+                      ? false // Always enabled for sequence
+                      : currentQuestion.type === 'type-answer'
+                      ? !typedAnswer.trim()
+                      : currentQuestion.type === 'match-equation'
+                      ? equationMatched.some(eq => !eq)
+                      : !selectedAnswer
+                  }
+                  className={`w-full md:w-auto px-12 py-4 rounded-xl font-bold text-white uppercase tracking-wide transition-all duration-200 ${
+                    (currentQuestion.type === 'drag-and-drop'
+                      ? !matched.some(m => !m)
+                      : currentQuestion.type === 'tap-select' || currentQuestion.type === 'highlight'
+                      ? multiSelected.length > 0
+                      : currentQuestion.type === 'fill-blank'
+                      ? blankAnswers.length > 0 && blankAnswers.every(a => a)
+                      : currentQuestion.type === 'order-sequence'
+                      ? true // Always enabled for sequence
+                      : currentQuestion.type === 'type-answer'
+                      ? !!typedAnswer.trim()
+                      : currentQuestion.type === 'match-equation'
+                      ? !equationMatched.some(eq => !eq)
+                      : !!selectedAnswer)
+                      ? 'bg-green-500 hover:bg-green-600 shadow-lg'
+                      : 'bg-gray-300 cursor-not-allowed'
+                  }`}
+                >
+                  Check
+                </button>
+              </div>
             </>
           ) : (
             <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200 shadow-lg">
@@ -924,6 +949,15 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
           )}
         </div>
       </div>
+
+      {/* AI Tutor Modal */}
+      <AITutor
+        question={currentQuestion.question}
+        correctAnswer={currentQuestion.correctAnswer || ''}
+        userAnswer={selectedAnswer || typedAnswer || ''}
+        isOpen={showAITutor}
+        onClose={() => setShowAITutor(false)}
+      />
     </div>
   )
 }
