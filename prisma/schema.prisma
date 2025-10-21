@@ -42,6 +42,7 @@ model User {
   progress      UserProgress[]
   achievements  UserAchievement[]
   learningSessions LearningSession[] @relation("UserLearningSessions")
+  inventory     UserInventory[]
   
   @@map("users")
 }
@@ -236,4 +237,42 @@ enum AchievementCategory {
   SKILL
   STREAK
   SPECIAL
+}
+
+// Shop System
+model ShopItem {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Int
+  category    String   // 'power-ups' or 'cosmetics'
+  icon        String   // Icon name
+  effect      String?  // JSON string describing the effect
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  purchases   UserInventory[]
+  
+  @@map("shop_items")
+}
+
+model UserInventory {
+  id          String   @id @default(cuid())
+  userId      String
+  itemId      String
+  
+  quantity    Int      @default(1)
+  isActive    Boolean  @default(false) // For cosmetics - is it currently equipped?
+  expiresAt   DateTime? // For time-limited items like XP boost
+  
+  purchasedAt DateTime @default(now())
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item        ShopItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, itemId])
+  @@map("user_inventory")
 }

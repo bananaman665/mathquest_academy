@@ -1,10 +1,11 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Heart, Zap, Shield, Flame, Gem, Lightbulb, Snowflake, Palette } from 'lucide-react'
+import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Gem } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
+import ShopClient from '@/components/ShopClient'
 
 export default async function ShopPage() {
   const user = await currentUser()
@@ -27,14 +28,23 @@ export default async function ShopPage() {
     })
   }
 
-  const shopItems = [
-    { id: 1, name: 'Extra Hearts', description: 'Refill your hearts to keep learning', price: 50, icon: Heart, category: 'power-ups', color: 'text-red-500' },
-    { id: 2, name: 'Streak Freeze', description: 'Protect your streak for 1 day', price: 100, icon: Snowflake, category: 'power-ups', color: 'text-cyan-500' },
-    { id: 3, name: 'XP Boost', description: 'Double XP for 1 hour', price: 150, icon: Zap, category: 'power-ups', color: 'text-yellow-500' },
-    { id: 4, name: 'Hint Pack', description: 'Get 5 hints for tough questions', price: 75, icon: Lightbulb, category: 'power-ups', color: 'text-amber-500' },
-    { id: 5, name: 'Golden Trophy', description: 'Show off your achievements', price: 500, icon: Trophy, category: 'cosmetics', color: 'text-yellow-600' },
-    { id: 6, name: 'Rainbow Theme', description: 'Colorful interface theme', price: 300, icon: Palette, category: 'cosmetics', color: 'text-purple-500' },
-  ]
+  // Fetch shop items from database
+  const shopItems = await prisma.shopItem.findMany({
+    where: { isActive: true },
+    orderBy: { price: 'asc' }
+  })
+
+  // Map items with color classes
+  const itemsWithColors = shopItems.map(item => ({
+    ...item,
+    color: item.category === 'power-ups' 
+      ? item.icon === 'Heart' ? 'text-red-500'
+      : item.icon === 'Snowflake' ? 'text-cyan-500'
+      : item.icon === 'Zap' ? 'text-yellow-500'
+      : 'text-amber-500'
+      : item.icon === 'Trophy' ? 'text-yellow-600'
+      : 'text-purple-500'
+  }))
 
   return (
     <div className="min-h-screen bg-white flex overflow-x-hidden">
@@ -112,136 +122,7 @@ export default async function ShopPage() {
         </header>
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8">
-          {/* Balance Card */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 font-semibold mb-1">Your Balance</p>
-                <div className="flex items-center gap-3">
-                  <p className="text-4xl font-black text-blue-600">{dbUser.totalXP}</p>
-                  <Gem className="w-10 h-10 text-blue-600" />
-                </div>
-                <p className="text-sm text-gray-600 mt-1">Earn more by completing lessons!</p>
-              </div>
-              <ShoppingBag className="w-16 h-16 text-blue-400" />
-            </div>
-          </div>
-
-          {/* Power-ups Section */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <Zap className="w-8 h-8 text-yellow-600" />
-              <h2 className="text-2xl font-black text-gray-900">Power-ups</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {shopItems.filter(item => item.category === 'power-ups').map((item) => {
-                const canAfford = dbUser.totalXP >= item.price
-                const ItemIcon = item.icon
-
-                return (
-                  <div
-                    key={item.id}
-                    className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                  >
-                    <div className="text-center mb-4">
-                      <div className="mb-4 flex justify-center">
-                        <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
-                          <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h3>
-                      <p className="text-sm text-gray-600">{item.description}</p>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
-                        <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
-                        <p className="text-lg font-black text-yellow-800">{item.price}</p>
-                      </div>
-                      {canAfford ? (
-                        <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse">
-                          ✓ Can afford
-                        </span>
-                      ) : (
-                        <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
-                          Not enough gems
-                        </span>
-                      )}
-                    </div>
-
-                    <button
-                      disabled={!canAfford}
-                      className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
-                        canAfford
-                          ? 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 active:scale-95'
-                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      }`}
-                    >
-                      {canAfford ? 'Buy Now' : 'Not Enough Gems'}
-                    </button>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Cosmetics Section */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <Palette className="w-8 h-8 text-purple-600" />
-              <h2 className="text-2xl font-black text-gray-900">Cosmetics</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {shopItems.filter(item => item.category === 'cosmetics').map((item) => {
-                const canAfford = dbUser.totalXP >= item.price
-                const ItemIcon = item.icon
-
-                return (
-                  <div
-                    key={item.id}
-                    className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                  >
-                    <div className="text-center mb-4">
-                      <div className="mb-4 flex justify-center">
-                        <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
-                          <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h3>
-                      <p className="text-sm text-gray-600">{item.description}</p>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
-                        <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
-                        <p className="text-lg font-black text-yellow-800">{item.price}</p>
-                      </div>
-                      {canAfford ? (
-                        <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse">
-                          ✓ Can afford
-                        </span>
-                      ) : (
-                        <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
-                          Not enough gems
-                        </span>
-                      )}
-                    </div>
-
-                    <button
-                      disabled={!canAfford}
-                      className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
-                        canAfford
-                          ? 'bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 active:scale-95'
-                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      }`}
-                    >
-                      {canAfford ? 'Buy Now' : 'Not Enough Gems'}
-                    </button>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <ShopClient items={itemsWithColors} userBalance={dbUser.totalXP} />
 
           {/* Info Card */}
           <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-2xl p-6">
