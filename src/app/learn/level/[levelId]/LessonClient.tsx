@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap } from 'lucide-react'
 import { Question } from '@/data/questions'
 import AITutor from '@/components/AITutor'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
+import { useInventory } from '@/hooks/useInventory'
 
 interface LessonClientProps {
   levelId: number
@@ -20,6 +21,13 @@ interface LessonClientProps {
 }
 
 export default function LessonClient({ levelId, introduction, questions }: LessonClientProps) {
+  // Inventory hook
+  const { inventory, hasItem, hasActiveItem, useItem, refetch } = useInventory()
+  
+  // Check if XP Boost is active
+  const xpBoostActive = hasActiveItem('XP Boost')
+  const xpMultiplier = xpBoostActive ? 2 : 1
+  
   // Local state for drag-and-drop pairs
   // For matching UI: numbers to words
   const initialNumbers = questions[0]?.pairs ? questions[0].pairs.map(p => p.left) : [];
@@ -157,7 +165,8 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
     setShowExplanation(true)
     if (correct) {
       playCorrect() // Play success sound
-      setEarnedXP(prev => prev + currentQuestion.xp)
+      const earnedPoints = currentQuestion.xp * xpMultiplier
+      setEarnedXP(prev => prev + earnedPoints)
       setCorrectCount(prev => prev + 1)
     } else {
       playIncorrect() // Play error sound
@@ -284,9 +293,33 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
           <Link href="/learn" className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100">
             <X className="w-7 h-7" />
           </Link>
-          <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
-            <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-            <span className="text-red-500 font-bold text-xl">{hearts}</span>
+          <div className="flex items-center gap-3">
+            {xpBoostActive && (
+              <div className="flex items-center gap-2 bg-yellow-100 px-3 py-2 rounded-xl border-2 border-yellow-400">
+                <Zap className="w-5 h-5 text-yellow-600 fill-yellow-600" />
+                <span className="text-yellow-600 font-bold text-sm">2x XP</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
+              <Heart className="w-6 h-6 text-red-500 fill-red-500" />
+              <span className="text-red-500 font-bold text-xl">{hearts}</span>
+            </div>
+            {hearts <= 2 && hasItem('extra-hearts') && (
+              <button
+                onClick={async () => {
+                  const success = await useItem('extra-hearts')
+                  if (success) {
+                    setHearts(5)
+                    playCorrect()
+                    await refetch()
+                  }
+                }}
+                className="px-3 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-xl text-sm hover:from-pink-600 hover:to-red-600 transition-all shadow-lg flex items-center gap-2"
+              >
+                <Heart className="w-4 h-4 fill-white" />
+                Refill
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -869,7 +902,10 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
                   </p>
                   {isCorrect && (
                     <div className="mt-3 inline-flex items-center gap-2 bg-yellow-100 border border-yellow-400 px-3 py-1 rounded-lg">
-                      <span className="text-yellow-600 font-bold">+{currentQuestion.xp} XP</span>
+                      <span className="text-yellow-600 font-bold">
+                        +{currentQuestion.xp * xpMultiplier} XP
+                        {xpBoostActive && <span className="ml-1 text-xs">(2x)</span>}
+                      </span>
                     </div>
                   )}
                 </div>
