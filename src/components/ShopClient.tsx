@@ -19,7 +19,7 @@ interface ShopClientProps {
   userBalance: number
 }
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Heart,
   Snowflake,
   Zap,
@@ -70,9 +70,10 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
       setSuccessMessage(`🎉 Successfully purchased ${item.name}!`)
       setTimeout(() => setSuccessMessage(null), 3000)
 
-    } catch (error: any) {
+    } catch (error) {
       playIncorrect()
-      setErrorMessage(error.message || 'Something went wrong. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      setErrorMessage(errorMessage)
       setTimeout(() => setErrorMessage(null), 3000)
     } finally {
       setPurchasingItem(null)
