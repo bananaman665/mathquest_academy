@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap } from 'lucide-react'
-import { Question } from '@/data/questions'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
+import { Question, GameMode } from '@/data/questions'
 import AITutor from '@/components/AITutor'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
@@ -18,15 +18,23 @@ interface LessonClientProps {
     examples: Array<{ number: string; visual: string; word: string }>
   }
   questions: Question[]
+  gameMode?: GameMode
 }
 
-export default function LessonClient({ levelId, introduction, questions }: LessonClientProps) {
+export default function LessonClient({ levelId, introduction, questions, gameMode = 'normal' }: LessonClientProps) {
   // Inventory hook
   const { inventory, hasItem, hasActiveItem, useItem, refetch } = useInventory()
   
   // Check if XP Boost is active
   const xpBoostActive = hasActiveItem('XP Boost')
   const xpMultiplier = xpBoostActive ? 2 : 1
+  
+  // Game mode state
+  const [gameTimer, setGameTimer] = useState(gameMode === 'speed-round' ? 60 : 0)
+  const [questionTimer, setQuestionTimer] = useState(gameMode === 'lightning' ? 10 : 0)
+  const [currentStreak, setCurrentStreak] = useState(0)
+  const [maxStreak, setMaxStreak] = useState(0)
+  const [comboMultiplier, setComboMultiplier] = useState(1)
   
   // Local state for drag-and-drop pairs
   // For matching UI: numbers to words
@@ -70,6 +78,52 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
     ? currentQuestion.equations.map(e => e.answer) 
     : []
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
+
+  // Timer effects for Speed Round
+  useEffect(() => {
+    if (gameMode === 'speed-round' && phase === 'practice' && gameTimer > 0) {
+      const timer = setInterval(() => {
+        setGameTimer(prev => {
+          if (prev <= 1) {
+            // Time's up!
+            router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${currentQuestionIndex + 1}&mode=speed-round`)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [gameMode, phase, gameTimer, router, levelId, earnedXP, correctCount, currentQuestionIndex])
+
+  // Timer effects for Lightning Mode
+  useEffect(() => {
+    if (gameMode === 'lightning' && phase === 'practice' && !showExplanation && questionTimer > 0) {
+      const timer = setInterval(() => {
+        setQuestionTimer(prev => {
+          if (prev <= 1) {
+            // Time's up for this question - count as wrong
+            setIsCorrect(false)
+            setShowExplanation(true)
+            playIncorrect()
+            setHearts(prev => Math.max(0, prev - 1))
+            setCurrentStreak(0)
+            setComboMultiplier(1)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [gameMode, phase, showExplanation, questionTimer, playIncorrect])
+
+  // Reset question timer for Lightning Mode
+  useEffect(() => {
+    if (gameMode === 'lightning' && !showExplanation) {
+      setQuestionTimer(10)
+    }
+  }, [currentQuestionIndex, gameMode, showExplanation])
 
   const handleStartPractice = () => {
     setPhase('practice')
@@ -165,12 +219,51 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
     setShowExplanation(true)
     if (correct) {
       playCorrect() // Play success sound
-      const earnedPoints = currentQuestion.xp * xpMultiplier
+      
+      // Update streak
+      const newStreak = currentStreak + 1
+      setCurrentStreak(newStreak)
+      if (newStreak > maxStreak) {
+        setMaxStreak(newStreak)
+      }
+      
+      // Calculate combo multiplier based on streak
+      let newComboMultiplier = 1
+      if (newStreak >= 10) newComboMultiplier = 5
+      else if (newStreak >= 7) newComboMultiplier = 3
+      else if (newStreak >= 5) newComboMultiplier = 2
+      setComboMultiplier(newComboMultiplier)
+      
+      // Calculate game mode bonus
+      let gameModeBonus = 1
+      if (gameMode === 'speed-round') gameModeBonus = 1.5
+      else if (gameMode === 'lightning') gameModeBonus = 1.75
+      else if (gameMode === 'perfect-streak') gameModeBonus = 2
+      else if (gameMode === 'boss-battle') gameModeBonus = 3
+      
+      // Total XP = base XP × XP boost × combo multiplier × game mode bonus
+      const earnedPoints = Math.floor(currentQuestion.xp * xpMultiplier * newComboMultiplier * gameModeBonus)
       setEarnedXP(prev => prev + earnedPoints)
       setCorrectCount(prev => prev + 1)
+      
+      // Perfect Streak mode: End if we've got 10 in a row
+      if (gameMode === 'perfect-streak' && newStreak >= 10) {
+        setTimeout(() => {
+          router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
+        }, 1000)
+      }
     } else {
       playIncorrect() // Play error sound
       setHearts(prev => Math.max(0, prev - 1))
+      setCurrentStreak(0)
+      setComboMultiplier(1)
+      
+      // Perfect Streak mode: End immediately on wrong answer
+      if (gameMode === 'perfect-streak') {
+        setTimeout(() => {
+          router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${currentQuestionIndex + 1}&mode=perfect-streak&failed=true`)
+        }, 2000)
+      }
     }
   }
 
@@ -303,17 +396,62 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
             <X className="w-7 h-7" />
           </Link>
           <div className="flex items-center gap-3">
+            {/* Speed Round Timer */}
+            {gameMode === 'speed-round' && (
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
+                gameTimer <= 10 
+                  ? 'bg-red-100 border-red-400 text-red-600 animate-pulse' 
+                  : 'bg-green-100 border-green-400 text-green-600'
+              }`}>
+                <Clock className="w-5 h-5" />
+                <span className="text-xl">{gameTimer}s</span>
+              </div>
+            )}
+            
+            {/* Lightning Mode Timer */}
+            {gameMode === 'lightning' && (
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
+                questionTimer <= 3 
+                  ? 'bg-red-100 border-red-400 text-red-600 animate-pulse' 
+                  : 'bg-yellow-100 border-yellow-400 text-yellow-600'
+              }`}>
+                <Zap className="w-5 h-5 fill-current" />
+                <span className="text-xl">{questionTimer}s</span>
+              </div>
+            )}
+            
+            {/* Streak Counter */}
+            {currentStreak > 0 && (
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
+                currentStreak >= 10 
+                  ? 'bg-purple-100 border-purple-400 text-purple-600' 
+                  : currentStreak >= 5 
+                  ? 'bg-orange-100 border-orange-400 text-orange-600' 
+                  : 'bg-blue-100 border-blue-400 text-blue-600'
+              }`}>
+                <Flame className="w-5 h-5" />
+                <span>{currentStreak} 🔥</span>
+                {comboMultiplier > 1 && (
+                  <span className="text-xs ml-1">{comboMultiplier}x</span>
+                )}
+              </div>
+            )}
+            
             {xpBoostActive && (
               <div className="flex items-center gap-2 bg-yellow-100 px-3 py-2 rounded-xl border-2 border-yellow-400">
                 <Zap className="w-5 h-5 text-yellow-600 fill-yellow-600" />
                 <span className="text-yellow-600 font-bold text-sm">2x XP</span>
               </div>
             )}
-            <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
-              <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-              <span className="text-red-500 font-bold text-xl">{hearts}</span>
-            </div>
-            {hearts <= 2 && hasItem('extra-hearts') && (
+            
+            {gameMode === 'normal' && (
+              <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
+                <Heart className="w-6 h-6 text-red-500 fill-red-500" />
+                <span className="text-red-500 font-bold text-xl">{hearts}</span>
+              </div>
+            )}
+            
+            {hearts <= 2 && hasItem('extra-hearts') && gameMode === 'normal' && (
               <button
                 onClick={handleUseExtraHearts}
                 className="px-3 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-xl text-sm hover:from-pink-600 hover:to-red-600 transition-all shadow-lg flex items-center gap-2"

@@ -1,6 +1,13 @@
 // Question database for all levels
 // We'll move this to the actual database later, but for now it's easier to iterate
 
+export type GameMode = 
+  | 'normal'          // Regular lesson with hearts
+  | 'speed-round'     // 60 seconds, solve as many as possible
+  | 'lightning'       // 10 seconds per question
+  | 'perfect-streak'  // Get 10 in a row correct
+  | 'boss-battle'     // Harder questions, more XP
+
 export type QuestionType =
   | 'multiple-choice'
   | 'visual-count'

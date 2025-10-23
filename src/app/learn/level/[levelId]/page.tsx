@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getQuestionsForLevel, getIntroductionForLevel, Question } from '@/data/questions'
-import LessonClient from './LessonClient'
+import LessonWithModeSelector from './LessonWithModeSelector'
 
 // Helper function to randomly convert questions to type-answer or match-equation
 function randomizeQuestionTypes(questions: Question[]): Question[] {
@@ -85,5 +85,5 @@ export default async function LevelPage({ params }: { params: Promise<{ levelId:
     )
   }
 
-  return <LessonClient levelId={levelId} introduction={introduction} questions={questions} />
+  return <LessonWithModeSelector levelId={levelId} introduction={introduction} questions={questions} />
 }
