@@ -15,7 +15,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 export default function InventoryClient() {
-  const { inventory, loading, useItem: useInventoryItem, refetch } = useInventory()
+  const inventoryHook = useInventory()
   const [usingItem, setUsingItem] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const { playCorrect } = useSoundEffects()
@@ -24,13 +24,13 @@ export default function InventoryClient() {
     setUsingItem(itemId)
     setMessage(null)
 
-    const success = await useInventoryItem(itemId)
+    const success = await inventoryHook.useItem(itemId)
     
     if (success) {
       playCorrect()
       setMessage('Item used successfully!')
       setTimeout(() => setMessage(null), 3000)
-      await refetch()
+      await inventoryHook.refetch()
     } else {
       setMessage('Failed to use item')
       setTimeout(() => setMessage(null), 3000)
@@ -39,7 +39,7 @@ export default function InventoryClient() {
     setUsingItem(null)
   }
 
-  if (loading) {
+  if (inventoryHook.loading) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -47,7 +47,7 @@ export default function InventoryClient() {
     )
   }
 
-  if (inventory.length === 0) {
+  if (inventoryHook.inventory.length === 0) {
     return (
       <div className="text-center py-12">
         <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -66,7 +66,7 @@ export default function InventoryClient() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {inventory.map((item) => {
+        {inventoryHook.inventory.map((item) => {
           const ItemIcon = iconMap[item.item.icon] || Package
           const isUsing = usingItem === item.itemId
           const effect = item.item.effect ? JSON.parse(item.item.effect) : null
