@@ -174,6 +174,15 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
     }
   }
 
+  const handleUseExtraHearts = async () => {
+    const success = await useItem('extra-hearts')
+    if (success) {
+      setHearts(5)
+      playCorrect()
+      await refetch()
+    }
+  }
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
@@ -306,14 +315,7 @@ export default function LessonClient({ levelId, introduction, questions }: Lesso
             </div>
             {hearts <= 2 && hasItem('extra-hearts') && (
               <button
-                onClick={async () => {
-                  const success = await useItem('extra-hearts')
-                  if (success) {
-                    setHearts(5)
-                    playCorrect()
-                    await refetch()
-                  }
-                }}
+                onClick={handleUseExtraHearts}
                 className="px-3 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-xl text-sm hover:from-pink-600 hover:to-red-600 transition-all shadow-lg flex items-center gap-2"
               >
                 <Heart className="w-4 h-4 fill-white" />

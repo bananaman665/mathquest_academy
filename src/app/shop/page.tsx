@@ -35,7 +35,15 @@ export default async function ShopPage() {
   })
 
   // Map items with color classes
-  const itemsWithColors = shopItems.map((item) => ({
+  const itemsWithColors = shopItems.map((item: { 
+    id: string
+    name: string
+    description: string
+    price: number
+    icon: string
+    category: string
+    effect: string | null
+  }) => ({
     ...item,
     color: item.category === 'power-ups' 
       ? item.icon === 'Heart' ? 'text-red-500'
