@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookOpen, Trophy, Zap, Target, Sparkles, Star, Rocket } from 'lucide-react'
+import { Trophy, Zap, Target, Sparkles, Star, Rocket } from 'lucide-react'
 
 export default function Home() {
   return (
