@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { GameMode } from '@/data/questions'
+import { GameMode, Question } from '@/data/questions'
 import GameModeSelector from '@/components/game/GameModeSelector'
 import LessonClient from './LessonClient'
 
@@ -13,7 +13,7 @@ interface LessonWithModeSelectorProps {
     content: string[]
     examples: Array<{ number: string; visual: string; word: string }>
   }
-  questions: any[]
+  questions: Question[]
 }
 
 export default function LessonWithModeSelector({ levelId, introduction, questions }: LessonWithModeSelectorProps) {

@@ -25,6 +25,9 @@ export default function LevelCompletePage() {
     return () => clearTimeout(timer)
   }, [])
 
+  console.log('Saving status:', saving)
+  console.log('Show confetti:', showConfetti)
+
   useEffect(() => {
     // Save progress to database
     const saveProgress = async () => {

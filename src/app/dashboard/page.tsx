@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { BookOpen, Trophy, Zap, Target, Sparkles, Rocket, Star } from "lucide-react"
+import { Trophy, Zap, Target, Sparkles, Rocket, Star } from "lucide-react"
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 

@@ -1,10 +1,9 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Lock, CheckCircle, Star, Trophy, Sparkles, Target, Award, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart } from 'lucide-react'
+import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { PrismaClient } from '@prisma/client'
-import MobileSidebar from '@/components/MobileSidebar'
 import BottomNav from '@/components/BottomNav'
 import { checkStreakExpiration } from '@/lib/streak'
 

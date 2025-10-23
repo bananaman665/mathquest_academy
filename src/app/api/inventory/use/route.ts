@@ -36,10 +36,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse the item effect
-    const effect = inventoryItem.item.effect ? JSON.parse(inventoryItem.item.effect) : null
+    const effect: { type?: string } | null = inventoryItem.item.effect ? JSON.parse(inventoryItem.item.effect) : null
 
     // Apply the effect based on item type
-    let result: any = {}
+    let result: {
+      message: string
+      effect: string
+      expiresAt?: Date
+      equipped?: boolean
+    } = {
+      message: '',
+      effect: ''
+    }
 
     switch (effect?.type) {
       case 'hearts':
