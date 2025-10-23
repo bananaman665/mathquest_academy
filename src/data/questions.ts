@@ -74,128 +74,121 @@ export interface LevelData {
 }
 
 export const levelContent: { [levelId: number]: LevelData } = {
-  // UNIT 1: NUMBER BASICS
+  // UNIT 1: ADDITION BASICS
   1: {
-    title: "Numbers 1-5",
+    title: "Addition: Numbers 1-10",
     introduction: {
-      title: "Welcome to Numbers!",
+      title: "Welcome to Addition!",
       content: [
-        "Numbers help us count things!",
-        "Let's learn the numbers 1, 2, 3, 4, and 5.",
-        "You'll see stars ⭐ to help you count!"
+        "Addition means putting numbers together!",
+        "When you add, you're finding the total of two numbers.",
+        "The + symbol means 'plus' or 'add'. Let's practice!"
       ],
       examples: [
-        { number: "1", visual: "⭐", word: "one" },
-        { number: "2", visual: "⭐⭐", word: "two" },
-        { number: "3", visual: "⭐⭐⭐", word: "three" },
-        { number: "4", visual: "⭐⭐⭐⭐", word: "four" },
-        { number: "5", visual: "⭐⭐⭐⭐⭐", word: "five" },
+        { number: "2 + 1", visual: "●● + ● = ●●●", word: "equals 3" },
+        { number: "3 + 2", visual: "●●● + ●● = ●●●●●", word: "equals 5" },
+        { number: "4 + 3", visual: "●●●● + ●●● = ●●●●●●●", word: "equals 7" },
       ]
     },
   questions: [
       {
         id: "1-1",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "How many stars do you see?",
-        visualContent: "⭐⭐⭐",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 1 + 1?",
         options: ["1", "2", "3", "4"],
-        correctAnswer: "3",
-        explanation: "There are 3 stars! Count them: ⭐ (1), ⭐ (2), ⭐ (3)",
+        correctAnswer: "2",
+        explanation: "1 + 1 = 2! When you add 1 and 1 together, you get 2.",
         xp: 10
       },
       {
         id: "1-2",
         levelId: 1,
         type: "multiple-choice" as QuestionType,
-        question: "Which number is this? 2",
-        options: ["one", "two", "three", "four"],
-        correctAnswer: "two",
-        explanation: "The number 2 is called 'two'!",
+        question: "What is 2 + 1?",
+        options: ["2", "3", "4", "5"],
+        correctAnswer: "3",
+        explanation: "2 + 1 = 3! Start at 2, then count up 1 more: 3!",
         xp: 10
       },
       {
         id: "1-3",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "Count the stars! How many are there?",
-        visualContent: "⭐⭐⭐⭐⭐",
-        options: ["3", "4", "5", "6"],
+        type: "multiple-choice" as QuestionType,
+        question: "What is 3 + 2?",
+        options: ["4", "5", "6", "7"],
         correctAnswer: "5",
-        explanation: "Great job! There are 5 stars!",
+        explanation: "3 + 2 = 5! Count it: 1, 2, 3 (pause) 4, 5!",
         xp: 10
       },
       {
         id: "1-4",
         levelId: 1,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 3?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "4",
-        explanation: "After 3 comes 4! The order is: 1, 2, 3, 4, 5",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 4 + 1?",
+        options: ["3", "4", "5", "6"],
+        correctAnswer: "5",
+        explanation: "4 + 1 = 5! When you add 1 to 4, you get 5!",
         xp: 10
       },
       {
         id: "1-5",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "How many stars?",
-        visualContent: "⭐⭐",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
-        explanation: "You counted 2 stars correctly!",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 2 + 2?",
+        options: ["2", "3", "4", "5"],
+        correctAnswer: "4",
+        explanation: "2 + 2 = 4! This is an important one to remember!",
         xp: 10
       },
       {
         id: "1-6",
         levelId: 1,
         type: "multiple-choice" as QuestionType,
-        question: "Which number comes first?",
-        options: ["5", "3", "1", "4"],
-        correctAnswer: "1",
-        explanation: "1 is the first number! The order is 1, 2, 3, 4, 5",
+        question: "What is 5 + 2?",
+        options: ["6", "7", "8", "9"],
+        correctAnswer: "7",
+        explanation: "5 + 2 = 7! Start at 5, then count: 6, 7!",
         xp: 10
       },
       {
         id: "1-7",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "Count carefully! How many stars?",
-        visualContent: "⭐⭐⭐⭐",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "4",
-        explanation: "Perfect! There are 4 stars!",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 3 + 3?",
+        options: ["5", "6", "7", "8"],
+        correctAnswer: "6",
+        explanation: "3 + 3 = 6! Double 3 equals 6!",
         xp: 10
       },
       {
         id: "1-8",
         levelId: 1,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 1?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
-        explanation: "After 1 comes 2!",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 4 + 3?",
+        options: ["6", "7", "8", "9"],
+        correctAnswer: "7",
+        explanation: "4 + 3 = 7! Count from 4: 5, 6, 7!",
         xp: 10
       },
       {
         id: "1-9",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "How many stars do you see?",
-        visualContent: "⭐",
-        options: ["1", "2", "3", "0"],
-        correctAnswer: "1",
-        explanation: "That's right! There is 1 star!",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 5 + 5?",
+        options: ["8", "9", "10", "11"],
+        correctAnswer: "10",
+        explanation: "5 + 5 = 10! This is a great one to memorize!",
         xp: 10
       },
       {
         id: "1-10",
         levelId: 1,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 4?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "5",
-        explanation: "Excellent! After 4 comes 5!",
+        type: "multiple-choice" as QuestionType,
+        question: "What is 6 + 4?",
+        options: ["9", "10", "11", "12"],
+        correctAnswer: "10",
+        explanation: "6 + 4 = 10! Another way to make 10!",
         xp: 10
       }
     ]
