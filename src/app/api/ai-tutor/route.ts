@@ -22,11 +22,14 @@ export async function POST(request: NextRequest) {
       }, { status: 403 })
     }
 
-    const { question, correctAnswer, userAnswer, userQuestion, history } = await request.json()
+    const { question, correctAnswer, userAnswer, userQuestion } = await request.json()
 
     // Create a simple explanation based on the context
     // In a real app, you'd integrate with OpenAI API here
     const explanation = generateExplanation(question, correctAnswer, userAnswer, userQuestion)
+    
+    // Log for debugging
+    console.log('Generated explanation for:', { question, correctAnswer, userAnswer })
 
     return NextResponse.json({ explanation })
   } catch (error) {
@@ -46,7 +49,6 @@ function generateExplanation(question: string, correctAnswer: string, userAnswer
     return `Let me break it down:\n\n1. Look at the question: "${question}"\n2. The correct answer is ${correctAnswer}\n3. ${userAnswer ? `You answered ${userAnswer}, which was ${userAnswer === correctAnswer ? 'correct! 🎉' : 'close, but the right answer is ' + correctAnswer}` : 'Try to think about what comes next in the pattern'}\n\nRemember: Practice makes perfect!`
   } else if (lowerQuestion.includes('example') || lowerQuestion.includes('similar')) {
     const num = parseInt(question.match(/\d+/)?.[0] || '5')
-    const nextNum = num + 1
     return `Sure! Here's a similar question:\n\n"What comes after ${num + 2}?"\nThe answer would be ${num + 3}!\n\nSee the pattern? Each time, we're just adding 1 to find the next number in the sequence.`
   } else {
     return `The correct answer is ${correctAnswer}. ${userAnswer && userAnswer !== correctAnswer ? `You answered ${userAnswer}, which is close! ` : ''}Keep practicing and you'll get even better at math! 🌟`

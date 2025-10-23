@@ -23,11 +23,14 @@ interface LessonClientProps {
 
 export default function LessonClient({ levelId, introduction, questions, gameMode = 'normal' }: LessonClientProps) {
   // Inventory hook
-  const { inventory, hasItem, hasActiveItem, useItem, refetch } = useInventory()
+  const inventoryHook = useInventory()
   
   // Check if XP Boost is active
-  const xpBoostActive = hasActiveItem('XP Boost')
+  const xpBoostActive = inventoryHook.hasActiveItem('XP Boost')
   const xpMultiplier = xpBoostActive ? 2 : 1
+  
+  // Log inventory status
+  console.log('Inventory loaded:', inventoryHook.inventory.length, 'items')
   
   // Game mode state
   const [gameTimer, setGameTimer] = useState(gameMode === 'speed-round' ? 60 : 0)
@@ -53,6 +56,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const router = useRouter()
   const { playCorrect, playIncorrect, playLevelComplete } = useSoundEffects()
   const [phase, setPhase] = useState<'intro' | 'practice'>('intro')
+  
+  // Log sound effects loaded
+  console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   // For type-answer questions
@@ -72,6 +78,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
 
   const currentQuestion = questions[currentQuestionIndex]
+  
+  // Log premium status and AI tutor state
+  console.log('Premium features:', { isPremium, showAITutor, setIsPremium })
   
   // Get answer boxes dynamically based on current question
   const answerBoxes = currentQuestion.type === 'match-equation' && currentQuestion.equations 
@@ -268,11 +277,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }
 
   const handleUseExtraHearts = async () => {
-    const success = await useItem('extra-hearts')
+    const success = await inventoryHook.useItem('extra-hearts')
     if (success) {
       setHearts(5)
       playCorrect()
-      await refetch()
+      await inventoryHook.refetch()
     }
   }
 
@@ -451,7 +460,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
             )}
             
-            {hearts <= 2 && hasItem('extra-hearts') && gameMode === 'normal' && (
+            {hearts <= 2 && inventoryHook.hasItem('extra-hearts') && gameMode === 'normal' && (
               <button
                 onClick={handleUseExtraHearts}
                 className="px-3 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-xl text-sm hover:from-pink-600 hover:to-red-600 transition-all shadow-lg flex items-center gap-2"
