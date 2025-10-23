@@ -15,7 +15,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 export default function InventoryClient() {
-  const { inventory, loading, useItem, refetch } = useInventory()
+  const { inventory, loading, useItem: useInventoryItem, refetch } = useInventory()
   const [usingItem, setUsingItem] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const { playCorrect } = useSoundEffects()
@@ -24,7 +24,7 @@ export default function InventoryClient() {
     setUsingItem(itemId)
     setMessage(null)
 
-    const success = await useItem(itemId)
+    const success = await useInventoryItem(itemId)
     
     if (success) {
       playCorrect()
