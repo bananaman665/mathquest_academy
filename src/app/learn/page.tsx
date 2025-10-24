@@ -174,6 +174,32 @@ function getLevelStatus(levelId: number, userCurrentLevel: number, completedLeve
   }
 }
 
+// Helper function to determine if level is a special challenge (Duolingo-style)
+// Pattern: Every 4th level is special (3 normal + 1 special, repeating)
+function getSpecialLevelType(levelId: number): { isSpecial: boolean; type: string; emoji: string; color: string } | null {
+  // Only every 4th level is special
+  if (levelId % 4 === 0) {
+    // Cycle through different special modes for variety
+    const cyclePosition = Math.floor(levelId / 4) % 4
+    
+    switch (cyclePosition) {
+      case 0:
+        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'from-yellow-400 to-orange-500' }
+      case 1:
+        return { isSpecial: true, type: 'Lightning', emoji: '⚡', color: 'from-blue-400 to-purple-500' }
+      case 2:
+        return { isSpecial: true, type: 'Perfect Streak', emoji: '🔥', color: 'from-orange-400 to-red-500' }
+      case 3:
+        return { isSpecial: true, type: 'Boss Battle', emoji: '👹', color: 'from-red-500 to-purple-600' }
+      default:
+        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'from-yellow-400 to-orange-500' }
+    }
+  }
+  
+  // Levels 1, 2, 3, 5, 6, 7, 9, 10, 11, etc. are normal
+  return null
+}
+
 function LevelTile({ level, position }: { level: Level, position: 'left' | 'center' | 'right' }) {
   const positionClasses = {
     left: 'md:ml-4',
@@ -213,6 +239,9 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
 
   const config = statusConfig[level.status as keyof typeof statusConfig] || statusConfig.locked
   const Icon = config?.icon || Lock
+  
+  // Check if this is a special challenge level
+  const specialLevel = getSpecialLevelType(level.id)
 
   return (
     <div className={`w-full max-w-xs ${positionClasses[position]} mb-6 sm:mb-8`}>
@@ -221,17 +250,25 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           href={`/learn/level/${level.id}`}
           className={`
             block relative
-            ${config.bgColor}
+            ${specialLevel ? `bg-gradient-to-br ${specialLevel.color}` : config.bgColor}
             ${config.opacity}
             rounded-xl sm:rounded-2xl p-4 sm:p-6
-            border-3 sm:border-4 ${config.borderColor}
+            border-3 sm:border-4 ${specialLevel ? 'border-yellow-400' : config.borderColor}
             shadow-lg sm:shadow-xl
             transform transition-all duration-300 ease-in-out
             hover:scale-105 sm:hover:scale-110 hover:shadow-xl sm:hover:shadow-2xl hover:-translate-y-1
             active:scale-95
-            ${config.animate ? 'animate-pulse' : ''}
+            ${config.animate || specialLevel ? 'animate-pulse' : ''}
           `}
         >
+          {/* Special Challenge Badge */}
+          {specialLevel && (
+            <div className="absolute -top-3 -right-3 bg-white text-purple-600 text-xs font-black px-3 py-1.5 rounded-full shadow-lg border-2 border-yellow-400 animate-bounce flex items-center gap-1">
+              <span>{specialLevel.emoji}</span>
+              <span>{specialLevel.type}</span>
+            </div>
+          )}
+          
           <div className="flex items-center justify-between mb-2">
             <span className={`text-base sm:text-lg font-bold ${config.textColor}`}>
               Level {level.id}
@@ -244,7 +281,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           <p className={`text-xs sm:text-sm ${config.textColor} opacity-90`}>
             {level.xp} XP
           </p>
-          {config.animate && (
+          {config.animate && !specialLevel && (
             <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
               START HERE
             </div>

@@ -1,6 +1,26 @@
 import Link from 'next/link'
-import { getQuestionsForLevel, getIntroductionForLevel, Question } from '@/data/questions'
-import LessonWithModeSelector from './LessonWithModeSelector'
+import { getQuestionsForLevel, getIntroductionForLevel, Question, GameMode } from '@/data/questions'
+import LessonClient from './LessonClient'
+
+// Determine game mode based on level position
+// Pattern: 3 classic levels, then 1 special level (repeating)
+function getGameModeForLevel(levelId: number): GameMode {
+  // Every 4th level is a special challenge
+  if (levelId % 4 === 0) {
+    // Use a seeded random based on level ID to ensure consistency
+    // Each 4th level gets randomly assigned one special mode, but it's always the same for that level
+    const specialModes: GameMode[] = ['speed-round', 'lightning', 'perfect-streak', 'boss-battle']
+    
+    // Create a deterministic "random" selection based on levelId
+    const seed = levelId * 12345 // Simple seed multiplier
+    const index = Math.abs(seed) % specialModes.length
+    
+    return specialModes[index]
+  }
+  
+  // Levels 1, 2, 3, 5, 6, 7, 9, 10, 11, etc. = Normal classic levels
+  return 'normal'
+}
 
 // Helper function to randomly convert questions to type-answer or match-equation
 function randomizeQuestionTypes(questions: Question[]): Question[] {
@@ -84,5 +104,15 @@ export default async function LevelPage({ params }: { params: Promise<{ levelId:
     )
   }
 
-  return <LessonWithModeSelector levelId={levelId} introduction={introduction} questions={questions} />
+  // Automatically determine game mode based on level number (Duolingo-style)
+  const gameMode = getGameModeForLevel(levelId)
+
+  return (
+    <LessonClient 
+      levelId={levelId} 
+      introduction={introduction} 
+      questions={questions}
+      gameMode={gameMode}
+    />
+  )
 }
