@@ -74,6 +74,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [earnedXP, setEarnedXP] = useState(0)
   const [correctCount, setCorrectCount] = useState(0)
   const [hearts, setHearts] = useState(5)
+  const [showGameOverModal, setShowGameOverModal] = useState(false)
   const [showAITutor, setShowAITutor] = useState(false)
   const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
 
@@ -133,6 +134,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       setQuestionTimer(10)
     }
   }, [currentQuestionIndex, gameMode, showExplanation])
+
+  // Game Over Effect - Check if hearts reach 0
+  useEffect(() => {
+    if (hearts === 0 && phase === 'practice') {
+      setShowGameOverModal(true)
+    }
+  }, [hearts, phase])
 
   const handleStartPractice = () => {
     setPhase('practice')
@@ -283,6 +291,19 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       playCorrect()
       await inventoryHook.refetch()
     }
+  }
+
+  // Game Over Modal Handlers
+  const handleExitLevel = () => {
+    router.push('/learn')
+  }
+
+  const handlePayGemsToContinue = async () => {
+    // TODO: Implement gem payment system
+    // For now, just restore 5 hearts
+    setHearts(5)
+    setShowGameOverModal(false)
+    playCorrect()
   }
 
   const handleNext = () => {
@@ -1143,6 +1164,62 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         isOpen={showAITutor}
         onClose={() => setShowAITutor(false)}
       />
+
+      {/* Game Over Modal - Ran Out of Hearts */}
+      {showGameOverModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 max-w-sm w-full shadow-2xl border-2 border-red-500 animate-in scale-95">
+            {/* Close button */}
+            <button
+              onClick={() => setShowGameOverModal(false)}
+              className="absolute top-4 right-4 text-white hover:text-red-200 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Content */}
+            <div className="text-center">
+              <div className="mb-6 text-6xl">💔</div>
+              
+              <h2 className="text-3xl font-black text-white mb-2">Oh no!</h2>
+              <p className="text-red-100 text-lg mb-8">You ran out of hearts</p>
+
+              {/* Progress Text */}
+              <div className="bg-white/10 rounded-xl p-4 mb-8 border border-white/20">
+                <p className="text-red-100 font-semibold mb-1">Level Progress</p>
+                <p className="text-2xl font-bold text-white">
+                  {correctCount} / {questions.length} Questions
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-4">
+                {/* Exit Button */}
+                <button
+                  onClick={handleExitLevel}
+                  className="w-full px-6 py-4 bg-white text-red-600 font-bold text-lg rounded-xl hover:bg-red-50 transition-all duration-200 shadow-lg uppercase tracking-wide"
+                >
+                  <ArrowRight className="w-5 h-5 inline mr-2" />
+                  Exit Level
+                </button>
+
+                {/* Pay Gems to Continue Button */}
+                <button
+                  onClick={handlePayGemsToContinue}
+                  className="w-full px-6 py-4 bg-purple-500 hover:bg-purple-600 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Pay Gems to Continue
+                </button>
+              </div>
+
+              {/* Tip Text */}
+              <p className="text-red-100 text-sm mt-6">💡 Tip: Use your extra hearts wisely when hearts are low!</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
+

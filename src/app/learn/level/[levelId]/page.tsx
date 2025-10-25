@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getQuestionsForLevel, getIntroductionForLevel, Question, GameMode } from '@/data/questions'
-import LessonClient from './LessonClient'
+import LevelWrapper from './LevelWrapper'
 
 // Determine game mode based on level position
 // Pattern: 3 classic levels, then 1 special level (repeating)
@@ -108,7 +108,7 @@ export default async function LevelPage({ params }: { params: Promise<{ levelId:
   const gameMode = getGameModeForLevel(levelId)
 
   return (
-    <LessonClient 
+    <LevelWrapper 
       levelId={levelId} 
       introduction={introduction} 
       questions={questions}
