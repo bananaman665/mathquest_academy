@@ -1168,7 +1168,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       {/* Game Over Modal - Ran Out of Hearts */}
       {showGameOverModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 max-w-sm w-full shadow-2xl border-2 border-red-500 animate-in scale-95">
+          <div className="bg-black rounded-3xl p-8 max-w-sm w-full shadow-2xl border-2 border-red-500 animate-in scale-95">
             {/* Close button */}
             <button
               onClick={() => setShowGameOverModal(false)}
@@ -1181,12 +1181,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="text-center">
               <div className="mb-6 text-6xl">💔</div>
               
-              <h2 className="text-3xl font-black text-white mb-2">Oh no!</h2>
-              <p className="text-red-100 text-lg mb-8">You ran out of hearts</p>
+              <h2 className="text-3xl font-black text-red-500 mb-2">Oh no!</h2>
+              <p className="text-gray-300 text-lg mb-8">You ran out of hearts</p>
 
               {/* Progress Text */}
-              <div className="bg-white/10 rounded-xl p-4 mb-8 border border-white/20">
-                <p className="text-red-100 font-semibold mb-1">Level Progress</p>
+              <div className="bg-red-500/10 rounded-xl p-4 mb-8 border border-red-500/30">
+                <p className="text-gray-300 font-semibold mb-1">Level Progress</p>
                 <p className="text-2xl font-bold text-white">
                   {correctCount} / {questions.length} Questions
                 </p>
@@ -1197,7 +1197,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {/* Exit Button */}
                 <button
                   onClick={handleExitLevel}
-                  className="w-full px-6 py-4 bg-white text-red-600 font-bold text-lg rounded-xl hover:bg-red-50 transition-all duration-200 shadow-lg uppercase tracking-wide"
+                  className="w-full px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide"
                 >
                   <ArrowRight className="w-5 h-5 inline mr-2" />
                   Exit Level
@@ -1206,7 +1206,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {/* Pay Gems to Continue Button */}
                 <button
                   onClick={handlePayGemsToContinue}
-                  className="w-full px-6 py-4 bg-purple-500 hover:bg-purple-600 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-5 h-5" />
                   Pay Gems to Continue
@@ -1214,7 +1214,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
 
               {/* Tip Text */}
-              <p className="text-red-100 text-sm mt-6">💡 Tip: Use your extra hearts wisely when hearts are low!</p>
+              <p className="text-gray-400 text-sm mt-6">💡 Tip: Use your extra hearts wisely when hearts are low!</p>
             </div>
           </div>
         </div>
