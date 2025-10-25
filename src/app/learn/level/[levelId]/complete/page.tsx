@@ -146,7 +146,7 @@ export default function LevelCompletePage() {
           {showStreakAnimation && streak !== null && (
             <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-5 md:p-6 mb-6 md:mb-8 animate-bounce">
               <div className="flex flex-col md:flex-row items-center justify-center gap-3">
-                <span className="text-3xl md:text-4xl">🔥</span>
+                <img src="/fire.svg" alt="streak" className="w-10 h-10 md:w-12 md:h-12" />
                 <div className="text-center md:text-left">
                   <h3 className="text-lg md:text-xl font-bold text-orange-700">
                     {streak === 1 ? 'Streak Started!' : `${streak} Day Streak!`}

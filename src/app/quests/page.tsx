@@ -98,7 +98,7 @@ export default async function QuestsPage() {
               <h1 className="text-2xl font-black text-gray-900">Daily Quests</h1>
               <div className="flex items-center gap-3 md:gap-6">
                 <div className="flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-xl">
-                  <span className="text-2xl">🔥</span>
+                  <img src="/fire.svg" alt="streak" className="w-6 h-6" />
                   <span className="font-bold text-orange-600">{dbUser.streak || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-xl">

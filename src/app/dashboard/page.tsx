@@ -119,7 +119,7 @@ export default async function DashboardPage() {
                 <p className="text-4xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">{dbUser.streak}</p>
               </div>
               <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/50 group-hover:rotate-12 transition-transform">
-                <span className="text-3xl">🔥</span>
+                <img src="/fire.svg" alt="streak" className="w-8 h-8" />
               </div>
             </div>
           </div>

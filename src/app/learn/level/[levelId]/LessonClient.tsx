@@ -438,8 +438,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   ? 'bg-orange-100 border-orange-400 text-orange-600' 
                   : 'bg-blue-100 border-blue-400 text-blue-600'
               }`}>
-                <Flame className="w-5 h-5" />
-                <span>{currentStreak} 🔥</span>
+                <img src="/fire.svg" alt="streak" className="w-5 h-5" />
+                <span>{currentStreak} </span>
                 {comboMultiplier > 1 && (
                   <span className="text-xs ml-1">{comboMultiplier}x</span>
                 )}
