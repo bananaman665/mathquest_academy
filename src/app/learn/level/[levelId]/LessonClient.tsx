@@ -365,7 +365,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-500/50 animate-pulse">
                 <BookOpen className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-black text-white mb-3">{introduction.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-black text-white mb-3 line-clamp-2">{introduction.title}</h1>
               <p className="text-gray-300 text-lg">Let&apos;s learn something new!</p>
             </div>
 
@@ -1154,13 +1154,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </button>
           )}
         </div>
-      </div>
+      </div> 
 
       {/* AI Tutor Modal */}
       <AITutor
         question={currentQuestion.question}
         correctAnswer={currentQuestion.correctAnswer || ''}
-        userAnswer={selectedAnswer || typedAnswer || ''}
+        userAnswer={selectedAnswer || typedAnswer || ''} 
         isOpen={showAITutor}
         onClose={() => setShowAITutor(false)}
       />
