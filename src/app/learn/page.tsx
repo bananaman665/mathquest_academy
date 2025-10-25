@@ -26,9 +26,9 @@ const units = [
     theme: "mountain", // 🏔️
     color: "from-blue-400 to-blue-600",
     levels: [
-      { id: 1, title: "Numbers 1-5", xp: 100 },
-      { id: 2, title: "Numbers 6-10", xp: 100 },
-      { id: 3, title: "Counting Practice", xp: 100 },
+      { id: 1, title: "Addition: Numbers 1-5", xp: 100 },
+      { id: 2, title: "Addition: Numbers 6-10", xp: 100 },
+      { id: 3, title: "Addition Practice", xp: 100 },
       { id: 4, title: "Number Matching", xp: 100 },
       { id: 5, title: "Review & Master", xp: 150 },
     ]
