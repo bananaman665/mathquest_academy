@@ -188,7 +188,7 @@ export default async function LeaderboardsPage() {
                     <div className="flex items-center gap-4 flex-1">
                       <div className="w-12 flex items-center justify-center">
                         {index < 3 ? (
-                          <div className="animate-bounce">
+                          <div>
                             {rankIcons[index]}
                           </div>
                         ) : (

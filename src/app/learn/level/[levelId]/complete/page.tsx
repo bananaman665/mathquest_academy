@@ -76,7 +76,7 @@ export default function LevelCompletePage() {
         <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-12 text-center">
           {/* Trophy Icon */}
           <div className="mb-4 md:mb-6">
-            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto animate-bounce">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto">
               <Trophy className="w-10 h-10 md:w-12 md:h-12 text-white" />
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function LevelCompletePage() {
 
           {/* Streak Notification */}
           {showStreakAnimation && streak !== null && (
-            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-5 md:p-6 mb-6 md:mb-8 animate-bounce">
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-5 md:p-6 mb-6 md:mb-8">
               <div className="flex flex-col md:flex-row items-center justify-center gap-3">
                 <img src="/fire.svg" alt="streak" className="w-10 h-10 md:w-12 md:h-12" />
                 <div className="text-center md:text-left">

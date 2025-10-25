@@ -146,7 +146,7 @@ export default async function QuestsPage() {
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="text-xl font-bold text-gray-900">{quest.title}</h3>
                           {isComplete && (
-                            <CheckCircle className="w-6 h-6 text-green-600 animate-bounce" />
+                            <CheckCircle className="w-6 h-6 text-green-600" />
                           )}
                         </div>
                         <p className="text-gray-600 mb-3">{quest.description}</p>

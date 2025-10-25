@@ -263,7 +263,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
         >
           {/* Special Challenge Badge */}
           {specialLevel && (
-            <div className="absolute -top-3 -right-3 bg-white text-purple-600 text-xs font-black px-3 py-1.5 rounded-full shadow-lg border-2 border-yellow-400 animate-bounce flex items-center gap-1">
+            <div className="absolute -top-3 -right-3 bg-white text-purple-600 text-xs font-black px-3 py-1.5 rounded-full shadow-lg border-2 border-yellow-400 flex items-center gap-1">
               <span>{specialLevel.emoji}</span>
               <span>{specialLevel.type}</span>
             </div>
@@ -282,7 +282,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             {level.xp} XP
           </p>
           {config.animate && !specialLevel && (
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
+            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
               START HERE
             </div>
           )}
@@ -443,7 +443,7 @@ export default async function LearnPage() {
                   <span className="font-bold text-orange-600 text-sm sm:text-base">{dbUser.streak || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-50 px-3 sm:px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
-                  <Gem className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600 animate-bounce" />
+                  <Gem className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600" />
                   <span className="font-bold text-blue-600 text-sm sm:text-base">{dbUser.totalXP || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-gradient-to-r from-red-100 to-red-50 px-3 sm:px-4 py-2 rounded-xl border border-red-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
