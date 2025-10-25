@@ -494,18 +494,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             {gameMode === 'normal' && (
               <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
                 <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-                <span className="text-red-500 font-bold text-xl">{hearts}</span>
+                <span className="text-red-500 font-bold text-xl">
+                  {hearts + (inventoryHook.getItemQuantity('extra-hearts') * 5)}
+                </span>
               </div>
-            )}
-            
-            {hearts <= 2 && inventoryHook.hasItem('extra-hearts') && gameMode === 'normal' && (
-              <button
-                onClick={handleUseExtraHearts}
-                className="px-3 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold rounded-xl text-sm hover:from-pink-600 hover:to-red-600 transition-all shadow-lg flex items-center gap-2"
-              >
-                <Heart className="w-4 h-4 fill-white" />
-                Refill
-              </button>
             )}
           </div>
         </div>

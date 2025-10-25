@@ -31,9 +31,29 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 export default function ShopClient({ items, userBalance }: ShopClientProps) {
   const [balance, setBalance] = useState(userBalance)
   const [purchasingItem, setPurchasingItem] = useState<string | null>(null)
+  const [usingItem, setUsingItem] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const { playCorrect, playIncorrect } = useSoundEffects()
+
+  const getUseEndpoint = (itemId: string): string => {
+    switch(itemId) {
+      case 'extra-hearts':
+        return '/api/inventory/use-hearts'
+      case 'streak-freeze':
+        return '/api/inventory/use-streak-freeze'
+      case 'xp-boost':
+        return '/api/inventory/use-xp-boost'
+      case 'hint-pack':
+        return '/api/inventory/use-hint-pack'
+      case 'golden-trophy':
+        return '/api/inventory/equip-golden-trophy'
+      case 'rainbow-theme':
+        return '/api/inventory/equip-rainbow-theme'
+      default:
+        return ''
+    }
+  }
 
   const handlePurchase = async (item: ShopItem) => {
     if (balance < item.price) {
@@ -77,6 +97,43 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
       setTimeout(() => setErrorMessage(null), 3000)
     } finally {
       setPurchasingItem(null)
+    }
+  }
+
+  const handleUseItem = async (item: ShopItem) => {
+    setUsingItem(item.id)
+    setErrorMessage(null)
+    setSuccessMessage(null)
+
+    try {
+      const endpoint = getUseEndpoint(item.id)
+      if (!endpoint) {
+        throw new Error('Item cannot be used')
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to use item')
+      }
+
+      // Success!
+      playCorrect()
+      setSuccessMessage(`✨ ${data.message}`)
+      setTimeout(() => setSuccessMessage(null), 4000)
+
+    } catch (error) {
+      playIncorrect()
+      const errorMsg = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      setErrorMessage(errorMsg)
+      setTimeout(() => setErrorMessage(null), 3000)
+    } finally {
+      setUsingItem(null)
     }
   }
 
@@ -162,6 +219,18 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
                 >
                   {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
                 </button>
+                
+                <button
+                  onClick={() => handleUseItem(item)}
+                  disabled={usingItem === item.id}
+                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
+                    usingItem !== item.id
+                      ? 'bg-green-600 hover:bg-green-700 text-white hover:scale-105 active:scale-95'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  {usingItem === item.id ? 'Using...' : 'Use Item'}
+                </button>
               </div>
             )
           })}
@@ -221,6 +290,18 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
                   }`}
                 >
                   {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
+                </button>
+
+                <button
+                  onClick={() => handleUseItem(item)}
+                  disabled={usingItem === item.id}
+                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
+                    usingItem !== item.id
+                      ? 'bg-pink-600 hover:bg-pink-700 text-white hover:scale-105 active:scale-95'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  {usingItem === item.id ? 'Equipping...' : 'Equip'}
                 </button>
               </div>
             )
