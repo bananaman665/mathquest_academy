@@ -285,11 +285,28 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }
 
   const handleUseExtraHearts = async () => {
-    const success = await inventoryHook.useItem('extra-hearts')
-    if (success) {
-      setHearts(5)
+    try {
+      const response = await fetch('/api/inventory/use-hearts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to use extra hearts')
+      }
+
+      // Success - restore hearts
       playCorrect()
+      setHearts(prev => Math.min(prev + data.heartsAdded, 10))
+      setShowGameOverModal(false)
+      
+      // Refetch inventory to update extra hearts count
       await inventoryHook.refetch()
+    } catch (error) {
+      console.error('Error using extra hearts:', error)
+      playIncorrect()
     }
   }
 
@@ -1192,8 +1209,28 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 </p>
               </div>
 
+              {/* Extra Hearts Available */}
+              {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
+                <div className="bg-green-500/10 rounded-xl p-4 mb-6 border border-green-500/30">
+                  <p className="text-green-300 text-sm font-semibold">
+                    ❤️ {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available
+                  </p>
+                </div>
+              )}
+
               {/* Action Buttons */}
               <div className="space-y-4">
+                {/* Use Extra Hearts Button - Only show if available */}
+                {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
+                  <button
+                    onClick={handleUseExtraHearts}
+                    className="w-full px-6 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
+                  >
+                    <Heart className="w-5 h-5 fill-current" />
+                    Use Extra Hearts
+                  </button>
+                )}
+
                 {/* Exit Button */}
                 <button
                   onClick={handleExitLevel}
@@ -1214,7 +1251,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
 
               {/* Tip Text */}
-              <p className="text-gray-400 text-sm mt-6">💡 Tip: Use your extra hearts wisely when hearts are low!</p>
+              <p className="text-gray-400 text-sm mt-6">💡 Tip: Buy extra hearts in the shop to keep going!</p>
             </div>
           </div>
         </div>
