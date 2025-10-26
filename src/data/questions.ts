@@ -313,16 +313,6 @@ export const levelContent: { [levelId: number]: LevelData } = {
         correctAnswer: "10",
         explanation: "There are 10 stars! Perfect count!",
         xp: 10
-      },
-      {
-        id: "2-10",
-        levelId: 2,
-        type: "number-sequence" as QuestionType,
-        question: "What comes before 5?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
-        explanation: "Before 5 comes 4!",
-        xp: 10
       }
     ]
   },
