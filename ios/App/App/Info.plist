@@ -45,10 +45,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>WKAppBoundDomains</key>
-	<array>
-		<string>mathquest-academy-bhfd.vercel.app</string>
-	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>https</string>
@@ -57,19 +53,7 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>mathquest-academy-bhfd.vercel.app</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<false/>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.2</string>
-			</dict>
-		</dict>
+		<true/>
 	</dict>
 </dict>
 </plist>

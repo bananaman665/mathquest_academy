@@ -5,19 +5,20 @@ const config: CapacitorConfig = {
   appName: 'MathQuest Academy',
   webDir: 'out',
   server: {
-    // Load from Vercel but prevent external browser opening
     url: 'https://mathquest-academy-bhfd.vercel.app',
     cleartext: true,
+    // Prevent opening in external browser
     androidScheme: 'https',
-    iosScheme: 'https'
+    iosScheme: 'capacitor',
+    hostname: 'app.mathquest.academy'
   },
   ios: {
     contentInset: 'never',
     allowsLinkPreview: false,
     scrollEnabled: true,
     preferredContentMode: 'mobile',
-    // Prevent external navigation
-    limitsNavigationsToAppBoundDomains: true
+    // Force internal WebView handling
+    overrideUserAgent: 'MathQuest-Academy-App'
   },
   plugins: {
     SplashScreen: {

@@ -8,6 +8,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Disable opening links in external Safari
+        if let bridge = (window?.rootViewController as? CAPBridgeViewController)?.bridge {
+            bridge.config.setValue(false, forKey: "allowLinkPreview")
+        }
+        
         return true
     }
 
