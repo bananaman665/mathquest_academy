@@ -3354,7 +3354,7 @@ for (const theme of unitThemes) {
           ],
           examples: []
         },
-  questions: theme.questions.map((fn: any, idx: number) => fn(`${levelId}-${idx + 1}`, levelId) as Question)
+  questions: theme.questions.map((fn: (id: string, levelId: number) => Question, idx: number) => fn(`${levelId}-${idx + 1}`, levelId))
       }
     }
   }
