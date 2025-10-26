@@ -118,12 +118,10 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "1-2",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "Count the hearts",
-        visualContent: "❤️❤️",
-        options: ["1", "2", "3", "4"],
+        type: "fill-blank" as QuestionType,
+        question: "2 + 0 = ___",
         correctAnswer: "2",
-        explanation: "There are 2 hearts!",
+        explanation: "When we add 0, the number stays the same!",
         xp: 10
       },
       {
@@ -217,12 +215,11 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-1",
         levelId: 2,
-        type: "visual-count" as QuestionType,
-        question: "How many flowers?",
-        visualContent: "🌸🌸🌸🌸🌸🌸",
+        type: "multiple-choice" as QuestionType,
+        question: "Which is the correct way to write six?",
         options: ["5", "6", "7", "8"],
         correctAnswer: "6",
-        explanation: "There are 6 flowers!",
+        explanation: "Six is written as 6!",
         xp: 10
       },
       {
@@ -238,12 +235,10 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-3",
         levelId: 2,
-        type: "visual-count" as QuestionType,
-        question: "Count the balloons",
-        visualContent: "🎈🎈🎈🎈🎈🎈🎈",
-        options: ["6", "7", "8", "9"],
+        type: "fill-blank" as QuestionType,
+        question: "1 + 6 = ___",
         correctAnswer: "7",
-        explanation: "There are 7 balloons!",
+        explanation: "1 plus 6 equals 7!",
         xp: 10
       },
       {
@@ -259,12 +254,11 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-5",
         levelId: 2,
-        type: "visual-count" as QuestionType,
-        question: "How many butterflies?",
-        visualContent: "🦋🦋🦋🦋🦋🦋🦋🦋",
-        options: ["7", "8", "9", "10"],
+        type: "multiple-choice" as QuestionType,
+        question: "Which number comes between 7 and 9?",
+        options: ["6", "7", "8", "9"],
         correctAnswer: "8",
-        explanation: "There are 8 butterflies!",
+        explanation: "8 comes between 7 and 9!",
         xp: 10
       },
       {
