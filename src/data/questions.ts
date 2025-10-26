@@ -282,7 +282,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         xp: 10
       },
       {
-        id: "2-7",
+        id: "2-8",
         levelId: 2,
         type: "visual-count" as QuestionType,
         question: "Count the stars",
@@ -293,7 +293,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         xp: 10
       },
       {
-        id: "2-8",
+        id: "2-9",
         levelId: 2,
         type: "multiple-choice" as QuestionType,
         question: "Which number is bigger: 5 or 9?",
@@ -303,7 +303,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         xp: 10
       },
       {
-        id: "2-9",
+        id: "2-10",
         levelId: 2,
         type: "visual-count" as QuestionType,
         question: "Count all the stars!",
