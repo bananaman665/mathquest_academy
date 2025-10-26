@@ -88,7 +88,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   console.log('Premium features:', { isPremium, showAITutor, setIsPremium })
   
   // Get answer boxes dynamically based on current question
-  const answerBoxes = currentQuestion.type === 'match-equation' && currentQuestion.equations 
+  const answerBoxes = currentQuestion?.type === 'match-equation' && currentQuestion?.equations 
     ? currentQuestion.equations.map(e => e.answer) 
     : []
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
@@ -669,6 +669,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32">
         <div className="w-full max-w-3xl">
+          {!currentQuestion ? (
+            <div className="text-center py-10">
+              <p className="text-red-600 font-bold text-lg">Error: Question not found</p>
+              <p className="text-gray-600 text-sm mt-2">Index: {currentQuestionIndex}, Total: {questions.length}</p>
+            </div>
+          ) : (
+            <>
           <div className="flex items-center gap-2 mb-6">
             <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
@@ -1315,6 +1322,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 </div>
               </div>
             </div>
+          )}
+            </>
           )}
         </div>
       </main>
