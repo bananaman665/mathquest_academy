@@ -8,6 +8,7 @@ import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } fr
 import { Question, GameMode } from '@/data/questions'
 import AITutor from '@/components/AITutor'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
+import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
 
@@ -1126,6 +1127,22 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   <span key={idx} className="bg-pink-400 text-black px-6 py-4 rounded-xl cursor-pointer">{opt}</span>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Number Line Placement */}
+          {currentQuestion.type === 'number-line-placement' && currentQuestion.numberLineMin !== undefined && currentQuestion.numberLineMax !== undefined && currentQuestion.correctPosition !== undefined && (
+            <div className="mb-8 bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-8 border-2 border-purple-500/50">
+              <NumberLinePlacement
+                question={currentQuestion.question}
+                correctPosition={currentQuestion.correctPosition}
+                numberLineMin={currentQuestion.numberLineMin}
+                numberLineMax={currentQuestion.numberLineMax}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                }}
+              />
             </div>
           )}
 

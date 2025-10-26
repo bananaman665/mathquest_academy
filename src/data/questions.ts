@@ -24,6 +24,7 @@ export type QuestionType =
   | 'type-answer'
   | 'match-equation'
   | 'block-stacking'
+  | 'number-line-placement'
 
 export interface Question {
   id: string
@@ -66,6 +67,10 @@ export interface Question {
   operation?: 'add' | 'subtract' // For block-stacking questions
   firstNumber?: number // First number in operation
   secondNumber?: number // Second number in operation
+  // Number line placement
+  numberLineMin?: number // Minimum value on number line
+  numberLineMax?: number // Maximum value on number line
+  correctPosition?: number // The correct number to place on the line
 }
 
 export interface LevelData {
@@ -276,6 +281,16 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-6",
         levelId: 2,
+        type: "number-line-placement" as QuestionType,
+        question: "Where does 5 go on the number line?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        correctPosition: 5,
+        xp: 15
+      },
+      {
+        id: "2-7",
+        levelId: 2,
         type: "number-sequence" as QuestionType,
         question: "What comes after 9?",
         options: ["8", "9", "10", "11"],
@@ -437,12 +452,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "3-10",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is smaller: 4 or 4?",
-        options: ["First 4", "Second 4", "They are the same", "Neither"],
-        correctAnswer: "They are the same",
-        explanation: "They are equal! Both are 4!",
-        xp: 10
+        type: "number-line-placement" as QuestionType,
+        question: "Where does 8 go on the number line?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        correctPosition: 8,
+        xp: 15
       }
     ]
   },
@@ -676,12 +691,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "5-10",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 8 + 2?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "8 + 2 = 10! That's another pair!",
-        xp: 10
+        type: "number-line-placement" as QuestionType,
+        question: "Where does 3 go on the number line?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        correctPosition: 3,
+        xp: 15
       }
     ]
   },
