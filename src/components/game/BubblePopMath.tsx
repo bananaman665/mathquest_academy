@@ -130,19 +130,21 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
                   <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
                   
                   {/* Main bubble */}
-                  <div className={`relative w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold shadow-xl border-4
+                  <div className={`relative w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold shadow-xl border-4
                     ${isCorrect 
                       ? 'bg-gradient-to-br from-green-300 to-green-400 border-green-200' 
                       : 'bg-gradient-to-br from-blue-300 to-blue-400 border-blue-200'
                     }`}
                   >
                     {/* Shine effect */}
-                    <div className="absolute top-2 left-2 w-6 h-6 bg-white/40 rounded-full blur-sm"></div>
+                    <div className="absolute top-2 left-2 w-8 h-8 bg-white/60 rounded-full blur-sm"></div>
                     
-                    {/* Number - dark color for better visibility */}
-                    <span className="relative z-10 text-gray-900 text-3xl font-black drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
-                      {bubble.value}
-                    </span>
+                    {/* Number - high contrast with white background circle */}
+                    <div className="relative z-10 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-inner">
+                      <span className="text-gray-900 text-4xl font-black">
+                        {bubble.value}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </motion.button>
