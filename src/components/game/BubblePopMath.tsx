@@ -139,8 +139,8 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
                     {/* Shine effect */}
                     <div className="absolute top-2 left-2 w-6 h-6 bg-white/40 rounded-full blur-sm"></div>
                     
-                    {/* Number */}
-                    <span className="relative z-10 text-white drop-shadow-lg">
+                    {/* Number - dark color for better visibility */}
+                    <span className="relative z-10 text-gray-900 text-3xl font-black drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
                       {bubble.value}
                     </span>
                   </div>
