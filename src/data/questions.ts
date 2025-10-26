@@ -3338,7 +3338,8 @@ const unitThemes = [
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "A train leaves at 1:00 PM and arrives at 4:00 PM. How long was the trip?", options: ["2 hours", "3 hours", "4 hours", "5 hours"], correctAnswer: "3 hours", explanation: "4:00 - 1:00 = 3 hours.", xp: 20 }),
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If you save $5 each week for 4 weeks, how much do you have?", options: ["$15", "$20", "$25", "$30"], correctAnswer: "$20", explanation: "5 × 4 = $20.", xp: 20 }),
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "A box has 12 crayons. You give 3 to a friend. How many are left?", options: ["7", "8", "9", "10"], correctAnswer: "9", explanation: "12 - 3 = 9 crayons.", xp: 20 }),
-    (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If 6 birds are on a tree and 3 fly away, how many are left?", options: ["2", "3", "4", "5"], correctAnswer: "3", explanation: "6 - 3 = 3 birds.", xp: 20 })];
+    (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If 6 birds are on a tree and 3 fly away, how many are left?", options: ["2", "3", "4", "5"], correctAnswer: "3", explanation: "6 - 3 = 3 birds.", xp: 20 }),
+    (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "A store has 15 items. If 6 are sold, how many are left?", options: ["8", "9", "10", "11"], correctAnswer: "9", explanation: "15 - 6 = 9 items.", xp: 20 })];
     return q[idx];
   })}
 ]

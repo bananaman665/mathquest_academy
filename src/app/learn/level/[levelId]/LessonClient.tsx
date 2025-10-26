@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import AITutor from '@/components/AITutor'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
@@ -908,10 +908,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               {!showExplanation && (
                 <NumberLine
                   question={currentQuestion.question}
-                  min={(currentQuestion as any).numberLineMin || 0}
-                  max={(currentQuestion as any).numberLineMax || 10}
+                  min={('numberLineMin' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMin : 0) || 0}
+                  max={('numberLineMax' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMax : 10) || 10}
                   correctAnswer={currentQuestion.correctPosition}
-                  labelInterval={(currentQuestion as any).numberLineLabelInterval || 1}
+                  labelInterval={('numberLineLabelInterval' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineLabelInterval : 1) || 1}
                   onAnswer={handleNumberLineAnswer}
                 />
               )}

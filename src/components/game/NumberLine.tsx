@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 interface NumberLineProps {
   question: string
@@ -117,7 +117,7 @@ export default function NumberLine({
 
             {/* Tick marks and labels */}
             <div className="absolute top-0 left-0 right-0 h-full flex justify-between px-2">
-              {labels.map((label, idx) => {
+              {labels.map((label) => {
                 const isEndpoint = label === min || label === max
                 return (
                   <div key={`tick-${label}`} className="flex flex-col items-center h-full relative">
