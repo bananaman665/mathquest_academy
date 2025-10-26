@@ -99,7 +99,8 @@ export enum QuestionType {
   DRAG_DROP = 'DRAG_DROP',
   TRUE_FALSE = 'TRUE_FALSE',
   EQUATION = 'EQUATION',
-  TEN_FRAME = 'TEN_FRAME'
+  TEN_FRAME = 'TEN_FRAME',
+  NUMBER_LINE = 'NUMBER_LINE'
 }
 
 export enum Difficulty {
