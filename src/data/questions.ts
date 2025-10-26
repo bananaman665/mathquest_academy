@@ -25,6 +25,7 @@ export type QuestionType =
   | 'match-equation'
   | 'block-stacking'
   | 'number-line-placement'
+  | 'ten-frame'
 
 export interface Question {
   id: string
@@ -71,6 +72,8 @@ export interface Question {
   numberLineMin?: number // Minimum value on number line
   numberLineMax?: number // Maximum value on number line
   correctPosition?: number // The correct number to place on the line
+  // Ten frame
+  // correctPosition reused for ten-frame (number of dots to show)
 }
 
 export interface LevelData {
@@ -136,13 +139,10 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "1-4",
         levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "How many circles?",
-        visualContent: "🔵🔵🔵",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "3",
-        explanation: "There are 3 circles!",
-        xp: 10
+        type: "ten-frame" as QuestionType,
+        question: "Show 3 in the ten frame",
+        correctPosition: 3,
+        xp: 15
       },
       {
         id: "1-5",
