@@ -264,13 +264,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-6",
         levelId: 2,
-        type: "number-line-placement" as QuestionType,
-        question: "Where does 5 go on the number line?",
-        numberLineMin: 0,
-        numberLineMax: 10,
-        correctPosition: 5,
-        explanation: "5 is halfway between 0 and 10 on the number line!",
-        xp: 15
+        type: "multiple-choice" as QuestionType,
+        question: "Which number is halfway between 0 and 10?",
+        options: ["3", "5", "7", "8"],
+        correctAnswer: "5",
+        explanation: "5 is exactly in the middle between 0 and 10!",
+        xp: 10
       },
       {
         id: "2-7",
@@ -426,13 +425,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "3-10",
         levelId: 3,
-        type: "number-line-placement" as QuestionType,
-        question: "Where does 8 go on the number line?",
-        numberLineMin: 0,
-        numberLineMax: 10,
-        correctPosition: 8,
-        explanation: "8 is near the right end of the number line, close to 10!",
-        xp: 15
+        type: "multiple-choice" as QuestionType,
+        question: "Which number comes right before 9?",
+        options: ["6", "7", "8", "10"],
+        correctAnswer: "8",
+        explanation: "8 comes right before 9!",
+        xp: 10
       }
     ]
   },
@@ -666,13 +664,11 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "5-10",
         levelId: 5,
-        type: "number-line-placement" as QuestionType,
-        question: "Where does 3 go on the number line?",
-        numberLineMin: 0,
-        numberLineMax: 10,
-        correctPosition: 3,
-        explanation: "3 is near the left side of the number line, after 0, 1, and 2!",
-        xp: 15
+        type: "fill-blank" as QuestionType,
+        question: "What number comes after 2? ___",
+        correctAnswer: "3",
+        explanation: "The counting order is 0, 1, 2, 3!",
+        xp: 10
       }
     ]
   },
