@@ -26,6 +26,7 @@ export type QuestionType =
   | 'block-stacking'
   | 'number-line-placement'
   | 'ten-frame'
+  | 'bubble-pop'
 
 export interface Question {
   id: string
@@ -74,6 +75,9 @@ export interface Question {
   correctPosition?: number // The correct number to place on the line
   // Ten frame
   // correctPosition reused for ten-frame (number of dots to show)
+  // Bubble pop
+  bubbleNumbers?: number[] // All numbers to show in bubbles
+  bubbleCorrectAnswers?: number[] // Numbers that should be popped
 }
 
 export interface LevelData {
@@ -274,12 +278,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-7",
         levelId: 2,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 9?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "After 9 comes 10!",
-        xp: 10
+        type: "bubble-pop" as QuestionType,
+        question: "Pop all numbers less than 5!",
+        bubbleNumbers: [1, 2, 3, 4, 5, 6, 7, 8],
+        bubbleCorrectAnswers: [1, 2, 3, 4],
+        explanation: "Numbers less than 5 are: 1, 2, 3, and 4!",
+        xp: 15
       },
       {
         id: "2-8",
@@ -375,12 +379,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "3-5",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Are 5 and 5 the same?",
-        options: ["Yes", "No", "Maybe", "I don't know"],
-        correctAnswer: "Yes",
-        explanation: "Yes! 5 equals 5!",
-        xp: 10
+        type: "bubble-pop" as QuestionType,
+        question: "Pop all even numbers!",
+        bubbleNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        bubbleCorrectAnswers: [2, 4, 6, 8, 10],
+        explanation: "Even numbers are 2, 4, 6, 8, and 10! They can be split into 2 equal groups.",
+        xp: 20
       },
       {
         id: "3-6",
@@ -654,12 +658,12 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "5-9",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 7 + 3?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "7 + 3 = 10! One more way to make 10!",
-        xp: 10
+        type: "bubble-pop" as QuestionType,
+        question: "Pop all numbers that make 10 when added to 5!",
+        bubbleNumbers: [1, 2, 3, 4, 5, 6, 7, 8],
+        bubbleCorrectAnswers: [5],
+        explanation: "5 + 5 = 10! So we need to pop 5!",
+        xp: 15
       },
       {
         id: "5-10",

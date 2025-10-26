@@ -11,6 +11,7 @@ import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
 import NumberLine from '@/components/game/NumberLine'
+import BubblePopMath from '@/components/game/BubblePopMath'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
 
@@ -1094,6 +1095,38 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   >{opt}</button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Bubble Pop Math */}
+          {currentQuestion.type === 'bubble-pop' && currentQuestion.bubbleNumbers && currentQuestion.bubbleCorrectAnswers && (
+            <div className="mb-8">
+              <BubblePopMath
+                question={currentQuestion.question}
+                numbers={currentQuestion.bubbleNumbers}
+                correctAnswers={currentQuestion.bubbleCorrectAnswers}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
             </div>
           )}
 
