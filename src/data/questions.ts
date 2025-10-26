@@ -269,6 +269,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         numberLineMin: 0,
         numberLineMax: 10,
         correctPosition: 5,
+        explanation: "5 is halfway between 0 and 10 on the number line!",
         xp: 15
       },
       {
@@ -440,6 +441,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         numberLineMin: 0,
         numberLineMax: 10,
         correctPosition: 8,
+        explanation: "8 is near the right end of the number line, close to 10!",
         xp: 15
       }
     ]
@@ -679,6 +681,7 @@ export const levelContent: { [levelId: number]: LevelData } = {
         numberLineMin: 0,
         numberLineMax: 10,
         correctPosition: 3,
+        explanation: "3 is near the left side of the number line, after 0, 1, and 2!",
         xp: 15
       }
     ]
