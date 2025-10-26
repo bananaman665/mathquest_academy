@@ -155,17 +155,6 @@ export const levelContent: { [levelId: number]: LevelData } = {
         xp: 10
       },
       {
-        id: "1-6",
-        levelId: 1,
-        type: "visual-count" as QuestionType,
-        question: "How many apples?",
-        visualContent: "🍎🍎🍎🍎",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
-        explanation: "There are 4 apples!",
-        xp: 10
-      },
-      {
         id: "1-7",
         levelId: 1,
         type: "number-sequence" as QuestionType,
@@ -2657,7 +2646,6 @@ export const levelContent: { [levelId: number]: LevelData } = {
     { id: "26-5", levelId: 26, type: "multiple-choice" as QuestionType, question: "What is bigger: 1/2 or 1/4?", options: ["1/2", "1/4", "They're equal", "Can't tell"], correctAnswer: "1/2", explanation: "1/2 is bigger than 1/4 because half of something is more than a quarter of it!", xp: 15 },
     { id: "26-6", levelId: 26, type: "multiple-choice" as QuestionType, question: "If a sandwich is cut in half, and you eat one half, how much sandwich is left?", options: ["1/2", "1/3", "1/4", "All of it"], correctAnswer: "1/2", explanation: "If you eat 1/2 of the sandwich, then 1/2 of the sandwich is left.", xp: 15 },
     { id: "26-7", levelId: 26, type: "multiple-choice" as QuestionType, question: "How many quarters are in one whole pizza?", options: ["1", "2", "3", "4"], correctAnswer: "4", explanation: "One whole pizza can be divided into 4 quarters (4 × 1/4 = 1 whole)", xp: 15 },
-    { id: "26-8", levelId: 26, type: "multiple-choice" as QuestionType, question: "How many halves are in one whole apple?", options: ["1", "2", "3", "4"], correctAnswer: "2", explanation: "One whole apple can be divided into 2 halves (2 × 1/2 = 1 whole)", xp: 15 },
     { id: "26-9", levelId: 26, type: "multiple-choice" as QuestionType, question: "If you have a cookie and cut it into 4 equal pieces, what fraction is 2 pieces?", options: ["1/4", "2/4", "1/2", "2/2"], correctAnswer: "2/4", explanation: "2 pieces out of 4 is 2/4, which is the same as 1/2!", xp: 15 },
     { id: "26-10", levelId: 26, type: "multiple-choice" as QuestionType, question: "Which fraction is the largest piece?", options: ["1/4", "1/3", "1/2", "1/5"], correctAnswer: "1/2", explanation: "1/2 (half) is the largest of these fractions because it's more than the others.", xp: 15 }
     ]
@@ -3342,8 +3330,7 @@ const unitThemes = [
     return q[idx];
   })},
   { start: 46, end: 50, type: "multiple-choice", topic: "Problem Solving", questions: Array(10).fill(null).map((_, idx) => {
-    const q = [(id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If you have 3 apples and get 2 more, how many do you have?", options: ["3", "4", "5", "6"], correctAnswer: "5", explanation: "3 + 2 = 5 apples.", xp: 20 }),
-    (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If a bus leaves at 2:00 and arrives at 3:30, how long was the trip?", options: ["1 hour", "1.5 hours", "2 hours", "2.5 hours"], correctAnswer: "1.5 hours", explanation: "3:30 - 2:00 = 1.5 hours.", xp: 20 }),
+    const q = [(id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If a bus leaves at 2:00 and arrives at 3:30, how long was the trip?", options: ["1 hour", "1.5 hours", "2 hours", "2.5 hours"], correctAnswer: "1.5 hours", explanation: "3:30 - 2:00 = 1.5 hours.", xp: 20 }),
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If you have 10 cookies and eat 3, how many are left?", options: ["5", "6", "7", "8"], correctAnswer: "7", explanation: "10 - 3 = 7 cookies.", xp: 20 }),
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "Sarah has 5 toys and gets 3 more. How many toys does she have?", options: ["6", "7", "8", "9"], correctAnswer: "8", explanation: "5 + 3 = 8 toys.", xp: 20 }),
     (id: string, levelId: number): Question => ({ id, levelId, type: "multiple-choice" as QuestionType, question: "If a book has 20 pages and you read 8, how many pages are left?", options: ["10", "11", "12", "13"], correctAnswer: "12", explanation: "20 - 8 = 12 pages.", xp: 20 }),
