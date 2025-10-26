@@ -76,45 +76,59 @@ export default function TenFrame({
   const dotsPlaced = placedDots.filter(d => d).length
 
   return (
-    <div className="flex flex-col items-center gap-8 py-8">
-      {/* Question */}
-      <div className="text-center">
-        <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
-        <p className="text-gray-300 text-lg">
-          Tap the boxes or drag dots to show <span className="font-bold text-blue-400">{correctPosition}</span>
-        </p>
-      </div>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="flex flex-col items-center gap-8 py-8">
+        {/* Question */}
+        <div className="text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
+          <p className="text-gray-300 text-lg">
+            Tap the boxes or drag dots to show <span className="font-bold text-blue-400">{correctPosition}</span>
+          </p>
+        </div>
 
-      {/* Ten Frame */}
-      <div className="bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-8 border-2 border-purple-500/50">
-        <div className="grid grid-cols-5 gap-3 mb-4">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleFrameClick(index)}
-              className={`w-16 h-16 rounded-lg border-4 transition-all transform hover:scale-105 ${
-                placedDots[index]
-                  ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-300 shadow-lg shadow-blue-500/50'
-                  : 'bg-slate-700 border-slate-600 hover:border-slate-500 hover:bg-slate-600'
+        {/* Ten Frame */}
+        <Droppable droppableId="frame" direction="horizontal">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-8 border-2 transition-colors ${
+                snapshot.isDraggingOver
+                  ? 'border-blue-400 shadow-lg shadow-blue-500/50'
+                  : 'border-purple-500/50'
               }`}
             >
-              {placedDots[index] && (
-                <div className="text-3xl">●</div>
-              )}
-            </button>
-          ))}
-        </div>
+              <div className="grid grid-cols-5 gap-3 mb-4">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleFrameClick(index)}
+                    className={`w-16 h-16 rounded-lg border-4 transition-all transform hover:scale-105 ${
+                      placedDots[index]
+                        ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-300 shadow-lg shadow-blue-500/50'
+                        : 'bg-slate-700 border-slate-600 hover:border-slate-500 hover:bg-slate-600'
+                    }`}
+                  >
+                    {placedDots[index] && (
+                      <div className="text-3xl">●</div>
+                    )}
+                  </button>
+                ))}
+              </div>
 
-        {/* Counter */}
-        <div className="text-center mt-6">
-          <div className="text-3xl font-bold text-white bg-slate-800 rounded-lg px-6 py-3 inline-block">
-            Dots: <span className="text-blue-400">{dotsPlaced}</span> / {correctPosition}
-          </div>
-        </div>
-      </div>
+              {/* Counter */}
+              <div className="text-center mt-6">
+                <div className="text-3xl font-bold text-white bg-slate-800 rounded-lg px-6 py-3 inline-block">
+                  Dots: <span className="text-blue-400">{dotsPlaced}</span> / {correctPosition}
+                </div>
+              </div>
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
 
-      {/* Staging Area - Available Dots */}
-      <Droppable droppableId="staging">
+        {/* Staging Area - Available Dots */}
+        <Droppable droppableId="staging">
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -199,5 +213,6 @@ export default function TenFrame({
         </div>
       )}
     </div>
+    </DragDropContext>
   )
 }

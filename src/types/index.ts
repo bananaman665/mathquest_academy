@@ -98,7 +98,8 @@ export enum QuestionType {
   FILL_BLANK = 'FILL_BLANK',
   DRAG_DROP = 'DRAG_DROP',
   TRUE_FALSE = 'TRUE_FALSE',
-  EQUATION = 'EQUATION'
+  EQUATION = 'EQUATION',
+  TEN_FRAME = 'TEN_FRAME'
 }
 
 export enum Difficulty {
