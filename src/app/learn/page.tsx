@@ -21,128 +21,142 @@ type Level = {
 const units = [
   {
     id: 1,
+    title: "Number Basics",
+    description: "Learn to recognize and count numbers 1-10",
+    theme: "mountain", // 🏔️
+    color: "from-blue-400 to-blue-600",
+    levels: [
+      { id: 1, title: "Numbers 1-5", xp: 100 },
+      { id: 2, title: "Numbers 6-10", xp: 100 },
+      { id: 3, title: "Counting Practice", xp: 100 },
+      { id: 4, title: "Number Matching", xp: 100 },
+      { id: 5, title: "Review & Master", xp: 150 },
+    ]
+  },
+  {
+    id: 2,
     title: "Addition Adventures",
     description: "Master adding numbers together",
     theme: "ocean", // 🌊
     color: "from-cyan-400 to-blue-600",
     levels: [
-      { id: 1, title: "Adding to 5", xp: 100 },
-      { id: 2, title: "Adding to 10", xp: 100 },
-      { id: 3, title: "Addition Facts", xp: 100 },
-      { id: 4, title: "Word Problems", xp: 150 },
-      { id: 5, title: "Addition Master", xp: 200 },
+      { id: 6, title: "Adding to 5", xp: 100 },
+      { id: 7, title: "Adding to 10", xp: 100 },
+      { id: 8, title: "Addition Facts", xp: 100 },
+      { id: 9, title: "Word Problems", xp: 150 },
+      { id: 10, title: "Addition Master", xp: 200 },
     ]
   },
   {
-    id: 2,
+    id: 3,
     title: "Subtraction Station",
     description: "Learn to subtract and find differences",
     theme: "forest", // 🌲
     color: "from-green-400 to-emerald-600",
     levels: [
-      { id: 6, title: "Taking Away", xp: 100 },
-      { id: 7, title: "Subtract to 10", xp: 100 },
-      { id: 8, title: "Subtraction Facts", xp: 100 },
-      { id: 9, title: "Missing Numbers", xp: 150 },
-      { id: 10, title: "Subtraction Master", xp: 200 },
+      { id: 11, title: "Taking Away", xp: 100 },
+      { id: 12, title: "Subtract to 10", xp: 100 },
+      { id: 13, title: "Subtraction Facts", xp: 100 },
+      { id: 14, title: "Missing Numbers", xp: 150 },
+      { id: 15, title: "Subtraction Master", xp: 200 },
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: "Multiplication Magic",
     description: "Discover the power of multiplication",
     theme: "stars", // ⭐
     color: "from-purple-400 to-pink-600",
     levels: [
-      { id: 11, title: "Groups of 2", xp: 150 },
-      { id: 12, title: "Times Tables 1-5", xp: 150 },
-      { id: 13, title: "Times Tables 6-10", xp: 150 },
-      { id: 14, title: "Multiply in Action", xp: 200 },
-      { id: 15, title: "Multiplication Pro", xp: 250 },
+      { id: 16, title: "Groups of 2", xp: 150 },
+      { id: 17, title: "Times Tables 1-5", xp: 150 },
+      { id: 18, title: "Times Tables 6-10", xp: 150 },
+      { id: 19, title: "Multiply in Action", xp: 200 },
+      { id: 20, title: "Multiplication Pro", xp: 250 },
     ]
   },
   {
-    id: 4,
+    id: 5,
     title: "Division Discovery",
     description: "Learn to divide and share equally",
     theme: "desert", // 🏜️
     color: "from-orange-400 to-red-600",
     levels: [
-      { id: 16, title: "Sharing Equally", xp: 150 },
-      { id: 17, title: "Divide by 2", xp: 150 },
-      { id: 18, title: "Division Facts", xp: 150 },
-      { id: 19, title: "Remainders", xp: 200 },
-      { id: 20, title: "Division Champion", xp: 250 },
+      { id: 21, title: "Sharing Equally", xp: 150 },
+      { id: 22, title: "Divide by 2", xp: 150 },
+      { id: 23, title: "Division Facts", xp: 150 },
+      { id: 24, title: "Remainders", xp: 200 },
+      { id: 25, title: "Division Champion", xp: 250 },
     ]
   },
   {
-    id: 5,
+    id: 6,
     title: "Fraction Fun",
     description: "Explore parts of a whole",
     theme: "candy", // 🍬
     color: "from-pink-400 to-rose-600",
     levels: [
-      { id: 21, title: "Half & Quarter", xp: 150 },
-      { id: 22, title: "Common Fractions", xp: 150 },
-      { id: 23, title: "Comparing Fractions", xp: 200 },
-      { id: 24, title: "Adding Fractions", xp: 200 },
-      { id: 25, title: "Fraction Master", xp: 300 },
+      { id: 26, title: "Half & Quarter", xp: 150 },
+      { id: 27, title: "Common Fractions", xp: 150 },
+      { id: 28, title: "Comparing Fractions", xp: 200 },
+      { id: 29, title: "Adding Fractions", xp: 200 },
+      { id: 30, title: "Fraction Master", xp: 300 },
     ]
   },
   {
-    id: 6,
+    id: 7,
     title: "Decimal Dimension",
     description: "Master numbers with decimal points",
     theme: "space", // 🚀
     color: "from-indigo-400 to-blue-700",
     levels: [
-      { id: 26, title: "Tenths", xp: 150 },
-      { id: 27, title: "Hundredths", xp: 150 },
-      { id: 28, title: "Decimal Operations", xp: 200 },
-      { id: 29, title: "Money Math", xp: 200 },
-      { id: 30, title: "Decimal Expert", xp: 300 },
+      { id: 31, title: "Tenths", xp: 150 },
+      { id: 32, title: "Hundredths", xp: 150 },
+      { id: 33, title: "Decimal Operations", xp: 200 },
+      { id: 34, title: "Money Math", xp: 200 },
+      { id: 35, title: "Decimal Expert", xp: 300 },
     ]
   },
   {
-    id: 7,
+    id: 8,
     title: "Geometry Garden",
     description: "Explore shapes and patterns",
     theme: "garden", // 🌺
     color: "from-emerald-400 to-teal-600",
     levels: [
-      { id: 31, title: "2D Shapes", xp: 150 },
-      { id: 32, title: "3D Shapes", xp: 150 },
-      { id: 33, title: "Perimeter", xp: 200 },
-      { id: 34, title: "Area", xp: 200 },
-      { id: 35, title: "Geometry Genius", xp: 300 },
+      { id: 36, title: "2D Shapes", xp: 150 },
+      { id: 37, title: "3D Shapes", xp: 150 },
+      { id: 38, title: "Perimeter", xp: 200 },
+      { id: 39, title: "Area", xp: 200 },
+      { id: 40, title: "Geometry Genius", xp: 300 },
     ]
   },
   {
-    id: 8,
+    id: 9,
     title: "Measurement Mission",
     description: "Learn to measure length, weight, and time",
     theme: "tools", // 🔧
     color: "from-yellow-400 to-amber-600",
     levels: [
-      { id: 36, title: "Length & Distance", xp: 150 },
-      { id: 37, title: "Weight & Mass", xp: 150 },
-      { id: 38, title: "Time Telling", xp: 200 },
-      { id: 39, title: "Temperature", xp: 200 },
-      { id: 40, title: "Measurement Master", xp: 300 },
+      { id: 41, title: "Length & Distance", xp: 150 },
+      { id: 42, title: "Weight & Mass", xp: 150 },
+      { id: 43, title: "Time Telling", xp: 200 },
+      { id: 44, title: "Temperature", xp: 200 },
+      { id: 45, title: "Measurement Master", xp: 300 },
     ]
   },
   {
-    id: 9,
+    id: 10,
     title: "Problem Solving Palace",
     description: "Apply math skills to real-world challenges",
     theme: "castle", // 🏰
     color: "from-violet-400 to-purple-700",
     levels: [
-      { id: 41, title: "Word Problems", xp: 200 },
-      { id: 42, title: "Logic Puzzles", xp: 200 },
-      { id: 43, title: "Patterns", xp: 200 },
-      { id: 44, title: "Data & Graphs", xp: 250 },
-      { id: 45, title: "Math Champion", xp: 500 },
+      { id: 46, title: "Word Problems", xp: 200 },
+      { id: 47, title: "Logic Puzzles", xp: 200 },
+      { id: 48, title: "Patterns", xp: 200 },
+      { id: 49, title: "Data & Graphs", xp: 250 },
+      { id: 50, title: "Math Champion", xp: 500 },
     ]
   }
 ]

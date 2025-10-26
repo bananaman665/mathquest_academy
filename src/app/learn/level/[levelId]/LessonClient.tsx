@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import AITutor from '@/components/AITutor'
+import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
 
@@ -175,6 +176,54 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     setSequenceOrder(items)
   }
 
+  // Block stacking answer handler
+  const handleBlockStackingAnswer = (isCorrect: boolean) => {
+    setIsCorrect(isCorrect)
+    setShowExplanation(true)
+    
+    if (isCorrect) {
+      playCorrect()
+      
+      // Update streak
+      const newStreak = currentStreak + 1
+      setCurrentStreak(newStreak)
+      if (newStreak > maxStreak) {
+        setMaxStreak(newStreak)
+      }
+      
+      // Calculate combo multiplier based on streak
+      let newComboMultiplier = 1
+      if (newStreak >= 10) newComboMultiplier = 5
+      else if (newStreak >= 7) newComboMultiplier = 3
+      else if (newStreak >= 5) newComboMultiplier = 2
+      setComboMultiplier(newComboMultiplier)
+      
+      // Calculate game mode bonus
+      let gameModeBonus = 1
+      if (gameMode === 'speed-round') gameModeBonus = 1.5
+      else if (gameMode === 'lightning') gameModeBonus = 1.75
+      else if (gameMode === 'perfect-streak') gameModeBonus = 2
+      else if (gameMode === 'boss-battle') gameModeBonus = 3
+      
+      // Total XP = base XP × XP boost × combo multiplier × game mode bonus
+      const earnedPoints = Math.floor(currentQuestion.xp * xpMultiplier * newComboMultiplier * gameModeBonus)
+      setEarnedXP(prev => prev + earnedPoints)
+      setCorrectCount(prev => prev + 1)
+      
+      // Perfect Streak mode: End if we've got 10 in a row
+      if (gameMode === 'perfect-streak' && newStreak >= 10) {
+        setTimeout(() => {
+          router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
+        }, 1000)
+      }
+    } else {
+      playIncorrect()
+      setHearts(prev => Math.max(0, prev - 1))
+      setCurrentStreak(0)
+      setComboMultiplier(1)
+    }
+  }
+
   const handleSubmit = () => {
     let correct = false
     if (currentQuestion.type === 'multiple-choice' || 
@@ -230,6 +279,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       console.log('Final result:', correct)
     } else if (currentQuestion.type === 'match-equation') {
       correct = !equationMatched.some(m => !m)
+    } else if (currentQuestion.type === 'block-stacking') {
+      // Block stacking is handled in the component itself
+      // This is just for structure - actual validation happens in BlockStackingQuestion
+      correct = selectedAnswer === currentQuestion.correctAnswer?.toString()
     }
     
     setIsCorrect(correct)
@@ -706,6 +759,22 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 className="w-full max-w-md mx-auto block px-6 py-4 text-2xl text-center bg-white text-gray-800 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 font-bold placeholder:text-gray-400"
                 autoFocus
               />
+            </div>
+          )}
+
+          {/* Block Stacking Question */}
+          {currentQuestion.type === 'block-stacking' && currentQuestion.firstNumber !== undefined && currentQuestion.secondNumber !== undefined && currentQuestion.operation && (
+            <div className="mb-8">
+              {!showExplanation && (
+                <BlockStackingQuestion
+                  firstNumber={currentQuestion.firstNumber}
+                  secondNumber={currentQuestion.secondNumber}
+                  operation={currentQuestion.operation}
+                  correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer.toString()) : 0}
+                  onAnswer={handleBlockStackingAnswer}
+                  question={currentQuestion.question}
+                />
+              )}
             </div>
           )}
 
