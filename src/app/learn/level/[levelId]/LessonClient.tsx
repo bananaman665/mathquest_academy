@@ -336,7 +336,15 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     } else if (currentQuestion.type === 'highlight') {
       correct = JSON.stringify(multiSelected.sort()) === JSON.stringify((currentQuestion.highlightCorrect || []).sort())
     } else if (currentQuestion.type === 'fill-blank') {
-      correct = blankAnswers.every((ans, idx) => ans === (currentQuestion.blanks?.[idx].answer))
+      if (currentQuestion.blanks) {
+        // Complex blanks with structured format
+        correct = blankAnswers.every((ans, idx) => ans === (currentQuestion.blanks?.[idx].answer))
+      } else if (currentQuestion.correctAnswer) {
+        // Simple fill-blank with just correctAnswer
+        correct = blankAnswers[0]?.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase()
+      } else {
+        correct = false
+      }
     } else if (currentQuestion.type === 'order-sequence') {
       correct = JSON.stringify(sequenceOrder) === JSON.stringify(currentQuestion.sequenceCorrect)
     } else if (currentQuestion.type === 'true-false') {
@@ -1025,24 +1033,41 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           )}
 
           {/* Fill-in-the-Blank */}
-          {currentQuestion.type === 'fill-blank' && currentQuestion.blanks && (
+          {currentQuestion.type === 'fill-blank' && (
             <div className="mb-8">
-              {currentQuestion.blanks.map((blank, idx) => {
-                const parts = blank.text.split('__');
-                return (
-                  <div key={idx} className="mb-2">
-                    {parts[0]}
-                    <input
-                      type="text"
-                      className="underline mx-2 px-2 py-1 rounded bg-slate-700 text-white"
-                      value={blankAnswers[idx] || ''}
-                      onChange={e => handleBlankChange(idx, e.target.value)}
-                      disabled={showExplanation}
-                    />
-                    {parts[1]}
-                  </div>
-                );
-              })}
+              {currentQuestion.blanks ? (
+                // Complex blanks with structured format
+                currentQuestion.blanks.map((blank, idx) => {
+                  const parts = blank.text.split('__');
+                  return (
+                    <div key={idx} className="mb-2">
+                      {parts[0]}
+                      <input
+                        type="text"
+                        className="underline mx-2 px-2 py-1 rounded bg-slate-700 text-white"
+                        value={blankAnswers[idx] || ''}
+                        onChange={e => handleBlankChange(idx, e.target.value)}
+                        disabled={showExplanation}
+                      />
+                      {parts[1]}
+                    </div>
+                  );
+                })
+              ) : (
+                // Simple fill-blank with just correctAnswer
+                <div className="flex items-center gap-4 text-2xl font-bold">
+                  <span>{currentQuestion.question.split('___')[0]}</span>
+                  <input
+                    type="text"
+                    className="border-b-4 border-slate-400 bg-transparent text-white text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:border-blue-500 transition-colors"
+                    value={blankAnswers[0] || ''}
+                    onChange={e => handleBlankChange(0, e.target.value)}
+                    disabled={showExplanation}
+                    placeholder="?"
+                  />
+                  <span>{currentQuestion.question.split('___')[1] || ''}</span>
+                </div>
+              )}
             </div>
           )}
 
