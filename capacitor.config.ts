@@ -7,6 +7,17 @@ const config: CapacitorConfig = {
   server: {
     url: 'https://mathquest-academy-bhfd.vercel.app',
     cleartext: true
+  },
+  ios: {
+    contentInset: 'never',
+    allowsLinkPreview: false,
+    scrollEnabled: false,
+    preferredContentMode: 'mobile'
+  },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0
+    }
   }
 };
 

@@ -86,7 +86,7 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
       </div>
 
       {/* Bubbles container */}
-      <div className="absolute inset-0 pt-32">
+      <div className="absolute inset-0 pt-32 z-20">
         <AnimatePresence>
           {bubbles.map((bubble) => {
             const isPopped = poppedIds.has(bubble.id)
@@ -99,11 +99,12 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
             return (
               <motion.button
                 key={bubble.id}
-                className={`absolute cursor-pointer transition-all duration-200 ${
+                className={`absolute cursor-pointer transition-all duration-200 z-30 ${
                   hasSubmitted ? 'pointer-events-none' : ''
                 }`}
                 style={{
                   left: `${bubble.x}%`,
+                  zIndex: 30,
                 }}
                 initial={{ bottom: '-100px', opacity: 0 }}
                 animate={{ 
@@ -182,7 +183,7 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
       {/* Completion message */}
       {hasSubmitted && (
         <motion.div
-          className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-20"
+          className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-40"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
