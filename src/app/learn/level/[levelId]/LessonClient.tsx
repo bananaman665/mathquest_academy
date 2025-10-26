@@ -920,16 +920,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Number Line Question */}
           {currentQuestion.type === 'number-line-placement' && currentQuestion.correctPosition !== undefined && (
             <div className="mb-8">
-              {!showExplanation && (
-                <NumberLine
-                  question={currentQuestion.question}
-                  min={('numberLineMin' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMin : 0) || 0}
-                  max={('numberLineMax' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMax : 10) || 10}
-                  correctAnswer={currentQuestion.correctPosition}
-                  labelInterval={('numberLineLabelInterval' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineLabelInterval : 1) || 1}
-                  onAnswer={handleNumberLineAnswer}
-                />
-              )}
+              <NumberLine
+                question={currentQuestion.question}
+                min={('numberLineMin' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMin : 0) || 0}
+                max={('numberLineMax' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineMax : 10) || 10}
+                correctAnswer={currentQuestion.correctPosition}
+                labelInterval={('numberLineLabelInterval' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineLabelInterval : 1) || 1}
+                onAnswer={handleNumberLineAnswer}
+              />
             </div>
           )}
 
@@ -1313,7 +1311,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
           )}
 
-          {showExplanation && (
+          {showExplanation && currentQuestion.type !== 'number-line-placement' && (
             <div className={`rounded-2xl p-6 mb-8 border-2 ${
               isCorrect 
                 ? 'bg-green-50 border-green-500' 
