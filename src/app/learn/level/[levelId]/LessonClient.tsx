@@ -453,12 +453,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 </h3>
                 <div className="space-y-4">
                   {introduction.examples.map((example, index) => (
-                    <div key={index} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl p-6 flex items-center gap-6 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                      <div className="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent w-20 text-center">
-                        {example.number}
+                    <div key={index} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                      <div className="flex items-start gap-4">
+                        <div className="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent min-w-fit">
+                          {example.number}
+                        </div>
+                        <div className="flex-1 overflow-x-auto">
+                          <div className="text-3xl whitespace-nowrap pb-2">{example.visual}</div>
+                        </div>
                       </div>
-                      <div className="text-4xl">{example.visual}</div>
-                      <div className="text-xl text-gray-200 font-bold">{example.word}</div>
+                      <div className="text-lg text-gray-300 font-semibold mt-2 ml-24">{example.word}</div>
                     </div>
                   ))}
                 </div>
