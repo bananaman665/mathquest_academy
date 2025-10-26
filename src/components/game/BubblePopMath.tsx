@@ -85,70 +85,66 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
         )}
       </div>
 
-      {/* Bubbles container */}
-      <div className="absolute inset-0 pt-32 z-20">
-        <AnimatePresence>
+      {/* Bubbles container - SIMPLIFIED */}
+      <div className="absolute inset-0 pt-32">
+        <AnimatePresence mode="popLayout">
           {bubbles.map((bubble) => {
             const isPopped = poppedIds.has(bubble.id)
-            const isCorrect = correctAnswers.includes(bubble.value)
-            const wasCorrectlyPopped = poppedCorrect.has(bubble.value)
-            const wasWronglyPopped = poppedWrong.has(bubble.value)
-
             if (isPopped) return null
 
+            const isCorrect = correctAnswers.includes(bubble.value)
+
             return (
-              <motion.button
+              <motion.div
                 key={bubble.id}
-                className={`absolute cursor-pointer transition-all duration-200 z-30 ${
-                  hasSubmitted ? 'pointer-events-none' : ''
-                }`}
+                className="absolute"
                 style={{
                   left: `${bubble.x}%`,
-                  zIndex: 30,
+                  width: '100px',
+                  height: '100px',
                 }}
-                initial={{ bottom: '-100px', opacity: 0 }}
+                initial={{ 
+                  y: 500,
+                  opacity: 0 
+                }}
                 animate={{ 
-                  bottom: '100%', 
+                  y: -600,
                   opacity: 1,
                 }}
                 exit={{
-                  scale: [1, 1.5, 0],
-                  opacity: [1, 0.5, 0],
-                  transition: { duration: 0.3 }
+                  scale: 0,
+                  opacity: 0,
+                  transition: { duration: 0.2 }
                 }}
                 transition={{
-                  duration: 8 / bubble.speed,
+                  duration: 10 / bubble.speed,
                   delay: bubble.startDelay / 1000,
                   ease: 'linear',
                 }}
-                onClick={() => handleBubblePop(bubble)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
               >
-                {/* Bubble with gradient */}
-                <div className="relative">
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
-                  
-                  {/* Main bubble */}
-                  <div className={`relative w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold shadow-xl border-4
-                    ${isCorrect 
-                      ? 'bg-gradient-to-br from-green-300 to-green-400 border-green-200' 
-                      : 'bg-gradient-to-br from-blue-300 to-blue-400 border-blue-200'
+                <button
+                  className="w-full h-full relative"
+                  onClick={() => handleBubblePop(bubble)}
+                  disabled={hasSubmitted}
+                >
+                  {/* Main bubble circle */}
+                  <div 
+                    className={`w-full h-full rounded-full flex items-center justify-center shadow-2xl border-4 ${
+                      isCorrect 
+                        ? 'bg-gradient-to-br from-green-400 via-green-300 to-green-400 border-green-500' 
+                        : 'bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-400 border-blue-500'
                     }`}
                   >
                     {/* Shine effect */}
-                    <div className="absolute top-2 left-2 w-8 h-8 bg-white/60 rounded-full blur-sm"></div>
+                    <div className="absolute top-3 left-3 w-8 h-8 bg-white/70 rounded-full blur-sm pointer-events-none"></div>
                     
-                    {/* Number - high contrast with white background circle */}
-                    <div className="relative z-10 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-inner">
-                      <span className="text-gray-900 text-4xl font-black">
-                        {bubble.value}
-                      </span>
-                    </div>
+                    {/* Number display */}
+                    <span className="text-5xl font-black text-gray-900 drop-shadow-lg relative z-10">
+                      {bubble.value}
+                    </span>
                   </div>
-                </div>
-              </motion.button>
+                </button>
+              </motion.div>
             )
           })}
         </AnimatePresence>
