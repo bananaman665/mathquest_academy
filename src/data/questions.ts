@@ -27,6 +27,14 @@ export type QuestionType =
   | 'number-line-placement'
   | 'ten-frame'
   | 'bubble-pop'
+  // New Interactive Types (Month 1)
+  | 'number-line-drag'
+  | 'fraction-builder'
+  | 'clock-setter'
+  | 'money-counter'
+  | 'array-builder'
+  | 'balance-scale'
+  | 'shape-composer'
 
 export interface Question {
   id: string
@@ -78,6 +86,42 @@ export interface Question {
   // Bubble pop
   bubbleNumbers?: number[] // All numbers to show in bubbles
   bubbleCorrectAnswers?: number[] // Numbers that should be popped
+  
+  // New Interactive Types (Month 1)
+  // Number Line Drag (enhanced version of number-line-placement)
+  numberLineDragCorrect?: number // The correct position to drag marker to
+  numberLineShowJumps?: boolean // Show jump visualization for add/subtract
+  numberLineStartPos?: number // Starting position for jump problems
+  
+  // Fraction Builder
+  fractionDenominator?: number // 2, 3, 4, 8, etc.
+  fractionCorrectNumerator?: number // How many segments should be filled
+  fractionShape?: 'circle' | 'rectangle' // Shape to display
+  
+  // Clock Setter
+  clockCorrectHour?: number // 1-12 or 0-23
+  clockCorrectMinute?: number // 0-59
+  clockUse24Hour?: boolean // 24-hour or 12-hour format
+  
+  // Money Counter
+  moneyTarget?: number // Target amount in cents
+  moneyCoinsAvailable?: string[] // ['penny', 'nickel', 'dime', 'quarter']
+  moneyAllowMultipleSolutions?: boolean // Allow different coin combinations
+  
+  // Array Builder
+  arrayRows?: number // Number of rows
+  arrayColumns?: number // Number of columns
+  arrayCorrectTotal?: number // Total dots/objects expected
+  
+  // Balance Scale
+  balanceLeftSide?: number // Value on left side
+  balanceCorrectRightSide?: number // Correct value for right side
+  balanceShowNumbers?: boolean // Show numbers or objects
+  
+  // Shape Composer
+  shapeTarget?: string // Target shape to build (e.g., 'rectangle')
+  shapePieces?: string[] // Available pieces (e.g., ['triangle', 'triangle'])
+  shapeRotationAllowed?: boolean // Can pieces be rotated?
 }
 
 export interface LevelData {
