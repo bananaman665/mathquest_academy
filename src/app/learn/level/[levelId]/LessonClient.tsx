@@ -12,6 +12,22 @@ import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
 import NumberLine from '@/components/game/NumberLine'
 import BubblePopMath from '@/components/game/BubblePopMath'
+import { 
+  NumberLineDrag, 
+  FractionBuilder, 
+  ClockSetter, 
+  GraphPlotter,
+  MoneyCounter,
+  ArrayBuilder,
+  BalanceScale,
+  ShapeComposer
+} from '@/components/interactive'
+import FillTheJar from '@/components/interactive/FillTheJar'
+import ArrayGridBuilder from '@/components/interactive/ArrayGridBuilder'
+import GroupMaker from '@/components/interactive/GroupMaker'
+import SkipCounter from '@/components/interactive/SkipCounter'
+import FairShare from '@/components/interactive/FairShare'
+import DivisionMachine from '@/components/interactive/DivisionMachine'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
 
@@ -82,6 +98,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [showGameOverModal, setShowGameOverModal] = useState(false)
   const [showAITutor, setShowAITutor] = useState(false)
   const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
+  const [showHints, setShowHints] = useState(false)
+  const [hintsUsed, setHintsUsed] = useState(0)
+  const [showStreakMilestone, setShowStreakMilestone] = useState(false)
+  const [streakMilestone, setStreakMilestone] = useState(0)
 
   const currentQuestion = questions[currentQuestionIndex]
   
@@ -151,6 +171,19 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     setPhase('practice')
   }
 
+  // Check for streak milestones and trigger celebration
+  const checkStreakMilestone = (streak: number) => {
+    const milestones = [5, 10, 15, 20, 25, 30]
+    if (milestones.includes(streak)) {
+      setStreakMilestone(streak)
+      setShowStreakMilestone(true)
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+        setShowStreakMilestone(false)
+      }, 3000)
+    }
+  }
+
   const handleAnswerSelect = (answer: string) => {
     if (showExplanation) return
     setSelectedAnswer(answer)
@@ -194,6 +227,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       if (newStreak > maxStreak) {
         setMaxStreak(newStreak)
       }
+      
+      // Check for milestone celebration
+      checkStreakMilestone(newStreak)
       
       // Calculate combo multiplier based on streak
       let newComboMultiplier = 1
@@ -243,6 +279,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         setMaxStreak(newStreak)
       }
       
+      // Check for milestone celebration
+      checkStreakMilestone(newStreak)
+      
       // Calculate combo multiplier based on streak
       let newComboMultiplier = 1
       if (newStreak >= 10) newComboMultiplier = 5
@@ -290,6 +329,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       if (newStreak > maxStreak) {
         setMaxStreak(newStreak)
       }
+      
+      // Check for milestone celebration
+      checkStreakMilestone(newStreak)
       
       // Calculate combo multiplier based on streak
       let newComboMultiplier = 1
@@ -413,6 +455,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         setMaxStreak(newStreak)
       }
       
+      // Check for milestone celebration
+      checkStreakMilestone(newStreak)
+      
       // Calculate combo multiplier based on streak
       let newComboMultiplier = 1
       if (newStreak >= 10) newComboMultiplier = 5
@@ -427,8 +472,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       else if (gameMode === 'perfect-streak') gameModeBonus = 2
       else if (gameMode === 'boss-battle') gameModeBonus = 3
       
-      // Total XP = base XP × XP boost × combo multiplier × game mode bonus
-      const earnedPoints = Math.floor(currentQuestion.xp * xpMultiplier * newComboMultiplier * gameModeBonus)
+      // Calculate hint penalty
+      const hintPenalty = hintsUsed > 0 ? 0.8 : 1
+      
+      // Total XP = base XP × XP boost × combo multiplier × game mode bonus × hint penalty
+      const earnedPoints = Math.floor(currentQuestion.xp * xpMultiplier * newComboMultiplier * gameModeBonus * hintPenalty)
       setEarnedXP(prev => prev + earnedPoints)
       setCorrectCount(prev => prev + 1)
       
@@ -533,64 +581,64 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   // INTRODUCTION PHASE
   if (phase === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
-        {/* Animated Background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl"></div>
         </div>
 
-        <header className="relative backdrop-blur-xl bg-white/5 border-b border-white/10 shadow-2xl">
+        <header className="relative bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
-              <Link href="/learn" className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors group">
+            <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
+              <Link href="/learn" className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors group">
                 <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
                 <span className="font-semibold">Back to Path</span>
               </Link>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <div className="flex items-center gap-2 bg-purple-50 border border-purple-200 px-4 py-2 rounded-xl">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-bold text-white">Level {levelId}</span>
+                <span className="font-bold text-gray-900">Level {levelId}</span>
               </div>
             </div>
           </div>
         </header>
 
-        <main className="relative max-w-2xl mx-auto px-4 py-12">
-          <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl shadow-2xl p-10 mb-8">
-            <div className="text-center mb-10">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-500/50 animate-pulse">
+        <main className="relative max-w-2xl mx-auto px-4 py-8 pb-24">
+          <div className="bg-white border-2 border-gray-200 rounded-3xl shadow-2xl p-6 sm:p-10 mb-6">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <BookOpen className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-black text-white mb-3 line-clamp-2">{introduction.title}</h1>
-              <p className="text-gray-300 text-lg">Let&apos;s learn something new!</p>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 mb-3">{introduction.title}</h1>
+              <p className="text-gray-600 text-lg sm:text-xl">Let&apos;s learn something new!</p>
             </div>
 
-            <div className="space-y-6 mb-10">
+            <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-10">
               {introduction.content.map((paragraph, index) => (
-                <p key={index} className="text-xl text-gray-200 leading-relaxed">{paragraph}</p>
+                <p key={index} className="text-lg sm:text-xl text-gray-700 leading-relaxed">{paragraph}</p>
               ))}
             </div>
 
             {introduction.examples && introduction.examples.length > 0 && (
-              <div className="backdrop-blur-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-8">
-                <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-yellow-400" />
+              <div className="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-2xl p-6 sm:p-8">
+                <h3 className="text-xl sm:text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-purple-600" />
                   Examples:
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {introduction.examples.map((example, index) => (
-                    <div key={index} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                      <div className="flex items-start gap-4">
-                        <div className="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent min-w-fit">
+                    <div key={index} className="bg-white border-2 border-purple-200 rounded-xl p-4 sm:p-6 hover:border-purple-400 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-start gap-3 sm:gap-4">
+                        <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent min-w-fit">
                           {example.number}
                         </div>
                         <div className="flex-1 overflow-x-auto">
-                          <div className="text-3xl whitespace-nowrap pb-2">{example.visual}</div>
+                          <div className="text-2xl sm:text-3xl whitespace-nowrap pb-2">{example.visual}</div>
                         </div>
                       </div>
-                      <div className="text-lg text-gray-300 font-semibold mt-2 ml-24">{example.word}</div>
+                      <div className="text-base sm:text-lg text-gray-700 font-semibold mt-2 ml-12 sm:ml-16">{example.word}</div>
                     </div>
                   ))}
                 </div>
@@ -598,12 +646,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             )}
           </div>
 
-          <div className="text-center">
+          <div className="text-center sticky bottom-4">
             <button
               onClick={handleStartPractice}
-              className="group bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-500 hover:via-pink-500 hover:to-blue-500 text-white font-black py-5 px-16 rounded-2xl shadow-2xl shadow-purple-500/50 transition-all duration-300 transform hover:scale-105 text-xl"
+              className="group bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white font-black py-4 sm:py-5 px-12 sm:px-16 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg sm:text-xl w-full sm:w-auto"
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center justify-center gap-3">
                 Start Practice
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </span>
@@ -654,17 +702,23 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             
             {/* Streak Counter */}
             {currentStreak > 0 && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
-                currentStreak >= 10 
-                  ? 'bg-purple-100 border-purple-400 text-purple-600' 
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold transition-all duration-300 ${
+                currentStreak >= 20 
+                  ? 'bg-gradient-to-r from-purple-100 to-pink-100 border-purple-400 text-purple-600 animate-pulse shadow-lg' 
+                  : currentStreak >= 15
+                  ? 'bg-gradient-to-r from-pink-100 to-orange-100 border-pink-400 text-pink-600 shadow-md'
+                  : currentStreak >= 10 
+                  ? 'bg-purple-100 border-purple-400 text-purple-600 shadow-md' 
                   : currentStreak >= 5 
                   ? 'bg-orange-100 border-orange-400 text-orange-600' 
                   : 'bg-blue-100 border-blue-400 text-blue-600'
               }`}>
-                <img src="/fire.svg" alt="streak" className="w-5 h-5" />
-                <span>{currentStreak} </span>
+                <img src="/fire.svg" alt="streak" className={`w-5 h-5 ${currentStreak >= 10 ? 'animate-pulse' : ''}`} />
+                <span className="text-lg">{currentStreak}</span>
                 {comboMultiplier > 1 && (
-                  <span className="text-xs ml-1">{comboMultiplier}x</span>
+                  <span className="text-sm font-black bg-white/50 px-2 py-0.5 rounded-full">
+                    {comboMultiplier}x
+                  </span>
                 )}
               </div>
             )}
@@ -711,6 +765,27 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
 
           <h2 className="text-3xl font-bold text-gray-800 mb-10 leading-tight">{currentQuestion.question}</h2>
+
+          {/* Hints Display */}
+          {showHints && currentQuestion.hints && currentQuestion.hints.length > 0 && (
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-bold text-sm">💡</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-blue-700 mb-2">Hint:</h3>
+                  <ul className="space-y-1">
+                    {currentQuestion.hints.map((hint, index) => (
+                      <li key={index} className="text-blue-800 text-base leading-relaxed">
+                        • {hint}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Visual Content */}
           {currentQuestion.visualContent && (
@@ -1130,6 +1205,479 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
           )}
 
+          {/* Number Line Drag */}
+          {currentQuestion.type === 'number-line-drag' && (
+            <div className="mb-8">
+              <NumberLineDrag
+                min={currentQuestion.numberLineMin || 0}
+                max={currentQuestion.numberLineMax || 10}
+                correctAnswer={currentQuestion.numberLineDragCorrect || 0}
+                question={currentQuestion.question}
+                showJumps={currentQuestion.numberLineShowJumps}
+                startPosition={currentQuestion.numberLineStartPos}
+                onAnswer={(isCorrect, userAnswer) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Fraction Builder */}
+          {currentQuestion.type === 'fraction-builder' && (
+            <div className="mb-8">
+              <FractionBuilder
+                question={currentQuestion.question}
+                denominator={currentQuestion.fractionDenominator || 4}
+                correctNumerator={currentQuestion.fractionCorrectNumerator || 1}
+                shape={currentQuestion.fractionShape || 'circle'}
+                onAnswer={(isCorrect, userAnswer) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Clock Setter */}
+          {currentQuestion.type === 'clock-setter' && (
+            <div className="mb-8">
+              <ClockSetter
+                question={currentQuestion.question}
+                correctHour={currentQuestion.clockCorrectHour || 12}
+                correctMinute={currentQuestion.clockCorrectMinute || 0}
+                use24Hour={currentQuestion.clockUse24Hour || false}
+                onAnswer={(isCorrect, userAnswer) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Graph Plotter */}
+          {currentQuestion.type === 'graph-plotter' && (
+            <div className="mb-8">
+              <GraphPlotter
+                question={currentQuestion.question}
+                correctPoints={[{ x: currentQuestion.correctPosition || 0, y: currentQuestion.secondNumber || 0 }]}
+                xMin={currentQuestion.numberLineMin || -5}
+                xMax={currentQuestion.numberLineMax || 5}
+                yMin={-5}
+                yMax={5}
+                onAnswer={(isCorrect, userPoints) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Money Counter */}
+          {currentQuestion.type === 'money-counter' && (
+            <div className="mb-8">
+              <MoneyCounter
+                question={currentQuestion.question}
+                targetAmount={currentQuestion.moneyTarget || 25}
+                availableCoins={{ penny: 10, nickel: 5, dime: 5, quarter: 4, dollar: 2 }}
+                showCents={true}
+                onAnswer={(isCorrect, userAmount) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Array Builder */}
+          {currentQuestion.type === 'array-builder' && (
+            <div className="mb-8">
+              <ArrayBuilder
+                question={currentQuestion.question}
+                rows={currentQuestion.arrayRows || 3}
+                columns={currentQuestion.arrayColumns || 4}
+                correctAnswer={currentQuestion.arrayCorrectTotal || 12}
+                showMultiplication={true}
+                onAnswer={(isCorrect, userAnswer) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Balance Scale */}
+          {currentQuestion.type === 'balance-scale' && (
+            <div className="mb-8">
+              <BalanceScale
+                question={currentQuestion.question}
+                leftSide={[0, currentQuestion.firstNumber || 5]}
+                rightSide={[currentQuestion.secondNumber || 8]}
+                missingValue={0}
+                correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer) : 3}
+                showEquals={true}
+                onAnswer={(isCorrect, userAnswer) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Fill The Jar */}
+          {currentQuestion.type === 'fill-the-jar' && (
+            <div className="mb-8">
+              <FillTheJar
+                question={currentQuestion.question}
+                targetNumber={currentQuestion.jarTarget || 10}
+                startingNumber={currentQuestion.jarStarting || 0}
+                itemEmoji={currentQuestion.jarEmoji || '🍎'}
+                mode={currentQuestion.jarMode as 'add' | 'remove' | 'count' || 'count'}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Shape Composer */}
+          {currentQuestion.type === 'shape-composer' && (
+            <div className="mb-8">
+              <ShapeComposer
+                question={currentQuestion.question}
+                targetShape={currentQuestion.shapeTarget as any || 'square'}
+                availablePieces={[
+                  { type: 'triangle', color: 'text-red-500', size: 1 },
+                  { type: 'triangle', color: 'text-red-500', size: 1 },
+                  { type: 'square', color: 'text-blue-500', size: 1 },
+                  { type: 'circle', color: 'text-green-500', size: 1 }
+                ]}
+                correctCombination={[
+                  { type: 'triangle', color: 'text-red-500', size: 1 },
+                  { type: 'triangle', color: 'text-red-500', size: 1 }
+                ]}
+                showGrid={true}
+                onAnswer={(isCorrect, selectedPieces) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Array Grid Builder - Multiplication */}
+          {currentQuestion.type === 'array-grid-builder' && (
+            <div className="mb-8">
+              <ArrayGridBuilder
+                targetRows={currentQuestion.gridTargetRows || 3}
+                targetCols={currentQuestion.gridTargetCols || 4}
+                emoji={currentQuestion.gridEmoji || '⭐'}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Group Maker - Multiplication */}
+          {currentQuestion.type === 'group-maker' && (
+            <div className="mb-8">
+              <GroupMaker
+                targetGroups={currentQuestion.groupsTarget || 4}
+                itemsPerGroup={currentQuestion.groupsItemsPerGroup || 3}
+                emoji={currentQuestion.groupsEmoji || '⭐'}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Skip Counter - Multiplication */}
+          {currentQuestion.type === 'skip-counter' && (
+            <div className="mb-8">
+              <SkipCounter
+                skipBy={currentQuestion.skipCountBy || 5}
+                numJumps={currentQuestion.skipCountJumps || 4}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Fair Share - Division */}
+          {currentQuestion.type === 'fair-share' && (
+            <div className="mb-8">
+              <FairShare
+                totalItems={currentQuestion.fairShareTotal || 12}
+                numGroups={currentQuestion.fairShareGroups || 3}
+                emoji={currentQuestion.fairShareEmoji || '🍪'}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Division Machine */}
+          {currentQuestion.type === 'division-machine' && (
+            <div className="mb-8">
+              <DivisionMachine
+                dividend={currentQuestion.divisionDividend || 15}
+                divisor={currentQuestion.divisionDivisor || 5}
+                emoji={currentQuestion.divisionEmoji || '⭐'}
+                onAnswer={(isCorrect) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
           {/* Order/Sequence */}
           {currentQuestion.type === 'order-sequence' && currentQuestion.sequence && (
             <div className="mb-8">
@@ -1226,119 +1774,52 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Mini-game */}
           {currentQuestion.type === 'mini-game' && (
             <div className="mb-8">
-              <div className="flex gap-4">
-                {currentQuestion.options?.map((opt, idx) => (
-                  <button
-                    key={idx}
-                    className={`px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'bg-pink-400 text-black' : 'bg-slate-700 text-pink-300'}`}
-                    onClick={() => handleAnswerSelect(opt)}
-                    disabled={showExplanation}
-                  >{opt}</button>
-                ))}
-              </div>
-              <p className="text-pink-300 mt-2">Pop every balloon labeled &apos;2&apos;!</p>
+              {currentQuestion.gameType === 'balloon-pop' && currentQuestion.bubbleNumbers && currentQuestion.bubbleCorrectAnswers ? (
+                <BubblePopMath
+                  question={currentQuestion.question}
+                  numbers={currentQuestion.bubbleNumbers}
+                  correctAnswers={currentQuestion.bubbleCorrectAnswers}
+                  onAnswer={(isCorrect) => {
+                    setIsCorrect(isCorrect)
+                    setShowExplanation(true)
+                    if (isCorrect) {
+                      playCorrect()
+                      const xp = currentQuestion.xp * xpMultiplier
+                      setEarnedXP(prev => prev + xp)
+                      setCorrectCount(prev => prev + 1)
+                      setCurrentStreak(prev => prev + 1)
+                      setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                      if (gameMode === 'perfect-streak') {
+                        const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                        setComboMultiplier(newMultiplier)
+                      }
+                    } else {
+                      playIncorrect()
+                      setHearts(prev => Math.max(0, prev - 1))
+                      setCurrentStreak(0)
+                      setComboMultiplier(1)
+                    }
+                  }}
+                />
+              ) : (
+                <>
+                  <div className="flex gap-4">
+                    {currentQuestion.options?.map((opt, idx) => (
+                      <button
+                        key={idx}
+                        className={`px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'bg-pink-400 text-black' : 'bg-slate-700 text-pink-300'}`}
+                        onClick={() => handleAnswerSelect(opt)}
+                        disabled={showExplanation}
+                      >{opt}</button>
+                    ))}
+                  </div>
+                  <p className="text-pink-300 mt-2">Mini-game: {currentQuestion.gameType || 'Unknown game type'}</p>
+                </>
+              )}
             </div>
           )}
 
           {/* Drag-and-Drop */}
-
-          {/* Fill-in-the-Blank */}
-          {currentQuestion.type === 'fill-blank' && currentQuestion.blanks && (
-            <div className="mb-8">
-              <p className="text-white mb-4">(Fill in the blank. UI not implemented yet.)</p>
-              {currentQuestion.blanks.map((blank, idx) => {
-                const parts = blank.text.split('__');
-                return (
-                  <div key={idx} className="mb-2">
-                    {parts[0]}
-                    <span className="underline mx-2">___</span>
-                    {parts[1]}
-                    <span className="ml-2 text-slate-400">(Answer: {blank.answer})</span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Tap-to-Select */}
-          {currentQuestion.type === 'tap-select' && currentQuestion.tapOptions && (
-            <div className="mb-8">
-              <p className="text-white mb-4">(Tap all correct options. UI not implemented yet.)</p>
-              <div className="flex gap-4">
-                {currentQuestion.tapOptions.map((opt, idx) => (
-                  <button key={idx} className="bg-blue-600 text-white px-6 py-4 rounded-xl">{opt}</button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Order/Sequence */}
-          {currentQuestion.type === 'order-sequence' && currentQuestion.sequence && (
-            <div className="mb-8">
-              <p className="text-white mb-4">(Arrange in order. UI not implemented yet.)</p>
-              <div className="flex gap-4">
-                {currentQuestion.sequence.map((item, idx) => (
-                  <span key={idx} className="bg-slate-700 text-white px-6 py-4 rounded-xl">{item}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Audio */}
-          {currentQuestion.type === 'audio' && currentQuestion.audioUrl && (
-            <div className="mb-8">
-              <audio controls src={currentQuestion.audioUrl} className="mb-4" />
-              <div className="grid grid-cols-2 gap-4">
-                {currentQuestion.options?.map((opt, idx) => (
-                  <button key={idx} className="bg-blue-600 text-white px-6 py-4 rounded-xl">{opt}</button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Picture Choice */}
-          {currentQuestion.type === 'picture-choice' && currentQuestion.images && (
-            <div className="mb-8 grid grid-cols-3 gap-4">
-              {currentQuestion.images.map((img, idx) => (
-                <div key={idx} className="bg-slate-700 rounded-xl p-4 flex flex-col items-center">
-                  <img src={img.url} alt={img.label} className="w-24 h-24 object-contain mb-2" />
-                  <span className="text-white font-bold">{img.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* True/False */}
-          {currentQuestion.type === 'true-false' && (
-            <div className="mb-8 flex gap-8">
-              <button className="bg-green-600 text-white px-8 py-4 rounded-xl font-bold">True</button>
-              <button className="bg-red-600 text-white px-8 py-4 rounded-xl font-bold">False</button>
-            </div>
-          )}
-
-          {/* Highlight */}
-          {currentQuestion.type === 'highlight' && currentQuestion.highlightOptions && (
-            <div className="mb-8">
-              <p className="text-white mb-4">(Highlight all correct options. UI not implemented yet.)</p>
-              <div className="flex gap-4">
-                {currentQuestion.highlightOptions.map((opt, idx) => (
-                  <span key={idx} className="bg-yellow-400 text-black px-6 py-4 rounded-xl cursor-pointer">{opt}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Mini-game */}
-          {currentQuestion.type === 'mini-game' && (
-            <div className="mb-8">
-              <p className="text-white mb-4">(Mini-game: {currentQuestion.gameType}. UI not implemented yet.)</p>
-              <div className="flex gap-4">
-                {currentQuestion.options?.map((opt, idx) => (
-                  <span key={idx} className="bg-pink-400 text-black px-6 py-4 rounded-xl cursor-pointer">{opt}</span>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Number Line Placement */}
           {currentQuestion.type === 'number-line-placement' && currentQuestion.numberLineMin !== undefined && currentQuestion.numberLineMax !== undefined && currentQuestion.correctPosition !== undefined && (
@@ -1402,7 +1883,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <>
               {/* Mobile: Stack buttons vertically */}
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-                {/* Top row on mobile: Skip and AI Tutor side by side */}
+                {/* Top row on mobile: Skip, Hint, and AI Tutor */}
                 <div className="flex gap-2 justify-between md:justify-start">
                   <button 
                     onClick={() => handleNext()} 
@@ -1410,6 +1891,19 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   >
                     Skip
                   </button>
+                  {currentQuestion.hints && currentQuestion.hints.length > 0 && (
+                    <button
+                      onClick={() => {
+                        setShowHints(!showHints)
+                        if (!showHints) {
+                          setHintsUsed(prev => prev + 1)
+                        }
+                      }}
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                    >
+                      💡 Hint
+                    </button>
+                  )}
                   <button
                     onClick={() => setShowAITutor(true)}
                     className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
@@ -1546,6 +2040,60 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
               {/* Tip Text */}
               <p className="text-gray-400 text-sm mt-6">💡 Tip: Buy extra hearts in the shop to keep going!</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Streak Milestone Celebration Modal */}
+      {showStreakMilestone && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in">
+          <div className="bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-3xl p-8 max-w-sm w-full shadow-2xl border-4 border-yellow-400 animate-scale-up relative overflow-hidden">
+            {/* Animated background sparkles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-300/30 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-10 right-10 w-32 h-32 bg-pink-300/30 rounded-full blur-xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-purple-300/30 rounded-full blur-xl animate-pulse delay-500"></div>
+            </div>
+
+            {/* Content */}
+            <div className="text-center relative z-10">
+              <div className="mb-6 text-8xl animate-bounce">🔥</div>
+              
+              <h2 className="text-4xl font-black text-white mb-2 drop-shadow-lg">
+                {streakMilestone >= 20 ? 'LEGENDARY!' : 
+                 streakMilestone >= 15 ? 'PHENOMENAL!' :
+                 streakMilestone >= 10 ? 'AMAZING!' : 
+                 'ON FIRE!'}
+              </h2>
+              <p className="text-white text-2xl font-bold mb-4 drop-shadow">
+                {streakMilestone} Question Streak!
+              </p>
+
+              {/* Bonus XP Display */}
+              <div className="bg-white/20 backdrop-blur rounded-xl p-4 mb-6 border-2 border-white/40">
+                <p className="text-yellow-200 text-sm font-semibold mb-1">Streak Bonus</p>
+                <p className="text-3xl font-black text-white">
+                  +{streakMilestone >= 20 ? 500 : streakMilestone >= 15 ? 300 : streakMilestone >= 10 ? 200 : 100} XP
+                </p>
+              </div>
+
+              {/* Combo Multiplier */}
+              {comboMultiplier > 1 && (
+                <div className="bg-yellow-400/20 backdrop-blur rounded-xl p-3 mb-6 border-2 border-yellow-400/40">
+                  <p className="text-yellow-100 text-lg font-bold">
+                    🎯 {comboMultiplier}x Combo Multiplier Active!
+                  </p>
+                </div>
+              )}
+
+              {/* Encouragement Text */}
+              <p className="text-white/90 text-lg font-semibold">
+                {streakMilestone >= 20 ? 'You\'re unstoppable!' :
+                 streakMilestone >= 15 ? 'Keep crushing it!' :
+                 streakMilestone >= 10 ? 'You\'re a math champion!' :
+                 'Keep the streak alive!'}
+              </p>
             </div>
           </div>
         </div>

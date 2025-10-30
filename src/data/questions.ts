@@ -31,10 +31,18 @@ export type QuestionType =
   | 'number-line-drag'
   | 'fraction-builder'
   | 'clock-setter'
+  | 'graph-plotter'
   | 'money-counter'
   | 'array-builder'
   | 'balance-scale'
   | 'shape-composer'
+  | 'fill-the-jar'
+  // Multiplication/Division Interactive Types
+  | 'array-grid-builder'
+  | 'group-maker'
+  | 'skip-counter'
+  | 'fair-share'
+  | 'division-machine'
 
 export interface Question {
   id: string
@@ -45,6 +53,7 @@ export interface Question {
   options?: string[]
   correctAnswer?: string
   explanation?: string
+  hints?: string[] // Helpful guidance without giving away the answer
   xp: number
   // Drag-and-drop
   pairs?: Array<{ left: string; right: string }>
@@ -122,6 +131,36 @@ export interface Question {
   shapeTarget?: string // Target shape to build (e.g., 'rectangle')
   shapePieces?: string[] // Available pieces (e.g., ['triangle', 'triangle'])
   shapeRotationAllowed?: boolean // Can pieces be rotated?
+  
+  // Fill The Jar
+  jarTarget?: number // Target number of items
+  jarStarting?: number // Starting number of items in jar
+  jarEmoji?: string // Emoji for items (e.g., '🍎', '🍪', '⚾️')
+  jarMode?: 'add' | 'remove' | 'count' // What action to perform
+  
+  // Array Grid Builder (Multiplication)
+  gridTargetRows?: number // Target number of rows
+  gridTargetCols?: number // Target number of columns
+  gridEmoji?: string // Emoji for grid items (e.g., '⭐', '🎯')
+  
+  // Group Maker (Multiplication)
+  groupsTarget?: number // Target number of groups
+  groupsItemsPerGroup?: number // Target items per group
+  groupsEmoji?: string // Emoji for items (e.g., '⭐', '🍎')
+  
+  // Skip Counter (Multiplication)
+  skipCountBy?: number // Number to skip count by (e.g., 2, 5, 10)
+  skipCountJumps?: number // Number of jumps to make
+  
+  // Fair Share (Division)
+  fairShareTotal?: number // Total items to share
+  fairShareGroups?: number // Number of groups to share among
+  fairShareEmoji?: string // Emoji for items (e.g., '🍪', '🍕')
+  
+  // Division Machine
+  divisionDividend?: number // Total items to divide
+  divisionDivisor?: number // Size of each group
+  divisionEmoji?: string // Emoji for items (e.g., '⭐', '🎯')
 }
 
 export interface LevelData {
@@ -170,7 +209,8 @@ export const levelContent: { [levelId: number]: LevelData } = {
         question: "2 + 0 = ___",
         correctAnswer: "2",
         explanation: "When we add 0, the number stays the same!",
-        xp: 10
+        xp: 10,
+        hints: ["When you add 0 to any number, the number stays the same", "2 + 0 = 2"]
       },
       {
         id: "1-3",
@@ -263,61 +303,77 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-1",
         levelId: 2,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is the correct way to write six?",
-        options: ["5", "6", "7", "8"],
-        correctAnswer: "6",
-        explanation: "Six is written as 6!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the number 6 on the number line!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: false,
+        explanation: "Great! 6 is right in the middle of the number line from 0 to 10!",
+        xp: 15
       },
       {
         id: "2-2",
         levelId: 2,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 7?",
-        options: ["6", "7", "8", "9"],
-        correctAnswer: "8",
-        explanation: "After 7 comes 8!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Start at 7. What comes next?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
+        explanation: "After 7 comes 8! You moved forward one step!",
+        xp: 15
       },
       {
         id: "2-3",
         levelId: 2,
-        type: "fill-blank" as QuestionType,
-        question: "1 + 6 = ___",
-        correctAnswer: "7",
-        explanation: "1 plus 6 equals 7!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Start at 1, add 6. Where do you land?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 1,
+        explanation: "1 plus 6 equals 7! You jumped 6 spaces forward!",
+        xp: 15
       },
       {
         id: "2-4",
         levelId: 2,
-        type: "number-sequence" as QuestionType,
-        question: "What comes after 8?",
-        options: ["7", "8", "9", "10"],
-        correctAnswer: "9",
-        explanation: "After 8 comes 9!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Start at 8. Jump forward 1 space!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
+        explanation: "After 8 comes 9! One more step!",
+        xp: 15
       },
       {
         id: "2-5",
         levelId: 2,
-        type: "multiple-choice" as QuestionType,
-        question: "Which number comes between 7 and 9?",
-        options: ["6", "7", "8", "9"],
-        correctAnswer: "8",
-        explanation: "8 comes between 7 and 9!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the number that comes between 7 and 9",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: false,
+        explanation: "8 is right between 7 and 9!",
+        xp: 15
       },
       {
         id: "2-6",
         levelId: 2,
-        type: "multiple-choice" as QuestionType,
-        question: "Which number is halfway between 0 and 10?",
-        options: ["3", "5", "7", "8"],
-        correctAnswer: "5",
-        explanation: "5 is exactly in the middle between 0 and 10!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the number exactly in the middle between 0 and 10",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: false,
+        explanation: "5 is exactly in the middle! It's halfway to 10!",
+        xp: 15
       },
       {
         id: "2-7",
@@ -332,34 +388,73 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "2-8",
         levelId: 2,
-        type: "visual-count" as QuestionType,
-        question: "Count the stars",
-        visualContent: "⭐⭐⭐⭐⭐⭐⭐⭐⭐",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "9",
-        explanation: "There are 9 stars!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Make a row of 9 squares to count to 9!",
+        arrayRows: 1,
+        arrayColumns: 9,
+        arrayCorrectTotal: 9,
+        explanation: "You built 9 squares! That's the number 9!",
+        xp: 15
       },
       {
         id: "2-9",
         levelId: 2,
-        type: "multiple-choice" as QuestionType,
-        question: "Which number is bigger: 5 or 9?",
-        options: ["5", "9", "They are the same", "0"],
-        correctAnswer: "9",
-        explanation: "9 is bigger than 5!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Which is bigger: 5 or 9? Drag to the bigger number!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: false,
+        explanation: "9 is bigger than 5! It's further to the right on the number line!",
+        xp: 15
       },
       {
         id: "2-10",
         levelId: 2,
-        type: "visual-count" as QuestionType,
-        question: "Count all the stars!",
-        visualContent: "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "There are 10 stars! Perfect count!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Build a perfect row of 10 squares!",
+        arrayRows: 1,
+        arrayColumns: 10,
+        arrayCorrectTotal: 10,
+        explanation: "Amazing! You counted to 10 perfectly!",
+        xp: 15
+      },
+      {
+        id: "2-11",
+        levelId: 2,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If the left side has 4, what goes on the right?",
+        balanceLeftSide: 4,
+        balanceCorrectRightSide: 4,
+        balanceShowNumbers: true,
+        explanation: "4 = 4! Both sides need to be equal to balance!",
+        xp: 15
+      },
+      {
+        id: "2-13",
+        levelId: 2,
+        type: "number-line-drag" as QuestionType,
+        question: "Start at 3, add 4. Where do you land?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
+        explanation: "3 + 4 = 7! You jumped 4 spaces from 3!",
+        xp: 15
+      },
+      {
+        id: "2-13",
+        levelId: 2,
+        type: "number-line-drag" as QuestionType,
+        question: "Start at 2, add 5. Where do you end up?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 2,
+        explanation: "2 + 5 = 7! You can see the jumps on the number line!",
+        xp: 15
       }
     ]
   },
@@ -383,42 +478,50 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "3-1",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is bigger: 2 or 5?",
-        options: ["2", "5", "They are the same", "0"],
-        correctAnswer: "5",
-        explanation: "5 is bigger than 2!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Which is bigger: 2 or 5? Drag to the bigger one!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: false,
+        explanation: "5 is bigger than 2! Numbers to the right are bigger!",
+        xp: 15
       },
       {
         id: "3-2",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is smaller: 4 or 7?",
-        options: ["4", "7", "They are the same", "0"],
-        correctAnswer: "4",
-        explanation: "4 is smaller than 7!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the SMALLER number: 4 or 7?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: false,
+        explanation: "4 is smaller than 7! It's further to the left on the number line!",
+        xp: 15
       },
       {
         id: "3-3",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is bigger: 6 or 3?",
-        options: ["3", "6", "They are the same", "0"],
-        correctAnswer: "6",
-        explanation: "6 is bigger than 3!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Which is bigger: 6 or 3? Drag to the bigger number!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: false,
+        explanation: "6 is bigger than 3! Numbers to the right are bigger!",
+        xp: 15
       },
       {
         id: "3-4",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is smaller: 1 or 8?",
-        options: ["1", "8", "They are the same", "0"],
-        correctAnswer: "1",
-        explanation: "1 is smaller than 8!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the SMALLER number: 1 or 8?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 1,
+        numberLineShowJumps: false,
+        explanation: "1 is smaller than 8! It's way to the left!",
+        xp: 15
       },
       {
         id: "3-5",
@@ -433,52 +536,94 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "3-6",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is bigger: 9 or 2?",
-        options: ["2", "9", "They are the same", "0"],
-        correctAnswer: "9",
-        explanation: "9 is bigger than 2!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Build a row of 9 squares to see how big 9 is!",
+        arrayRows: 1,
+        arrayColumns: 9,
+        arrayCorrectTotal: 9,
+        explanation: "9 is WAY bigger than 2! Look at all those squares!",
+        xp: 15
       },
       {
         id: "3-7",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is smaller: 10 or 6?",
-        options: ["6", "10", "They are the same", "0"],
-        correctAnswer: "6",
-        explanation: "6 is smaller than 10!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "Find the SMALLER number: 10 or 6?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: false,
+        explanation: "6 is smaller than 10! 10 is the biggest number on this line!",
+        xp: 15
       },
       {
         id: "3-8",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Are 3 and 8 the same?",
-        options: ["Yes", "No", "Maybe", "I don't know"],
-        correctAnswer: "No",
-        explanation: "No! 3 and 8 are different!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Build 3 squares. Is it the same as 8?",
+        arrayRows: 1,
+        arrayColumns: 3,
+        arrayCorrectTotal: 3,
+        explanation: "No! 3 and 8 are very different! 8 is much bigger!",
+        xp: 15
       },
       {
         id: "3-9",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which is bigger: 7 or 7?",
-        options: ["First 7", "Second 7", "They are the same", "Neither"],
-        correctAnswer: "They are the same",
-        explanation: "They are equal! Both are 7!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Build 7 squares. Is it equal to 7?",
+        arrayRows: 1,
+        arrayColumns: 7,
+        arrayCorrectTotal: 7,
+        explanation: "Yes! They are equal! Both are 7!",
+        xp: 15
       },
       {
         id: "3-10",
         levelId: 3,
-        type: "multiple-choice" as QuestionType,
-        question: "Which number comes right before 9?",
-        options: ["6", "7", "8", "10"],
-        correctAnswer: "8",
-        explanation: "8 comes right before 9!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What comes right BEFORE 9? Drag there!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: false,
+        explanation: "8 comes right before 9! One step to the left!",
+        xp: 15
+      },
+      {
+        id: "3-11",
+        levelId: 3,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! Left side: 7. Right side: ?",
+        balanceLeftSide: 7,
+        balanceCorrectRightSide: 7,
+        balanceShowNumbers: true,
+        explanation: "7 = 7! To balance, both sides must be equal!",
+        xp: 15
+      },
+      {
+        id: "3-12",
+        levelId: 3,
+        type: "number-line-drag" as QuestionType,
+        question: "Which is BIGGER: 4 or 6? Drag to it!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: false,
+        explanation: "6 is bigger! The further right, the bigger the number!",
+        xp: 15
+      },
+      {
+        id: "3-13",
+        levelId: 3,
+        type: "number-line-drag" as QuestionType,
+        question: "Find the BIGGER number: 3 or 8?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: false,
+        explanation: "8 is bigger! The further right, the bigger the number!",
+        xp: 15
       }
     ]
   },
@@ -503,102 +648,163 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "4-1",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 1 + 1?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
-        explanation: "1 + 1 = 2! One thing plus one thing equals two things!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 1 + 1? Start at 1, add 1 more!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 2,
+        numberLineShowJumps: true,
+        numberLineStartPos: 1,
+        explanation: "1 + 1 = 2! You jumped forward 1 space!",
+        xp: 15
       },
       {
         id: "4-2",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 2 + 1?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "3",
-        explanation: "2 + 1 = 3! Start at 2, then count up 1 more!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 2 + 1? Start at 2, add 1!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 2,
+        explanation: "2 + 1 = 3! You jumped forward 1 space from 2!",
+        xp: 15
       },
       {
         id: "4-3",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 1 + 2?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "3",
-        explanation: "1 + 2 = 3! We get the same answer!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 1 + 2? Start at 1, add 2!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 1,
+        explanation: "1 + 2 = 3! Same answer as 2 + 1!",
+        xp: 15
       },
       {
         id: "4-4",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 2 + 2?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "4",
-        explanation: "2 + 2 = 4! Two plus two equals four!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Build 2 + 2. Make two rows of 2!",
+        arrayRows: 2,
+        arrayColumns: 2,
+        arrayCorrectTotal: 4,
+        explanation: "2 + 2 = 4! You can see it as 2 rows of 2!",
+        xp: 15
       },
       {
         id: "4-5",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 0 + 3?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "3",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 0 + 3? Start at 0, add 3!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 0,
         explanation: "0 + 3 = 3! Adding zero doesn't change the number!",
-        xp: 10
+        xp: 15
       },
       {
         id: "4-6",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 3 + 1?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "4",
-        explanation: "3 + 1 = 4! Start at 3, then count up 1 more!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 3 + 1? Start at 3, jump forward 1!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
+        explanation: "3 + 1 = 4! One more jump from 3!",
+        xp: 15
       },
       {
         id: "4-7",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 1 + 3?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "4",
-        explanation: "1 + 3 = 4! The order doesn't matter!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 1 + 3? Start at 1, add 3!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 1,
+        explanation: "1 + 3 = 4! The order doesn't matter in addition!",
+        xp: 15
       },
       {
         id: "4-8",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 2 + 3?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "5",
-        explanation: "2 + 3 = 5! Count: 2... 3, 4, 5!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 2 + 3? Start at 2, jump 3 spaces!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 2,
+        explanation: "2 + 3 = 5! Watch the jumps: 2... 3, 4, 5!",
+        xp: 15
       },
       {
         id: "4-9",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 3 + 2?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "5",
+        type: "array-builder" as QuestionType,
+        question: "Build 3 + 2. Make a 2×3 rectangle (or 3×2)!",
+        arrayRows: 2,
+        arrayColumns: 3,
+        arrayCorrectTotal: 6,
+        explanation: "Whoops! 3 + 2 = 5, but you built 6! Try again with 1 row of 5!",
+        xp: 15
+      },
+      {
+        id: "4-9b",
+        levelId: 4,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 3 + 2? Start at 3, add 2!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
         explanation: "3 + 2 = 5! Same as 2 + 3!",
-        xp: 10
+        xp: 15
       },
       {
         id: "4-10",
         levelId: 4,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 1 + 4?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "5",
-        explanation: "1 + 4 = 5! Great adding!",
-        xp: 10
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 2 + 1, what number balances it?",
+        balanceLeftSide: 3,
+        balanceCorrectRightSide: 3,
+        balanceShowNumbers: true,
+        explanation: "2 + 1 = 3, so you need 3 on the right side to balance!",
+        xp: 15
+      },
+      {
+        id: "4-11",
+        levelId: 4,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 1 + 4? Start at 1, jump 4 spaces!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 1,
+        explanation: "1 + 4 = 5! Great addition work!",
+        xp: 15
+      },
+      {
+        id: "4-12",
+        levelId: 4,
+        type: "array-builder" as QuestionType,
+        question: "Show 4 + 1 by building 5 squares in a row!",
+        arrayRows: 1,
+        arrayColumns: 5,
+        arrayCorrectTotal: 5,
+        explanation: "4 + 1 = 5! You built it perfectly!",
+        xp: 15
       }
     ]
   },
@@ -622,85 +828,116 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "5-1",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 3 + 3?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "6",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 3 + 3? Double 3!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
         explanation: "3 + 3 = 6! This is called 'double 3'!",
-        xp: 10
+        xp: 15
       },
       {
         id: "5-2",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 4 + 3?",
-        options: ["5", "6", "7", "8"],
-        correctAnswer: "7",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 4 + 3? Start at 4!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 4,
         explanation: "4 + 3 = 7! Count from 4: 5, 6, 7!",
-        xp: 10
+        xp: 15
       },
       {
         id: "5-3",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 5 + 2?",
-        options: ["6", "7", "8", "9"],
-        correctAnswer: "7",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 + 2 = 7! Start at 5: 6, 7!",
-        xp: 10
+        xp: 15
       },
       {
         id: "5-4",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 5 + 4?",
-        options: ["7", "8", "9", "10"],
-        correctAnswer: "9",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 + 4 = 9! Great work!",
-        xp: 10
-      },
-      {
-        id: "5-5",
-        levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 5 + 5?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "5 + 5 = 10! Double 5 equals 10! Perfect!",
-        xp: 10
+        xp: 15
       },
       {
         id: "5-6",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 6 + 3?",
-        options: ["7", "8", "9", "10"],
-        correctAnswer: "9",
-        explanation: "6 + 3 = 9! Count from 6: 7, 8, 9!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Make 5 + 5! Build a 2×5 rectangle!",
+        arrayRows: 2,
+        arrayColumns: 5,
+        arrayCorrectTotal: 10,
+        explanation: "5 + 5 = 10! Double 5 equals 10! Perfect!",
+        xp: 15
       },
       {
         id: "5-7",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 4 + 4?",
-        options: ["6", "7", "8", "9"],
-        correctAnswer: "8",
-        explanation: "4 + 4 = 8! This is 'double 4'!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 6 + 3?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
+        explanation: "6 + 3 = 9! Count from 6: 7, 8, 9!",
+        xp: 15
       },
       {
         id: "5-8",
         levelId: 5,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 6 + 4?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
-        explanation: "6 + 4 = 10! Another way to make 10!",
-        xp: 10
+        type: "array-builder" as QuestionType,
+        question: "Make 4 + 4! Build a 2×4 rectangle (double 4)!",
+        arrayRows: 2,
+        arrayColumns: 4,
+        arrayCorrectTotal: 8,
+        explanation: "4 + 4 = 8! This is 'double 4'!",
+        xp: 15
       },
       {
         id: "5-9",
+        levelId: 5,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 6 + 4? Can you make 10?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 10,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
+        explanation: "6 + 4 = 10! Another way to make 10!",
+        xp: 15
+      },
+      {
+        id: "5-10",
+        levelId: 5,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 5 + 5, what balances it?",
+        balanceLeftSide: 10,
+        balanceCorrectRightSide: 10,
+        balanceShowNumbers: true,
+        explanation: "5 + 5 = 10! So you need 10 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "5-11",
         levelId: 5,
         type: "bubble-pop" as QuestionType,
         question: "Pop all numbers that make 10 when added to 5!",
@@ -710,13 +947,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
         xp: 15
       },
       {
-        id: "5-10",
+        id: "5-12",
         levelId: 5,
-        type: "fill-blank" as QuestionType,
-        question: "What number comes after 2? ___",
-        correctAnswer: "3",
-        explanation: "The counting order is 0, 1, 2, 3!",
-        xp: 10
+        type: "number-line-drag" as QuestionType,
+        question: "What is 7 + 3?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 10,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
+        explanation: "7 + 3 = 10! You found another pair that makes 10!",
+        xp: 15
       }
     ]
   },
@@ -740,100 +981,129 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "6-1",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 6 + 5?",
-        options: ["10", "11", "12", "13"],
-        correctAnswer: "11",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 6 + 5? Start at 6!",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 11,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
+        hints: ["Start at 6 and count forward 5 steps", "6 + 5 is the same as 5 + 6"],
         explanation: "6 + 5 = 11! Start at 6 and count: 7, 8, 9, 10, 11!",
         xp: 15
       },
       {
         id: "6-2",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 7 + 4?",
-        options: ["10", "11", "12", "13"],
-        correctAnswer: "11",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 11,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
         explanation: "7 + 4 = 11! Excellent!",
         xp: 15
       },
       {
         id: "6-3",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 7 + 5?",
-        options: ["11", "12", "13", "14"],
-        correctAnswer: "12",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 12,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
         explanation: "7 + 5 = 12! Great adding!",
         xp: 15
       },
       {
         id: "6-4",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 8 + 4?",
-        options: ["11", "12", "13", "14"],
-        correctAnswer: "12",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 12,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 + 4 = 12! Perfect!",
         xp: 15
       },
       {
         id: "6-5",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 8 + 5?",
-        options: ["12", "13", "14", "15"],
-        correctAnswer: "13",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 13,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 + 5 = 13! You're doing great!",
         xp: 15
       },
       {
         id: "6-6",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 7 + 6?",
-        options: ["12", "13", "14", "15"],
-        correctAnswer: "13",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 13,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
         explanation: "7 + 6 = 13! Almost to 15!",
         xp: 15
       },
       {
         id: "6-7",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 8 + 6?",
-        options: ["13", "14", "15", "16"],
-        correctAnswer: "14",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 14,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 + 6 = 14! One more!",
         xp: 15
       },
       {
         id: "6-8",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 9 + 5?",
-        options: ["13", "14", "15", "16"],
-        correctAnswer: "14",
+        type: "array-builder" as QuestionType,
+        question: "Make 9 + 5! Build a rectangle!",
+        arrayRows: 5,
+        arrayColumns: 9,
+        arrayCorrectTotal: 14,
         explanation: "9 + 5 = 14! You're amazing!",
         xp: 15
       },
       {
         id: "6-9",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 8 + 7?",
-        options: ["14", "15", "16", "17"],
-        correctAnswer: "15",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 15,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 + 7 = 15! Perfect sum!",
         xp: 15
       },
       {
         id: "6-10",
         levelId: 6,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 9 + 6?",
-        options: ["14", "15", "16", "17"],
-        correctAnswer: "15",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 15,
+        numberLineShowJumps: true,
+        numberLineStartPos: 9,
         explanation: "9 + 6 = 15! Another way to make 15!",
         xp: 15
       }
@@ -859,100 +1129,124 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "7-1",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 9 + 7?",
-        options: ["15", "16", "17", "18"],
-        correctAnswer: "16",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 9 + 7? Start at 9!",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 16,
+        numberLineShowJumps: true,
+        numberLineStartPos: 9,
         explanation: "9 + 7 = 16! Good job!",
         xp: 15
       },
       {
         id: "7-2",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 8 + 8?",
-        options: ["15", "16", "17", "18"],
-        correctAnswer: "16",
+        type: "array-builder" as QuestionType,
+        question: "Make 8 + 8! Build a 2×8 rectangle (double 8)!",
+        arrayRows: 2,
+        arrayColumns: 8,
+        arrayCorrectTotal: 16,
         explanation: "8 + 8 = 16! Double 8 is 16!",
         xp: 15
       },
       {
         id: "7-3",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 9 + 8?",
-        options: ["16", "17", "18", "19"],
-        correctAnswer: "17",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 17,
+        numberLineShowJumps: true,
+        numberLineStartPos: 9,
         explanation: "9 + 8 = 17! Almost to 20!",
         xp: 15
       },
       {
         id: "7-4",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 + 7?",
-        options: ["16", "17", "18", "19"],
-        correctAnswer: "17",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 17,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 + 7 = 17! Adding 10 is easy!",
         xp: 15
       },
       {
         id: "7-5",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 9 + 9?",
-        options: ["17", "18", "19", "20"],
-        correctAnswer: "18",
+        type: "array-builder" as QuestionType,
+        question: "Make 9 + 9! Build a 2×9 rectangle (double 9)!",
+        arrayRows: 2,
+        arrayColumns: 9,
+        arrayCorrectTotal: 18,
         explanation: "9 + 9 = 18! Double 9 is 18!",
         xp: 15
       },
       {
         id: "7-6",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 + 8?",
-        options: ["17", "18", "19", "20"],
-        correctAnswer: "18",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 18,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 + 8 = 18! Good!",
         xp: 15
       },
       {
         id: "7-7",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 + 9?",
-        options: ["18", "19", "20", "21"],
-        correctAnswer: "19",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 19,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 + 9 = 19! One away from 20!",
         xp: 15
       },
       {
         id: "7-8",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 + 10?",
-        options: ["18", "19", "20", "21"],
-        correctAnswer: "20",
+        type: "array-builder" as QuestionType,
+        question: "Make 10 + 10! Build a 2×10 rectangle (double 10)!",
+        arrayRows: 2,
+        arrayColumns: 10,
+        arrayCorrectTotal: 20,
         explanation: "10 + 10 = 20! Perfect! Double 10 is 20!",
         xp: 15
       },
       {
         id: "7-9",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 6 + 10?",
-        options: ["15", "16", "17", "18"],
-        correctAnswer: "16",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 16,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
         explanation: "6 + 10 = 16! The order doesn't matter!",
         xp: 15
       },
       {
         id: "7-10",
         levelId: 7,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 5 + 10?",
-        options: ["14", "15", "16", "17"],
-        correctAnswer: "15",
+        numberLineMin: 0,
+        numberLineMax: 20,
+        numberLineDragCorrect: 15,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 + 10 = 15! Addition master!",
         xp: 15
       }
@@ -978,100 +1272,142 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "8-1",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 2 - 1?",
-        options: ["0", "1", "2", "3"],
-        correctAnswer: "1",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 2 - 1? Start at 2, move back 1!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 1,
+        numberLineShowJumps: true,
+        numberLineStartPos: 2,
         explanation: "2 - 1 = 1! Start at 2, take away 1, you have 1 left!",
         xp: 15
       },
       {
         id: "8-2",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 3 - 1?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 3 - 1? Move backward!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 2,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
         explanation: "3 - 1 = 2! Take one away from three!",
         xp: 15
       },
       {
         id: "8-3",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 3 - 2?",
-        options: ["0", "1", "2", "3"],
-        correctAnswer: "1",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 3 - 2? Jump back 2!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 1,
+        numberLineShowJumps: true,
+        numberLineStartPos: 3,
+        hints: ["Start at 3 and move backward 2 steps", "Take away 2 from 3"],
         explanation: "3 - 2 = 1! Take two away from three!",
         xp: 15
       },
       {
         id: "8-4",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 4 - 1?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "3",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 4,
         explanation: "4 - 1 = 3! Start at 4, go back 1!",
         xp: 15
       },
       {
         id: "8-5",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 5 - 1?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 - 1 = 4! Take one away from five!",
         xp: 15
       },
       {
         id: "8-6",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 5 - 2?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "3",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 5 - 2? Back 2 steps!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 - 2 = 3! Take two away from five!",
-        xp: 15
-      },
-      {
-        id: "8-7",
-        levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 4 - 2?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
-        explanation: "4 - 2 = 2! Take two away from four!",
         xp: 15
       },
       {
         id: "8-8",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 6 - 2?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
-        explanation: "6 - 2 = 4! Go back 2 from 6!",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 4 - 2?",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 2,
+        numberLineShowJumps: true,
+        numberLineStartPos: 4,
+        explanation: "4 - 2 = 2! Take two away from four!",
         xp: 15
       },
       {
         id: "8-9",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 6 - 3?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "3",
-        explanation: "6 - 3 = 3! Half of 6 is 3!",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 6 - 2? Go back 2!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
+        explanation: "6 - 2 = 4! Go back 2 from 6!",
         xp: 15
       },
       {
         id: "8-10",
         levelId: 8,
-        type: "multiple-choice" as QuestionType,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 5 - 2, what balances it?",
+        balanceLeftSide: 3,
+        balanceCorrectRightSide: 3,
+        balanceShowNumbers: true,
+        explanation: "5 - 2 = 3! So you need 3 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "8-11",
+        levelId: 8,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 6 - 3? Back 3 steps!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 6,
+        explanation: "6 - 3 = 3! Half of 6 is 3!",
+        xp: 15
+      },
+      {
+        id: "8-12",
+        levelId: 8,
+        type: "number-line-drag" as QuestionType,
         question: "What is 5 - 3?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 2,
+        numberLineShowJumps: true,
+        numberLineStartPos: 5,
         explanation: "5 - 3 = 2! Great subtraction!",
         xp: 15
       }
@@ -1097,100 +1433,141 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "9-1",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 1?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "9",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 1? Start at 10!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 1 = 9! Start at 10, go back 1!",
         xp: 15
       },
       {
         id: "9-2",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 2?",
-        options: ["7", "8", "9", "10"],
-        correctAnswer: "8",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 2? Move back 2!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 2 = 8! Go back 2 from 10!",
         xp: 15
       },
       {
         id: "9-3",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 - 3?",
-        options: ["6", "7", "8", "9"],
-        correctAnswer: "7",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 7,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 3 = 7! Take three away from ten!",
         xp: 15
       },
       {
         id: "9-4",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 4?",
-        options: ["5", "6", "7", "8"],
-        correctAnswer: "6",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 4? Back 4 steps!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 4 = 6! Excellent!",
         xp: 15
       },
       {
         id: "9-5",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 5?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "5",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 5? Halfway back!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 5 = 5! Half of 10 is 5!",
         xp: 15
       },
       {
         id: "9-6",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 - 6?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 6 = 4! Great work!",
         xp: 15
       },
       {
         id: "9-7",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 - 7?",
-        options: ["2", "3", "4", "5"],
-        correctAnswer: "3",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 3,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 7 = 3! You're doing great!",
         xp: 15
       },
       {
         id: "9-8",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 10 - 8?",
-        options: ["1", "2", "3", "4"],
-        correctAnswer: "2",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 2,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 8 = 2! Perfect!",
         xp: 15
       },
       {
         id: "9-9",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 9?",
-        options: ["0", "1", "2", "3"],
-        correctAnswer: "1",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 9? Almost everything!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 1,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 9 = 1! Almost all taken away!",
         xp: 15
       },
       {
         id: "9-10",
         levelId: 9,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 10 - 10?",
-        options: ["0", "1", "2", "3"],
-        correctAnswer: "0",
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 10 - 4, what balances it?",
+        balanceLeftSide: 6,
+        balanceCorrectRightSide: 6,
+        balanceShowNumbers: true,
+        explanation: "10 - 4 = 6! So you need 6 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "9-11",
+        levelId: 9,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 10 - 10? Take away everything!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 0,
+        numberLineShowJumps: true,
+        numberLineStartPos: 10,
         explanation: "10 - 10 = 0! When you take everything away, you have nothing!",
         xp: 15
       }
@@ -1216,100 +1593,141 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "10-1",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 7 - 2?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "5",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 7 - 2? Start at 7!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 7,
         explanation: "7 - 2 = 5! Go back 2 from 7!",
         xp: 15
       },
       {
         id: "10-2",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 8 - 3?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "5",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 - 3 = 5! Take 3 away from 8!",
         xp: 15
       },
       {
         id: "10-3",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 9 - 3?",
-        options: ["5", "6", "7", "8"],
-        correctAnswer: "6",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 9 - 3? Back 3!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: true,
+        numberLineStartPos: 9,
         explanation: "9 - 3 = 6! Great job!",
         xp: 15
       },
       {
         id: "10-4",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 8 - 4?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: "4",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 8 - 4? Half of 8!",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 4,
+        numberLineShowJumps: true,
+        numberLineStartPos: 8,
         explanation: "8 - 4 = 4! Half of 8 is 4!",
         xp: 15
       },
       {
         id: "10-5",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 9 - 4?",
-        options: ["4", "5", "6", "7"],
-        correctAnswer: "5",
+        numberLineMin: 0,
+        numberLineMax: 10,
+        numberLineDragCorrect: 5,
+        numberLineShowJumps: true,
+        numberLineStartPos: 9,
         explanation: "9 - 4 = 5! Excellent!",
         xp: 15
       },
       {
         id: "10-6",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 12 - 3?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "9",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 12 - 3? Bigger numbers!",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 12,
         explanation: "12 - 3 = 9! You're getting bigger numbers!",
         xp: 15
       },
       {
         id: "10-7",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 11 - 5?",
-        options: ["5", "6", "7", "8"],
-        correctAnswer: "6",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 6,
+        numberLineShowJumps: true,
+        numberLineStartPos: 11,
         explanation: "11 - 5 = 6! Perfect!",
         xp: 15
       },
       {
         id: "10-8",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
+        type: "number-line-drag" as QuestionType,
         question: "What is 13 - 4?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "9",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 9,
+        numberLineShowJumps: true,
+        numberLineStartPos: 13,
         explanation: "13 - 4 = 9! You're amazing!",
         xp: 15
       },
       {
         id: "10-9",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 15 - 5?",
-        options: ["8", "9", "10", "11"],
-        correctAnswer: "10",
+        type: "number-line-drag" as QuestionType,
+        question: "What is 15 - 5? Make 10!",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 10,
+        numberLineShowJumps: true,
+        numberLineStartPos: 15,
         explanation: "15 - 5 = 10! Another way to make 10!",
         xp: 15
       },
       {
         id: "10-10",
         levelId: 10,
-        type: "multiple-choice" as QuestionType,
-        question: "What is 14 - 6?",
-        options: ["7", "8", "9", "10"],
-        correctAnswer: "8",
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 12 - 5, what balances it?",
+        balanceLeftSide: 7,
+        balanceCorrectRightSide: 7,
+        balanceShowNumbers: true,
+        explanation: "12 - 5 = 7! So you need 7 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "10-11",
+        levelId: 10,
+        type: "number-line-drag" as QuestionType,
+        question: "What is 14 - 6? Expert level!",
+        numberLineMin: 0,
+        numberLineMax: 15,
+        numberLineDragCorrect: 8,
+        numberLineShowJumps: true,
+        numberLineStartPos: 14,
         explanation: "14 - 6 = 8! Subtraction expert!",
         xp: 15
       }
@@ -1426,6 +1844,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "11-10",
         levelId: 11,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 13 - 5, what balances it?",
+        balanceLeftSide: 8,
+        balanceCorrectRightSide: 8,
+        balanceShowNumbers: true,
+        explanation: "13 - 5 = 8! So you need 8 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "11-11",
+        levelId: 11,
         type: "multiple-choice" as QuestionType,
         question: "What is 17 - 6?",
         options: ["10", "11", "12", "13"],
@@ -1539,11 +1968,23 @@ export const levelContent: { [levelId: number]: LevelData } = {
         question: "What is 15 - 8?",
         options: ["6", "7", "8", "9"],
         correctAnswer: "7",
+        hints: ["Start at 15 and count backward 8 steps", "Think: 10 - 8 = 2, so 15 - 8 = 7"],
         explanation: "15 - 8 = 7! Good!",
         xp: 15
       },
       {
         id: "12-10",
+        levelId: 12,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 18 - 7, what balances it?",
+        balanceLeftSide: 11,
+        balanceCorrectRightSide: 11,
+        balanceShowNumbers: true,
+        explanation: "18 - 7 = 11! So you need 11 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "12-11",
         levelId: 12,
         type: "multiple-choice" as QuestionType,
         question: "What is 17 - 8?",
@@ -1664,6 +2105,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "13-10",
         levelId: 13,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 15 - 8, what balances it?",
+        balanceLeftSide: 7,
+        balanceCorrectRightSide: 7,
+        balanceShowNumbers: true,
+        explanation: "15 - 8 = 7! So you need 7 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "13-11",
+        levelId: 13,
         type: "multiple-choice" as QuestionType,
         question: "What is 17 - 9?",
         options: ["7", "8", "9", "10"],
@@ -1783,6 +2235,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "14-10",
         levelId: 14,
+        type: "balance-scale" as QuestionType,
+        question: "Balance! If left = 8 + 5, what balances it?",
+        balanceLeftSide: 13,
+        balanceCorrectRightSide: 13,
+        balanceShowNumbers: true,
+        explanation: "8 + 5 = 13! So you need 13 on the right to balance!",
+        xp: 15
+      },
+      {
+        id: "14-11",
+        levelId: 14,
         type: "multiple-choice" as QuestionType,
         question: "What is 15 - 9?",
         options: ["5", "6", "7", "8"],
@@ -1901,6 +2364,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       },
       {
         id: "15-10",
+        levelId: 15,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 20 - 8, what balances it?",
+        balanceLeftSide: 12,
+        balanceCorrectRightSide: 12,
+        balanceShowNumbers: true,
+        explanation: "20 - 8 = 12! So you need 12 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "15-11",
         levelId: 15,
         type: "multiple-choice" as QuestionType,
         question: "What is 12 - 6?",
@@ -2022,12 +2496,45 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "16-10",
         levelId: 16,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 2 × 5, what balances it?",
+        balanceLeftSide: 10,
+        balanceCorrectRightSide: 10,
+        balanceShowNumbers: true,
+        explanation: "2 × 5 = 10! So you need 10 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "16-11",
+        levelId: 16,
         type: "multiple-choice" as QuestionType,
         question: "What is 2 × 6?",
         options: ["10", "11", "12", "13"],
         correctAnswer: "12",
         explanation: "2 × 6 = 12! Same as 6 × 2!",
         xp: 20
+      },
+      {
+        id: "16-12",
+        levelId: 16,
+        type: "array-grid-builder" as QuestionType,
+        question: "Build an array for 2 × 4",
+        gridTargetRows: 2,
+        gridTargetCols: 4,
+        gridEmoji: "⭐",
+        explanation: "2 rows × 4 columns = 8 stars! Great job building the array!",
+        xp: 25
+      },
+      {
+        id: "16-13",
+        levelId: 16,
+        type: "group-maker" as QuestionType,
+        question: "Make 3 groups of 2 apples",
+        groupsTarget: 3,
+        groupsItemsPerGroup: 2,
+        groupsEmoji: "🍎",
+        explanation: "3 groups × 2 apples = 6 apples! Perfect grouping!",
+        xp: 25
       }
     ]
   },
@@ -2141,12 +2648,44 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "17-10",
         levelId: 17,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 3 × 4, what balances it?",
+        balanceLeftSide: 12,
+        balanceCorrectRightSide: 12,
+        balanceShowNumbers: true,
+        explanation: "3 × 4 = 12! So you need 12 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "17-11",
+        levelId: 17,
         type: "multiple-choice" as QuestionType,
         question: "What is 4 × 5?",
         options: ["16", "17", "18", "20"],
         correctAnswer: "20",
         explanation: "4 × 5 = 20! Five groups of 4!",
         xp: 20
+      },
+      {
+        id: "17-12",
+        levelId: 17,
+        type: "array-grid-builder" as QuestionType,
+        question: "Build an array for 3 × 3",
+        gridTargetRows: 3,
+        gridTargetCols: 3,
+        gridEmoji: "🎯",
+        explanation: "3 rows × 3 columns = 9! Perfect square array!",
+        xp: 25
+      },
+      {
+        id: "17-13",
+        levelId: 17,
+        type: "skip-counter" as QuestionType,
+        question: "Count by 3s to reach 15",
+        skipCountBy: 3,
+        skipCountJumps: 5,
+        explanation: "3, 6, 9, 12, 15! Counting by 3s is the same as 3 × 5!",
+        xp: 25
       }
     ]
   },
@@ -2260,12 +2799,44 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "18-10",
         levelId: 18,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 5 × 6, what balances it?",
+        balanceLeftSide: 30,
+        balanceCorrectRightSide: 30,
+        balanceShowNumbers: true,
+        explanation: "5 × 6 = 30! So you need 30 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "18-11",
+        levelId: 18,
         type: "multiple-choice" as QuestionType,
         question: "What is 6 × 5?",
         options: ["28", "29", "30", "31"],
         correctAnswer: "30",
         explanation: "6 × 5 = 30! Great work!",
         xp: 20
+      },
+      {
+        id: "18-12",
+        levelId: 18,
+        type: "skip-counter" as QuestionType,
+        question: "Count by 5s to reach 30",
+        skipCountBy: 5,
+        skipCountJumps: 6,
+        explanation: "5, 10, 15, 20, 25, 30! That's 5 × 6 = 30!",
+        xp: 25
+      },
+      {
+        id: "18-13",
+        levelId: 18,
+        type: "group-maker" as QuestionType,
+        question: "Make 6 groups of 4 gems",
+        groupsTarget: 6,
+        groupsItemsPerGroup: 4,
+        groupsEmoji: "💎",
+        explanation: "6 groups × 4 gems = 24 gems! Perfect organization!",
+        xp: 25
       }
     ]
   },
@@ -2378,6 +2949,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       },
       {
         id: "19-10",
+        levelId: 19,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 7 × 4, what balances it?",
+        balanceLeftSide: 28,
+        balanceCorrectRightSide: 28,
+        balanceShowNumbers: true,
+        explanation: "7 × 4 = 28! So you need 28 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "19-11",
         levelId: 19,
         type: "multiple-choice" as QuestionType,
         question: "What is 8 × 5?",
@@ -2498,6 +3080,17 @@ export const levelContent: { [levelId: number]: LevelData } = {
       {
         id: "20-10",
         levelId: 20,
+        type: "balance-scale" as QuestionType,
+        question: "Balance the scale! If left = 9 × 5, what balances it?",
+        balanceLeftSide: 45,
+        balanceCorrectRightSide: 45,
+        balanceShowNumbers: true,
+        explanation: "9 × 5 = 45! So you need 45 on the right to balance!",
+        xp: 20
+      },
+      {
+        id: "20-11",
+        levelId: 20,
         type: "multiple-choice" as QuestionType,
         question: "What is 10 × 10?",
         options: ["90", "95", "100", "105"],
@@ -2534,7 +3127,9 @@ export const levelContent: { [levelId: number]: LevelData } = {
     { id: "21-7", levelId: 21, type: "multiple-choice" as QuestionType, question: "What is 15 ÷ 3?", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "15 ÷ 3 = 5. Fifteen split into 3 equal groups makes 5 in each group.", xp: 15 },
     { id: "21-8", levelId: 21, type: "multiple-choice" as QuestionType, question: "If you have 20 coins and 4 piggy banks, how many coins per bank? (20 ÷ 4 = ?)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "20 ÷ 4 = 5. Each piggy bank gets 5 coins.", xp: 15 },
     { id: "21-9", levelId: 21, type: "multiple-choice" as QuestionType, question: "What is 14 ÷ 2?", options: ["6", "7", "8", "9"], correctAnswer: "7", explanation: "14 ÷ 2 = 7. Fourteen split into 2 equal groups makes 7 in each group.", xp: 15 },
-    { id: "21-10", levelId: 21, type: "multiple-choice" as QuestionType, question: "What is 18 ÷ 2?", options: ["8", "9", "10", "11"], correctAnswer: "9", explanation: "18 ÷ 2 = 9. Eighteen split into 2 equal groups makes 9 in each group.", xp: 15 }
+    { id: "21-10", levelId: 21, type: "multiple-choice" as QuestionType, question: "What is 18 ÷ 2?", options: ["8", "9", "10", "11"], correctAnswer: "9", explanation: "18 ÷ 2 = 9. Eighteen split into 2 equal groups makes 9 in each group.", xp: 15 },
+    { id: "21-11", levelId: 21, type: "fair-share" as QuestionType, question: "Share 12 cookies equally among 3 friends", fairShareTotal: 12, fairShareGroups: 3, fairShareEmoji: "🍪", explanation: "12 ÷ 3 = 4. Each friend gets 4 cookies!", xp: 25 },
+    { id: "21-12", levelId: 21, type: "division-machine" as QuestionType, question: "Divide 15 apples into groups of 3", divisionDividend: 15, divisionDivisor: 3, divisionEmoji: "🍎", explanation: "15 ÷ 3 = 5. You can make 5 groups of 3 apples!", xp: 25 }
     ]
   },
 
@@ -2563,7 +3158,9 @@ export const levelContent: { [levelId: number]: LevelData } = {
     { id: "22-7", levelId: 22, type: "multiple-choice" as QuestionType, question: "What is 30 ÷ 6? (Hint: 6 × 5 = 30)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "30 ÷ 6 = 5, because 6 × 5 = 30.", xp: 15 },
     { id: "22-8", levelId: 22, type: "multiple-choice" as QuestionType, question: "What is 35 ÷ 7? (Hint: 7 × 5 = 35)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "35 ÷ 7 = 5, because 7 × 5 = 35.", xp: 15 },
     { id: "22-9", levelId: 22, type: "multiple-choice" as QuestionType, question: "What is 40 ÷ 8? (Hint: 8 × 5 = 40)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "40 ÷ 8 = 5, because 8 × 5 = 40.", xp: 15 },
-    { id: "22-10", levelId: 22, type: "multiple-choice" as QuestionType, question: "What is 45 ÷ 9? (Hint: 9 × 5 = 45)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "45 ÷ 9 = 5, because 9 × 5 = 45.", xp: 15 }
+    { id: "22-10", levelId: 22, type: "multiple-choice" as QuestionType, question: "What is 45 ÷ 9? (Hint: 9 × 5 = 45)", options: ["4", "5", "6", "7"], correctAnswer: "5", explanation: "45 ÷ 9 = 5, because 9 × 5 = 45.", xp: 15 },
+    { id: "22-11", levelId: 22, type: "fair-share" as QuestionType, question: "Share 20 stars equally among 4 friends", fairShareTotal: 20, fairShareGroups: 4, fairShareEmoji: "⭐", explanation: "20 ÷ 4 = 5. Each friend gets 5 stars!", xp: 25 },
+    { id: "22-12", levelId: 22, type: "division-machine" as QuestionType, question: "Divide 24 gems into groups of 6", divisionDividend: 24, divisionDivisor: 6, divisionEmoji: "💎", explanation: "24 ÷ 6 = 4. You can make 4 groups of 6 gems!", xp: 25 }
     ]
   },
 

@@ -44,6 +44,12 @@ export default function AITutor({ question, correctAnswer, userAnswer, isOpen, o
     router.push('/upgrade')
   }
 
+  const handleStartTrial = () => {
+    // For testing: immediately grant access to AI tutor
+    setIsPremium(true)
+    setCheckingPremium(false)
+  }
+
   const handleAsk = async () => {
     if (!input.trim()) return
 
@@ -61,7 +67,8 @@ export default function AITutor({ question, correctAnswer, userAnswer, isOpen, o
           correctAnswer,
           userAnswer,
           userQuestion: userMessage,
-          history: messages
+          history: messages,
+          isTrial: true // Enable trial access for testing
         })
       })
 
@@ -69,6 +76,12 @@ export default function AITutor({ question, correctAnswer, userAnswer, isOpen, o
       
       if (data.explanation) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.explanation }])
+      } else if (data.error) {
+        // Show specific error message
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: `❌ ${data.error.message || 'Something went wrong. Please try again.'}` 
+        }])
       }
     } catch (error) {
       console.error('AI Tutor error:', error)
@@ -129,7 +142,7 @@ export default function AITutor({ question, correctAnswer, userAnswer, isOpen, o
             </div>
             
             <button 
-              onClick={handleUpgrade}
+              onClick={handleStartTrial}
               className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-lg hover:shadow-xl mb-3"
             >
               Start Free 7-Day Trial

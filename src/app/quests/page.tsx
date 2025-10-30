@@ -207,7 +207,7 @@ export default async function QuestsPage() {
       </div>
 
       {/* Bottom Navigation for Mobile */}
-      <BottomNav currentPage="quests" />
+      <BottomNav currentPage="achievements" />
     </div>
   )
 }

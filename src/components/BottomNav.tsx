@@ -1,17 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, Trophy, Target, ShoppingBag, User } from 'lucide-react'
+import { Home, Trophy, Award, ShoppingBag, User } from 'lucide-react'
 
 interface BottomNavProps {
-  currentPage: 'learn' | 'leaderboards' | 'quests' | 'shop' | 'profile' | 'dashboard'
+  currentPage: 'learn' | 'leaderboards' | 'achievements' | 'shop' | 'profile' | 'dashboard'
 }
 
 export default function BottomNav({ currentPage }: BottomNavProps) {
   const navItems = [
     { href: '/learn', icon: Home, label: 'Learn', id: 'learn' },
     { href: '/leaderboards', icon: Trophy, label: 'Ranks', id: 'leaderboards' },
-    { href: '/quests', icon: Target, label: 'Quests', id: 'quests' },
+    { href: '/achievements', icon: Award, label: 'Badges', id: 'achievements' },
     { href: '/shop', icon: ShoppingBag, label: 'Shop', id: 'shop' },
     { href: '/profile', icon: User, label: 'Profile', id: 'profile' },
   ]

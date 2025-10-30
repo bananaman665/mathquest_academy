@@ -28,9 +28,16 @@ export default function NumberLineDrag({
   const containerRef = useRef<HTMLDivElement>(null)
 
   const numbers = Array.from({ length: max - min + 1 }, (_, i) => min + i)
-  const snapThreshold = 0.4 // How close to snap
 
-  const handleDrag = (clientX: number) => {
+  // Reset state when question changes
+  useEffect(() => {
+    setCurrentPosition(startPosition ?? min)
+    setHasSubmitted(false)
+    setIsDragging(false)
+  }, [question, correctAnswer, min, startPosition])
+
+  // Handle drag position from mouse/touch
+  const updatePositionFromEvent = (clientX: number) => {
     if (!containerRef.current || hasSubmitted) return
 
     const rect = containerRef.current.getBoundingClientRect()
@@ -40,32 +47,64 @@ export default function NumberLineDrag({
     // Convert percentage to number position
     const rawPosition = min + percentage * (max - min)
     
-    // Snap to nearest integer
+    // ALWAYS snap to nearest integer for accurate positioning
     const snappedPosition = Math.round(rawPosition)
     
-    // Check if close enough to snap
-    if (Math.abs(rawPosition - snappedPosition) < snapThreshold) {
-      setCurrentPosition(snappedPosition)
-    } else {
-      setCurrentPosition(rawPosition)
-    }
+    // Clamp to valid range
+    const clampedPosition = Math.max(min, Math.min(max, snappedPosition))
+    
+    console.log('Debug:', { 
+      clientX, 
+      rectLeft: rect.left, 
+      rectWidth: rect.width, 
+      x, 
+      percentage: percentage.toFixed(3), 
+      rawPosition: rawPosition.toFixed(2), 
+      snappedPosition,
+      clampedPosition,
+      min,
+      max
+    })
+    
+    setCurrentPosition(clampedPosition)
   }
 
-  const handleMouseDown = () => setIsDragging(true)
-  
-  const handleMouseUp = () => setIsDragging(false)
+  const handleMouseDown = () => {
+    if (!hasSubmitted) setIsDragging(true)
+  }
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (isDragging) {
-      handleDrag(e.clientX)
+      updatePositionFromEvent(e.clientX)
     }
   }
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      handleDrag(e.touches[0].clientX)
+  const handleTouchMove = (e: TouchEvent) => {
+    if (isDragging && e.touches.length > 0) {
+      updatePositionFromEvent(e.touches[0].clientX)
     }
   }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+  }
+
+  // Add global event listeners for mouse/touch move
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleDragEnd)
+      window.addEventListener('touchmove', handleTouchMove)
+      window.addEventListener('touchend', handleDragEnd)
+      
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove)
+        window.removeEventListener('mouseup', handleDragEnd)
+        window.removeEventListener('touchmove', handleTouchMove)
+        window.removeEventListener('touchend', handleDragEnd)
+      }
+    }
+  }, [isDragging])
 
   const handleSubmit = () => {
     if (hasSubmitted) return
@@ -82,57 +121,62 @@ export default function NumberLineDrag({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6">
-      {/* Question */}
-      <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">{question}</h3>
-        {showJumps && startPosition !== undefined && (
-          <p className="text-lg text-gray-600">
-            Start at {startPosition}, where do you end?
-          </p>
-        )}
-      </div>
-
-      {/* Number Line Container */}
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
+      {/* Number Line Container - Clean */}
       <div
-        ref={containerRef}
-        className="relative w-full h-32 mb-8 cursor-pointer select-none"
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleMouseUp}
+        className="relative w-full mb-8 select-none"
+        style={{ minHeight: '200px' }}
       >
-        {/* The Line */}
-        <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full shadow-lg"></div>
+        {/* Inner container for perfect alignment */}
+        <div ref={containerRef} className="relative w-full" style={{ height: '140px', paddingTop: '40px', paddingBottom: '40px' }}>
+          {/* The Line - Traditional Number Line Style */}
+          <div className="absolute left-0 right-0 h-1 bg-gray-800" style={{ top: '50%', transform: 'translateY(-50%)' }}></div>
 
-        {/* Number Markers */}
-        {numbers.map((num) => {
-          const percentage = getPositionPercentage(num)
-          const isCurrentAnswer = Math.round(currentPosition) === num
-          const isCorrectAnswer = hasSubmitted && num === correctAnswer
-          const isWrongAnswer = hasSubmitted && Math.round(currentPosition) === num && num !== correctAnswer
+          {/* Left Arrow */}
+          <div 
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3"
+            style={{ zIndex: 1 }}
+          >
+            <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[10px] border-t-transparent border-b-transparent border-r-gray-800"></div>
+          </div>
 
-          return (
-            <div
-              key={num}
-              className="absolute"
-              style={{
-                left: `${percentage}%`,
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
-              }}
-            >
-              {/* Tick Mark */}
+          {/* Right Arrow */}
+          <div 
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3"
+            style={{ zIndex: 1 }}
+          >
+            <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-t-transparent border-b-transparent border-l-gray-800"></div>
+          </div>
+
+          {/* Number Markers */}
+          {numbers.map((num) => {
+            const percentage = getPositionPercentage(num)
+            const isCurrentAnswer = Math.round(currentPosition) === num
+            const isCorrectAnswer = hasSubmitted && num === correctAnswer
+            const isWrongAnswer = hasSubmitted && Math.round(currentPosition) === num && num !== correctAnswer
+
+            return (
               <div
-                className={`w-1 h-8 mx-auto mb-2 transition-all duration-200 ${
+                key={num}
+                className="absolute"
+                style={{
+                  left: `${percentage}%`,
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              >
+              {/* Tick Mark - Traditional Vertical Line */}
+              <div
+                className={`w-0.5 mx-auto mb-2 transition-all duration-200 ${
                   isCurrentAnswer && !hasSubmitted
-                    ? 'bg-yellow-400 h-12 w-2 shadow-lg'
-                    : 'bg-gray-400'
+                    ? 'bg-blue-600 h-8'
+                    : isCorrectAnswer
+                    ? 'bg-green-600 h-8'
+                    : 'bg-gray-800 h-6'
                 }`}
               ></div>
 
-              {/* Number Label */}
+              {/* Number Label - Enhanced */}
               <div
                 className={`text-center font-bold transition-all duration-200 ${
                   isCorrectAnswer
@@ -140,28 +184,17 @@ export default function NumberLineDrag({
                     : isWrongAnswer
                     ? 'text-red-600 text-xl'
                     : isCurrentAnswer && !hasSubmitted
-                    ? 'text-blue-600 text-xl'
-                    : 'text-gray-700 text-lg'
+                    ? 'text-blue-600 text-2xl font-extrabold'
+                    : 'text-gray-800 text-lg'
                 }`}
               >
                 {num}
               </div>
-
-              {/* Highlight Circle */}
-              {isCurrentAnswer && !hasSubmitted && (
-                <motion.div
-                  className="absolute top-1/2 left-1/2 w-12 h-12 bg-yellow-300 rounded-full -z-10"
-                  style={{ transform: 'translate(-50%, -50%)' }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1.5, opacity: 0.3 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
             </div>
           )
         })}
 
-        {/* Draggable Marker */}
+        {/* Draggable Marker - Much Better Design */}
         <motion.div
           className="absolute top-1/2 cursor-grab active:cursor-grabbing z-20"
           style={{
@@ -170,109 +203,123 @@ export default function NumberLineDrag({
           }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleMouseDown}
-          drag="x"
-          dragConstraints={containerRef}
-          dragElastic={0}
-          whileDrag={{ scale: 1.2 }}
+          whileTap={{ scale: 1.15 }}
           animate={{
-            scale: hasSubmitted ? 1 : isDragging ? 1.2 : 1
+            scale: hasSubmitted ? 1 : isDragging ? 1.15 : 1,
+            y: isDragging ? -5 : 0
           }}
         >
           <div className={`relative ${hasSubmitted ? 'pointer-events-none' : ''}`}>
-            {/* Marker Arrow */}
-            <div
-              className={`w-0 h-0 border-l-[20px] border-r-[20px] border-t-[30px] border-l-transparent border-r-transparent transition-colors duration-200 ${
+            {/* Current Position Display - Above Marker */}
+            <motion.div
+              className={`absolute -top-20 left-1/2 -translate-x-1/2 px-5 py-3 rounded-2xl font-bold text-white text-2xl shadow-2xl border-4 border-white ${
                 hasSubmitted
                   ? Math.round(currentPosition) === correctAnswer
-                    ? 'border-t-green-500'
-                    : 'border-t-red-500'
-                  : isDragging
-                  ? 'border-t-yellow-500'
-                  : 'border-t-blue-500'
-              } drop-shadow-lg`}
-            ></div>
-
-            {/* Current Position Display */}
-            <div
-              className={`absolute -top-16 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full font-bold text-white text-xl shadow-xl ${
-                hasSubmitted
-                  ? Math.round(currentPosition) === correctAnswer
-                    ? 'bg-green-500'
-                    : 'bg-red-500'
-                  : 'bg-blue-500'
+                    ? 'bg-gradient-to-br from-green-400 to-green-600'
+                    : 'bg-gradient-to-br from-red-400 to-red-600'
+                  : 'bg-gradient-to-br from-blue-500 to-blue-700'
               }`}
+              animate={{
+                scale: isDragging ? [1, 1.1, 1] : 1
+              }}
+              transition={{
+                duration: 0.5,
+                repeat: isDragging ? Infinity : 0
+              }}
             >
-              {Math.round(currentPosition)}
-            </div>
+              <div className="flex items-center gap-2">
+                {hasSubmitted && (
+                  <span className="text-2xl">
+                    {Math.round(currentPosition) === correctAnswer ? '✓' : '✗'}
+                  </span>
+                )}
+                <span>{Math.round(currentPosition)}</span>
+              </div>
+              {/* Arrow pointing down */}
+              <div 
+                className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent ${
+                  hasSubmitted
+                    ? Math.round(currentPosition) === correctAnswer
+                      ? 'border-t-green-600'
+                      : 'border-t-red-600'
+                    : 'border-t-blue-700'
+                }`}
+              ></div>
+            </motion.div>
           </div>
         </motion.div>
 
-        {/* Jump Visualization (for addition/subtraction) */}
-        {showJumps && startPosition !== undefined && !hasSubmitted && (
-          <motion.div
-            className="absolute top-1/2 h-1 bg-orange-400 border-2 border-orange-600"
-            style={{
-              left: `${getPositionPercentage(startPosition)}%`,
-              width: `${Math.abs(getPositionPercentage(currentPosition) - getPositionPercentage(startPosition))}%`,
-              transform: 'translateY(-50%)'
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-          >
-            {/* Arrow at end */}
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-0 h-0 border-l-[12px] border-t-[8px] border-b-[8px] border-l-orange-600 border-t-transparent border-b-transparent"
-              style={{
-                right: currentPosition > startPosition ? '-12px' : 'auto',
-                left: currentPosition < startPosition ? '-12px' : 'auto',
-                transform: currentPosition < startPosition ? 'rotate(180deg) translateY(50%)' : 'translateY(-50%)'
-              }}
-            ></div>
-          </motion.div>
-        )}
-      </div>
-
-      {/* Current Answer Display */}
-      <div className="text-center mb-6">
-        <div className="text-lg text-gray-600">
-          Your answer: <span className="font-bold text-2xl text-blue-600">{Math.round(currentPosition)}</span>
         </div>
       </div>
 
-      {/* Submit Button */}
+      {/* Submit Button - Much Better */}
       {!hasSubmitted && (
         <div className="text-center">
-          <button
+          <motion.button
             onClick={handleSubmit}
-            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            className="group relative px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold text-xl rounded-full shadow-2xl overflow-hidden"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Submit Answer
-          </button>
+            {/* Animated background shine */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+              animate={{
+                x: ['-100%', '200%']
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <span className="relative z-10 flex items-center gap-3">
+              <span>Submit Answer</span>
+              <span className="text-2xl group-hover:scale-125 transition-transform">✨</span>
+            </span>
+          </motion.button>
         </div>
       )}
 
-      {/* Result */}
+      {/* Result - Enhanced */}
       {hasSubmitted && (
         <motion.div
           className="text-center"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', duration: 0.5 }}
+          initial={{ scale: 0, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ type: 'spring', duration: 0.6, bounce: 0.4 }}
         >
           {Math.round(currentPosition) === correctAnswer ? (
-            <div className="bg-green-100 border-4 border-green-500 rounded-2xl p-6">
-              <div className="text-6xl mb-2">🎉</div>
-              <div className="text-2xl font-bold text-green-700">Perfect!</div>
+            <div className="bg-gradient-to-br from-green-50 to-emerald-100 border-4 border-green-500 rounded-3xl p-8 shadow-2xl">
+              <motion.div 
+                className="text-7xl mb-3"
+                animate={{
+                  rotate: [0, -10, 10, -10, 10, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                🎉
+              </motion.div>
+              <div className="text-3xl font-bold text-green-700 mb-2">Perfect!</div>
               <div className="text-lg text-green-600 mt-2">
                 {correctAnswer} is the correct answer!
               </div>
             </div>
           ) : (
-            <div className="bg-red-100 border-4 border-red-500 rounded-2xl p-6">
-              <div className="text-6xl mb-2">🤔</div>
-              <div className="text-2xl font-bold text-red-700">Not quite!</div>
+            <div className="bg-gradient-to-br from-red-50 to-pink-100 border-4 border-red-500 rounded-3xl p-8 shadow-2xl">
+              <motion.div 
+                className="text-7xl mb-3"
+                animate={{
+                  x: [-10, 10, -10, 10, 0]
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                🤔
+              </motion.div>
+              <div className="text-3xl font-bold text-red-700 mb-2">Not quite!</div>
               <div className="text-lg text-red-600 mt-2">
-                The correct answer is {correctAnswer}
+                The correct answer is <span className="font-bold text-2xl">{correctAnswer}</span>
               </div>
             </div>
           )}

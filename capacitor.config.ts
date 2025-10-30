@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 // Use network IP for iOS to access dev server (localhost doesn't always work on device)
 // Update this IP to match your machine's local network IP shown in npm run dev output
-const serverUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.150:3000';
+const serverUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3001';
 
 const config: CapacitorConfig = {
   appId: 'com.mathquest.academy',

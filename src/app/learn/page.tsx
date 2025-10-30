@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart } from 'lucide-react'
+import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { PrismaClient } from '@prisma/client'
 import BottomNav from '@/components/BottomNav'
@@ -190,7 +190,7 @@ function getSpecialLevelType(levelId: number): { isSpecial: boolean; type: strin
       case 2:
         return { isSpecial: true, type: 'Perfect Streak', emoji: '🔥', color: 'from-orange-400 to-red-500' }
       case 3:
-        return { isSpecial: true, type: 'Boss Battle', emoji: '👹', color: 'from-red-500 to-purple-600' }
+        return { isSpecial: true, type: 'Boss Battle', emoji: '', color: 'from-red-500 to-purple-600' }
       default:
         return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'from-yellow-400 to-orange-500' }
     }
@@ -210,12 +210,13 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
   const statusConfig = {
     completed: {
       icon: CheckCircle,
-      bgColor: 'bg-green-500',
+      bgColor: 'bg-gradient-to-br from-green-400 to-green-600',
       textColor: 'text-white',
       borderColor: 'border-green-600',
       clickable: true,
       opacity: 'opacity-100',
-      animate: false
+      animate: false,
+      shadowColor: 'shadow-green-500/50'
     },
     current: {
       icon: Star,
@@ -224,16 +225,18 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
       borderColor: 'border-yellow-500',
       clickable: true,
       opacity: 'opacity-100',
-      animate: true
+      animate: true,
+      shadowColor: 'shadow-orange-500/50'
     },
     locked: {
       icon: Lock,
-      bgColor: 'bg-gray-300',
-      textColor: 'text-gray-500',
+      bgColor: 'bg-gradient-to-br from-gray-200 to-gray-400',
+      textColor: 'text-gray-600',
       borderColor: 'border-gray-400',
       clickable: false,
       opacity: 'opacity-60',
-      animate: false
+      animate: false,
+      shadowColor: 'shadow-gray-400/30'
     }
   }
 
@@ -254,36 +257,38 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             ${config.opacity}
             rounded-xl sm:rounded-2xl p-4 sm:p-6
             border-3 sm:border-4 ${specialLevel ? 'border-yellow-400' : config.borderColor}
-            shadow-lg sm:shadow-xl
+            shadow-lg sm:shadow-xl ${config.shadowColor}
             transform transition-all duration-300 ease-in-out
-            hover:scale-105 sm:hover:scale-110 hover:shadow-xl sm:hover:shadow-2xl hover:-translate-y-1
+            hover:scale-105 sm:hover:scale-110 hover:shadow-2xl hover:-translate-y-1
             active:scale-95
             ${config.animate || specialLevel ? 'animate-pulse' : ''}
+            overflow-hidden
           `}
         >
-          {/* Special Challenge Badge */}
-          {specialLevel && (
-            <div className="absolute -top-3 -right-3 bg-white text-purple-600 text-xs font-black px-3 py-1.5 rounded-full shadow-lg border-2 border-yellow-400 flex items-center gap-1">
-              <span>{specialLevel.emoji}</span>
-              <span>{specialLevel.type}</span>
-            </div>
-          )}
+          {/* Decorative shine effect */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 pointer-events-none"></div>
           
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2 relative z-10">
             <span className={`text-base sm:text-lg font-bold ${config.textColor}`}>
               Level {level.id}
             </span>
-            <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${config.textColor} transition-transform duration-300 group-hover:rotate-12`} />
+            <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${config.textColor} ${level.status === 'completed' ? 'drop-shadow-lg' : ''}`} />
           </div>
-          <h3 className={`text-lg sm:text-xl font-bold ${config.textColor} mb-1`}>
+          <h3 className={`text-lg sm:text-xl font-bold ${config.textColor} mb-1 relative z-10`}>
             {level.title}
           </h3>
-          <p className={`text-xs sm:text-sm ${config.textColor} opacity-90`}>
+          <p className={`text-xs sm:text-sm ${config.textColor} opacity-90 relative z-10 flex items-center gap-1`}>
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
             {level.xp} XP
           </p>
           {config.animate && !specialLevel && (
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+            <div className="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-bounce z-10">
               START HERE
+            </div>
+          )}
+          {level.status === 'completed' && (
+            <div className="absolute bottom-2 right-2 bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+              ✓ Completed
             </div>
           )}
         </Link>
@@ -433,9 +438,9 @@ export default async function LearnPage() {
 
       {/* Main Content - Responsive margin */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        {/* Top Header - Responsive padding for mobile menu button */}
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
+        {/* Top Header - Responsive padding for mobile menu button and safe area */}
+        <header className="bg-white border-b border-gray-200 sticky top-0 z-10 pt-safe">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 pt-14 sm:pt-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
                 <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 to-orange-50 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
@@ -451,52 +456,77 @@ export default async function LearnPage() {
                   <span className="font-bold text-red-600 text-sm sm:text-base">5</span>
                 </div>
               </div>
+              
+              {/* Profile Button */}
+              <Link href="/profile" className="flex items-center gap-2 bg-gradient-to-r from-purple-100 to-purple-50 px-3 sm:px-4 py-2 rounded-xl border border-purple-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <User className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
+                <span className="hidden sm:inline font-bold text-purple-600 text-sm">Profile</span>
+              </Link>
             </div>
           </div>
         </header>
 
-        {/* Learning Path Content - Responsive padding with bottom space for mobile nav */}
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8">
+        {/* Learning Path Content - Responsive padding with bottom space for mobile nav and top space for notch/camera */}
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-6 py-6 sm:py-8 pb-24 md:pb-8">
           {/* Welcome Banner - Responsive */}
-          <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-sm">
-            <div className="flex items-center gap-3 mb-3">
-              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName}!</h2>
-            </div>
-            <p className="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">
-              Start your math adventure by completing Level 1!
-            </p>
+          <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
+            {/* Decorative background elements */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-200/30 rounded-full blur-2xl"></div>
             
-            {/* Placement Test Button - Only show if user is at level 1 */}
-            {dbUser.currentLevel === 1 && (
-              <Link
-                href="/placement-test"
-                className="inline-flex items-center gap-2 sm:gap-3 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 text-gray-900 font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 shadow-sm text-sm sm:text-base"
-              >
-                <Target className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
-                <div>
-                  <div>Take Placement Test</div>
-                  <div className="text-xs sm:text-sm text-gray-600">(Find your perfect level)</div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="bg-green-500 p-2 rounded-xl shadow-md">
+                  <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
-              </Link>
-            )}
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName}!</h2>
+              </div>
+              <p className="text-gray-700 text-base sm:text-lg mb-2">
+                Start your math adventure by completing Level 1!
+              </p>
+              {/* Level progress indicator */}
+              <div className="flex items-center gap-2 mb-4 sm:mb-6">
+                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm">
+                  <Trophy className="w-4 h-4 text-purple-600" />
+                  <span className="text-sm font-bold text-gray-900">Level {dbUser.currentLevel}</span>
+                </div>
+                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm">
+                  <Zap className="w-4 h-4 text-yellow-600" />
+                  <span className="text-sm font-bold text-gray-900">{dbUser.totalXP} XP</span>
+                </div>
+              </div>
+              
+              {/* Placement Test Button - Only show if user is at level 1 */}
+              {dbUser.currentLevel === 1 && (
+                <Link
+                  href="/placement-test"
+                  className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base"
+                >
+                  <Target className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <div>
+                    <div>Take Placement Test</div>
+                    <div className="text-xs sm:text-sm opacity-90">(Find your perfect level)</div>
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
 
         {/* Units and Levels */}
         {units.map((unit) => (
           <div key={unit.id} className="mb-12 sm:mb-16">
             {/* Unit Header */}
-            <div className={`bg-gradient-to-r ${unit.color} rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white mb-6 sm:mb-8 shadow-xl`}>
-              <div className="flex items-center justify-between gap-2 sm:gap-4">
-                <div className="flex-1 min-w-0">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 truncate">Unit {unit.id}: {unit.title}</h2>
-                  <p className="text-white/90 text-sm sm:text-base line-clamp-2">{unit.description}</p>
-                </div>
-                <div className="text-3xl sm:text-4xl md:text-5xl opacity-50 flex-shrink-0">
-                  {unit.theme === 'mountain' && '🏔️'}
-                  {unit.theme === 'ocean' && '🌊'}
-                  {unit.theme === 'forest' && '🌲'}
-                </div>
+            <div className={`relative overflow-hidden bg-gradient-to-r ${unit.color} rounded-2xl p-6 sm:p-8 text-white mb-6 sm:mb-8 shadow-2xl border-3 border-white/30 text-center`}>
+              {/* Decorative corner elements */}
+              <div className="absolute top-0 left-0 w-20 h-20 bg-white/10 rounded-full -translate-x-10 -translate-y-10"></div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-x-12 translate-y-12"></div>
+              
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
+              
+              <div className="relative z-10">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black mb-2 drop-shadow-lg">Unit {unit.id}: {unit.title}</h2>
+                <p className="text-white/95 text-sm sm:text-base md:text-lg font-medium drop-shadow">{unit.description}</p>
               </div>
             </div>
 
