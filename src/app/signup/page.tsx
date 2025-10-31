@@ -29,8 +29,8 @@ export default function SignUpPage() {
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h2 className="text-3xl font-extrabold text-gray-900">
-              Join MathQuest Academy
+                        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+              Join Mathlify
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Start your math adventure and master math through fun gameplay!

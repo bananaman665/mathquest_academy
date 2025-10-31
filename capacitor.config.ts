@@ -5,8 +5,8 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const serverUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
 
 const config: CapacitorConfig = {
-  appId: 'com.mathquest.academy',
-  appName: 'MathQuest Academy',
+  appId: 'com.mathlify.app',
+  appName: 'Mathlify',
   webDir: 'out',
   server: {
     url: serverUrl,
@@ -17,7 +17,7 @@ const config: CapacitorConfig = {
     contentInset: 'never',
     scrollEnabled: true,
     // Add a proper user agent to satisfy Google's security requirements
-    appendUserAgent: 'MathQuestAcademy/1.0 Safari/605.1.15'
+    appendUserAgent: 'Mathlify/1.0 Safari/605.1.15'
   }
 };
 

@@ -29,8 +29,8 @@ export default function SignInPage() {
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h2 className="text-3xl font-extrabold text-gray-900">
-              Sign in to MathQuest Academy
+                        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+              Sign in to Mathlify
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Continue your math adventure and keep earning XP!

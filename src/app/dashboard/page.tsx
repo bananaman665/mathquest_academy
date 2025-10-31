@@ -61,7 +61,7 @@ async function DashboardContent() {
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                MathQuest Academy
+                Mathlify
               </h1>
             </div>
             <div className="flex items-center gap-4">

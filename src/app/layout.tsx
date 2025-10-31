@@ -15,15 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MathQuest Academy - Learn Math Through Adventure",
-  description: "Master mathematics through gamified learning. Earn XP, level up, and unlock achievements as you progress through engaging math challenges.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
-};
+  title: "Mathlify - Learn Math Through Adventure",
+  description: "An interactive math learning platform with gamification",
+}
 
 export default function RootLayout({
   children,

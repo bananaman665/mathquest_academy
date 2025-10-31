@@ -15,13 +15,13 @@ export default function Home() {
       <header className="relative bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Sparkles className="w-6 h-6 text-white" />
+                        <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Sparkles className="w-7 h-7 text-white" />
               </div>
-              <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                MathQuest Academy
-              </h1>
+              <span className="text-3xl font-black bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                Mathlify
+              </span>
             </div>
             <div className="flex space-x-3">
               <Link 
@@ -164,10 +164,10 @@ export default function Home() {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                MathQuest Academy
+                Mathlify
               </span>
             </div>
-            <p className="text-gray-600">&copy; 2025 MathQuest Academy. Making math learning epic and fun.</p>
+            <p className="text-gray-600">&copy; 2025 Mathlify. Making math learning epic and fun.</p>
           </div>
         </div>
       </footer>
