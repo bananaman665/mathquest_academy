@@ -438,8 +438,8 @@ export default async function LearnPage() {
 
       {/* Main Content - Responsive margin */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        {/* Top Header - Responsive padding for mobile menu button and safe area */}
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10 pt-safe">
+        {/* Top Header - Responsive padding for mobile menu button and safe area - NOW STICKY */}
+        <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 pt-safe shadow-sm">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 pt-14 sm:pt-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
@@ -467,7 +467,7 @@ export default async function LearnPage() {
         </header>
 
         {/* Learning Path Content - Responsive padding with bottom space for mobile nav and top space for notch/camera */}
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-6 py-6 sm:py-8 pb-24 md:pb-8">
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-6 py-6 sm:py-8 pb-24 md:pb-8">
           {/* Welcome Banner - Responsive */}
           <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
             {/* Decorative background elements */}
