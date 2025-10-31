@@ -245,8 +245,8 @@ export default function GraphPlotter({
 
     // Determine color based on correctness
     const allCorrect = plottedPoints.every(isPointCorrect)
-    const lineColor = hasSubmitted 
-      ? (allCorrect ? '#10B981' : '#EF4444') 
+    const lineColor = hasSubmitted
+      ? (allCorrect ? '#10B981' : '#EF4444')
       : '#3B82F6'
 
     return (

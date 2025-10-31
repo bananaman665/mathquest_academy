@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, CheckCircle } from 'lucide-react'
+import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, CheckCircle, Flame } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
@@ -98,7 +98,7 @@ export default async function QuestsPage() {
               <h1 className="text-2xl font-black text-gray-900">Daily Quests</h1>
               <div className="flex items-center gap-3 md:gap-6">
                 <div className="flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-xl">
-                  <img src="/fire.svg" alt="streak" className="w-6 h-6" />
+                  <Flame className="w-6 h-6 text-orange-600 animate-pulse" />
                   <span className="font-bold text-orange-600">{dbUser.streak || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-xl">

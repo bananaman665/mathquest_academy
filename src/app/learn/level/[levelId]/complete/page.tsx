@@ -2,7 +2,7 @@
 
 import { useSearchParams, useParams } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Star, Target, ArrowRight } from 'lucide-react'
+import { Trophy, Star, Target, ArrowRight, Flame } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export default function LevelCompletePage() {
@@ -146,7 +146,7 @@ export default function LevelCompletePage() {
           {showStreakAnimation && streak !== null && (
             <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-xl p-5 md:p-6 mb-6 md:mb-8">
               <div className="flex flex-col md:flex-row items-center justify-center gap-3">
-                <img src="/fire.svg" alt="streak" className="w-10 h-10 md:w-12 md:h-12" />
+                <Flame className="w-10 h-10 md:w-12 md:h-12 text-orange-600 animate-pulse" />
                 <div className="text-center md:text-left">
                   <h3 className="text-lg md:text-xl font-bold text-orange-700">
                     {streak === 1 ? 'Streak Started!' : `${streak} Day Streak!`}

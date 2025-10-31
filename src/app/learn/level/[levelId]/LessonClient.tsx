@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import AITutor from '@/components/AITutor'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
@@ -664,45 +664,45 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
   // PRACTICE PHASE - Duolingo-Inspired Clean Theme
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col overflow-x-hidden">
       {/* Progress Bar */}
       <div className="w-full h-4 bg-gray-200">
         <div className="bg-green-500 h-4 transition-all duration-500" style={{ width: `${progress}%` }} />
       </div>
 
-      <header className="px-4 py-4 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <Link href="/learn" className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100">
-            <X className="w-7 h-7" />
+      <header className="px-4 py-4 pt-14 sm:pt-4 border-b border-gray-200 overflow-x-hidden">
+        <div className="max-w-5xl mx-auto flex justify-between items-center gap-2">
+          <Link href="/learn" className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100 flex-shrink-0">
+            <X className="w-6 h-6 sm:w-7 sm:h-7" />
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 sm:gap-3 flex-wrap justify-end">
             {/* Speed Round Timer */}
             {gameMode === 'speed-round' && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
+              <div className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 font-bold text-sm sm:text-base ${
                 gameTimer <= 10 
                   ? 'bg-red-100 border-red-400 text-red-600 animate-pulse' 
                   : 'bg-green-100 border-green-400 text-green-600'
               }`}>
-                <Clock className="w-5 h-5" />
-                <span className="text-xl">{gameTimer}s</span>
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-lg sm:text-xl">{gameTimer}s</span>
               </div>
             )}
             
             {/* Lightning Mode Timer */}
             {gameMode === 'lightning' && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold ${
+              <div className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 font-bold text-sm sm:text-base ${
                 questionTimer <= 3 
                   ? 'bg-red-100 border-red-400 text-red-600 animate-pulse' 
                   : 'bg-yellow-100 border-yellow-400 text-yellow-600'
               }`}>
-                <Zap className="w-5 h-5 fill-current" />
-                <span className="text-xl">{questionTimer}s</span>
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                <span className="text-lg sm:text-xl">{questionTimer}s</span>
               </div>
             )}
             
             {/* Streak Counter */}
             {currentStreak > 0 && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 font-bold transition-all duration-300 ${
+              <div className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 font-bold transition-all duration-300 ${
                 currentStreak >= 20 
                   ? 'bg-gradient-to-r from-purple-100 to-pink-100 border-purple-400 text-purple-600 animate-pulse shadow-lg' 
                   : currentStreak >= 15
@@ -713,10 +713,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   ? 'bg-orange-100 border-orange-400 text-orange-600' 
                   : 'bg-blue-100 border-blue-400 text-blue-600'
               }`}>
-                <img src="/fire.svg" alt="streak" className={`w-5 h-5 ${currentStreak >= 10 ? 'animate-pulse' : ''}`} />
-                <span className="text-lg">{currentStreak}</span>
+                <Flame className={`w-4 h-4 sm:w-5 sm:h-5 text-orange-600 ${currentStreak >= 10 ? 'animate-pulse' : ''}`} />
+                <span className="text-base sm:text-lg">{currentStreak}</span>
                 {comboMultiplier > 1 && (
-                  <span className="text-sm font-black bg-white/50 px-2 py-0.5 rounded-full">
+                  <span className="text-xs sm:text-sm font-black bg-white/50 px-1.5 sm:px-2 py-0.5 rounded-full">
                     {comboMultiplier}x
                   </span>
                 )}
@@ -724,16 +724,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             )}
             
             {xpBoostActive && (
-              <div className="flex items-center gap-2 bg-yellow-100 px-3 py-2 rounded-xl border-2 border-yellow-400">
-                <Zap className="w-5 h-5 text-yellow-600 fill-yellow-600" />
-                <span className="text-yellow-600 font-bold text-sm">2x XP</span>
+              <div className="flex items-center gap-1 sm:gap-2 bg-yellow-100 px-2 sm:px-3 py-1 sm:py-2 rounded-xl border-2 border-yellow-400">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 fill-yellow-600" />
+                <span className="text-yellow-600 font-bold text-xs sm:text-sm">2x XP</span>
               </div>
             )}
             
             {gameMode === 'normal' && (
-              <div className="flex items-center gap-2 bg-red-100 px-4 py-2 rounded-xl">
-                <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-                <span className="text-red-500 font-bold text-xl">
+              <div className="flex items-center gap-1 sm:gap-2 bg-red-100 px-2 sm:px-4 py-1 sm:py-2 rounded-xl">
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 fill-red-500" />
+                <span className="text-red-500 font-bold text-lg sm:text-xl">
                   {hearts + (inventoryHook.getItemQuantity('extra-hearts') * 5)}
                 </span>
               </div>
@@ -742,7 +742,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32 overflow-x-hidden">
         <div className="w-full max-w-3xl">
           {!currentQuestion ? (
             <div className="text-center py-10">
@@ -764,7 +764,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           </div>
 
 
-          <h2 className="text-3xl font-bold text-gray-800 mb-10 leading-tight">{currentQuestion.question}</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-10 leading-tight">{currentQuestion.question}</h2>
 
           {/* Hints Display */}
           {showHints && currentQuestion.hints && currentQuestion.hints.length > 0 && (
@@ -848,11 +848,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
           {/* Multiple Choice & Number Sequence - use same UI */}
           {(currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'number-sequence') && currentQuestion.options && (
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8">
               {currentQuestion.options.map((option, index) => {
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
-                let cardClass = "relative p-8 rounded-2xl border-4 transition-all duration-200 cursor-pointer "
+                let cardClass = "relative p-4 sm:p-8 rounded-2xl border-4 transition-all duration-200 cursor-pointer "
                 if (showExplanation) {
                   if (isCorrectOption) {
                     cardClass += "bg-green-600 border-green-500 shadow-lg shadow-green-500/50"
@@ -873,7 +873,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     <div className="absolute top-3 right-3 w-6 h-6 bg-slate-800/50 rounded-full flex items-center justify-center">
                       <span className="text-xs text-slate-300">{index + 1}</span>
                     </div>
-                    <div className="text-4xl font-bold text-white text-center">{option}</div>
+                    <div className="text-2xl sm:text-4xl font-bold text-white text-center break-words">{option}</div>
                     {showExplanation && isCorrectOption && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">

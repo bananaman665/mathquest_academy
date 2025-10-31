@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { Trophy, Zap, Target, Sparkles, Rocket, Star } from "lucide-react"
+import { Trophy, Zap, Target, Sparkles, Rocket, Star, Flame } from "lucide-react"
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import { checkStreakExpiration } from '@/lib/streak'
@@ -55,7 +55,7 @@ async function DashboardContent() {
       {/* Header */}
       <header className="relative bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Sparkles className="w-6 h-6 text-white" />
@@ -129,7 +129,7 @@ async function DashboardContent() {
                 <p className="text-4xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">{dbUser.streak}</p>
               </div>
               <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
-                <img src="/fire.svg" alt="streak" className="w-8 h-8" />
+                <Flame className="w-8 h-8 text-white animate-pulse" />
               </div>
             </div>
           </div>
