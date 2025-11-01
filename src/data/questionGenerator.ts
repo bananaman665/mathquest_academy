@@ -126,7 +126,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'addition',
     numberRange: { min: 0, max: 5 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag'],
+    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🍎', '🎈']
@@ -137,7 +137,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'addition',
     numberRange: { min: 0, max: 10 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'block-stacking'],
+    questionTypes: ['multiple-choice', 'number-line-drag', 'block-stacking', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'easy'
   },
@@ -167,7 +167,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'addition',
     numberRange: { min: 0, max: 10 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag', 'ten-frame'],
+    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag', 'ten-frame', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
@@ -179,7 +179,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'subtraction',
     numberRange: { min: 0, max: 5 },
     answerRange: { min: 0, max: 5 },
-    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag'],
+    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'easy',
     allowNegatives: false
@@ -190,7 +190,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'subtraction',
     numberRange: { min: 0, max: 10 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'block-stacking'],
+    questionTypes: ['multiple-choice', 'number-line-drag', 'block-stacking', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'easy',
     allowNegatives: false
@@ -223,7 +223,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'subtraction',
     numberRange: { min: 0, max: 10 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag', 'ten-frame'],
+    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag', 'ten-frame', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'medium',
     allowNegatives: false
@@ -236,7 +236,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'addition',
     numberRange: { min: 1, max: 20 },
     answerRange: { min: 2, max: 20 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer'],
+    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
@@ -246,7 +246,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'subtraction',
     numberRange: { min: 1, max: 20 },
     answerRange: { min: 0, max: 20 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer'],
+    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'medium',
     allowNegatives: false
@@ -811,7 +811,7 @@ function generateQuestionByType(
         id,
         levelId,
         type,
-        question: `How many ${emoji}?`,
+        question: `Count the ${emoji}`,
         visualContent: visual,
         options: allOptions,
         correctAnswer: String(num1),
@@ -895,8 +895,8 @@ function generateQuestionByType(
         levelId,
         type,
         question: operation === 'addition' 
-          ? `Stack ${num1} blocks and ${num2} more blocks. How many total?`
-          : `Start with ${num1} blocks. Remove ${num2} blocks. How many left?`,
+          ? `${num1} + ${num2} = ?`
+          : `${num1} - ${num2} = ?`,
         operation: operation === 'addition' ? 'add' : 'subtract',
         firstNumber: num1,
         secondNumber: num2,
@@ -915,7 +915,7 @@ function generateQuestionByType(
         id,
         levelId,
         type,
-        question: `How many dots do you see?`,
+        question: `Count the dots`,
         correctPosition: answer,
         correctAnswer: String(answer),
         explanation: `There are ${answer} dots in the ten frame!`,
@@ -927,12 +927,39 @@ function generateQuestionByType(
       }
     }
 
+    case 'balance-scale': {
+      // For balance scale: left side has known value, right side needs to be balanced
+      // In addition: left = num1, right = answer - num1  (so left + right = answer)
+      // In subtraction: left = answer, right = num1 - answer (so left + right = num1)
+      const leftSide = operation === 'addition' ? num1 : answer
+      const rightSide = operation === 'addition' ? (answer - num1) : (num1 - answer)
+      
+      return {
+        id,
+        levelId,
+        type,
+        question: operation === 'addition' 
+          ? `${leftSide} + ? = ${answer}`
+          : `? + ${rightSide} = ${num1}`,
+        balanceLeft: leftSide,
+        balanceRight: rightSide,
+        balanceItem: '⚖️',
+        correctAnswer: String(rightSide),
+        explanation: `${leftSide} + ${rightSide} = ${leftSide + rightSide}`,
+        hints: [
+          `What number balances the scale?`,
+          `Think about what you need to add`
+        ],
+        xp: 15
+      }
+    }
+
     case 'array-grid-builder': {
       return {
         id,
         levelId,
         type,
-        question: `Make an array with ${num1} rows and ${num2} columns. How many total?`,
+        question: `${num1} × ${num2} = ?`,
         firstNumber: num1,
         secondNumber: num2,
         correctAnswer: String(answer),
@@ -974,7 +1001,7 @@ function generateQuestionByType(
         id,
         levelId,
         type,
-        question: `Share ${num1} cookies fairly among ${groups} friends. How many does each friend get?`,
+        question: `${num1} ÷ ${groups} = ?`,
         fairShareTotal: num1,
         fairShareGroups: groups,
         fairShareEmoji: '🍪',
@@ -993,14 +1020,14 @@ function generateQuestionByType(
         id,
         levelId,
         type,
-        question: `The division machine divides ${num1} into groups of ${num2}. How many groups?`,
+        question: `${num1} ÷ ${num2} = ?`,
         divisionDividend: num1,
         divisionDivisor: num2,
         divisionEmoji: '⭐',
         correctAnswer: String(answer),
         explanation: `${num1} ÷ ${num2} = ${answer}`,
         hints: [
-          `How many ${num2}s fit into ${num1}?`,
+          `Divide to find the answer`,
           `Use division to find out`
         ],
         xp: 15
