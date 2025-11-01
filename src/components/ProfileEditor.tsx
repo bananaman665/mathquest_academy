@@ -149,7 +149,7 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
                 placeholder="Enter username"
-                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold text-black placeholder:text-gray-400"
                 disabled={loading}
               />
             </div>
@@ -204,7 +204,7 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Current password"
-                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold text-black placeholder:text-gray-400"
                 disabled={loading}
               />
             </div>
@@ -215,7 +215,7 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="New password (min 8 characters)"
-                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold text-black placeholder:text-gray-400"
                 disabled={loading}
               />
             </div>
@@ -226,7 +226,7 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm new password"
-                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold"
+                className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-semibold text-black placeholder:text-gray-400"
                 disabled={loading}
               />
             </div>
