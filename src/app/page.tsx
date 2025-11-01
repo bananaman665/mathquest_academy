@@ -167,7 +167,20 @@ export default function Home() {
                 Mathlify
               </span>
             </div>
-            <p className="text-gray-600">&copy; 2025 Mathlify. Making math learning epic and fun.</p>
+            <p className="text-gray-600 mb-4">&copy; 2025 Mathlify. Making math learning epic and fun.</p>
+            <div className="flex items-center justify-center gap-6 text-sm">
+              <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-gray-400">·</span>
+              <Link href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">
+                Terms of Service
+              </Link>
+              <span className="text-gray-400">·</span>
+              <a href="mailto:support@mathlify.app" className="text-gray-600 hover:text-gray-900 transition-colors">
+                Contact
+              </a>
+            </div>
           </div>
         </div>
       </footer>
