@@ -5,6 +5,7 @@ import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Awar
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
+import ProfileEditor from '@/components/ProfileEditor'
 
 export default async function ProfilePage() {
   const user = await currentUser()
@@ -284,29 +285,34 @@ export default async function ProfilePage() {
               <h2 className="text-2xl font-black text-gray-900">Account Settings</h2>
             </div>
             <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+              <ProfileEditor 
+                username={dbUser.username} 
+                userId={user.id}
+              />
+
+              <div className="space-y-4 mt-4 pt-4 border-t border-gray-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-200 gap-2">
                   <div>
                     <p className="font-bold text-gray-900">Email</p>
                     <p className="text-sm text-gray-600">{user.emailAddresses[0]?.emailAddress}</p>
                   </div>
-                  <button className="text-blue-600 font-bold hover:text-blue-700">Edit</button>
+                  <span className="text-sm text-gray-500 italic">Managed by Clerk</span>
                 </div>
 
-                <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-200 gap-2">
                   <div>
                     <p className="font-bold text-gray-900">Notifications</p>
                     <p className="text-sm text-gray-600">Manage your notification preferences</p>
                   </div>
-                  <button className="text-blue-600 font-bold hover:text-blue-700">Edit</button>
+                  <span className="text-sm text-gray-500 italic">Coming soon</span>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <p className="font-bold text-gray-900">Privacy</p>
                     <p className="text-sm text-gray-600">Control who can see your profile</p>
                   </div>
-                  <button className="text-blue-600 font-bold hover:text-blue-700">Edit</button>
+                  <span className="text-sm text-gray-500 italic">Coming soon</span>
                 </div>
               </div>
             </div>
