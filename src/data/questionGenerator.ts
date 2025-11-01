@@ -76,7 +76,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Counting 1-10",
     operation: 'counting',
     numberRange: { min: 1, max: 5 },
-    questionTypes: ['visual-count', 'multiple-choice'],
+    questionTypes: ['bubble-pop', 'tap-select', 'ten-frame', 'multiple-choice'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🎈', '🍎', '🐶', '🚗']
@@ -86,7 +86,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Counting 1-10",
     operation: 'counting',
     numberRange: { min: 1, max: 10 },
-    questionTypes: ['visual-count', 'multiple-choice', 'tap-select'],
+    questionTypes: ['bubble-pop', 'tap-select', 'ten-frame', 'multiple-choice'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🎈', '🍎', '🐶', '🚗', '🌸', '⚽', '🎨']
@@ -126,7 +126,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'addition',
     numberRange: { min: 0, max: 5 },
     answerRange: { min: 0, max: 10 },
-    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag', 'balance-scale'],
+    questionTypes: ['ten-frame', 'multiple-choice', 'number-line-drag', 'balance-scale', 'block-stacking'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🍎', '🎈']
@@ -179,7 +179,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'subtraction',
     numberRange: { min: 0, max: 5 },
     answerRange: { min: 0, max: 5 },
-    questionTypes: ['visual-count', 'multiple-choice', 'number-line-drag', 'balance-scale'],
+    questionTypes: ['ten-frame', 'multiple-choice', 'number-line-drag', 'balance-scale', 'block-stacking'],
     totalQuestions: 10,
     difficulty: 'easy',
     allowNegatives: false
@@ -497,7 +497,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Introduction to Fractions",
     operation: 'fractions',
     numberRange: { min: 1, max: 8 },
-    questionTypes: ['fraction-builder', 'multiple-choice', 'visual-count'],
+    questionTypes: ['fraction-builder', 'multiple-choice', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
@@ -924,6 +924,29 @@ function generateQuestionByType(
           `Each row can hold 5 dots`
         ],
         xp: 10
+      }
+    }
+
+    case 'bubble-pop': {
+      // Generate numbers to show in bubbles (target + some extra numbers)
+      const target = num1 // The number we want students to count to
+      const allNumbers = Array.from({ length: target + 3 }, (_, i) => i + 1) // e.g., for target=5, show 1-8
+      const correctNumbers = Array.from({ length: target }, (_, i) => i + 1) // e.g., [1,2,3,4,5]
+      
+      return {
+        id,
+        levelId,
+        type,
+        question: `Pop the bubbles from 1 to ${target}`,
+        bubbleNumbers: allNumbers,
+        bubbleCorrectAnswers: correctNumbers,
+        correctAnswer: String(target),
+        explanation: `Great job! You counted from 1 to ${target}!`,
+        hints: [
+          `Start with bubble number 1`,
+          `Pop the bubbles in order: 1, 2, 3...`
+        ],
+        xp: 15
       }
     }
 
