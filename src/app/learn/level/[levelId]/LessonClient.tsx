@@ -1136,11 +1136,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 })
               ) : (
                 // Simple fill-blank with just correctAnswer
-                <div className="flex items-center gap-4 text-2xl font-bold">
+                <div className="flex items-center gap-4 text-2xl font-bold text-gray-900">
                   <span>{currentQuestion.question.split('___')[0]}</span>
                   <input
                     type="text"
-                    className="border-b-4 border-slate-400 bg-transparent text-white text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:border-blue-500 transition-colors"
+                    className="border-b-4 border-slate-400 bg-transparent text-gray-900 text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:border-blue-500 transition-colors"
                     value={blankAnswers[0] || ''}
                     onChange={e => handleBlankChange(0, e.target.value)}
                     disabled={showExplanation}
