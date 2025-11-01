@@ -2035,7 +2035,28 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
             {/* Content */}
             <div className="text-center relative z-10">
-              <div className="mb-6 text-8xl animate-bounce">🔥</div>
+              {/* Modern Fire Icon */}
+              <div className="mb-6 flex justify-center animate-bounce">
+                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-2xl">
+                  <path d="M12 2C12 2 8 6 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 6 12 2 12 2Z" stroke="url(#fireGradient1)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="url(#fireGradient1)" fillOpacity="0.2"/>
+                  <path d="M12 14C12 14 9 16 9 18.5C9 20.433 10.567 22 12.5 22C14.433 22 16 20.433 16 18.5C16 16 12 14 12 14Z" stroke="url(#fireGradient2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="url(#fireGradient2)" fillOpacity="0.2"/>
+                  <path d="M12 14C12 14 15 16 15 18.5C15 20.433 13.433 22 11.5 22C9.567 22 8 20.433 8 18.5C8 16 12 14 12 14Z" stroke="url(#fireGradient3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="url(#fireGradient3)" fillOpacity="0.2"/>
+                  <defs>
+                    <linearGradient id="fireGradient1" x1="12" y1="2" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#FFD700"/>
+                      <stop offset="1" stopColor="#FF8C00"/>
+                    </linearGradient>
+                    <linearGradient id="fireGradient2" x1="12" y1="14" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#FF8C00"/>
+                      <stop offset="1" stopColor="#FF4500"/>
+                    </linearGradient>
+                    <linearGradient id="fireGradient3" x1="12" y1="14" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#FF6B00"/>
+                      <stop offset="1" stopColor="#FF0000"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
               
               <h2 className="text-4xl font-black text-white mb-2 drop-shadow-lg">
                 {streakMilestone >= 20 ? 'LEGENDARY!' : 
