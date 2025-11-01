@@ -1,8 +1,13 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-// Use network IP for iOS to access dev server (localhost doesn't always work on device)
-// Update this IP to match your machine's local network IP shown in npm run dev output
-const serverUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
+// Production URL - comment out for local development
+const productionUrl = 'https://mathquest-academy.vercel.app';
+
+// Development URL - use your local network IP for testing on device
+const devUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
+
+// Use production URL by default, set CAPACITOR_DEV=true to use dev server
+const serverUrl = process.env.CAPACITOR_DEV === 'true' ? devUrl : productionUrl;
 
 const config: CapacitorConfig = {
   appId: 'com.mathlify.app',
@@ -10,7 +15,7 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     url: serverUrl,
-    cleartext: true,
+    cleartext: process.env.CAPACITOR_DEV === 'true', // Only allow cleartext in dev mode
     allowNavigation: ['*']  // Allow all navigation within the app
   },
   ios: {
