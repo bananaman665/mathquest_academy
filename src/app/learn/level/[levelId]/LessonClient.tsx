@@ -970,7 +970,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 onChange={(e) => setTypedAnswer(e.target.value)}
                 disabled={showExplanation}
                 placeholder="Type your answer here..."
-                className="w-full max-w-md mx-auto block px-6 py-4 text-2xl text-center bg-white text-gray-800 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 font-bold placeholder:text-gray-400"
+                className="w-full max-w-md mx-auto block px-6 py-4 text-2xl text-center bg-white text-black rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 font-bold placeholder:text-gray-400"
                 autoFocus
               />
             </div>
