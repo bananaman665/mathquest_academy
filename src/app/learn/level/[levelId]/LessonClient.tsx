@@ -1125,7 +1125,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       {parts[0]}
                       <input
                         type="text"
-                        className="underline mx-2 px-2 py-1 rounded bg-slate-700 text-white"
+                        className="mx-2 px-2 py-1 rounded bg-slate-700 text-white"
                         value={blankAnswers[idx] || ''}
                         onChange={e => handleBlankChange(idx, e.target.value)}
                         disabled={showExplanation}
@@ -1140,7 +1140,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   <span>{currentQuestion.question.split('___')[0]}</span>
                   <input
                     type="text"
-                    className="border-b-4 border-slate-400 bg-transparent text-gray-900 text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:border-blue-500 transition-colors"
+                    className="bg-transparent text-gray-900 text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded transition-colors"
                     value={blankAnswers[0] || ''}
                     onChange={e => handleBlankChange(0, e.target.value)}
                     disabled={showExplanation}
