@@ -1208,8 +1208,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 max={currentQuestion.numberLineMax || 10}
                 correctAnswer={currentQuestion.numberLineDragCorrect || 0}
                 question={currentQuestion.question}
-                showJumps={currentQuestion.numberLineShowJumps}
-                startPosition={currentQuestion.numberLineStartPos}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1241,8 +1239,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <FractionBuilder
                 question={currentQuestion.question}
                 denominator={currentQuestion.fractionDenominator || 4}
-                correctNumerator={currentQuestion.fractionCorrectNumerator || 1}
-                shape={currentQuestion.fractionShape || 'circle'}
+                correctNumerator={currentQuestion.fractionNumerator || 1}
+                shape={'circle'}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1273,9 +1271,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <ClockSetter
                 question={currentQuestion.question}
-                correctHour={currentQuestion.clockCorrectHour || 12}
-                correctMinute={currentQuestion.clockCorrectMinute || 0}
-                use24Hour={currentQuestion.clockUse24Hour || false}
+                correctHour={currentQuestion.clockHour || 12}
+                correctMinute={currentQuestion.clockMinute || 0}
+                use24Hour={currentQuestion.clockFormat === '24h'}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1341,7 +1339,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <MoneyCounter
                 question={currentQuestion.question}
-                targetAmount={currentQuestion.moneyTarget || 25}
+                targetAmount={currentQuestion.moneyTotal || 25}
                 availableCoins={{ penny: 10, nickel: 5, dime: 5, quarter: 4, dollar: 2 }}
                 showCents={true}
                 onAnswer={(isCorrect, userAmount) => {
@@ -1376,7 +1374,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 question={currentQuestion.question}
                 rows={currentQuestion.arrayRows || 3}
                 columns={currentQuestion.arrayColumns || 4}
-                correctAnswer={currentQuestion.arrayCorrectTotal || 12}
+                correctAnswer={(currentQuestion.arrayRows || 3) * (currentQuestion.arrayColumns || 4)}
                 showMultiplication={true}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
@@ -1443,10 +1441,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <FillTheJar
                 question={currentQuestion.question}
-                targetNumber={currentQuestion.jarTarget || 10}
-                startingNumber={currentQuestion.jarStarting || 0}
-                itemEmoji={currentQuestion.jarEmoji || '🍎'}
-                mode={currentQuestion.jarMode as 'add' | 'remove' | 'count' || 'count'}
+                targetNumber={currentQuestion.jarCapacity || 10}
+                startingNumber={currentQuestion.jarFilled || 0}
+                itemEmoji={currentQuestion.jarUnit || '🍎'}
+                mode={'count'}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1477,7 +1475,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <ShapeComposer
                 question={currentQuestion.question}
-                targetShape={currentQuestion.shapeTarget as any || 'square'}
+                targetShape={(currentQuestion.shapeTargetSvg as 'square' | 'triangle' | 'circle' | 'rectangle') || 'square'}
                 availablePieces={[
                   { type: 'triangle', color: 'text-red-500', size: 1 },
                   { type: 'triangle', color: 'text-red-500', size: 1 },
@@ -1518,9 +1516,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {currentQuestion.type === 'array-grid-builder' && (
             <div className="mb-8">
               <ArrayGridBuilder
-                targetRows={currentQuestion.gridTargetRows || 3}
-                targetCols={currentQuestion.gridTargetCols || 4}
-                emoji={currentQuestion.gridEmoji || '⭐'}
+                targetRows={currentQuestion.arrayRows || 3}
+                targetCols={currentQuestion.arrayColumns || 4}
+                emoji={currentQuestion.arrayEmoji || '⭐'}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1550,9 +1548,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {currentQuestion.type === 'group-maker' && (
             <div className="mb-8">
               <GroupMaker
-                targetGroups={currentQuestion.groupsTarget || 4}
-                itemsPerGroup={currentQuestion.groupsItemsPerGroup || 3}
-                emoji={currentQuestion.groupsEmoji || '⭐'}
+                targetGroups={currentQuestion.numberOfGroups || 4}
+                itemsPerGroup={currentQuestion.groupSize || 3}
+                emoji={currentQuestion.groupEmoji || '⭐'}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)

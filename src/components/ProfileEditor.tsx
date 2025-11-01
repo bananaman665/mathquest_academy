@@ -50,8 +50,8 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
       setSuccess('Username updated successfully!')
       setIsEditingUsername(false)
       setTimeout(() => setSuccess(''), 3000)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to update username')
     } finally {
       setLoading(false)
     }
@@ -100,8 +100,8 @@ export default function ProfileEditor({ username, userId }: ProfileEditorProps) 
       setNewPassword('')
       setConfirmPassword('')
       setTimeout(() => setSuccess(''), 3000)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to update password')
     } finally {
       setLoading(false)
     }

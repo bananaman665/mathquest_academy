@@ -3,10 +3,18 @@ import { auth } from '@clerk/nextjs/server'
 import { prisma } from '@/lib/prisma'
 import OpenAI from 'openai'
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+// Initialize OpenAI client lazily
+let openai: OpenAI | null = null
+function getOpenAIClient() {
+  if (!openai) {
+    const apiKey = process.env.OPENAI_API_KEY
+    if (!apiKey) {
+      throw new Error('Missing OPENAI_API_KEY environment variable')
+    }
+    openai = new OpenAI({ apiKey })
+  }
+  return openai
+}
 
 // Type for conversation history messages
 interface HistoryMessage {
@@ -58,7 +66,8 @@ export const POST = withErrorHandling(async (req: Request) => {
       }
     ]
 
-    const completion = await openai.chat.completions.create({
+    const client = getOpenAIClient()
+    const completion = await client.chat.completions.create({
       model: 'gpt-3.5-turbo', // Use gpt-4 for premium users if you want better quality
       messages,
       max_tokens: 500,
