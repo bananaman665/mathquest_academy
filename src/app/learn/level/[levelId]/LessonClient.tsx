@@ -2025,12 +2025,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       {/* Streak Milestone Celebration Modal */}
       {showStreakMilestone && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in">
-          <div className="bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-3xl p-8 max-w-sm w-full shadow-2xl border-4 border-yellow-400 animate-scale-up relative overflow-hidden">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl border-4 border-orange-400 animate-scale-up relative overflow-hidden">
             {/* Animated background sparkles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-300/30 rounded-full blur-xl animate-pulse"></div>
-              <div className="absolute bottom-10 right-10 w-32 h-32 bg-pink-300/30 rounded-full blur-xl animate-pulse delay-1000"></div>
-              <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-purple-300/30 rounded-full blur-xl animate-pulse delay-500"></div>
+              <div className="absolute top-10 left-10 w-20 h-20 bg-orange-100 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-10 right-10 w-32 h-32 bg-yellow-100 rounded-full blur-xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-orange-50 rounded-full blur-xl animate-pulse delay-500"></div>
             </div>
 
             {/* Content */}
@@ -2040,35 +2040,35 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 <Flame className="w-32 h-32 text-orange-500 drop-shadow-2xl" strokeWidth={2} />
               </div>
               
-              <h2 className="text-4xl font-black text-white mb-2 drop-shadow-lg">
+              <h2 className="text-4xl font-black text-gray-900 mb-2">
                 {streakMilestone >= 20 ? 'LEGENDARY!' : 
                  streakMilestone >= 15 ? 'PHENOMENAL!' :
                  streakMilestone >= 10 ? 'AMAZING!' : 
                  'ON FIRE!'}
               </h2>
-              <p className="text-white text-2xl font-bold mb-4 drop-shadow">
+              <p className="text-gray-700 text-2xl font-bold mb-4">
                 {streakMilestone} Question Streak!
               </p>
 
               {/* Bonus XP Display */}
-              <div className="bg-white/20 backdrop-blur rounded-xl p-4 mb-6 border-2 border-white/40">
-                <p className="text-yellow-200 text-sm font-semibold mb-1">Streak Bonus</p>
-                <p className="text-3xl font-black text-white">
+              <div className="bg-orange-50 rounded-xl p-4 mb-6 border-2 border-orange-200">
+                <p className="text-orange-600 text-sm font-semibold mb-1">Streak Bonus</p>
+                <p className="text-3xl font-black text-orange-600">
                   +{streakMilestone >= 20 ? 500 : streakMilestone >= 15 ? 300 : streakMilestone >= 10 ? 200 : 100} XP
                 </p>
               </div>
 
               {/* Combo Multiplier */}
               {comboMultiplier > 1 && (
-                <div className="bg-yellow-400/20 backdrop-blur rounded-xl p-3 mb-6 border-2 border-yellow-400/40">
-                  <p className="text-yellow-100 text-lg font-bold">
+                <div className="bg-yellow-50 rounded-xl p-3 mb-6 border-2 border-yellow-200">
+                  <p className="text-yellow-700 text-lg font-bold">
                     🎯 {comboMultiplier}x Combo Multiplier Active!
                   </p>
                 </div>
               )}
 
               {/* Encouragement Text */}
-              <p className="text-white/90 text-lg font-semibold">
+              <p className="text-gray-700 text-lg font-semibold">
                 {streakMilestone >= 20 ? 'You\'re unstoppable!' :
                  streakMilestone >= 15 ? 'Keep crushing it!' :
                  streakMilestone >= 10 ? 'You\'re a math champion!' :
