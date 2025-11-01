@@ -202,7 +202,7 @@ export default function ArrayBuilder({
       {showMultiplication && currentCount > 0 && (
         <div className="bg-yellow-50 rounded-2xl shadow-xl p-6 mb-6">
           <h4 className="text-lg font-bold text-gray-800 mb-3 text-center">
-            📊 What You're Building:
+            📊 What You&apos;re Building:
           </h4>
           <div className="flex flex-wrap gap-2 justify-center">
             {Array.from({ length: Math.floor(currentCount / columns) }).map((_, rowIdx) => (

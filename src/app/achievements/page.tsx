@@ -167,7 +167,7 @@ export default function AchievementsPage() {
             {checking ? 'Checking...' : '🎯 Check for New Achievements'}
           </button>
           <p className="text-sm text-gray-600 mt-2">
-            See if you've earned any new badges based on your progress!
+            See if you&apos;ve earned any new badges based on your progress!
           </p>
         </div>
 
