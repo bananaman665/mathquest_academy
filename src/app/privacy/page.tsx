@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Introduction</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Welcome to Mathlify ("we," "our," or "us"). We are committed to protecting your privacy and the privacy of children who use our educational app. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and website.
+              Welcome to Mathlify (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy and the privacy of children who use our educational app. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and website.
             </p>
             <p className="text-gray-700 leading-relaxed">
               By using Mathlify, you agree to the collection and use of information in accordance with this policy.
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
               <li>Personalize learning experiences and track progress</li>
               <li>Process in-app purchases and manage virtual currency</li>
               <li>Send important updates about your account and our services</li>
-              <li>Improve our app's functionality and user experience</li>
+              <li>Improve our app&apos;s functionality and user experience</li>
               <li>Ensure the safety and security of our users</li>
               <li>Comply with legal obligations</li>
               <li>Detect and prevent fraud or abuse</li>
@@ -80,15 +80,15 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Children's Privacy</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Children&apos;s Privacy</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify is designed for children and complies with the Children's Online Privacy Protection Act (COPPA). We do not knowingly collect personal information from children under 13 without parental consent.
+              Mathlify is designed for children and complies with the Children&apos;s Online Privacy Protection Act (COPPA). We do not knowingly collect personal information from children under 13 without parental consent.
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>We do not require children to provide more information than necessary to use the app</li>
-              <li>We do not share children's personal information with third parties for marketing purposes</li>
-              <li>Parents can request to review, delete, or stop the collection of their child's information</li>
-              <li>We use industry-standard security measures to protect children's data</li>
+              <li>We do not share children&apos;s personal information with third parties for marketing purposes</li>
+              <li>Parents can request to review, delete, or stop the collection of their child&apos;s information</li>
+              <li>We use industry-standard security measures to protect children&apos;s data</li>
             </ul>
             <p className="text-gray-700 leading-relaxed">
               If you are a parent or guardian and believe your child has provided us with personal information without your consent, please contact us at <a href="mailto:privacy@mathlify.app" className="text-blue-600 hover:underline">privacy@mathlify.app</a>.
@@ -171,7 +171,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Changes to This Privacy Policy</h2>
             <p className="text-gray-700 leading-relaxed">
-              We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date. Significant changes will be communicated via email or in-app notification.
+              We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the &quot;Last Updated&quot; date. Significant changes will be communicated via email or in-app notification.
             </p>
           </section>
 

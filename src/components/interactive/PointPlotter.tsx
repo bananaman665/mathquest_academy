@@ -12,7 +12,7 @@ interface PointPlotterProps {
   yMin?: number
   yMax?: number
   showLabels?: boolean
-  onAnswer: (isCorrect: boolean, answer?: any) => void
+  onAnswer: (isCorrect: boolean, answer?: { x: number; y: number }[]) => void
 }
 
 interface PlottedPoint {
@@ -239,7 +239,7 @@ export default function PointPlotter({
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
-                  onClick={(e) => handlePointClick(e as any, point.id)}
+                  onClick={(e) => handlePointClick(e as React.MouseEvent<SVGGElement>, point.id)}
                 >
                   <circle
                     cx={px}

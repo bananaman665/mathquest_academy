@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       })
 
       return NextResponse.json({ success: true })
-    } catch (clerkError: any) {
+    } catch (clerkError: unknown) {
       console.error('Clerk error:', clerkError)
       return NextResponse.json(
         { error: 'Failed to update password. Please check your current password.' },

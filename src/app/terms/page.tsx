@@ -20,10 +20,10 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Agreement to Terms</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Welcome to Mathlify! These Terms of Service ("Terms") govern your access to and use of the Mathlify mobile application and website (collectively, the "Service"). By accessing or using our Service, you agree to be bound by these Terms.
+              Welcome to Mathlify! These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Mathlify mobile application and website (collectively, the &quot;Service&quot;). By accessing or using our Service, you agree to be bound by these Terms.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              If you do not agree to these Terms, please do not use our Service. If you are under 18 years of age, you must have your parent or guardian's permission to use Mathlify.
+              If you do not agree to these Terms, please do not use our Service. If you are under 18 years of age, you must have your parent or guardian&apos;s permission to use Mathlify.
             </p>
           </section>
 
@@ -148,7 +148,7 @@ export default function TermsOfService() {
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>We do not guarantee specific learning outcomes</li>
               <li>Content should not be considered professional educational advice</li>
-              <li>Parents and teachers should supervise children's learning</li>
+              <li>Parents and teachers should supervise children&apos;s learning</li>
               <li>We are not responsible for academic performance or test results</li>
             </ul>
           </section>
@@ -156,16 +156,16 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Privacy and Data Protection</h2>
             <p className="text-gray-700 leading-relaxed">
-              Your use of Mathlify is also governed by our <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>. Please review it to understand how we collect, use, and protect your information, especially regarding children's privacy and COPPA compliance.
+              Your use of Mathlify is also governed by our <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>. Please review it to understand how we collect, use, and protect your information, especially regarding children&apos;s privacy and COPPA compliance.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Disclaimers and Limitations of Liability</h2>
             
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Service "As Is"</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Service &quot;As Is&quot;</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
-              The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not guarantee that:
+              The Service is provided &quot;as is&quot; and &quot;as available&quot; without warranties of any kind, either express or implied. We do not guarantee that:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>The Service will be uninterrupted, secure, or error-free</li>

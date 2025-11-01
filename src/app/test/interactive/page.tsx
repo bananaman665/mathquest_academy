@@ -86,7 +86,7 @@ export default function InteractiveTestPage() {
                 1️⃣.5 Number Line with Addition
               </h2>
               <p className="text-gray-600">
-                See how addition works as "jumps" on the number line!
+                See how addition works as &quot;jumps&quot; on the number line!
               </p>
             </div>
             
