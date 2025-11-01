@@ -100,7 +100,7 @@ export default function UpgradePage() {
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <TestimonialCard
             name="Sarah, Age 11"
-            text="The AI Tutor helps me understand math so much better! I went from struggling to loving math."
+            text="The helpful hints make math so much easier! I went from struggling to loving math."
             rating={5}
           />
           <TestimonialCard
@@ -110,7 +110,7 @@ export default function UpgradePage() {
           />
           <TestimonialCard
             name="Emma, Age 12"
-            text="I use the AI Tutor for homework help. It explains things better than my textbook!"
+            text="I love using the hints for homework help. They explain things better than my textbook!"
             rating={5}
           />
         </div>
@@ -126,10 +126,6 @@ export default function UpgradePage() {
             <FAQItem
               question="Will I lose my progress if I cancel?"
               answer="Nope! Your progress, XP, and achievements are saved forever. You can always upgrade again later."
-            />
-            <FAQItem
-              question="Is the AI Tutor unlimited?"
-              answer="Yes! Ask as many questions as you want. The AI Tutor is available 24/7 to help you learn."
             />
             <FAQItem
               question="What payment methods do you accept?"

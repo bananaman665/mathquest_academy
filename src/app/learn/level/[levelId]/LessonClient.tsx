@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
-import AITutor from '@/components/AITutor'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
@@ -96,7 +95,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [correctCount, setCorrectCount] = useState(0)
   const [hearts, setHearts] = useState(5)
   const [showGameOverModal, setShowGameOverModal] = useState(false)
-  const [showAITutor, setShowAITutor] = useState(false)
   const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
   const [showHints, setShowHints] = useState(false)
   const [hintsUsed, setHintsUsed] = useState(0)
@@ -104,9 +102,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [streakMilestone, setStreakMilestone] = useState(0)
 
   const currentQuestion = questions[currentQuestionIndex]
-  
-  // Log premium status and AI tutor state
-  console.log('Premium features:', { isPremium, showAITutor, setIsPremium })
   
   // Get answer boxes dynamically based on current question
   const answerBoxes = currentQuestion?.type === 'match-equation' && currentQuestion?.equations 
@@ -1883,7 +1878,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <>
               {/* Mobile: Stack buttons vertically */}
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-                {/* Top row on mobile: Skip, Hint, and AI Tutor */}
+                {/* Top row on mobile: Skip and Hint */}
                 <div className="flex gap-2 justify-between md:justify-start">
                   <button 
                     onClick={() => handleNext()} 
@@ -1904,13 +1899,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       💡 Hint
                     </button>
                   )}
-                  <button
-                    onClick={() => setShowAITutor(true)}
-                    className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
-                  >
-                    <Sparkles className="w-5 h-5" />
-                    <span>AI Tutor</span>
-                  </button>
                 </div>
 
                 {/* Bottom row on mobile: Check button full width */}
@@ -1960,15 +1948,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           )}
         </div>
       </div> 
-
-      {/* AI Tutor Modal */}
-      <AITutor
-        question={currentQuestion.question}
-        correctAnswer={currentQuestion.correctAnswer || ''}
-        userAnswer={selectedAnswer || typedAnswer || ''} 
-        isOpen={showAITutor}
-        onClose={() => setShowAITutor(false)}
-      />
 
       {/* Game Over Modal - Ran Out of Hearts */}
       {showGameOverModal && (
