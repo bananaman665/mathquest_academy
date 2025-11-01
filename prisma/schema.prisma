@@ -7,8 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("mathquest_PRISMA_DATABASE_URL")
-  directUrl = env("mathquest_DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 // User Model (Clerk ID as primary key)
