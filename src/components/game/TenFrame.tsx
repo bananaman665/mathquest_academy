@@ -80,9 +80,9 @@ export default function TenFrame({
       <div className="flex flex-col items-center gap-8 py-8">
         {/* Question */}
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
-          <p className="text-gray-300 text-lg">
-            Tap the boxes or drag dots to show <span className="font-bold text-blue-400">{correctPosition}</span>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">{question}</h3>
+          <p className="text-gray-700 text-lg">
+            Tap the boxes or drag dots to show <span className="font-bold text-blue-600">{correctPosition}</span>
           </p>
         </div>
 
@@ -92,13 +92,13 @@ export default function TenFrame({
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-8 border-2 transition-colors ${
+              className={`bg-white rounded-2xl p-8 border-2 transition-colors shadow-lg ${
                 snapshot.isDraggingOver
-                  ? 'border-blue-400 shadow-lg shadow-blue-500/50'
-                  : 'border-purple-500/50'
+                  ? 'border-blue-400 shadow-blue-500/50'
+                  : 'border-gray-300'
               }`}
             >
-              <div className="grid grid-cols-5 gap-3 mb-4">
+              <div className="grid grid-cols-5 gap-3">
                 {Array.from({ length: 10 }).map((_, index) => (
                   <button
                     key={index}
@@ -106,21 +106,14 @@ export default function TenFrame({
                     className={`w-16 h-16 rounded-lg border-4 transition-all transform hover:scale-105 ${
                       placedDots[index]
                         ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-300 shadow-lg shadow-blue-500/50'
-                        : 'bg-slate-700 border-slate-600 hover:border-slate-500 hover:bg-slate-600'
+                        : 'bg-gray-100 border-gray-300 hover:border-gray-400 hover:bg-gray-200'
                     }`}
                   >
                     {placedDots[index] && (
-                      <div className="text-3xl">●</div>
+                      <div className="text-3xl text-white">●</div>
                     )}
                   </button>
                 ))}
-              </div>
-
-              {/* Counter */}
-              <div className="text-center mt-6">
-                <div className="text-3xl font-bold text-white bg-slate-800 rounded-lg px-6 py-3 inline-block">
-                  Dots: <span className="text-blue-400">{dotsPlaced}</span> / {correctPosition}
-                </div>
               </div>
               {provided.placeholder}
             </div>
@@ -135,8 +128,8 @@ export default function TenFrame({
             {...provided.droppableProps}
             className={`flex gap-3 p-6 rounded-lg border-2 transition-colors flex-wrap justify-center ${
               snapshot.isDraggingOver
-                ? 'border-green-400 bg-green-500/10'
-                : 'border-slate-600 bg-slate-800/50'
+                ? 'border-green-400 bg-green-50'
+                : 'border-gray-300 bg-gray-50'
             }`}
           >
             {dotsCount > 0 ? (
@@ -151,13 +144,13 @@ export default function TenFrame({
                         snapshot.isDragging ? 'opacity-50 shadow-2xl scale-110' : 'hover:shadow-xl'
                       }`}
                     >
-                      <span className="text-xl">●</span>
+                      <span className="text-xl text-white">●</span>
                     </div>
                   )}
                 </Draggable>
               ))
             ) : (
-              <div className="text-gray-400 text-lg font-semibold">All dots placed!</div>
+              <div className="text-gray-500 text-lg font-semibold">All dots placed!</div>
             )}
             {provided.placeholder}
           </div>
