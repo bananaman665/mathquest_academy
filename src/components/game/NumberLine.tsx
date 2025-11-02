@@ -25,10 +25,27 @@ export default function NumberLine({
   const lineRef = useRef<HTMLDivElement>(null)
   const tolerance = 1 // Within 1 unit
 
+  // Smart label interval calculation to avoid overcrowding
+  const range = max - min
+  let smartInterval = labelInterval
+  
+  // If range is too large, increase interval to show fewer labels
+  if (range > 15) {
+    smartInterval = 5 // Show every 5th number
+  } else if (range > 10) {
+    smartInterval = 2 // Show every 2nd number
+  } else {
+    smartInterval = 1 // Show every number
+  }
+
   // Generate labels for the number line
   const labels = []
-  for (let i = min; i <= max; i += labelInterval) {
+  for (let i = min; i <= max; i += smartInterval) {
     labels.push(i)
+  }
+  // Always include the max value if not already included
+  if (labels[labels.length - 1] !== max) {
+    labels.push(max)
   }
 
   // Calculate pixel position from value
