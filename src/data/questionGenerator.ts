@@ -524,7 +524,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Subtracting Fractions",
     operation: 'fractions',
     numberRange: { min: 1, max: 12 },
-    questionTypes: ['multiple-choice', 'type-answer'],
+    questionTypes: ['multiple-choice', 'type-answer', 'fraction-builder'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
@@ -981,6 +981,36 @@ function generateQuestionByType(
         hints: [
           `What number balances the scale?`,
           `Think about what you need to add`
+        ],
+        xp: 15
+      }
+    }
+
+    case 'fraction-builder': {
+      // For fractions: num1 = numerator, num2 = denominator
+      const numerator = num1
+      const denominator = num2 || 4 // Default to quarters if not specified
+      
+      return {
+        id,
+        levelId,
+        type,
+        question: operation === 'addition' || operation === 'subtraction'
+          ? `${num1}/${num2} ${getOperationSymbol()} ${answer}/${num2} = ?`
+          : `What fraction is shown?`,
+        fractionNumerator: numerator,
+        fractionDenominator: denominator,
+        correctAnswer: operation === 'addition' ? String((numerator + answer)) :
+                       operation === 'subtraction' ? String((numerator - answer)) :
+                       `${numerator}/${denominator}`,
+        explanation: operation === 'addition' 
+          ? `${numerator}/${denominator} + ${answer}/${denominator} = ${numerator + answer}/${denominator}`
+          : operation === 'subtraction'
+          ? `${numerator}/${denominator} - ${answer}/${denominator} = ${numerator - answer}/${denominator}`
+          : `The fraction shows ${numerator} out of ${denominator} parts`,
+        hints: [
+          `Look at how many parts are shaded`,
+          `Count the total number of equal parts`
         ],
         xp: 15
       }
