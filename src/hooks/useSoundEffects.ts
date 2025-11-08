@@ -1,6 +1,8 @@
 import { useCallback, useRef } from 'react'
 
 export const useSoundEffects = () => {
+  const correctSoundRef = useRef<HTMLAudioElement | null>(null)
+  const levelCompleteSoundRef = useRef<HTMLAudioElement | null>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
 
   // Initialize AudioContext on first use
@@ -12,29 +14,17 @@ export const useSoundEffects = () => {
     return audioContextRef.current
   }, [])
 
-  // Play correct answer sound (bright, happy ding)
+  // Play correct answer sound (digital chime)
   const playCorrect = useCallback(() => {
-    const audioContext = getAudioContext()
-    const oscillator = audioContext.createOscillator()
-    const gainNode = audioContext.createGain()
-
-    oscillator.connect(gainNode)
-    gainNode.connect(audioContext.destination)
-
-    // Duolingo-style success sound: C6 -> E6
-    oscillator.frequency.setValueAtTime(1046.5, audioContext.currentTime) // C6
-    oscillator.frequency.setValueAtTime(1318.5, audioContext.currentTime + 0.1) // E6
-    
-    oscillator.type = 'sine'
-    
-    // Envelope for smooth sound
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime)
-    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4)
-
-    oscillator.start(audioContext.currentTime)
-    oscillator.stop(audioContext.currentTime + 0.4)
-  }, [getAudioContext])
+    if (!correctSoundRef.current) {
+      correctSoundRef.current = new Audio('/sounds/correct-answer.mp3')
+      correctSoundRef.current.volume = 0.5
+    }
+    correctSoundRef.current.currentTime = 0
+    correctSoundRef.current.play().catch(() => {
+      // Ignore errors if audio can't play
+    })
+  }, [])
 
   // Play incorrect answer sound (lower, gentle "oops" sound)
   const playIncorrect = useCallback(() => {
@@ -60,39 +50,30 @@ export const useSoundEffects = () => {
     oscillator.stop(audioContext.currentTime + 0.5)
   }, [getAudioContext])
 
-  // Play level complete sound (triumphant)
+  // Play level complete sound (triumphant game show music)
   const playLevelComplete = useCallback(() => {
-    const audioContext = getAudioContext()
-    
-    // Play a major chord progression
-    const playNote = (frequency: number, startTime: number, duration: number) => {
-      const oscillator = audioContext.createOscillator()
-      const gainNode = audioContext.createGain()
-
-      oscillator.connect(gainNode)
-      gainNode.connect(audioContext.destination)
-
-      oscillator.frequency.setValueAtTime(frequency, startTime)
-      oscillator.type = 'sine'
-
-      gainNode.gain.setValueAtTime(0, startTime)
-      gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.01)
-      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration)
-
-      oscillator.start(startTime)
-      oscillator.stop(startTime + duration)
+    if (!levelCompleteSoundRef.current) {
+      levelCompleteSoundRef.current = new Audio('/sounds/lesson-complete.mp3')
+      levelCompleteSoundRef.current.volume = 0.6
     }
+    levelCompleteSoundRef.current.currentTime = 0
+    levelCompleteSoundRef.current.play().catch(() => {
+      // Ignore errors if audio can't play
+    })
+  }, [])
 
-    const now = audioContext.currentTime
-    // C major arpeggio
-    playNote(523.25, now, 0.3) // C5
-    playNote(659.25, now + 0.15, 0.3) // E5
-    playNote(783.99, now + 0.3, 0.5) // G5
-  }, [getAudioContext])
+  // Stop level complete sound (useful when user escapes the lesson)
+  const stopLevelComplete = useCallback(() => {
+    if (levelCompleteSoundRef.current) {
+      levelCompleteSoundRef.current.pause()
+      levelCompleteSoundRef.current.currentTime = 0
+    }
+  }, [])
 
   return {
     playCorrect,
     playIncorrect,
     playLevelComplete,
+    stopLevelComplete,
   }
 }

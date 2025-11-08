@@ -1,23 +1,36 @@
 'use client'
 
-import { useSearchParams, useParams } from 'next/navigation'
+import { useSearchParams, useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Trophy, Star, Target, ArrowRight, Flame } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 export default function LevelCompletePage() {
   const searchParams = useSearchParams()
   const params = useParams()
+  const router = useRouter()
   const levelId = parseInt(params.levelId as string)
   const xp = parseInt(searchParams.get('xp') || '0')
   const correct = parseInt(searchParams.get('correct') || '0')
   const total = parseInt(searchParams.get('total') || '10')
   const accuracy = Math.round((correct / total) * 100)
 
+  const { playLevelComplete, stopLevelComplete } = useSoundEffects()
   const [showConfetti, setShowConfetti] = useState(true)
   const [saving, setSaving] = useState(false)
   const [streak, setStreak] = useState<number | null>(null)
   const [showStreakAnimation, setShowStreakAnimation] = useState(false)
+
+  // Play completion music when page loads
+  useEffect(() => {
+    playLevelComplete()
+    
+    // Stop music when component unmounts (user navigates away)
+    return () => {
+      stopLevelComplete()
+    }
+  }, [playLevelComplete, stopLevelComplete])
 
   useEffect(() => {
     // Hide confetti after animation

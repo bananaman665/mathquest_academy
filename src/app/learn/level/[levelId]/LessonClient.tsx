@@ -74,11 +74,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [equationMatched, setEquationMatched] = useState<(string | null)[]>(Array(initialAnswers.length).fill(null));
   
   const router = useRouter()
-  const { playCorrect, playIncorrect, playLevelComplete } = useSoundEffects()
+  const { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete } = useSoundEffects()
   const [phase, setPhase] = useState<'intro' | 'practice'>('intro')
   
   // Log sound effects loaded
-  console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete })
+  console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   // For type-answer questions
@@ -524,6 +524,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
   // Game Over Modal Handlers
   const handleExitLevel = () => {
+    stopLevelComplete() // Stop music if playing
     router.push('/learn')
   }
 
