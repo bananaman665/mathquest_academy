@@ -20,17 +20,17 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Agreement to Terms</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Welcome to Mathlify! These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Mathlify mobile application and website (collectively, the &quot;Service&quot;). By accessing or using our Service, you agree to be bound by these Terms.
+              Welcome to Mathly! These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Mathly mobile application and website (collectively, the &quot;Service&quot;). By accessing or using our Service, you agree to be bound by these Terms.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              If you do not agree to these Terms, please do not use our Service. If you are under 18 years of age, you must have your parent or guardian&apos;s permission to use Mathlify.
+              If you do not agree to these Terms, please do not use our Service. If you are under 18 years of age, you must have your parent or guardian&apos;s permission to use Mathly.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Description of Service</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify is an educational platform that provides interactive math learning experiences for students. Our Service includes:
+              Mathly is an educational platform that provides interactive math learning experiences for students. Our Service includes:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Interactive math lessons and exercises</li>
@@ -48,7 +48,7 @@ export default function TermsOfService() {
             
             <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Account Creation</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
-              To use certain features of Mathlify, you must create an account. You agree to:
+              To use certain features of Mathly, you must create an account. You agree to:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>Provide accurate, current, and complete information</li>
@@ -67,7 +67,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Acceptable Use</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              You agree to use Mathlify only for lawful purposes and in accordance with these Terms. You agree NOT to:
+              You agree to use Mathly only for lawful purposes and in accordance with these Terms. You agree NOT to:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Use the Service in any way that violates applicable laws or regulations</li>
@@ -88,7 +88,7 @@ export default function TermsOfService() {
             
             <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Virtual Items</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify includes virtual currency (gems) and virtual items (power-ups, shop items) that can be earned through gameplay or purchased with real money. You understand that:
+              Mathly includes virtual currency (gems) and virtual items (power-ups, shop items) that can be earned through gameplay or purchased with real money. You understand that:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>Virtual currency and items have no real-world value</li>
@@ -109,7 +109,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Premium Subscriptions</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify offers optional premium subscriptions with additional features. Subscriptions:
+              Mathly offers optional premium subscriptions with additional features. Subscriptions:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>Auto-renew unless cancelled at least 24 hours before the end of the period</li>
@@ -128,7 +128,7 @@ export default function TermsOfService() {
             
             <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Our Content</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
-              The Service and its original content, features, and functionality are owned by Mathlify and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.
+              The Service and its original content, features, and functionality are owned by Mathly and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
               You may not copy, modify, distribute, sell, or lease any part of our Service or software without our explicit written permission.
@@ -143,7 +143,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Educational Disclaimer</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify is designed to supplement, not replace, traditional education. While we strive for accuracy in our educational content:
+              Mathly is designed to supplement, not replace, traditional education. While we strive for accuracy in our educational content:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>We do not guarantee specific learning outcomes</li>
@@ -156,7 +156,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Privacy and Data Protection</h2>
             <p className="text-gray-700 leading-relaxed">
-              Your use of Mathlify is also governed by our <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>. Please review it to understand how we collect, use, and protect your information, especially regarding children&apos;s privacy and COPPA compliance.
+              Your use of Mathly is also governed by our <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>. Please review it to understand how we collect, use, and protect your information, especially regarding children&apos;s privacy and COPPA compliance.
             </p>
           </section>
 
@@ -176,7 +176,7 @@ export default function TermsOfService() {
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Limitation of Liability</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
-              To the maximum extent permitted by law, Mathlify shall not be liable for:
+              To the maximum extent permitted by law, Mathly shall not be liable for:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Indirect, incidental, special, consequential, or punitive damages</li>
@@ -189,7 +189,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Indemnification</h2>
             <p className="text-gray-700 leading-relaxed">
-              You agree to indemnify and hold harmless Mathlify, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the Service or violation of these Terms.
+              You agree to indemnify and hold harmless Mathly, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the Service or violation of these Terms.
             </p>
           </section>
 
@@ -227,7 +227,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Entire Agreement</h2>
             <p className="text-gray-700 leading-relaxed">
-              These Terms, together with our Privacy Policy, constitute the entire agreement between you and Mathlify regarding the use of the Service and supersede any prior agreements.
+              These Terms, together with our Privacy Policy, constitute the entire agreement between you and Mathly regarding the use of the Service and supersede any prior agreements.
             </p>
           </section>
 
@@ -245,7 +245,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Acknowledgment</h2>
             <p className="text-gray-700 leading-relaxed">
-              By using Mathlify, you acknowledge that you have read these Terms of Service and agree to be bound by them.
+              By using Mathly, you acknowledge that you have read these Terms of Service and agree to be bound by them.
             </p>
           </section>
         </div>

@@ -40,7 +40,7 @@ export default async function InventoryPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-black text-green-600">Mathlify</span>
+            <span className="text-2xl font-black text-green-600">Mathly</span>
           </Link>
         </div>
 
@@ -94,13 +94,9 @@ export default async function InventoryPage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-black text-gray-900">My Inventory</h1>
-            </div>
-          </div>
-        </header>
+                <header className="bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-black text-green-600">Mathly</span>
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8">
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-2xl p-6 mb-8">

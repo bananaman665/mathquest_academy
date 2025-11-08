@@ -15,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mathlify - Learn Math Through Adventure",
+  title: "Mathly - Learn Math Through Adventure",
   description: "An interactive math learning platform with gamification",
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({

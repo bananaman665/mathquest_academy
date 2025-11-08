@@ -1,27 +1,35 @@
+import { currentUser } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Zap, Target, Sparkles, Star, Rocket } from 'lucide-react'
+import { Sparkles, Rocket, Zap, Trophy, Target, Star } from 'lucide-react'
 
-export default function Home() {
+export default async function Home() {
+  // Check if user is signed in
+  const user = await currentUser()
+  
+  // If signed in, go to learn page, otherwise go to sign in
+  if (user) {
+    redirect('/learn')
+  } else {
+    redirect('/signin')
+  }
+  
+  // This code is never reached, but kept for reference
   return (
-    <div className="min-h-screen bg-white">
-      {/* Subtle Background Patterns */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-100 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-100 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       {/* Header */}
-      <header className="relative bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm sticky top-0 z-50">
+      <header className="relative bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
-                        <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Sparkles className="w-7 h-7 text-white" />
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
+                <Sparkles className="w-8 h-8 text-white" />
               </div>
-              <span className="text-3xl font-black bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                Mathlify
-              </span>
+              <div>
+                <h1 className="text-3xl font-black text-green-600">
+                  Mathly
+                </h1>
+              </div>
             </div>
             <div className="flex space-x-3">
               <Link 
@@ -164,10 +172,10 @@ export default function Home() {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                Mathlify
+                Mathly
               </span>
             </div>
-            <p className="text-gray-600 mb-4">&copy; 2025 Mathlify. Making math learning epic and fun.</p>
+            <p className="text-gray-600 mb-4">&copy; 2025 Mathly. Making math learning epic and fun.</p>
             <div className="flex items-center justify-center gap-6 text-sm">
               <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
                 Privacy Policy
@@ -177,7 +185,7 @@ export default function Home() {
                 Terms of Service
               </Link>
               <span className="text-gray-400">·</span>
-              <a href="mailto:support@mathlify.app" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="mailto:support@mathly.app" className="text-gray-600 hover:text-gray-900 transition-colors">
                 Contact
               </a>
             </div>

@@ -52,7 +52,7 @@ export const POST = withErrorHandling(async (req: Request) => {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
       {
         role: 'system',
-        content: `You are an expert math tutor for Mathlify, a gamified math learning platform. Your role is to help students understand math concepts through clear, encouraging explanations that fit our playful, supportive tone.`
+        content: `You are an expert math tutor for Mathly, a gamified math learning platform. Your role is to help students understand math concepts through clear, encouraging explanations that fit our playful, supportive tone.`
       },
       // Include recent conversation history (limit to last 10 messages)
       ...history.slice(-10).map((msg: HistoryMessage) => ({

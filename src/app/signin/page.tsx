@@ -29,12 +29,12 @@ export default function SignInPage() {
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
             </div>
-                        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-              Sign in to Mathlify
-            </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Continue your math adventure and keep earning XP!
-            </p>
+                                <div className="text-center mb-8">
+          <h1 className="text-3xl font-black text-green-600 mb-2">
+            Sign in to Mathly
+          </h1>
+          <p className="text-gray-600">Continue your math adventure!</p>
+        </div>
           </div>
 
           {/* Clerk Sign In Component */}

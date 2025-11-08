@@ -25,7 +25,7 @@ async function seedShopItems() {
     {
       id: 'xp-boost',
       name: 'XP Boost',
-      description: 'Double XP for 1 hour',
+      description: 'Double XP for 1 hour!',
       price: 150,
       icon: 'Zap',
       category: 'power-ups',
@@ -43,7 +43,7 @@ async function seedShopItems() {
     {
       id: 'golden-trophy',
       name: 'Golden Trophy',
-      description: 'Show off your achievements',
+      description: 'Show off your achievements!',
       price: 500,
       icon: 'Trophy',
       category: 'cosmetics',

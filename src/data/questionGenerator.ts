@@ -229,109 +229,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     allowNegatives: false
   },
 
-  // UNIT 4: ADDITION & SUBTRACTION WITHIN 20 (Levels 16-20)
+  // UNIT 4: ADDITION & SUBTRACTION WITHIN 100 (Levels 16-20)
   16: {
     levelId: 16,
-    unit: "Addition 11-20",
-    operation: 'addition',
-    numberRange: { min: 1, max: 20 },
-    answerRange: { min: 2, max: 20 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  17: {
-    levelId: 17,
-    unit: "Subtraction 11-20",
-    operation: 'subtraction',
-    numberRange: { min: 1, max: 20 },
-    answerRange: { min: 0, max: 20 },
-    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
-    totalQuestions: 10,
-    difficulty: 'medium',
-    allowNegatives: false
-  },
-  18: {
-    levelId: 18,
-    unit: "Mixed Operations 1-20",
-    operation: 'mixed',
-    numberRange: { min: 1, max: 20 },
-    answerRange: { min: 0, max: 20 },
-    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  19: {
-    levelId: 19,
-    unit: "Word Problems 1-20",
-    operation: 'mixed',
-    numberRange: { min: 1, max: 20 },
-    answerRange: { min: 0, max: 20 },
-    questionTypes: ['multiple-choice', 'type-answer'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-  20: {
-    levelId: 20,
-    unit: "Practice 1-20",
-    operation: 'mixed',
-    numberRange: { min: 1, max: 20 },
-    answerRange: { min: 0, max: 20 },
-    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-
-  // UNIT 5: PLACE VALUE (Levels 21-25)
-  21: {
-    levelId: 21,
-    unit: "Tens and Ones",
-    operation: 'place-value',
-    numberRange: { min: 10, max: 99 },
-    questionTypes: ['multiple-choice', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  22: {
-    levelId: 22,
-    unit: "Counting by 10s",
-    operation: 'counting',
-    numberRange: { min: 10, max: 100 },
-    questionTypes: ['multiple-choice', 'number-sequence', 'skip-counter'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  23: {
-    levelId: 23,
-    unit: "Compare 2-Digit Numbers",
-    operation: 'counting',
-    numberRange: { min: 10, max: 99 },
-    questionTypes: ['multiple-choice', 'true-false'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  24: {
-    levelId: 24,
-    unit: "Hundreds Place",
-    operation: 'place-value',
-    numberRange: { min: 100, max: 999 },
-    questionTypes: ['multiple-choice', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-  25: {
-    levelId: 25,
-    unit: "Place Value Practice",
-    operation: 'place-value',
-    numberRange: { min: 1, max: 999 },
-    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-
-  // UNIT 6: ADDITION & SUBTRACTION WITHIN 100 (Levels 26-30)
-  26: {
-    levelId: 26,
     unit: "Addition 2-Digit",
     operation: 'addition',
     numberRange: { min: 10, max: 50 },
@@ -340,8 +240,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  27: {
-    levelId: 27,
+  17: {
+    levelId: 17,
     unit: "Subtraction 2-Digit",
     operation: 'subtraction',
     numberRange: { min: 10, max: 50 },
@@ -351,8 +251,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowNegatives: false
   },
-  28: {
-    levelId: 28,
+  18: {
+    levelId: 18,
     unit: "Regrouping Addition",
     operation: 'addition',
     numberRange: { min: 15, max: 99 },
@@ -361,8 +261,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  29: {
-    levelId: 29,
+  19: {
+    levelId: 19,
     unit: "Regrouping Subtraction",
     operation: 'subtraction',
     numberRange: { min: 20, max: 99 },
@@ -372,8 +272,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowNegatives: false
   },
-  30: {
-    levelId: 30,
+  20: {
+    levelId: 20,
     unit: "Mixed 2-Digit Operations",
     operation: 'mixed',
     numberRange: { min: 10, max: 99 },
@@ -383,9 +283,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 7: MULTIPLICATION BASICS (Levels 31-35)
-  31: {
-    levelId: 31,
+  // UNIT 5: MULTIPLICATION BASICS (Levels 21-25)
+  21: {
+    levelId: 21,
     unit: "Introduction to Multiplication",
     operation: 'multiplication',
     numberRange: { min: 1, max: 5 },
@@ -394,8 +294,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  32: {
-    levelId: 32,
+  22: {
+    levelId: 22,
     unit: "Times Tables 2, 5, 10",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -404,8 +304,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  33: {
-    levelId: 33,
+  23: {
+    levelId: 23,
     unit: "Times Tables 3, 4, 6",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -414,8 +314,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  34: {
-    levelId: 34,
+  24: {
+    levelId: 24,
     unit: "Times Tables 7, 8, 9",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -424,8 +324,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  35: {
-    levelId: 35,
+  25: {
+    levelId: 25,
     unit: "All Times Tables",
     operation: 'multiplication',
     numberRange: { min: 1, max: 12 },
@@ -435,9 +335,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 8: DIVISION BASICS (Levels 36-40)
-  36: {
-    levelId: 36,
+  // UNIT 6: DIVISION BASICS (Levels 26-30)
+  26: {
+    levelId: 26,
     unit: "Introduction to Division",
     operation: 'division',
     numberRange: { min: 2, max: 10 },
@@ -447,8 +347,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'medium',
     allowRemainders: false
   },
-  37: {
-    levelId: 37,
+  27: {
+    levelId: 27,
     unit: "Division by 2, 5, 10",
     operation: 'division',
     numberRange: { min: 2, max: 50 },
@@ -458,8 +358,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'medium',
     allowRemainders: false
   },
-  38: {
-    levelId: 38,
+  28: {
+    levelId: 28,
     unit: "Division Facts",
     operation: 'division',
     numberRange: { min: 3, max: 81 },
@@ -469,8 +369,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowRemainders: false
   },
-  39: {
-    levelId: 39,
+  29: {
+    levelId: 29,
     unit: "Division with Remainders",
     operation: 'division',
     numberRange: { min: 3, max: 50 },
@@ -480,13 +380,113 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowRemainders: true
   },
-  40: {
-    levelId: 40,
-    unit: "Multiplication & Division",
+  30: {
+    levelId: 30,
+    unit: "Multiplication & Division Practice",
     operation: 'mixed',
     numberRange: { min: 1, max: 100 },
     answerRange: { min: 1, max: 100 },
     questionTypes: ['multiple-choice', 'type-answer'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+
+  // UNIT 7: ADDITION & SUBTRACTION WITHIN 20 (Levels 31-35)
+  31: {
+    levelId: 31,
+    unit: "Addition 11-20",
+    operation: 'addition',
+    numberRange: { min: 1, max: 20 },
+    answerRange: { min: 2, max: 20 },
+    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  32: {
+    levelId: 32,
+    unit: "Subtraction 11-20",
+    operation: 'subtraction',
+    numberRange: { min: 1, max: 20 },
+    answerRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'number-line-drag', 'type-answer', 'balance-scale'],
+    totalQuestions: 10,
+    difficulty: 'medium',
+    allowNegatives: false
+  },
+  33: {
+    levelId: 33,
+    unit: "Mixed Operations 1-20",
+    operation: 'mixed',
+    numberRange: { min: 1, max: 20 },
+    answerRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  34: {
+    levelId: 34,
+    unit: "Word Problems 1-20",
+    operation: 'mixed',
+    numberRange: { min: 1, max: 20 },
+    answerRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'type-answer'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+  35: {
+    levelId: 35,
+    unit: "Practice 1-20",
+    operation: 'mixed',
+    numberRange: { min: 1, max: 20 },
+    answerRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+
+  // UNIT 8: PLACE VALUE (Levels 36-40)
+  36: {
+    levelId: 36,
+    unit: "Tens and Ones",
+    operation: 'place-value',
+    numberRange: { min: 10, max: 99 },
+    questionTypes: ['multiple-choice', 'fill-blank'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  37: {
+    levelId: 37,
+    unit: "Counting by 10s",
+    operation: 'counting',
+    numberRange: { min: 10, max: 100 },
+    questionTypes: ['multiple-choice', 'number-sequence', 'skip-counter'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  38: {
+    levelId: 38,
+    unit: "Compare 2-Digit Numbers",
+    operation: 'counting',
+    numberRange: { min: 10, max: 99 },
+    questionTypes: ['multiple-choice', 'true-false'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  39: {
+    levelId: 39,
+    unit: "Hundreds Place",
+    operation: 'place-value',
+    numberRange: { min: 100, max: 999 },
+    questionTypes: ['multiple-choice', 'fill-blank'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+  40: {
+    levelId: 40,
+    unit: "Place Value Practice",
+    operation: 'place-value',
+    numberRange: { min: 1, max: 999 },
+    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
@@ -701,18 +701,34 @@ function generateQuestion(
     case 'fractions':
     case 'mixed':
     default:
-      // For complex operations, pick random operation
-      const ops = ['addition', 'subtraction']
+      // For mixed operations, choose operations based on curriculum progression
+      // Levels 1-20: Only addition and subtraction (before multiplication is taught)
+      // Levels 21+: All four operations (after multiplication/division are introduced)
+      const ops = levelId >= 21 
+        ? ['addition', 'subtraction', 'multiplication', 'division']
+        : ['addition', 'subtraction']
       const randomOp = ops[Math.floor(rng.next() * ops.length)]
       
       if (randomOp === 'addition') {
         num1 = rng.nextInt(numberRange.min, numberRange.max)
         num2 = rng.nextInt(numberRange.min, numberRange.max)
         answer = num1 + num2
-      } else {
+      } else if (randomOp === 'subtraction') {
+        // Generate answer first to avoid negatives
         answer = rng.nextInt(numberRange.min, numberRange.max)
         num2 = rng.nextInt(numberRange.min, numberRange.max)
         num1 = answer + num2
+      } else if (randomOp === 'multiplication') {
+        // Keep multiplication factors reasonable (1-12)
+        num1 = rng.nextInt(Math.max(1, numberRange.min), Math.min(numberRange.max, 12))
+        num2 = rng.nextInt(Math.max(1, numberRange.min), Math.min(numberRange.max, 12))
+        answer = num1 * num2
+      } else {
+        // Division: generate answer and divisor, then dividend = answer * divisor
+        // This ensures no remainders
+        answer = rng.nextInt(Math.max(1, numberRange.min), Math.min(numberRange.max, 12))
+        num2 = rng.nextInt(Math.max(2, numberRange.min), Math.min(numberRange.max, 12))
+        num1 = answer * num2
       }
       break
   }

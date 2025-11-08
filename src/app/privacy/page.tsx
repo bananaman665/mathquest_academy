@@ -20,10 +20,10 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Introduction</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Welcome to Mathlify (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy and the privacy of children who use our educational app. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and website.
+              Welcome to Mathly (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy and the privacy of children who use our educational app. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and website.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              By using Mathlify, you agree to the collection and use of information in accordance with this policy.
+              By using Mathly, you agree to the collection and use of information in accordance with this policy.
             </p>
           </section>
 
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Children&apos;s Privacy</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify is designed for children and complies with the Children&apos;s Online Privacy Protection Act (COPPA). We do not knowingly collect personal information from children under 13 without parental consent.
+              Mathly is designed for children and complies with the Children&apos;s Online Privacy Protection Act (COPPA). We do not knowingly collect personal information from children under 13 without parental consent.
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
               <li>We do not require children to provide more information than necessary to use the app</li>
@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
               <li>We use industry-standard security measures to protect children&apos;s data</li>
             </ul>
             <p className="text-gray-700 leading-relaxed">
-              If you are a parent or guardian and believe your child has provided us with personal information without your consent, please contact us at <a href="mailto:privacy@mathlify.app" className="text-blue-600 hover:underline">privacy@mathlify.app</a>.
+              If you are a parent or guardian and believe your child has provided us with personal information without your consent, please contact us at <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a>.
             </p>
           </section>
 
@@ -135,7 +135,7 @@ export default function PrivacyPolicy() {
               <li><strong>Data Portability:</strong> Request your data in a machine-readable format</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
-              To exercise these rights, please contact us at <a href="mailto:privacy@mathlify.app" className="text-blue-600 hover:underline">privacy@mathlify.app</a>.
+              To exercise these rights, please contact us at <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a>.
             </p>
           </section>
 
@@ -149,7 +149,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Third-Party Services</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Mathlify uses the following third-party services:
+              Mathly uses the following third-party services:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li><strong>Clerk:</strong> Authentication and user management (<a href="https://clerk.com/privacy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Privacy Policy</a>)</li>
@@ -164,7 +164,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">International Data Transfers</h2>
             <p className="text-gray-700 leading-relaxed">
-              Your information may be transferred to and maintained on servers located outside of your country. By using Mathlify, you consent to the transfer of your information to countries that may have different data protection laws than your country of residence.
+              Your information may be transferred to and maintained on servers located outside of your country. By using Mathly, you consent to the transfer of your information to countries that may have different data protection laws than your country of residence.
             </p>
           </section>
 
@@ -181,8 +181,8 @@ export default function PrivacyPolicy() {
               If you have any questions about this Privacy Policy or our privacy practices, please contact us:
             </p>
             <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:privacy@mathlify.app" className="text-blue-600 hover:underline">privacy@mathlify.app</a></p>
-              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:support@mathlify.app" className="text-blue-600 hover:underline">support@mathlify.app</a></p>
+              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a></p>
+              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:support@mathly.app" className="text-blue-600 hover:underline">support@mathly.app</a></p>
             </div>
           </section>
 

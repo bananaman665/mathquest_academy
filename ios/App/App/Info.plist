@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Mathlify</string>
+        <string>Mathly</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -58,9 +58,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Mathlify needs access to your camera to scan math problems and provide instant help.</string>
+	<string>Mathly needs access to your camera to scan math problems and provide instant help.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Mathlify needs access to your photos to help you solve math problems from images.</string>
+	<string>Mathly needs access to your photos to help you solve math problems from images.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This allows us to provide you with personalized learning experiences and track your progress.</string>
 </dict>
