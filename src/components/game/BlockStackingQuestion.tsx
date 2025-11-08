@@ -93,7 +93,7 @@ export default function BlockStackingQuestion({
         </div>
 
         {/* Main workspace */}
-        <div className="flex gap-16 items-start">
+        <div className="flex gap-8 items-start justify-center w-full">
           {/* Block Stack */}
           <div className="flex flex-col items-center gap-4">
             <div className="text-white font-bold text-lg">
@@ -104,11 +104,11 @@ export default function BlockStackingQuestion({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-col-reverse items-center gap-2 p-6 rounded-lg border-2 ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-6 rounded-lg border-2 ${
                     snapshot.isDraggingOver
                       ? 'border-green-400 bg-green-500/10'
                       : 'border-slate-600 bg-slate-800/50'
-                  } min-h-80 min-w-40 transition-colors`}
+                  } min-h-48 w-60 transition-colors`}
                 >
                   {stackBlocks.length === 0 ? (
                     <div className="text-gray-400 text-center py-12">No blocks</div>
@@ -120,12 +120,14 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-32 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg shadow-lg border-2 border-blue-300 cursor-grab transition-all ${
+                            className={`w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full shadow-lg border-3 border-blue-300 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-50 shadow-2xl rotate-12'
-                                : 'hover:shadow-xl'
+                                ? 'opacity-50 shadow-2xl scale-110'
+                                : 'hover:shadow-xl hover:scale-105'
                             }`}
-                          />
+                          >
+                            <div className="w-6 h-6 bg-white/30 rounded-full"></div>
+                          </div>
                         )}
                       </Draggable>
                     ))
@@ -139,7 +141,7 @@ export default function BlockStackingQuestion({
             </div>
           </div>
 
-          {/* Trash Zone */}
+          {/* Blocks to Add Zone */}
           <div className="flex flex-col items-center gap-4">
             <div className="text-white font-bold text-lg">
               {operation === 'add' ? 'Blocks to Add' : 'Trash'}
@@ -153,7 +155,7 @@ export default function BlockStackingQuestion({
                     snapshot.isDraggingOver
                       ? 'border-red-400 bg-red-500/10'
                       : 'border-slate-600 bg-slate-800/50'
-                  } w-64 min-h-80 transition-colors`}
+                  } w-60 min-h-48 transition-colors`}
                 >
                   {trashBlocks.length === 0 ? (
                     <div className="text-gray-400 text-center w-full py-12">Empty</div>
@@ -165,12 +167,14 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-24 h-8 bg-gradient-to-r from-gray-400 to-gray-600 rounded-lg shadow-lg border-2 border-gray-300 cursor-grab transition-all ${
+                            className={`w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg border-3 border-amber-300 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-50 shadow-2xl'
-                                : 'hover:shadow-lg'
+                                ? 'opacity-50 shadow-2xl scale-110'
+                                : 'hover:shadow-xl hover:scale-105'
                             }`}
-                          />
+                          >
+                            <div className="w-6 h-6 bg-white/30 rounded-full"></div>
+                          </div>
                         )}
                       </Draggable>
                     ))
