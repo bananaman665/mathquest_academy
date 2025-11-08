@@ -793,10 +793,14 @@ function generateQuestionByType(
       const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
       
       let questionText: string
+      let explanationText: string
+      
       if (operation === 'counting') {
         questionText = `What number comes after ${num1}?`
+        explanationText = `The number after ${num1} is ${answer}. We count: ${num1}, ${answer}!`
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+        explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
       }
 
       return {
@@ -806,10 +810,11 @@ function generateQuestionByType(
         question: questionText,
         options: allOptions,
         correctAnswer: String(answer),
-        explanation: `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
+        explanation: explanationText,
         hints: [
           operation === 'addition' ? `Try counting up from ${num1}` :
           operation === 'subtraction' ? `Try counting down from ${num1}` :
+          operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
           `Think about your times tables`,
           `Take your time and work it out step by step`
         ],
