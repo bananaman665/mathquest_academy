@@ -692,9 +692,9 @@ function generateQuestion(
       break
 
     case 'counting':
-      num1 = rng.nextInt(numberRange.min, numberRange.max)
+      num1 = rng.nextInt(numberRange.min, numberRange.max - 1) // Ensure we can add 1
       num2 = 0
-      answer = num1
+      answer = num1 + 1 // The number that comes AFTER num1
       break
 
     case 'place-value':
