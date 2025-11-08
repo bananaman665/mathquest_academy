@@ -1407,10 +1407,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <BalanceScale
                 question={currentQuestion.question}
-                leftSide={[0, currentQuestion.firstNumber || 5]}
-                rightSide={[currentQuestion.secondNumber || 8]}
-                missingValue={0}
-                correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer) : 3}
+                leftSide={[currentQuestion.balanceLeft !== undefined ? currentQuestion.balanceLeft : 0, 0]}
+                rightSide={[currentQuestion.balanceRight !== undefined ? currentQuestion.balanceRight : 0]}
+                missingValue={1}
+                correctAnswer={currentQuestion.balanceRight !== undefined ? currentQuestion.balanceRight : parseInt(currentQuestion.correctAnswer || '0')}
                 showEquals={true}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
