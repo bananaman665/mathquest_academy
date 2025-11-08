@@ -1410,7 +1410,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 leftSide={[currentQuestion.balanceLeft !== undefined ? currentQuestion.balanceLeft : 0, 0]}
                 rightSide={[currentQuestion.balanceRight !== undefined ? currentQuestion.balanceRight : 0]}
                 missingValue={1}
-                correctAnswer={currentQuestion.balanceRight !== undefined ? currentQuestion.balanceRight : parseInt(currentQuestion.correctAnswer || '0')}
+                correctAnswer={parseInt(currentQuestion.correctAnswer || '0')}
                 showEquals={true}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)

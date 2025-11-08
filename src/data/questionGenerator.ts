@@ -981,27 +981,31 @@ function generateQuestionByType(
     }
 
     case 'balance-scale': {
-      // For balance scale: left side has known value, right side needs to be balanced
-      // In addition: left = num1, right = answer - num1  (so left + right = answer)
-      // In subtraction: left = answer, right = num1 - answer (so left + right = num1)
-      const leftSide = operation === 'addition' ? num1 : answer
-      const rightSide = operation === 'addition' ? (answer - num1) : (num1 - answer)
+      // For balance scale: Show equation format where user finds missing value
+      // Question: num1 + ? = answer
+      // Left side: num1 + missing (user selects)
+      // Right side: answer (the total we want)
+      // Correct answer: answer - num1
+      
+      const missingValue = operation === 'addition' 
+        ? answer - num1  // For 3 + ? = 10, missing = 7
+        : num1 - answer  // For subtraction
       
       return {
         id,
         levelId,
         type,
         question: operation === 'addition' 
-          ? `${leftSide} + ? = ${answer}`
-          : `? + ${rightSide} = ${num1}`,
-        balanceLeft: leftSide,
-        balanceRight: rightSide,
+          ? `${num1} + ? = ${answer}`
+          : `? + ${num2} = ${num1}`,
+        balanceLeft: num1,           // The known number on left side
+        balanceRight: answer,        // The total on right side
         balanceItem: '⚖️',
-        correctAnswer: String(rightSide),
-        explanation: `${leftSide} + ${rightSide} = ${leftSide + rightSide}`,
+        correctAnswer: String(missingValue),
+        explanation: `${num1} + ${missingValue} = ${answer}`,
         hints: [
           `What number balances the scale?`,
-          `Think about what you need to add`
+          `Think: ${num1} + ? = ${answer}`
         ],
         xp: 15
       }
