@@ -27,10 +27,16 @@ export default function BlockStackingQuestion({
 
   // Initialize blocks based on operation
   useEffect(() => {
-    const initialCount = operation === 'add' ? firstNumber : firstNumber
-    setStackBlocks(Array.from({ length: initialCount }, (_, i) => `block-${i}`))
-    setTrashBlocks([])
-  }, [operation, firstNumber])
+    if (operation === 'add') {
+      // For addition: start with firstNumber in stack, secondNumber in trash to add
+      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `stack-block-${i}`))
+      setTrashBlocks(Array.from({ length: secondNumber }, (_, i) => `trash-block-${i}`))
+    } else {
+      // For subtraction: start with firstNumber in stack, remove secondNumber
+      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `block-${i}`))
+      setTrashBlocks([])
+    }
+  }, [operation, firstNumber, secondNumber])
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result
@@ -64,9 +70,13 @@ export default function BlockStackingQuestion({
 
   const handleReset = () => {
     setShowFeedback(false)
-    const initialCount = operation === 'add' ? firstNumber : firstNumber
-    setStackBlocks(Array.from({ length: initialCount }, (_, i) => `block-${i}`))
-    setTrashBlocks([])
+    if (operation === 'add') {
+      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `stack-block-${i}`))
+      setTrashBlocks(Array.from({ length: secondNumber }, (_, i) => `trash-block-${i}`))
+    } else {
+      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `block-${i}`))
+      setTrashBlocks([])
+    }
   }
 
   return (
@@ -86,7 +96,9 @@ export default function BlockStackingQuestion({
         <div className="flex gap-16 items-start">
           {/* Block Stack */}
           <div className="flex flex-col items-center gap-4">
-            <div className="text-white font-bold text-lg">Your Stack</div>
+            <div className="text-white font-bold text-lg">
+              {operation === 'add' ? 'Your Stack (Drag blocks here)' : 'Your Stack'}
+            </div>
             <Droppable droppableId="stack">
               {(provided, snapshot) => (
                 <div
@@ -129,7 +141,9 @@ export default function BlockStackingQuestion({
 
           {/* Trash Zone */}
           <div className="flex flex-col items-center gap-4">
-            <div className="text-white font-bold text-lg">Trash</div>
+            <div className="text-white font-bold text-lg">
+              {operation === 'add' ? 'Blocks to Add' : 'Trash'}
+            </div>
             <Droppable droppableId="trash">
               {(provided, snapshot) => (
                 <div
