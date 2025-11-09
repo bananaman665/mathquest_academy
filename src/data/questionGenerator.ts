@@ -636,6 +636,8 @@ function generateQuestion(
 
   // Generate numbers based on operation
   let num1: number, num2: number, answer: number
+  // Track the actual operation used (important for mixed/place-value)
+  let actualOperation = operation
 
   switch (operation) {
     case 'addition':
@@ -674,8 +676,8 @@ function generateQuestion(
 
     case 'multiplication':
       // For multiplication: pick two factors
-      num1 = rng.nextInt(numberRange.min, numberRange.max)
-      num2 = rng.nextInt(numberRange.min, Math.min(numberRange.max, 12)) // Keep factors reasonable
+      num1 = rng.nextInt(numberRange.min, Math.min(numberRange.max, 12)) // Keep factors reasonable
+      num2 = rng.nextInt(numberRange.min, Math.min(numberRange.max, 12))
       answer = num1 * num2
       break
 
@@ -711,7 +713,10 @@ function generateQuestion(
       const ops = levelId >= 21 
         ? ['addition', 'subtraction', 'multiplication', 'division']
         : ['addition', 'subtraction']
-      const randomOp = ops[Math.floor(rng.next() * ops.length)]
+      const randomOp = ops[Math.floor(rng.next() * ops.length)] as 'addition' | 'subtraction' | 'multiplication' | 'division'
+      
+      // Track the actual operation used for display (instead of trying to reassign const operation)
+      actualOperation = randomOp
       
       if (randomOp === 'addition') {
         num1 = rng.nextInt(numberRange.min, numberRange.max)
@@ -745,7 +750,8 @@ function generateQuestion(
     num2,
     answer,
     rng,
-    questionIndex
+    questionIndex,
+    actualOperation // Pass the actual operation used for correct symbol display
   )
 }
 
@@ -762,10 +768,13 @@ function generateQuestionByType(
   num2: number,
   answer: number,
   rng: SeededRandom,
-  index: number
+  index: number,
+  actualOperation: string // The actual operation used (important for mixed/place-value)
 ): Question {
-  const { levelId, operation, visualEmojis } = config
+  const { levelId, visualEmojis } = config
   const id = `${levelId}-${index + 1}`
+  // Use actualOperation instead of config.operation for symbol display
+  const operation = actualOperation as 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'mixed'
 
   // Generate wrong answers for multiple choice
   const generateWrongAnswers = (correct: number, count: number = 3): string[] => {
