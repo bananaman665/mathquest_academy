@@ -296,7 +296,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   22: {
     levelId: 22,
     unit: "Counting by 10s",
-    operation: 'counting',
+    operation: 'place-value',
     numberRange: { min: 10, max: 100 },
     questionTypes: ['multiple-choice', 'number-sequence', 'skip-counter'],
     totalQuestions: 10,
@@ -305,7 +305,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   23: {
     levelId: 23,
     unit: "Compare 2-Digit Numbers",
-    operation: 'counting',
+    operation: 'place-value',
     numberRange: { min: 10, max: 99 },
     questionTypes: ['multiple-choice', 'true-false'],
     totalQuestions: 10,
