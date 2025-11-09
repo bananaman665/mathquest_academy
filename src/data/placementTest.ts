@@ -35,7 +35,7 @@ export const placementTestQuestions = [
     explanation: '10 - 7 = 3.',
     xp: 15,
   },
-  // Unit 4: Multiplication Magic
+  // Unit 4: Bigger Numbers
   {
     id: 'pt4',
     levelDifficulty: 17,

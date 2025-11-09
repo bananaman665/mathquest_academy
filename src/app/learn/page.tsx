@@ -63,7 +63,7 @@ const units = [
   },
   {
     id: 4,
-    title: "Multiplication Magic",
+    title: "Bigger Numbers",
     description: "Discover the power of multiplication",
     theme: "stars", // ⭐
     color: "from-purple-400 to-pink-600",
