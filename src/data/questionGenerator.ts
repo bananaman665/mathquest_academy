@@ -649,6 +649,10 @@ function generateQuestion(
         num2 = rng.nextInt(numberRange.min, numberRange.max)
       }
       answer = num1 + num2
+      // Debug logging for addition with 0
+      if (num2 === 0 || num1 === 0) {
+        console.log(`[DEBUG] Addition: ${num1} + ${num2} = ${answer}`)
+      }
       break
 
     case 'subtraction':
