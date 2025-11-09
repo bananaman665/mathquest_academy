@@ -27,6 +27,11 @@ function randomizeQuestionTypes(questions: Question[]): Question[] {
   return questions.map(q => {
     const rand = Math.random()
     
+    // Skip randomization for counting questions (they have specific question format)
+    if (q.question.includes('comes after') || q.question.includes('comes before')) {
+      return q
+    }
+    
     // 10% chance to convert to type-answer
     if (rand < 0.1 && (q.type === 'multiple-choice' || q.type === 'visual-count' || q.type === 'number-sequence') && q.correctAnswer) {
       // Create acceptableAnswers with unique variations
