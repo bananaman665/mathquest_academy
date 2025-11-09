@@ -81,37 +81,37 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-8 py-8">
+      <div className="flex flex-col items-center gap-6 py-6 px-4">
         {/* Question */}
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
-          <p className="text-gray-300 text-lg">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">{question}</h3>
+          <p className="text-gray-300 text-base sm:text-lg">
             {operation === 'add'
-              ? `Drag ${secondNumber} block${secondNumber !== 1 ? 's' : ''} from the trash to add them to your stack`
-              : `Drag ${secondNumber} block${secondNumber !== 1 ? 's' : ''} from the stack to the trash`}
+              ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from right to left`
+              : `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from left to right`}
           </p>
         </div>
 
         {/* Main workspace */}
-        <div className="flex gap-8 items-start justify-center w-full">
+        <div className="flex gap-6 items-start justify-center w-full max-w-2xl">
           {/* Block Stack */}
-          <div className="flex flex-col items-center gap-4">
-            <div className="text-white font-bold text-lg">
-              {operation === 'add' ? 'Your Stack (Drag blocks here)' : 'Your Stack'}
+          <div className="flex flex-col items-center gap-3 flex-1">
+            <div className="text-white font-bold text-base sm:text-lg text-center">
+              {operation === 'add' ? 'Your Stack' : 'Your Stack'}
             </div>
             <Droppable droppableId="stack">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-6 rounded-lg border-2 ${
+                  className={`flex flex-wrap content-start items-start justify-center gap-2 p-4 rounded-xl border-2 ${
                     snapshot.isDraggingOver
                       ? 'border-green-400 bg-green-500/10'
-                      : 'border-slate-600 bg-slate-800/50'
-                  } min-h-48 w-60 transition-colors`}
+                      : 'border-slate-600 bg-slate-700/50'
+                  } min-h-40 w-full transition-colors`}
                 >
                   {stackBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center py-12">No blocks</div>
+                    <div className="text-gray-400 text-center py-12 w-full text-sm">No tokens</div>
                   ) : (
                     stackBlocks.map((blockId, idx) => (
                       <Draggable key={blockId} draggableId={blockId} index={idx}>
@@ -120,13 +120,13 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full shadow-lg border-3 border-blue-300 cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full shadow-lg border-3 border-blue-200 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-50 shadow-2xl scale-110'
+                                ? 'opacity-70 shadow-2xl scale-110 rotate-12'
                                 : 'hover:shadow-xl hover:scale-105'
                             }`}
                           >
-                            <div className="w-6 h-6 bg-white/30 rounded-full"></div>
+                            <div className="w-7 h-7 bg-white/40 rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
@@ -136,29 +136,29 @@ export default function BlockStackingQuestion({
                 </div>
               )}
             </Droppable>
-            <div className="text-2xl font-bold text-white bg-slate-700 px-6 py-2 rounded-lg">
+            <div className="text-xl sm:text-2xl font-bold text-white bg-slate-700 px-5 py-2 rounded-lg shadow-lg min-w-[60px] text-center">
               {stackBlocks.length}
             </div>
           </div>
 
           {/* Blocks to Add Zone */}
-          <div className="flex flex-col items-center gap-4">
-            <div className="text-white font-bold text-lg">
-              {operation === 'add' ? 'Blocks to Add' : 'Trash'}
+          <div className="flex flex-col items-center gap-3 flex-1">
+            <div className="text-white font-bold text-base sm:text-lg text-center">
+              {operation === 'add' ? 'Drag From Here' : 'Trash'}
             </div>
             <Droppable droppableId="trash">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start gap-2 p-6 rounded-lg border-2 ${
+                  className={`flex flex-wrap content-start gap-2 p-4 rounded-xl border-2 ${
                     snapshot.isDraggingOver
-                      ? 'border-red-400 bg-red-500/10'
-                      : 'border-slate-600 bg-slate-800/50'
-                  } w-60 min-h-48 transition-colors`}
+                      ? 'border-amber-400 bg-amber-500/10'
+                      : 'border-slate-600 bg-slate-700/50'
+                  } w-full min-h-40 transition-colors`}
                 >
                   {trashBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-12">Empty</div>
+                    <div className="text-gray-400 text-center w-full py-12 text-sm">Empty</div>
                   ) : (
                     trashBlocks.map((blockId, idx) => (
                       <Draggable key={blockId} draggableId={blockId} index={idx}>
@@ -167,13 +167,13 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg border-3 border-amber-300 cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full shadow-lg border-3 border-amber-200 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-50 shadow-2xl scale-110'
+                                ? 'opacity-70 shadow-2xl scale-110 rotate-12'
                                 : 'hover:shadow-xl hover:scale-105'
                             }`}
                           >
-                            <div className="w-6 h-6 bg-white/30 rounded-full"></div>
+                            <div className="w-7 h-7 bg-white/40 rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
@@ -183,8 +183,8 @@ export default function BlockStackingQuestion({
                 </div>
               )}
             </Droppable>
-            <div className="text-lg font-semibold text-gray-400">
-              {trashBlocks.length} removed
+            <div className="text-base sm:text-lg font-semibold text-gray-300">
+              {trashBlocks.length} {operation === 'add' ? 'to add' : 'removed'}
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function BlockStackingQuestion({
         {!showFeedback && (
           <button
             onClick={handleSubmit}
-            className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg"
+            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 active:scale-95 text-white font-bold py-3 px-8 rounded-xl transition-all text-base sm:text-lg shadow-lg"
           >
             Check Answer
           </button>
@@ -201,9 +201,9 @@ export default function BlockStackingQuestion({
 
         {/* Feedback */}
         {showFeedback && (
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-md px-4">
             <div
-              className={`p-6 rounded-lg text-center font-bold text-lg ${
+              className={`p-5 rounded-xl text-center font-bold text-base sm:text-lg ${
                 isCorrect
                   ? 'bg-green-500/20 text-green-300 border-2 border-green-500'
                   : 'bg-red-500/20 text-red-300 border-2 border-red-500'
@@ -211,13 +211,13 @@ export default function BlockStackingQuestion({
             >
               {isCorrect ? (
                 <div>
-                  <div className="text-2xl mb-2">🎉 Correct!</div>
-                  <div>You have {stackBlocks.length} blocks left!</div>
+                  <div className="text-3xl mb-2">🎉 Correct!</div>
+                  <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens!</div>
                 </div>
               ) : (
                 <div>
-                  <div className="text-2xl mb-2">❌ Not quite right</div>
-                  <div>You have {stackBlocks.length} blocks, but the answer is {correctAnswer}</div>
+                  <div className="text-3xl mb-2">❌ Not quite</div>
+                  <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens, but need {correctAnswer}</div>
                 </div>
               )}
             </div>
@@ -225,7 +225,7 @@ export default function BlockStackingQuestion({
             {!isCorrect && (
               <button
                 onClick={handleReset}
-                className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg"
               >
                 Try Again
               </button>
