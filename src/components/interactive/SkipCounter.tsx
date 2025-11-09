@@ -194,8 +194,8 @@ export default function SkipCounter({
         </motion.button>
       </div>
 
-      {/* Submit Button */}
-      {currentJumps > 0 && !submitted && (
+      {/* Submit Button - Always show, even for 0 jumps */}
+      {!submitted && (
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
