@@ -77,7 +77,7 @@ const units = [
   },
   {
     id: 5,
-    title: "Division Discovery",
+    title: "Place Values",
     description: "Learn to divide and share equally",
     theme: "desert", // 🏜️
     color: "from-orange-400 to-red-600",

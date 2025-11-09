@@ -46,7 +46,7 @@ export const placementTestQuestions = [
     explanation: '3 × 4 = 12.',
     xp: 20,
   },
-  // Unit 5: Division Discovery
+  // Unit 5: Place Values
   {
     id: 'pt5',
     levelDifficulty: 22,
