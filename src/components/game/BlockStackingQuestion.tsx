@@ -85,7 +85,7 @@ export default function BlockStackingQuestion({
         {/* Question */}
         <div className="text-center">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">{question}</h3>
-          <p className="text-gray-300 text-base sm:text-lg">
+          <p className="text-gray-900 font-medium text-base sm:text-lg">
             {operation === 'add'
               ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from right to left`
               : `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from left to right`}
