@@ -467,7 +467,7 @@ export default async function LearnPage() {
         </header>
 
         {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header + safe area */}
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-40 sm:pt-32 py-6 sm:py-8 pb-24 md:pb-8">
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-32 sm:pt-24 py-6 sm:py-8 pb-24 md:pb-8">
           {/* Welcome Banner - Responsive */}
           <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
             {/* Decorative background elements */}
