@@ -584,9 +584,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl"></div>
         </div>
 
-        <header className="relative bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
+            <div className="flex justify-between items-center py-4 pt-16 sm:pt-6">
               <Link href="/learn" className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors group">
                 <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
                 <span className="font-semibold">Back to Path</span>
@@ -601,7 +601,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           </div>
         </header>
 
-        <main className="relative max-w-2xl mx-auto px-4 py-8 pb-24">
+        <main className="relative max-w-2xl mx-auto px-4 pt-32 sm:pt-28 py-8 pb-24">
           <div className="bg-white border-2 border-gray-200 rounded-3xl shadow-2xl p-6 sm:p-10 mb-6">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -1871,7 +1871,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 pb-safe shadow-lg z-50">
         <div className="max-w-5xl mx-auto">
           {!showExplanation ? (
             <>
