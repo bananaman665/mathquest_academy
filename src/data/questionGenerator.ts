@@ -298,7 +298,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Counting by 10s",
     operation: 'place-value',
     numberRange: { min: 10, max: 100 },
-    questionTypes: ['multiple-choice', 'number-sequence', 'skip-counter'],
+    questionTypes: ['multiple-choice', 'number-sequence', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
@@ -704,6 +704,41 @@ function generateQuestion(
       break
 
     case 'place-value':
+      // Generate a number for place value questions
+      // For levels 21-25: focus on tens, ones, hundreds place
+      num1 = rng.nextInt(numberRange.min, numberRange.max)
+      
+      // Determine what place value to ask about based on number size
+      if (num1 >= 100) {
+        // Ask about hundreds, tens, or ones
+        const placeType = rng.nextInt(1, 3) // 1=hundreds, 2=tens, 3=ones
+        if (placeType === 1) {
+          answer = Math.floor(num1 / 100) // Hundreds digit
+          num2 = 100 // Store place type
+        } else if (placeType === 2) {
+          answer = Math.floor((num1 % 100) / 10) // Tens digit
+          num2 = 10
+        } else {
+          answer = num1 % 10 // Ones digit
+          num2 = 1
+        }
+      } else if (num1 >= 10) {
+        // Ask about tens or ones
+        const placeType = rng.nextInt(1, 2) // 1=tens, 2=ones
+        if (placeType === 1) {
+          answer = Math.floor(num1 / 10) // Tens digit
+          num2 = 10
+        } else {
+          answer = num1 % 10 // Ones digit
+          num2 = 1
+        }
+      } else {
+        // Single digit, just ask about the value
+        answer = num1
+        num2 = 1
+      }
+      break
+
     case 'fractions':
     case 'mixed':
     default:
@@ -811,6 +846,19 @@ function generateQuestionByType(
       if (operation === 'counting') {
         questionText = `What number comes after ${num1}?`
         explanationText = `The number after ${num1} is ${answer}. We count: ${num1}, ${answer}!`
+      } else if (operation === 'place-value') {
+        // Place value questions
+        const placeNames = { 1: 'ones', 10: 'tens', 100: 'hundreds' }
+        const placeName = placeNames[num2 as keyof typeof placeNames] || 'ones'
+        
+        // Vary the question format for different levels
+        const questionFormats = [
+          `What is the ${placeName} digit in ${num1}?`,
+          `In the number ${num1}, what digit is in the ${placeName} place?`,
+          `What number is in the ${placeName} place of ${num1}?`
+        ]
+        questionText = questionFormats[index % questionFormats.length]
+        explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
         explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
@@ -828,6 +876,7 @@ function generateQuestionByType(
           operation === 'addition' ? `Try counting up from ${num1}` :
           operation === 'subtraction' ? `Try counting down from ${num1}` :
           operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
+          operation === 'place-value' ? `Look at each digit's position in the number` :
           `Think about your times tables`,
           `Take your time and work it out step by step`
         ],
@@ -890,7 +939,17 @@ function generateQuestionByType(
     }
 
     case 'type-answer': {
-      const questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+      let questionText: string
+      
+      if (operation === 'place-value') {
+        // For counting by 10s - "What comes after 40 when counting by 10s?"
+        const skipBy = levelId === 22 ? 10 : 1
+        questionText = skipBy === 10 
+          ? `What comes after ${num1} when counting by ${skipBy}s?`
+          : `${num1} ${getOperationSymbol()} ${num2} = ?`
+      } else {
+        questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+      }
 
       return {
         id,
@@ -899,15 +958,63 @@ function generateQuestionByType(
         question: questionText,
         correctAnswer: String(answer),
         acceptableAnswers: [String(answer)],
-        explanation: `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
+        explanation: operation === 'place-value' && levelId === 22
+          ? `When counting by 10s, after ${num1} comes ${answer}`
+          : `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
         hints: [
           operation === 'addition' ? `Add ${num1} and ${num2} together` :
           operation === 'subtraction' ? `Take ${num2} away from ${num1}` :
           operation === 'multiplication' ? `${num1} groups of ${num2}` :
+          operation === 'place-value' && levelId === 22 ? `Add 10 to ${num1}` :
           `How many times does ${num2} go into ${num1}?`,
           `Work it out step by step`
         ],
         xp: 15
+      }
+    }
+
+    case 'number-sequence': {
+      if (operation === 'place-value' && levelId === 22) {
+        // Counting by 10s sequence: "10, 20, 30, __, 50"
+        const skipBy = 10
+        const start = Math.floor(num1 / skipBy) * skipBy // Round to nearest 10
+        const sequence = [start, start + skipBy, start + skipBy * 2, start + skipBy * 4]
+        const missingIndex = 3 // Missing the 4th number
+        const correctAnswer = start + skipBy * 3
+        
+        const wrongAnswers = generateWrongAnswers(correctAnswer, 3)
+        const allOptions = rng.shuffle([String(correctAnswer), ...wrongAnswers])
+        
+        return {
+          id,
+          levelId,
+          type: 'multiple-choice',
+          question: `Fill in the missing number: ${sequence[0]}, ${sequence[1]}, ${sequence[2]}, __, ${sequence[3]}`,
+          options: allOptions,
+          correctAnswer: String(correctAnswer),
+          explanation: `When counting by ${skipBy}s: ${sequence[0]}, ${sequence[1]}, ${sequence[2]}, ${correctAnswer}, ${sequence[3]}`,
+          hints: [
+            `Count by ${skipBy}s`,
+            `What number comes between ${sequence[2]} and ${sequence[3]}?`
+          ],
+          xp: 10
+        }
+      } else {
+        // Default number sequence
+        const wrongAnswers = generateWrongAnswers(answer, 3)
+        const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
+        
+        return {
+          id,
+          levelId,
+          type: 'multiple-choice',
+          question: `What comes next? ${num1 - 2}, ${num1 - 1}, ${num1}, __`,
+          options: allOptions,
+          correctAnswer: String(num1 + 1),
+          explanation: `The next number is ${num1 + 1}`,
+          hints: [`Count forward by 1`, `What number comes after ${num1}?`],
+          xp: 10
+        }
       }
     }
 
