@@ -438,8 +438,8 @@ export default async function LearnPage() {
 
       {/* Main Content - Responsive margin */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        {/* Top Header - FIXED position for always visible */}
-        <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm">
+        {/* Top Header - FIXED position for always visible with safe area padding */}
+        <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm pt-safe">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
@@ -466,8 +466,8 @@ export default async function LearnPage() {
           </div>
         </header>
 
-        {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header */}
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-24 sm:pt-24 py-6 sm:py-8 pb-24 md:pb-8">
+        {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header + safe area */}
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-32 sm:pt-28 py-6 sm:py-8 pb-24 md:pb-8">
           {/* Welcome Banner - Responsive */}
           <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
             {/* Decorative background elements */}
