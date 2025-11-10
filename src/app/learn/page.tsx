@@ -64,7 +64,7 @@ const units = [
   {
     id: 4,
     title: "Bigger Numbers",
-    description: "Discover the power of multiplication",
+    description: "Discover the power of huge numbers",
     theme: "stars", // ⭐
     color: "from-purple-400 to-pink-600",
     levels: [
@@ -91,72 +91,72 @@ const units = [
   },
   {
     id: 6,
-    title: "Fraction Fun",
-    description: "Explore parts of a whole",
+    title: "Multiplication Magic",
+    description: "Discover the power of multiplication",
     theme: "candy", // 🍬
     color: "from-pink-400 to-rose-600",
     levels: [
-      { id: 26, title: "Half & Quarter", xp: 150 },
-      { id: 27, title: "Common Fractions", xp: 150 },
-      { id: 28, title: "Comparing Fractions", xp: 200 },
-      { id: 29, title: "Adding Fractions", xp: 200 },
-      { id: 30, title: "Fraction Master", xp: 300 },
+      { id: 26, title: "Skip Counting", xp: 150 },
+      { id: 27, title: "Multiplication Intro", xp: 150 },
+      { id: 28, title: "Times Tables 2-5", xp: 200 },
+      { id: 29, title: "Times Tables 6-10", xp: 200 },
+      { id: 30, title: "Multiplication Master", xp: 300 },
     ]
   },
   {
     id: 7,
-    title: "Decimal Dimension",
-    description: "Master numbers with decimal points",
+    title: "Division Discovery",
+    description: "Learn to divide and share equally",
     theme: "space", // 🚀
     color: "from-indigo-400 to-blue-700",
     levels: [
-      { id: 31, title: "Tenths", xp: 150 },
-      { id: 32, title: "Hundredths", xp: 150 },
-      { id: 33, title: "Decimal Operations", xp: 200 },
-      { id: 34, title: "Money Math", xp: 200 },
-      { id: 35, title: "Decimal Expert", xp: 300 },
+      { id: 31, title: "Sharing Equally", xp: 150 },
+      { id: 32, title: "Division Basics", xp: 150 },
+      { id: 33, title: "Division Facts", xp: 200 },
+      { id: 34, title: "Remainders", xp: 200 },
+      { id: 35, title: "Division Champion", xp: 300 },
     ]
   },
   {
     id: 8,
-    title: "Geometry Garden",
-    description: "Explore shapes and patterns",
+    title: "Fraction Fun",
+    description: "Explore parts of a whole",
     theme: "garden", // 🌺
     color: "from-emerald-400 to-teal-600",
     levels: [
-      { id: 36, title: "2D Shapes", xp: 150 },
-      { id: 37, title: "3D Shapes", xp: 150 },
-      { id: 38, title: "Perimeter", xp: 200 },
-      { id: 39, title: "Area", xp: 200 },
-      { id: 40, title: "Geometry Genius", xp: 300 },
+      { id: 36, title: "Half & Quarter", xp: 150 },
+      { id: 37, title: "Common Fractions", xp: 150 },
+      { id: 38, title: "Comparing Fractions", xp: 200 },
+      { id: 39, title: "Adding Fractions", xp: 200 },
+      { id: 40, title: "Fraction Master", xp: 300 },
     ]
   },
   {
     id: 9,
-    title: "Measurement Mission",
-    description: "Learn to measure length, weight, and time",
+    title: "Decimal Dimension",
+    description: "Master numbers with decimal points",
     theme: "tools", // 🔧
     color: "from-yellow-400 to-amber-600",
     levels: [
-      { id: 41, title: "Length & Distance", xp: 150 },
-      { id: 42, title: "Weight & Mass", xp: 150 },
-      { id: 43, title: "Time Telling", xp: 200 },
-      { id: 44, title: "Temperature", xp: 200 },
-      { id: 45, title: "Measurement Master", xp: 300 },
+      { id: 41, title: "Tenths", xp: 150 },
+      { id: 42, title: "Hundredths", xp: 150 },
+      { id: 43, title: "Decimal Operations", xp: 200 },
+      { id: 44, title: "Money Math", xp: 200 },
+      { id: 45, title: "Decimal Expert", xp: 300 },
     ]
   },
   {
     id: 10,
-    title: "Problem Solving Palace",
-    description: "Apply math skills to real-world challenges",
+    title: "Geometry Garden",
+    description: "Explore shapes and patterns",
     theme: "castle", // 🏰
     color: "from-violet-400 to-purple-700",
     levels: [
-      { id: 46, title: "Word Problems", xp: 200 },
-      { id: 47, title: "Logic Puzzles", xp: 200 },
-      { id: 48, title: "Patterns", xp: 200 },
-      { id: 49, title: "Data & Graphs", xp: 250 },
-      { id: 50, title: "Math Champion", xp: 500 },
+      { id: 46, title: "2D Shapes", xp: 200 },
+      { id: 47, title: "3D Shapes", xp: 200 },
+      { id: 48, title: "Perimeter", xp: 200 },
+      { id: 49, title: "Area", xp: 250 },
+      { id: 50, title: "Geometry Genius", xp: 500 },
     ]
   }
 ]
