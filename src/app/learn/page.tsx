@@ -78,15 +78,15 @@ const units = [
   {
     id: 5,
     title: "Place Values",
-    description: "Learn to divide and share equally",
+    description: "Understand tens, ones, and hundreds place",
     theme: "desert", // 🏜️
     color: "from-orange-400 to-red-600",
     levels: [
-      { id: 21, title: "Sharing Equally", xp: 150 },
-      { id: 22, title: "Divide by 2", xp: 150 },
-      { id: 23, title: "Division Facts", xp: 150 },
-      { id: 24, title: "Remainders", xp: 200 },
-      { id: 25, title: "Division Champion", xp: 250 },
+      { id: 21, title: "Tens and Ones", xp: 150 },
+      { id: 22, title: "Counting by 10s", xp: 150 },
+      { id: 23, title: "Compare Numbers", xp: 150 },
+      { id: 24, title: "Hundreds Place", xp: 200 },
+      { id: 25, title: "Place Value Master", xp: 250 },
     ]
   },
   {
