@@ -120,13 +120,13 @@ export default async function ShopPage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        <header className="bg-white border-b border-gray-200 px-6 py-4 pt-12">
+        <header className="fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 bg-white border-b border-gray-200 px-6 py-4 pt-12">
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-black text-green-600">Mathly</span>
+            <span className="text-2xl font-black text-green-600">Shop</span>
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8 pt-8 sm:pt-6">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8 pt-32 sm:pt-28">
           <ShopClient items={itemsWithColors} userBalance={dbUser.totalXP} />
 
           {/* Info Card */}
