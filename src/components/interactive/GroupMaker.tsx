@@ -142,22 +142,8 @@ export default function GroupMaker({
             <div className="text-xs font-bold text-gray-700 mb-2 text-center">
               Group {groupIdx + 1}
             </div>
-            <div className="flex flex-wrap gap-1 justify-center">
-              {Array.from({ length: perGroup }).map((_, itemIdx) => (
-                <motion.div
-                  key={itemIdx}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 300,
-                    delay: groupIdx * 0.1 + itemIdx * 0.05
-                  }}
-                  className="text-2xl"
-                >
-                  {emoji}
-                </motion.div>
-              ))}
+            <div className="text-3xl font-bold text-center text-gray-800 py-4">
+              {perGroup}
             </div>
           </motion.div>
         ))}
