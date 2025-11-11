@@ -941,7 +941,10 @@ function generateQuestionByType(
     case 'type-answer': {
       let questionText: string
       
-      if (operation === 'place-value') {
+      if (operation === 'counting') {
+        // For counting questions - "What number comes after X?"
+        questionText = `What number comes after ${num1}?`
+      } else if (operation === 'place-value') {
         // For counting by 10s - "What comes after 40 when counting by 10s?"
         const skipBy = levelId === 22 ? 10 : 1
         questionText = skipBy === 10 
@@ -958,10 +961,13 @@ function generateQuestionByType(
         question: questionText,
         correctAnswer: String(answer),
         acceptableAnswers: [String(answer)],
-        explanation: operation === 'place-value' && levelId === 22
+        explanation: operation === 'counting'
+          ? `The number after ${num1} is ${answer}`
+          : operation === 'place-value' && levelId === 22
           ? `When counting by 10s, after ${num1} comes ${answer}`
           : `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
         hints: [
+          operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
           operation === 'addition' ? `Add ${num1} and ${num2} together` :
           operation === 'subtraction' ? `Take ${num2} away from ${num1}` :
           operation === 'multiplication' ? `${num1} groups of ${num2}` :
@@ -1019,20 +1025,33 @@ function generateQuestionByType(
     }
 
     case 'fill-blank': {
-      const blanks = [
-        { text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }
-      ]
+      let questionText: string
+      let blanks: Array<{ text: string; answer: string }>
+      let explanationText: string
+      
+      if (operation === 'counting') {
+        // For counting questions - "What number comes after X?"
+        questionText = `What number comes after ${num1}?`
+        blanks = [{ text: `${num1}, ___`, answer: String(answer) }]
+        explanationText = `The number after ${num1} is ${answer}`
+      } else {
+        questionText = `Fill in the blank:`
+        blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]
+        explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
+      }
 
       return {
         id,
         levelId,
         type,
-        question: `Fill in the blank:`,
+        question: questionText,
         blanks,
         correctAnswer: String(answer),
-        explanation: `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
+        explanation: explanationText,
         hints: [
+          operation === 'counting' ? `Count forward from ${num1}` :
           `What number makes this equation true?`,
+          operation === 'counting' ? `What comes next?` :
           `Try solving ${num1} ${getOperationSymbol()} ${num2}`
         ],
         xp: 15
