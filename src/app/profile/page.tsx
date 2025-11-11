@@ -286,6 +286,11 @@ export default async function ProfilePage() {
               <h2 className="text-2xl font-black text-gray-900">Account Settings</h2>
             </div>
             <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+              {/* Sign Out Button - Moved to top for visibility */}
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <SignOutButton />
+              </div>
+
               <ProfileEditor 
                 username={dbUser.username} 
                 userId={user.id}
@@ -315,11 +320,6 @@ export default async function ProfilePage() {
                   </div>
                   <span className="text-sm text-gray-500 italic">Coming soon</span>
                 </div>
-              </div>
-
-              {/* Sign Out Button */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <SignOutButton />
               </div>
             </div>
           </div>
