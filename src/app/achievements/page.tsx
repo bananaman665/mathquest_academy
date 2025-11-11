@@ -144,7 +144,7 @@ export default function AchievementsPage() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="fixed top-0 left-0 right-0 bg-gradient-to-br from-purple-50 to-blue-50 pt-12 pb-4 px-4 z-10">
+        <div className="fixed top-0 left-0 right-0 bg-gradient-to-br from-purple-50 to-blue-50 pt-safe-header pb-4 px-4 z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
               <Trophy className="w-8 h-8 text-yellow-600" />

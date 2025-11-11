@@ -101,7 +101,7 @@ export default async function ProfilePage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64 w-full">
-        <header className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 md:left-64 z-10 pt-12">
+        <header className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 md:left-64 z-10 pt-safe-header">
           <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
             <h1 className="text-2xl font-black text-gray-900">Profile</h1>
           </div>

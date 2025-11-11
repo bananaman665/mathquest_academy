@@ -62,3 +62,13 @@ html {
 .animate-scale-up {
   animation: scale-up 0.2s ease-out;
 }
+
+/* Safe area insets for different phone models */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 3rem);
+}
+
+.pt-safe-header {
+  padding-top: calc(env(safe-area-inset-top) + 1rem);
+}
+

@@ -440,7 +440,7 @@ export default async function LearnPage() {
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
         {/* Top Header - FIXED position for always visible with safe area padding */}
         <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-safe pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
                 <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 to-orange-50 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">

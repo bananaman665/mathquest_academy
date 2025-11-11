@@ -120,7 +120,7 @@ export default async function ShopPage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
-        <header className="fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 bg-white border-b border-gray-200 px-6 py-4 pt-12">
+        <header className="fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 bg-white border-b border-gray-200 px-6 py-4 pt-safe-header">
           <div className="flex items-center justify-between">
             <span className="text-2xl font-black text-green-600">Shop</span>
           </div>
