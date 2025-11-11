@@ -64,99 +64,99 @@ const units = [
   {
     id: 4,
     title: "Bigger Numbers",
-    description: "Discover the power of huge numbers",
+    description: "Work with two-digit numbers",
     theme: "stars", // ⭐
     color: "from-purple-400 to-pink-600",
     levels: [
-      { id: 16, title: "Groups of 2", xp: 150 },
-      { id: 17, title: "Times Tables 1-5", xp: 150 },
-      { id: 18, title: "Times Tables 6-10", xp: 150 },
-      { id: 19, title: "Multiply in Action", xp: 200 },
-      { id: 20, title: "Multiplication Pro", xp: 250 },
+      { id: 16, title: "Addition 2-Digit", xp: 150 },
+      { id: 17, title: "Subtraction 2-Digit", xp: 150 },
+      { id: 18, title: "Regrouping Addition", xp: 150 },
+      { id: 19, title: "Regrouping Subtraction", xp: 200 },
+      { id: 20, title: "Mixed 2-Digit Operations", xp: 250 },
     ]
   },
   {
     id: 5,
-    title: "Place Values",
-    description: "Understand tens, ones, and hundreds place",
+    title: "Multiplication Magic",
+    description: "Discover the power of multiplication",
     theme: "desert", // 🏜️
     color: "from-orange-400 to-red-600",
     levels: [
-      { id: 21, title: "Tens and Ones", xp: 150 },
-      { id: 22, title: "Counting by 10s", xp: 150 },
-      { id: 23, title: "Compare Numbers", xp: 150 },
-      { id: 24, title: "Hundreds Place", xp: 200 },
-      { id: 25, title: "Place Value Master", xp: 250 },
+      { id: 21, title: "Introduction to Multiplication", xp: 150 },
+      { id: 22, title: "Times Tables 2, 5, 10", xp: 150 },
+      { id: 23, title: "Times Tables 3, 4, 6", xp: 150 },
+      { id: 24, title: "Times Tables 7, 8, 9", xp: 200 },
+      { id: 25, title: "All Times Tables", xp: 250 },
     ]
   },
   {
     id: 6,
-    title: "Multiplication Magic",
-    description: "Discover the power of multiplication",
+    title: "Division Discovery",
+    description: "Learn to divide and share equally",
     theme: "candy", // 🍬
     color: "from-pink-400 to-rose-600",
     levels: [
-      { id: 26, title: "Skip Counting", xp: 150 },
-      { id: 27, title: "Multiplication Intro", xp: 150 },
-      { id: 28, title: "Times Tables 2-5", xp: 200 },
-      { id: 29, title: "Times Tables 6-10", xp: 200 },
-      { id: 30, title: "Multiplication Master", xp: 300 },
+      { id: 26, title: "Introduction to Division", xp: 150 },
+      { id: 27, title: "Division by 2, 5, 10", xp: 150 },
+      { id: 28, title: "Division Facts", xp: 200 },
+      { id: 29, title: "Division with Remainders", xp: 200 },
+      { id: 30, title: "Multiplication & Division Practice", xp: 300 },
     ]
   },
   {
     id: 7,
-    title: "Division Discovery",
-    description: "Learn to divide and share equally",
+    title: "Review & Practice",
+    description: "Master operations within 20",
     theme: "space", // 🚀
     color: "from-indigo-400 to-blue-700",
     levels: [
-      { id: 31, title: "Sharing Equally", xp: 150 },
-      { id: 32, title: "Division Basics", xp: 150 },
-      { id: 33, title: "Division Facts", xp: 200 },
-      { id: 34, title: "Remainders", xp: 200 },
-      { id: 35, title: "Division Champion", xp: 300 },
+      { id: 31, title: "Addition 11-20", xp: 150 },
+      { id: 32, title: "Subtraction 11-20", xp: 150 },
+      { id: 33, title: "Mixed Operations 1-20", xp: 200 },
+      { id: 34, title: "Word Problems 1-20", xp: 200 },
+      { id: 35, title: "Practice 1-20", xp: 300 },
     ]
   },
   {
     id: 8,
-    title: "Fraction Fun",
-    description: "Explore parts of a whole",
+    title: "Place Values",
+    description: "Understand tens, ones, and hundreds",
     theme: "garden", // 🌺
     color: "from-emerald-400 to-teal-600",
     levels: [
-      { id: 36, title: "Half & Quarter", xp: 150 },
-      { id: 37, title: "Common Fractions", xp: 150 },
-      { id: 38, title: "Comparing Fractions", xp: 200 },
-      { id: 39, title: "Adding Fractions", xp: 200 },
-      { id: 40, title: "Fraction Master", xp: 300 },
+      { id: 36, title: "Tens and Ones", xp: 150 },
+      { id: 37, title: "Counting by 10s", xp: 150 },
+      { id: 38, title: "Compare 2-Digit Numbers", xp: 200 },
+      { id: 39, title: "Hundreds Place", xp: 200 },
+      { id: 40, title: "Place Value Practice", xp: 300 },
     ]
   },
   {
     id: 9,
-    title: "Decimal Dimension",
-    description: "Master numbers with decimal points",
+    title: "Fraction Fun",
+    description: "Explore parts of a whole",
     theme: "tools", // 🔧
     color: "from-yellow-400 to-amber-600",
     levels: [
-      { id: 41, title: "Tenths", xp: 150 },
-      { id: 42, title: "Hundredths", xp: 150 },
-      { id: 43, title: "Decimal Operations", xp: 200 },
-      { id: 44, title: "Money Math", xp: 200 },
-      { id: 45, title: "Decimal Expert", xp: 300 },
+      { id: 41, title: "Introduction to Fractions", xp: 150 },
+      { id: 42, title: "Comparing Fractions", xp: 150 },
+      { id: 43, title: "Adding Fractions", xp: 200 },
+      { id: 44, title: "Subtracting Fractions", xp: 200 },
+      { id: 45, title: "Fraction Practice", xp: 300 },
     ]
   },
   {
     id: 10,
-    title: "Geometry Garden",
-    description: "Explore shapes and patterns",
+    title: "Advanced Topics",
+    description: "Master advanced math concepts",
     theme: "castle", // 🏰
     color: "from-violet-400 to-purple-700",
     levels: [
-      { id: 46, title: "2D Shapes", xp: 200 },
-      { id: 47, title: "3D Shapes", xp: 200 },
-      { id: 48, title: "Perimeter", xp: 200 },
-      { id: 49, title: "Area", xp: 250 },
-      { id: 50, title: "Geometry Genius", xp: 500 },
+      { id: 46, title: "Decimals", xp: 200 },
+      { id: 47, title: "Money Math", xp: 200 },
+      { id: 48, title: "Time", xp: 200 },
+      { id: 49, title: "Measurement", xp: 250 },
+      { id: 50, title: "Master Review", xp: 500 },
     ]
   }
 ]
