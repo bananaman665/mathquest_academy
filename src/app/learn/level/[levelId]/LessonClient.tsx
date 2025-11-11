@@ -111,6 +111,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     : []
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
 
+  // Cleanup effect to restore scroll on unmount
+  useEffect(() => {
+    return () => {
+      // Remove any scroll locks when component unmounts
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+    }
+  }, [])
+
   // Timer effects for Speed Round
   useEffect(() => {
     if (gameMode === 'speed-round' && phase === 'practice' && gameTimer > 0) {
