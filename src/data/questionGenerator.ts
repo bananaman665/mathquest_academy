@@ -701,6 +701,7 @@ function generateQuestion(
       num1 = rng.nextInt(numberRange.min, numberRange.max - 1) // Ensure we can add 1
       num2 = 0
       answer = num1 + 1 // The number that comes AFTER num1
+      console.log(`[COUNTING] Generated: num1=${num1}, num2=${num2}, answer=${answer}`)
       break
 
     case 'place-value':
@@ -1034,6 +1035,7 @@ function generateQuestionByType(
         questionText = `What number comes after ${num1}?`
         blanks = [{ text: `${num1}, ___`, answer: String(answer) }]
         explanationText = `The number after ${num1} is ${answer}`
+        console.log(`[FILL-BLANK-COUNTING] Question: "${questionText}", Answer: ${answer}`)
       } else {
         questionText = `Fill in the blank:`
         blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]
