@@ -50,7 +50,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const xpMultiplier = xpBoostActive ? 2 : 1
   
   // Log inventory status
-  console.log('Inventory loaded:', inventoryHook.inventory.length, 'items')
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Inventory loaded:', inventoryHook.inventory.length, 'items')
+  }
   
   // Game mode state
   const [gameTimer, setGameTimer] = useState(gameMode === 'speed-round' ? 60 : 0)
@@ -78,7 +80,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [phase, setPhase] = useState<'intro' | 'practice'>('intro')
   
   // Log sound effects loaded
-  console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete })
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete })
+  }
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   // For type-answer questions
@@ -423,12 +427,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       const acceptable = currentQuestion.acceptableAnswers || []
       
       // Debug logging
-      console.log('Type-answer validation:', {
-        userAnswer,
-        typedAnswer,
-        correctAnswer: currentQuestion.correctAnswer,
-        acceptableAnswers: acceptable,
-      })
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Type-answer validation:', {
+          userAnswer,
+          typedAnswer,
+          correctAnswer: currentQuestion.correctAnswer,
+          acceptableAnswers: acceptable,
+        })
+      }
       
       // Check acceptableAnswers if they exist
       if (acceptable.length > 0) {
@@ -436,7 +442,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           const normalizedAns = ans.trim()
           const normalizedUser = userAnswer
           const matches = normalizedAns.toLowerCase() === normalizedUser.toLowerCase()
-          console.log(`Comparing "${normalizedAns}" with "${normalizedUser}":`, matches)
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`Comparing "${normalizedAns}" with "${normalizedUser}":`, matches)
+          }
           // Case-insensitive comparison
           return matches
         })
@@ -447,7 +455,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         correct = normalizedCorrect.toLowerCase() === userAnswer.toLowerCase()
       }
       
-      console.log('Final result:', correct)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Final result:', correct)
+      }
     } else if (currentQuestion.type === 'match-equation') {
       correct = !equationMatched.some(m => !m)
     } else if (currentQuestion.type === 'block-stacking') {

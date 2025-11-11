@@ -32,7 +32,12 @@ export default async function ProfilePage() {
   // Calculate stats
   const levelsCompleted = dbUser.currentLevel - 1
   const lessonsCompleted = levelsCompleted * 10 // 10 questions per level
-  const accuracy = levelsCompleted > 0 ? Math.floor(85 + Math.random() * 10) : 0 // Mock accuracy
+  
+  // Calculate real accuracy from database
+  const accuracy = dbUser.questionsAnswered > 0 
+    ? Math.round((dbUser.correctAnswers / dbUser.questionsAnswered) * 100)
+    : 0
+    
   const rank = dbUser.totalXP > 1000 ? 'Gold' : dbUser.totalXP > 500 ? 'Silver' : 'Bronze'
 
   const achievements = [

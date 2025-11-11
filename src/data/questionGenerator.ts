@@ -652,7 +652,7 @@ function generateQuestion(
       }
       answer = num1 + num2
       // Debug logging for addition with 0
-      if (num2 === 0 || num1 === 0) {
+      if (process.env.NODE_ENV === 'development' && (num2 === 0 || num1 === 0)) {
         console.log(`[DEBUG] Addition: ${num1} + ${num2} = ${answer}`)
       }
       break
@@ -1053,7 +1053,9 @@ function generateQuestionByType(
         questionText = `What number comes after ${num1}?`
         blanks = [{ text: `${num1}, ___`, answer: String(answer) }]
         explanationText = `The number after ${num1} is ${answer}`
-        console.log(`[FILL-BLANK-COUNTING] Question: "${questionText}", Answer: ${answer}`)
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[FILL-BLANK-COUNTING] Question: "${questionText}", Answer: ${answer}`)
+        }
       } else {
         questionText = `Fill in the blank:`
         blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]

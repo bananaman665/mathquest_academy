@@ -53,18 +53,20 @@ export default function NumberLineDrag({
     // Clamp to valid range
     const clampedPosition = Math.max(min, Math.min(max, snappedPosition))
     
-    console.log('Debug:', { 
-      clientX, 
-      rectLeft: rect.left, 
-      rectWidth: rect.width, 
-      x, 
-      percentage: percentage.toFixed(3), 
-      rawPosition: rawPosition.toFixed(2), 
-      snappedPosition,
-      clampedPosition,
-      min,
-      max
-    })
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Debug:', { 
+        clientX, 
+        rectLeft: rect.left, 
+        rectWidth: rect.width, 
+        x, 
+        percentage: percentage.toFixed(3), 
+        rawPosition: rawPosition.toFixed(2), 
+        snappedPosition,
+        clampedPosition,
+        min,
+        max
+      })
+    }
     
     setCurrentPosition(clampedPosition)
   }

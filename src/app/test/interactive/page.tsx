@@ -24,7 +24,9 @@ export default function InteractiveTestPage() {
 
   const handleAnswer = (component: string) => (isCorrect: boolean, answer: string | number) => {
     setResults(prev => [...prev, { component, isCorrect, answer: String(answer) }])
-    console.log(`${component}: ${isCorrect ? '✅' : '❌'} - Answer: ${answer}`)
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`${component}: ${isCorrect ? '✅' : '❌'} - Answer: ${answer}`)
+    }
   }
 
   return (
