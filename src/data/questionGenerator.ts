@@ -701,7 +701,6 @@ function generateQuestion(
       num1 = rng.nextInt(numberRange.min, numberRange.max - 1) // Ensure we can add 1
       num2 = 0
       answer = num1 + 1 // The number that comes AFTER num1
-      console.log(`[COUNTING] Generated: num1=${num1}, num2=${num2}, answer=${answer}`)
       break
 
     case 'place-value':
@@ -811,6 +810,7 @@ function generateQuestionByType(
   const id = `${levelId}-${index + 1}`
   // Use actualOperation instead of config.operation for symbol display
   const operation = actualOperation as 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'mixed'
+
 
   // Generate wrong answers for multiple choice
   const generateWrongAnswers = (correct: number, count: number = 3): string[] => {
@@ -1263,19 +1263,32 @@ function generateQuestionByType(
     }
 
     default: {
-      // Fallback to multiple choice
+      // Fallback to multiple choice for unknown question types (tap-select, ten-frame, bubble-pop, etc.)
       const wrongAnswers = generateWrongAnswers(answer, 3)
       const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
+
+      let questionText: string
+      let explanationText: string
+      
+      if (operation === 'counting') {
+        questionText = `What number comes after ${num1}?`
+        explanationText = `The number after ${num1} is ${answer}. We count: ${num1}, ${answer}!`
+      } else {
+        questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+        explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
+      }
 
       return {
         id,
         levelId,
         type: 'multiple-choice',
-        question: `${num1} ${getOperationSymbol()} ${num2} = ?`,
+        question: questionText,
         options: allOptions,
         correctAnswer: String(answer),
-        explanation: `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
-        hints: [`Work it out step by step`],
+        explanation: explanationText,
+        hints: [
+          operation === 'counting' ? `Count forward: ${num1}, ${answer}...` : `Work it out step by step`
+        ],
         xp: 10
       }
     }

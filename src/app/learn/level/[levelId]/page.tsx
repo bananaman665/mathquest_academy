@@ -24,11 +24,17 @@ function getGameModeForLevel(levelId: number): GameMode {
 
 // Helper function to randomly convert questions to type-answer or match-equation
 function randomizeQuestionTypes(questions: Question[]): Question[] {
-  return questions.map(q => {
+  return questions.map((q, index) => {
     const rand = Math.random()
     
     // Skip randomization for counting questions (they have specific question format)
-    if (q.question.includes('comes after') || q.question.includes('comes before')) {
+    // Also skip if the question has num2 = 0 (which indicates counting operations)
+    if (q.question.includes('comes after') || 
+        q.question.includes('comes before') ||
+        q.question.includes('What number comes') ||
+        q.type === 'bubble-pop' ||
+        q.type === 'tap-select' ||
+        q.type === 'ten-frame') {
       return q
     }
     
