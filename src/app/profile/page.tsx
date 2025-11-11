@@ -6,6 +6,7 @@ import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
 import ProfileEditor from '@/components/ProfileEditor'
+import SignOutButton from '@/components/SignOutButton'
 
 export default async function ProfilePage() {
   const user = await currentUser()
@@ -314,6 +315,11 @@ export default async function ProfilePage() {
                   </div>
                   <span className="text-sm text-gray-500 italic">Coming soon</span>
                 </div>
+              </div>
+
+              {/* Sign Out Button */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <SignOutButton />
               </div>
             </div>
           </div>

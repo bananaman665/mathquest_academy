@@ -8,13 +8,15 @@ interface GroupMakerProps {
   itemsPerGroup: number;
   emoji?: string;
   onAnswer: (correct: boolean) => void;
+  onSubmitReady?: (submitFn: () => void) => void;
 }
 
 export default function GroupMaker({
   targetGroups,
   itemsPerGroup,
   emoji = '⭐',
-  onAnswer
+  onAnswer,
+  onSubmitReady
 }: GroupMakerProps) {
   const [groups, setGroups] = useState(1);
   const [perGroup, setPerGroup] = useState(1);
@@ -31,14 +33,17 @@ export default function GroupMaker({
     onAnswer(correct);
   };
 
-  // Auto-submit when correct configuration is reached
+  // Expose submit function to parent
   useEffect(() => {
-    if (!submitted && groups === targetGroups && perGroup === itemsPerGroup) {
-      setTimeout(() => {
-        handleSubmit();
-      }, 500);
+    if (onSubmitReady && !submitted) {
+      onSubmitReady(handleSubmit);
     }
-  }, [groups, perGroup, submitted, targetGroups, itemsPerGroup]);
+    return () => {
+      if (onSubmitReady) {
+        onSubmitReady(null as any);
+      }
+    };
+  }, [onSubmitReady, submitted, groups, perGroup]);
 
   const colors = [
     'from-red-200 to-red-300 border-red-400',

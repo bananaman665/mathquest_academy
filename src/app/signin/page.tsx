@@ -20,7 +20,7 @@ export default function SignInPage() {
       </header>
 
       {/* Sign In Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-24">
         <div className="max-w-md w-full space-y-8">
           {/* Custom Header */}
           <div className="text-center">
@@ -48,13 +48,23 @@ export default function SignInPage() {
                   headerSubtitle: "hidden", // Hide default subtitle
                   socialButtonsBlockButton: 
                     "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
+                  socialButtonsBlockButtonText: "font-semibold",
                   formButtonPrimary: 
                     "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700",
                   footerActionLink: "text-blue-600 hover:text-blue-700",
+                  footerActionText: "text-gray-600",
+                  formFieldInput: "border-gray-300 focus:border-blue-500 focus:ring-blue-500",
+                  formFieldLabel: "text-gray-700 font-medium",
+                  identityPreviewText: "text-gray-700",
+                  identityPreviewEditButton: "text-blue-600 hover:text-blue-700",
                 },
                 variables: {
                   colorPrimary: "#2563eb",
                   borderRadius: "0.75rem",
+                },
+                layout: {
+                  socialButtonsPlacement: "top",
+                  socialButtonsVariant: "blockButton",
                 }
               }}
               routing="path"

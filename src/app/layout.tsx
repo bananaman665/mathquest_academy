@@ -39,7 +39,27 @@ export default function RootLayout({
   const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_YWN0dWFsLW1vb3NlLTM1LmNsZXJrLmFjY291bnRzLmRldiQ';
 
   return (
-    <ClerkProvider publishableKey={clerkPublishableKey}>
+    <ClerkProvider 
+      publishableKey={clerkPublishableKey}
+      appearance={{
+        variables: {
+          colorPrimary: "#2563eb",
+          colorBackground: "#ffffff",
+          colorText: "#1f2937",
+          borderRadius: "0.75rem",
+        },
+        elements: {
+          formButtonPrimary: 
+            "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white",
+          card: "shadow-xl",
+          headerTitle: "text-gray-900 font-bold",
+          headerSubtitle: "text-gray-600",
+          socialButtonsBlockButton: 
+            "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
+          footerActionLink: "text-blue-600 hover:text-blue-700",
+        }
+      }}
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

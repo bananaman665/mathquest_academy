@@ -8,13 +8,15 @@ interface ArrayGridBuilderProps {
   targetCols: number;
   emoji?: string;
   onAnswer: (correct: boolean) => void;
+  onSubmitReady?: (submitFn: () => void) => void;
 }
 
 export default function ArrayGridBuilder({
   targetRows,
   targetCols,
   emoji = '⭐',
-  onAnswer
+  onAnswer,
+  onSubmitReady
 }: ArrayGridBuilderProps) {
   const [rows, setRows] = useState(1);
   const [cols, setCols] = useState(1);
@@ -31,14 +33,17 @@ export default function ArrayGridBuilder({
     onAnswer(correct);
   };
 
-  // Auto-submit when correct configuration is reached
+  // Expose submit function to parent
   useEffect(() => {
-    if (!submitted && rows === targetRows && cols === targetCols) {
-      setTimeout(() => {
-        handleSubmit();
-      }, 500);
+    if (onSubmitReady && !submitted) {
+      onSubmitReady(handleSubmit);
     }
-  }, [rows, cols, submitted, targetRows, targetCols]);
+    return () => {
+      if (onSubmitReady) {
+        onSubmitReady(null as any);
+      }
+    };
+  }, [onSubmitReady, submitted, rows, cols]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));

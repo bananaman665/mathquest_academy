@@ -100,6 +100,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [hintsUsed, setHintsUsed] = useState(0)
   const [showStreakMilestone, setShowStreakMilestone] = useState(false)
   const [streakMilestone, setStreakMilestone] = useState(0)
+  // For interactive components that need manual CHECK button
+  const [interactiveSubmitFn, setInteractiveSubmitFn] = useState<(() => void) | null>(null)
 
   const currentQuestion = questions[currentQuestionIndex]
   
@@ -362,6 +364,19 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }
 
   const handleSubmit = () => {
+    // Handle interactive components with their own submit logic
+    if (interactiveSubmitFn && (
+      currentQuestion.type === 'array-grid-builder' ||
+      currentQuestion.type === 'group-maker' ||
+      currentQuestion.type === 'skip-counter' ||
+      currentQuestion.type === 'fair-share' ||
+      currentQuestion.type === 'division-machine' ||
+      currentQuestion.type === 'fill-the-jar'
+    )) {
+      interactiveSubmitFn()
+      return
+    }
+    
     let correct = false
     if (currentQuestion.type === 'multiple-choice' || 
         currentQuestion.type === 'audio' || 
@@ -543,6 +558,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       setTypedAnswer('')
       setMultiSelected([])
       setBlankAnswers([])
+      setInteractiveSubmitFn(null) // Reset interactive component submit function
       // Reset drag-and-drop state for next question
       const nextQuestion = questions[currentQuestionIndex + 1]
       if (nextQuestion.type === 'drag-and-drop' && nextQuestion.pairs) {
@@ -1520,6 +1536,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 targetRows={currentQuestion.arrayRows || 3}
                 targetCols={currentQuestion.arrayColumns || 4}
                 emoji={currentQuestion.arrayEmoji || '⭐'}
+                onSubmitReady={setInteractiveSubmitFn}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1552,6 +1569,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 targetGroups={currentQuestion.numberOfGroups || 4}
                 itemsPerGroup={currentQuestion.groupSize || 3}
                 emoji={currentQuestion.groupEmoji || '⭐'}
+                onSubmitReady={setInteractiveSubmitFn}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1916,6 +1934,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       ? !typedAnswer.trim()
                       : currentQuestion.type === 'match-equation'
                       ? equationMatched.some(eq => !eq)
+                      : currentQuestion.type === 'array-grid-builder' ||
+                        currentQuestion.type === 'group-maker' ||
+                        currentQuestion.type === 'skip-counter' ||
+                        currentQuestion.type === 'fair-share' ||
+                        currentQuestion.type === 'division-machine' ||
+                        currentQuestion.type === 'fill-the-jar'
+                      ? !interactiveSubmitFn // Enabled when component provides submit function
                       : !selectedAnswer
                   }
                   className={`w-full md:w-auto px-12 py-4 rounded-xl font-bold text-white uppercase tracking-wide transition-all duration-200 ${
@@ -1931,6 +1956,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       ? !!typedAnswer.trim()
                       : currentQuestion.type === 'match-equation'
                       ? !equationMatched.some(eq => !eq)
+                      : currentQuestion.type === 'array-grid-builder' ||
+                        currentQuestion.type === 'group-maker' ||
+                        currentQuestion.type === 'skip-counter' ||
+                        currentQuestion.type === 'fair-share' ||
+                        currentQuestion.type === 'division-machine' ||
+                        currentQuestion.type === 'fill-the-jar'
+                      ? !!interactiveSubmitFn // Enabled when component provides submit function
                       : !!selectedAnswer)
                       ? 'bg-green-500 hover:bg-green-600 shadow-lg'
                       : 'bg-gray-300 cursor-not-allowed'
