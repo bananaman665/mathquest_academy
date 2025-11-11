@@ -113,7 +113,7 @@ export default function AchievementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center py-12">
             <div className="animate-spin w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading your achievements...</p>
+            <p className="text-gray-600">Loading your badges...</p>
           </div>
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function AchievementsPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4">
         <div className="max-w-4xl mx-auto text-center py-12">
-          <p className="text-gray-600">Failed to load achievements.</p>
+          <p className="text-gray-600">Failed to load badges.</p>
         </div>
       </div>
     )
@@ -141,50 +141,56 @@ export default function AchievementsPage() {
   const lockedAchievements = allAchievements.filter(achievement => !earnedIds.has(achievement.id))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-black text-gray-900 mb-2">🏆 Achievements</h1>
-          <p className="text-gray-600 text-lg">
-            {earnedAchievements.length} of {totalAchievements} unlocked
-          </p>
-          <div className="w-full bg-gray-200 rounded-full h-3 mt-4">
-            <div
-              className="bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${totalAchievements > 0 ? (earnedAchievements.length / totalAchievements) * 100 : 0}%` }}
-            ></div>
+        <div className="fixed top-0 left-0 right-0 bg-gradient-to-br from-purple-50 to-blue-50 pt-12 pb-4 px-4 z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <Trophy className="w-8 h-8 text-yellow-600" />
+              <h1 className="text-4xl font-black text-gray-900">Badges</h1>
+            </div>
+            <p className="text-gray-600 text-lg">
+              {earnedAchievements.length} of {totalAchievements} unlocked
+            </p>
+            <div className="w-full bg-gray-200 rounded-full h-3 mt-4">
+              <div
+                className="bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${totalAchievements > 0 ? (earnedAchievements.length / totalAchievements) * 100 : 0}%` }}
+              ></div>
+            </div>
           </div>
         </div>
 
-        {/* Check for new achievements button */}
+        <div className="pt-48 px-4 pb-4">
+        {/* Check for new badges button */}
         <div className="text-center mb-8">
           <button
             onClick={checkForNewAchievements}
             disabled={checking}
             className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {checking ? 'Checking...' : '🎯 Check for New Achievements'}
+            {checking ? 'Checking...' : '🎯 Check for New Badges'}
           </button>
           <p className="text-sm text-gray-600 mt-2">
             See if you&apos;ve earned any new badges based on your progress!
           </p>
         </div>
 
-        {/* Achievement Categories */}
+        {/* Badge Categories */}
         <div className="grid gap-8">
-          {/* Earned Achievements */}
+          {/* Earned Badges */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-green-600" />
-              Earned Achievements ({earnedAchievements.length})
+              Earned Badges ({earnedAchievements.length})
             </h2>
             {earnedAchievements.length === 0 ? (
               <div className="bg-white rounded-xl p-8 text-center border-2 border-gray-200">
                 <Trophy className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">No achievements yet!</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">No badges yet!</h3>
                 <p className="text-gray-600">
-                  Start learning and completing levels to earn your first achievement!
+                  Start learning and completing levels to earn your first badge!
                 </p>
               </div>
             ) : (
@@ -216,12 +222,12 @@ export default function AchievementsPage() {
             )}
           </div>
 
-          {/* Locked Achievements */}
+          {/* Locked Badges */}
           {lockedAchievements.length > 0 && (
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Lock className="w-6 h-6 text-gray-400" />
-                Locked Achievements ({lockedAchievements.length})
+                Locked Badges ({lockedAchievements.length})
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {lockedAchievements.map((achievement) => (
@@ -251,9 +257,9 @@ export default function AchievementsPage() {
             </div>
           )}
 
-          {/* Achievement Categories Info */}
+          {/* Badge Categories Info */}
           <div className="bg-white rounded-xl p-6 shadow-lg">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Achievement Categories</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Badge Categories</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
                 <Star className="w-5 h-5 text-blue-500" />
@@ -288,13 +294,14 @@ export default function AchievementsPage() {
         </div>
 
         {/* Back to Dashboard */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 pb-24 md:pb-8">
           <button
             onClick={() => router.push('/dashboard')}
             className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-all"
           >
             ← Back to Dashboard
           </button>
+        </div>
         </div>
       </div>
 
