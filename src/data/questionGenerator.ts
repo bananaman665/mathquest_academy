@@ -1000,7 +1000,7 @@ function generateQuestionByType(
           xp: 10
         }
       } else {
-        // Default number sequence
+        // Default number sequence - use the pre-calculated answer
         const wrongAnswers = generateWrongAnswers(answer, 3)
         const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
         
@@ -1010,8 +1010,8 @@ function generateQuestionByType(
           type: 'multiple-choice',
           question: `What comes next? ${num1 - 2}, ${num1 - 1}, ${num1}, __`,
           options: allOptions,
-          correctAnswer: String(num1 + 1),
-          explanation: `The next number is ${num1 + 1}`,
+          correctAnswer: String(answer),
+          explanation: `The next number is ${answer}`,
           hints: [`Count forward by 1`, `What number comes after ${num1}?`],
           xp: 10
         }
