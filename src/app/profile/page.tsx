@@ -101,13 +101,13 @@ export default async function ProfilePage() {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64 w-full">
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <header className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 md:left-64 z-10 pt-12">
           <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
             <h1 className="text-2xl font-black text-gray-900">Profile</h1>
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8">
+        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8 pt-32">
           {/* Profile Header */}
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 md:p-8 mb-8 text-white">
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
