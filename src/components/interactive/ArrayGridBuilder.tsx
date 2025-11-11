@@ -136,9 +136,8 @@ export default function ArrayGridBuilder({
                     damping: 20,
                     delay: (rowIdx * cols + colIdx) * 0.02
                   }}
-                  className="w-12 h-12 flex items-center justify-center text-3xl bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg border-2 border-purple-300"
+                  className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg border-2 border-purple-300"
                 >
-                  {emoji}
                 </motion.div>
               ))}
             </div>
