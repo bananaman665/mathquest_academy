@@ -40,7 +40,7 @@ export default function ArrayGridBuilder({
     }
     return () => {
       if (onSubmitReady) {
-        onSubmitReady(null as any);
+        onSubmitReady(() => {});
       }
     };
   }, [onSubmitReady, submitted, rows, cols]);

@@ -40,7 +40,7 @@ export default function GroupMaker({
     }
     return () => {
       if (onSubmitReady) {
-        onSubmitReady(null as any);
+        onSubmitReady(() => {});
       }
     };
   }, [onSubmitReady, submitted, groups, perGroup]);
