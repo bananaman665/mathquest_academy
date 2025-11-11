@@ -689,11 +689,23 @@ function generateQuestion(
         num1 = rng.nextInt(num2, numberRange.max)
         answer = Math.floor(num1 / num2)
       } else {
+        // Generate divisor first (the number we're dividing by)
+        num2 = rng.nextInt(Math.max(2, numberRange.min), Math.min(numberRange.max, 12))
+        
+        // Generate answer (quotient) - ensure it's within a reasonable range
         answer = answerRange
           ? rng.nextInt(answerRange.min, answerRange.max)
-          : rng.nextInt(Math.max(1, numberRange.min), numberRange.max)
-        num2 = rng.nextInt(Math.max(2, numberRange.min), Math.min(numberRange.max, 12))
+          : rng.nextInt(Math.max(1, numberRange.min), Math.min(10, numberRange.max))
+        
+        // Calculate dividend (num1 = answer * num2)
         num1 = answer * num2
+        
+        // Validate that num1 is within numberRange, regenerate if not
+        if (num1 > numberRange.max) {
+          // Recalculate with smaller answer
+          answer = Math.floor(numberRange.max / num2)
+          num1 = answer * num2
+        }
       }
       break
 
@@ -770,9 +782,15 @@ function generateQuestion(
       } else {
         // Division: generate answer and divisor, then dividend = answer * divisor
         // This ensures no remainders
-        answer = rng.nextInt(Math.max(1, numberRange.min), Math.min(numberRange.max, 12))
         num2 = rng.nextInt(Math.max(2, numberRange.min), Math.min(numberRange.max, 12))
+        answer = rng.nextInt(Math.max(1, numberRange.min), Math.min(10, numberRange.max))
         num1 = answer * num2
+        
+        // Validate that num1 is within numberRange
+        if (num1 > numberRange.max) {
+          answer = Math.floor(numberRange.max / num2)
+          num1 = answer * num2
+        }
       }
       break
   }
