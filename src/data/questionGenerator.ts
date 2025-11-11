@@ -283,56 +283,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 5: PLACE VALUES (Levels 21-25)
+  // UNIT 5: MULTIPLICATION BASICS (Levels 21-25)
   21: {
     levelId: 21,
-    unit: "Tens and Ones",
-    operation: 'place-value',
-    numberRange: { min: 10, max: 99 },
-    questionTypes: ['multiple-choice', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  22: {
-    levelId: 22,
-    unit: "Counting by 10s",
-    operation: 'place-value',
-    numberRange: { min: 10, max: 100 },
-    questionTypes: ['multiple-choice', 'number-sequence', 'type-answer'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  23: {
-    levelId: 23,
-    unit: "Compare 2-Digit Numbers",
-    operation: 'place-value',
-    numberRange: { min: 10, max: 99 },
-    questionTypes: ['multiple-choice', 'true-false'],
-    totalQuestions: 10,
-    difficulty: 'medium'
-  },
-  24: {
-    levelId: 24,
-    unit: "Hundreds Place",
-    operation: 'place-value',
-    numberRange: { min: 100, max: 999 },
-    questionTypes: ['multiple-choice', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-  25: {
-    levelId: 25,
-    unit: "Place Value Practice",
-    operation: 'place-value',
-    numberRange: { min: 1, max: 999 },
-    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
-    totalQuestions: 10,
-    difficulty: 'hard'
-  },
-
-  // UNIT 6: MULTIPLICATION BASICS (Levels 26-30)
-  26: {
-    levelId: 26,
     unit: "Introduction to Multiplication",
     operation: 'multiplication',
     numberRange: { min: 1, max: 5 },
@@ -341,8 +294,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  27: {
-    levelId: 27,
+  22: {
+    levelId: 22,
     unit: "Times Tables 2, 5, 10",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -351,8 +304,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  28: {
-    levelId: 28,
+  23: {
+    levelId: 23,
     unit: "Times Tables 3, 4, 6",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -361,8 +314,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  29: {
-    levelId: 29,
+  24: {
+    levelId: 24,
     unit: "Times Tables 7, 8, 9",
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
@@ -371,8 +324,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  30: {
-    levelId: 30,
+  25: {
+    levelId: 25,
     unit: "All Times Tables",
     operation: 'multiplication',
     numberRange: { min: 1, max: 12 },
@@ -382,9 +335,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 7: DIVISION BASICS (Levels 31-35)
-  31: {
-    levelId: 31,
+  // UNIT 6: DIVISION BASICS (Levels 26-30)
+  26: {
+    levelId: 26,
     unit: "Introduction to Division",
     operation: 'division',
     numberRange: { min: 2, max: 10 },
@@ -394,8 +347,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'medium',
     allowRemainders: false
   },
-  32: {
-    levelId: 32,
+  27: {
+    levelId: 27,
     unit: "Division by 2, 5, 10",
     operation: 'division',
     numberRange: { min: 2, max: 50 },
@@ -405,8 +358,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'medium',
     allowRemainders: false
   },
-  33: {
-    levelId: 33,
+  28: {
+    levelId: 28,
     unit: "Division Facts",
     operation: 'division',
     numberRange: { min: 3, max: 81 },
@@ -416,8 +369,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowRemainders: false
   },
-  34: {
-    levelId: 34,
+  29: {
+    levelId: 29,
     unit: "Division with Remainders",
     operation: 'division',
     numberRange: { min: 3, max: 50 },
@@ -427,8 +380,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard',
     allowRemainders: true
   },
-  35: {
-    levelId: 35,
+  30: {
+    levelId: 30,
     unit: "Multiplication & Division Practice",
     operation: 'mixed',
     numberRange: { min: 1, max: 100 },
@@ -438,9 +391,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 8: ADDITION & SUBTRACTION WITHIN 20 (Levels 36-40)
-  36: {
-    levelId: 36,
+  // UNIT 7: ADDITION & SUBTRACTION WITHIN 20 (Levels 31-35)
+  31: {
+    levelId: 31,
     unit: "Addition 11-20",
     operation: 'addition',
     numberRange: { min: 1, max: 20 },
@@ -449,8 +402,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  37: {
-    levelId: 37,
+  32: {
+    levelId: 32,
     unit: "Subtraction 11-20",
     operation: 'subtraction',
     numberRange: { min: 1, max: 20 },
@@ -460,8 +413,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'medium',
     allowNegatives: false
   },
-  38: {
-    levelId: 38,
+  33: {
+    levelId: 33,
     unit: "Mixed Operations 1-20",
     operation: 'mixed',
     numberRange: { min: 1, max: 20 },
@@ -470,8 +423,8 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'medium'
   },
-  39: {
-    levelId: 39,
+  34: {
+    levelId: 34,
     unit: "Word Problems 1-20",
     operation: 'mixed',
     numberRange: { min: 1, max: 20 },
@@ -480,13 +433,60 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     totalQuestions: 10,
     difficulty: 'hard'
   },
-  40: {
-    levelId: 40,
+  35: {
+    levelId: 35,
     unit: "Practice 1-20",
     operation: 'mixed',
     numberRange: { min: 1, max: 20 },
     answerRange: { min: 0, max: 20 },
     questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+
+  // UNIT 8: PLACE VALUE (Levels 36-40)
+  36: {
+    levelId: 36,
+    unit: "Tens and Ones",
+    operation: 'place-value',
+    numberRange: { min: 10, max: 99 },
+    questionTypes: ['multiple-choice', 'fill-blank'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  37: {
+    levelId: 37,
+    unit: "Counting by 10s",
+    operation: 'place-value',
+    numberRange: { min: 10, max: 100 },
+    questionTypes: ['multiple-choice', 'number-sequence', 'type-answer'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  38: {
+    levelId: 38,
+    unit: "Compare 2-Digit Numbers",
+    operation: 'place-value',
+    numberRange: { min: 10, max: 99 },
+    questionTypes: ['multiple-choice', 'true-false'],
+    totalQuestions: 10,
+    difficulty: 'medium'
+  },
+  39: {
+    levelId: 39,
+    unit: "Hundreds Place",
+    operation: 'place-value',
+    numberRange: { min: 100, max: 999 },
+    questionTypes: ['multiple-choice', 'fill-blank'],
+    totalQuestions: 10,
+    difficulty: 'hard'
+  },
+  40: {
+    levelId: 40,
+    unit: "Place Value Practice",
+    operation: 'place-value',
+    numberRange: { min: 1, max: 999 },
+    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
