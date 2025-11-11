@@ -29,7 +29,7 @@ export default function TutorialDemoPage() {
     },
     {
       title: "Start Learning",
-      description: "Click 'Continue Learning' to jump right into your next lesson. Each level has 10 fun questions!",
+      description: "Click &quot;Continue Learning&quot; to jump right into your next lesson. Each level has 10 fun questions!",
       target: "continue-button",
       position: "top"
     },
@@ -53,7 +53,7 @@ export default function TutorialDemoPage() {
     },
     {
       title: "Ready to Start! 🚀",
-      description: "That's it! You're all set. Click 'Start Learning' to begin your math adventure!",
+      description: "That&apos;s it! You&apos;re all set. Click &quot;Start Learning&quot; to begin your math adventure!",
       target: null,
       position: "center"
     }
@@ -294,7 +294,7 @@ export default function TutorialDemoPage() {
                   onClick={nextStep}
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2"
                 >
-                  {tutorialStep === tutorialSteps.length - 1 ? "Let's Go!" : 'Next'}
+                  {tutorialStep === tutorialSteps.length - 1 ? "Let&apos;s Go!" : 'Next'}
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
