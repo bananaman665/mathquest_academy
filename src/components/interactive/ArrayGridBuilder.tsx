@@ -185,37 +185,7 @@ export default function ArrayGridBuilder({
           </div>
         </motion.div>
       )}
-
-      {/* Celebration */}
-      {isCorrect && submitted && (
-        <div className="absolute inset-0 pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-4xl"
-              initial={{
-                x: '50%',
-                y: '50%',
-                scale: 0,
-                rotate: 0
-              }}
-              animate={{
-                x: `${50 + (Math.random() - 0.5) * 200}%`,
-                y: `${50 + (Math.random() - 0.5) * 200}%`,
-                scale: [0, 1, 0],
-                rotate: 360
-              }}
-              transition={{
-                duration: 1.5,
-                delay: i * 0.05,
-                ease: 'easeOut'
-              }}
-            >
-              ⭐
-            </motion.div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
+

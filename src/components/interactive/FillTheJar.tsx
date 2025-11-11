@@ -31,7 +31,6 @@ export default function FillTheJar({
 }: FillTheJarProps) {
   const [items, setItems] = useState<Item[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [showCelebration, setShowCelebration] = useState(false);
 
   // Initialize with starting items
   useEffect(() => {
@@ -98,14 +97,7 @@ export default function FillTheJar({
     setHasSubmitted(true);
     const isCorrect = items.length === targetNumber;
     
-    if (isCorrect) {
-      setShowCelebration(true);
-      setTimeout(() => {
-        onAnswer(true);
-      }, 1500);
-    } else {
-      onAnswer(false);
-    }
+    onAnswer(isCorrect);
   };
 
   const canSubmit = mode === 'count' 
@@ -130,38 +122,6 @@ export default function FillTheJar({
 
       {/* The Jar */}
       <div className="relative">
-        {/* Celebration Effect */}
-        <AnimatePresence>
-          {showCelebration && (
-            <>
-              {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute top-1/2 left-1/2 text-3xl"
-                  initial={{ 
-                    scale: 0, 
-                    x: 0, 
-                    y: 0,
-                    opacity: 1 
-                  }}
-                  animate={{
-                    scale: [0, 1.5, 1],
-                    x: Math.cos((i / 12) * Math.PI * 2) * 150,
-                    y: Math.sin((i / 12) * Math.PI * 2) * 150,
-                    opacity: 0,
-                  }}
-                  transition={{ 
-                    duration: 1.5,
-                    ease: "easeOut"
-                  }}
-                >
-                  {['⭐', '✨', '🎉', '🎊'][i % 4]}
-                </motion.div>
-              ))}
-            </>
-          )}
-        </AnimatePresence>
-
         {/* Jar Container */}
         <div className="relative w-64 h-80">
           {/* Jar Lid */}
