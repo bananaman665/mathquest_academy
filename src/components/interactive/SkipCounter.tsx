@@ -27,9 +27,19 @@ export default function SkipCounter({
   const handleJump = () => {
     if (currentJumps < numJumps + 2) {
       const nextValue = (currentJumps + 1) * skipBy;
-      setCurrentJumps(prev => prev + 1);
+      const newJumpCount = currentJumps + 1;
+      setCurrentJumps(newJumpCount);
       setJumpHistory(prev => [...prev, nextValue]);
       setSubmitted(false);
+      
+      // Auto-submit when target is reached
+      if (newJumpCount === numJumps) {
+        setTimeout(() => {
+          setSubmitted(true);
+          setIsCorrect(true);
+          onAnswer(true);
+        }, 500); // Small delay to show the final jump
+      }
     }
   };
 
@@ -193,20 +203,6 @@ export default function SkipCounter({
           Reset
         </motion.button>
       </div>
-
-      {/* Submit Button - Always show, even for 0 jumps */}
-      {!submitted && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleSubmit}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xl font-bold rounded-full shadow-lg"
-        >
-          Check Answer
-        </motion.button>
-      )}
 
       {/* Feedback */}
       {submitted && (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface ArrayGridBuilderProps {
@@ -30,6 +30,15 @@ export default function ArrayGridBuilder({
     setIsCorrect(correct);
     onAnswer(correct);
   };
+
+  // Auto-submit when correct configuration is reached
+  useEffect(() => {
+    if (!submitted && rows === targetRows && cols === targetCols) {
+      setTimeout(() => {
+        handleSubmit();
+      }, 500);
+    }
+  }, [rows, cols, submitted, targetRows, targetCols]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));
@@ -150,18 +159,6 @@ export default function ArrayGridBuilder({
         <span className="text-gray-600">=</span>
         <span className="text-orange-600">{currentTotal}</span>
       </motion.div>
-
-      {/* Submit Button */}
-      {!submitted && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleSubmit}
-          className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-full shadow-lg"
-        >
-          Check Answer
-        </motion.button>
-      )}
 
       {/* Feedback */}
       {submitted && (

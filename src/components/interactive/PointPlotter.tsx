@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface PointPlotterProps {
   question: string
@@ -105,6 +105,21 @@ export default function PointPlotter({
     setHasAnswered(true)
     onAnswer(isCorrect, plottedPoints)
   }
+
+  // Auto-submit when all points are plotted correctly
+  useEffect(() => {
+    if (!hasAnswered && plottedPoints.length === targetPoints.length) {
+      const isCorrect = targetPoints.every(target =>
+        plottedPoints.some(plotted => plotted.x === target.x && plotted.y === target.y)
+      )
+      
+      if (isCorrect) {
+        setTimeout(() => {
+          handleCheckAnswer();
+        }, 500);
+      }
+    }
+  }, [plottedPoints, hasAnswered, targetPoints]);
 
   const handleClear = () => {
     setPlottedPoints([])
@@ -287,16 +302,6 @@ export default function PointPlotter({
           >
             Clear All
           </button>
-        )}
-        {plottedPoints.length === targetPoints.length && !hasAnswered && (
-          <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            onClick={handleCheckAnswer}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors text-lg"
-          >
-            ✓ Check Answer
-          </motion.button>
         )}
       </div>
 

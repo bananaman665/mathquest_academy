@@ -61,7 +61,15 @@ export default function FillTheJar({
       rotation: Math.random() * 40 - 20,
     };
     
-    setItems(prev => [...prev, newItem]);
+    const newItems = [...items, newItem];
+    setItems(newItems);
+    
+    // Auto-submit when target is reached
+    if (newItems.length === targetNumber) {
+      setTimeout(() => {
+        handleSubmit();
+      }, 500);
+    }
     
     // Play sound effect (if available)
     if (typeof window !== 'undefined') {
@@ -229,7 +237,7 @@ export default function FillTheJar({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center justify-center">
         {(mode === 'count' || mode === 'add') && (
           <motion.button
             onClick={addItem}
@@ -241,28 +249,6 @@ export default function FillTheJar({
             Add {itemEmoji}
           </motion.button>
         )}
-
-        <motion.button
-          onClick={handleSubmit}
-          disabled={!canSubmit || hasSubmitted}
-          className={`px-8 py-4 font-bold text-xl rounded-2xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${
-            items.length === targetNumber
-              ? 'bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 text-white animate-pulse'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-          }`}
-          whileHover={{ scale: (!canSubmit || hasSubmitted) ? 1 : 1.05 }}
-          whileTap={{ scale: (!canSubmit || hasSubmitted) ? 1 : 0.95 }}
-        >
-          {items.length === targetNumber ? (
-            <span className="flex items-center gap-2">
-              <Sparkles className="w-6 h-6" />
-              Check Answer!
-              <Sparkles className="w-6 h-6" />
-            </span>
-          ) : (
-            'Submit'
-          )}
-        </motion.button>
       </div>
 
       {/* Hint */}

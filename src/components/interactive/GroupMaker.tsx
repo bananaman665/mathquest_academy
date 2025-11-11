@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface GroupMakerProps {
@@ -30,6 +30,15 @@ export default function GroupMaker({
     setIsCorrect(correct);
     onAnswer(correct);
   };
+
+  // Auto-submit when correct configuration is reached
+  useEffect(() => {
+    if (!submitted && groups === targetGroups && perGroup === itemsPerGroup) {
+      setTimeout(() => {
+        handleSubmit();
+      }, 500);
+    }
+  }, [groups, perGroup, submitted, targetGroups, itemsPerGroup]);
 
   const colors = [
     'from-red-200 to-red-300 border-red-400',
@@ -167,18 +176,6 @@ export default function GroupMaker({
         <span className="text-gray-600">=</span>
         <span className="text-green-600">{currentTotal}</span>
       </motion.div>
-
-      {/* Submit Button */}
-      {!submitted && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleSubmit}
-          className="px-8 py-3 bg-gradient-to-r from-purple-500 to-orange-500 text-white text-xl font-bold rounded-full shadow-lg"
-        >
-          Check Answer
-        </motion.button>
-      )}
 
       {/* Feedback */}
       {submitted && (

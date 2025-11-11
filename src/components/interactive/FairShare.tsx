@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface FairShareProps {
@@ -56,6 +56,18 @@ export default function FairShare({
     setIsCorrect(correct);
     onAnswer(correct);
   };
+
+  // Auto-submit when correct distribution is achieved
+  useEffect(() => {
+    if (!submitted) {
+      const allEqual = groupCounts.every(count => count === itemsPerGroup);
+      if (allEqual && remainingItems === remainder && groupCounts.some(c => c > 0)) {
+        setTimeout(() => {
+          handleSubmit();
+        }, 500);
+      }
+    }
+  }, [groupCounts, remainingItems, submitted, itemsPerGroup, remainder]);
 
   const colors = [
     'from-red-200 to-red-300 border-red-400',
@@ -179,20 +191,6 @@ export default function FairShare({
           Reset
         </motion.button>
       </div>
-
-      {/* Submit Button */}
-      {distributedCount > 0 && !submitted && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleSubmit}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xl font-bold rounded-full shadow-lg"
-        >
-          Check Answer
-        </motion.button>
-      )}
 
       {/* Feedback */}
       {submitted && (
