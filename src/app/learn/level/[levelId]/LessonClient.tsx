@@ -1871,7 +1871,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 pb-safe shadow-lg z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 pb-12 shadow-lg z-50">
         <div className="max-w-5xl mx-auto">
           {!showExplanation ? (
             <>
