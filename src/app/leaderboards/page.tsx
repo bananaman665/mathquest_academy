@@ -6,6 +6,24 @@ import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
 
+// Utility function to format large numbers with abbreviations
+function formatXP(xp: number): string {
+  if (xp >= 1000000) {
+    return `${(xp / 1000000).toFixed(1)}M`.replace('.0M', 'M')
+  }
+  if (xp >= 1000) {
+    return `${(xp / 1000).toFixed(1)}k`.replace('.0k', 'k')
+  }
+  return xp.toString()
+}
+
+// Utility function to truncate username to 8 characters (length of "Learning")
+function truncateUsername(name: string | null | undefined): string {
+  const username = name || 'User'
+  if (username.length <= 8) return username
+  return username.substring(0, 8) + '...'
+}
+
 export default async function LeaderboardsPage() {
   const user = await currentUser()
 
@@ -138,7 +156,7 @@ export default async function LeaderboardsPage() {
                 </div>
                 <div className="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-xl">
                   <span className="text-2xl">💎</span>
-                  <span className="font-bold text-blue-600">{dbUser.totalXP || 0}</span>
+                  <span className="font-bold text-blue-600">{formatXP(dbUser.totalXP || 0)}</span>
                 </div>
               </div>
             </div>
@@ -155,8 +173,8 @@ export default async function LeaderboardsPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 font-semibold">Your Rank</p>
-                  <p className="text-2xl font-black text-gray-900">{user.firstName || 'You'}</p>
-                  <p className="text-sm text-gray-600">Level {dbUser.currentLevel} • {dbUser.totalXP} XP</p>
+                  <p className="text-2xl font-black text-gray-900">{truncateUsername(user.firstName)}</p>
+                  <p className="text-sm text-gray-600">Level {dbUser.currentLevel} • {formatXP(dbUser.totalXP)} XP</p>
                 </div>
               </div>
               <Trophy className="w-12 h-12 text-yellow-500 transition-transform duration-300 hover:rotate-12 hover:scale-110" />
@@ -202,14 +220,14 @@ export default async function LeaderboardsPage() {
                       </div>
                       <div className="flex-1">
                         <p className={`font-bold ${isCurrentUser ? 'text-blue-600' : 'text-gray-900'}`}>
-                          {topUser.name || topUser.username || `User ${index + 1}`}
+                          {truncateUsername(topUser.name || topUser.username)}
                           {isCurrentUser && ' (You)'}
                         </p>
                         <p className="text-sm text-gray-600">Level {topUser.currentLevel}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-black text-yellow-600">{topUser.totalXP}</p>
+                      <p className="text-2xl font-black text-yellow-600">{formatXP(topUser.totalXP)}</p>
                       <p className="text-xs text-gray-600">XP</p>
                     </div>
                   </div>
