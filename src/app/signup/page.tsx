@@ -8,7 +8,7 @@ export default function SignUpPage() {
       {/* Header */}
       <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex justify-between items-center py-8 pt-12">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <BookOpen className="w-5 h-5 text-white" />
@@ -20,7 +20,7 @@ export default function SignUpPage() {
       </header>
 
       {/* Sign Up Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-32 mt-20">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-40 mt-20">
         <div className="max-w-md w-full space-y-8">
           {/* Custom Header */}
           <div className="text-center">
