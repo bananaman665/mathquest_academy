@@ -538,53 +538,57 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     difficulty: 'hard'
   },
 
-  // UNIT 10: ADVANCED TOPICS (Levels 46-50)
+  // UNIT 10: DECIMALS (Levels 46-50)
   46: {
     levelId: 46,
-    unit: "Decimals",
+    unit: "Introduction to Decimals",
     operation: 'mixed',
-    numberRange: { min: 1, max: 100 },
-    questionTypes: ['multiple-choice', 'type-answer'],
+    numberRange: { min: 0, max: 10 },
+    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag'],
     totalQuestions: 10,
     difficulty: 'hard',
     allowDecimals: true
   },
   47: {
     levelId: 47,
-    unit: "Money Math",
+    unit: "Tenths and Hundredths",
     operation: 'mixed',
-    numberRange: { min: 1, max: 100 },
-    questionTypes: ['money-counter', 'multiple-choice', 'type-answer'],
+    numberRange: { min: 0, max: 10 },
+    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
     totalQuestions: 10,
-    difficulty: 'hard'
+    difficulty: 'hard',
+    allowDecimals: true
   },
   48: {
     levelId: 48,
-    unit: "Time",
-    operation: 'counting',
-    numberRange: { min: 1, max: 12 },
-    questionTypes: ['clock-setter', 'multiple-choice'],
+    unit: "Adding Decimals",
+    operation: 'addition',
+    numberRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
-    difficulty: 'hard'
+    difficulty: 'hard',
+    allowDecimals: true
   },
   49: {
     levelId: 49,
-    unit: "Measurement",
-    operation: 'mixed',
-    numberRange: { min: 1, max: 100 },
-    questionTypes: ['multiple-choice', 'type-answer', 'balance-scale'],
+    unit: "Subtracting Decimals",
+    operation: 'subtraction',
+    numberRange: { min: 0, max: 20 },
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
-    difficulty: 'hard'
+    difficulty: 'hard',
+    allowDecimals: true
   },
   50: {
     levelId: 50,
-    unit: "Master Review",
+    unit: "Decimal Master",
     operation: 'mixed',
-    numberRange: { min: 1, max: 100 },
-    answerRange: { min: 0, max: 200 },
+    numberRange: { min: 0, max: 50 },
+    answerRange: { min: 0, max: 100 },
     questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
     totalQuestions: 15,
-    difficulty: 'hard'
+    difficulty: 'hard',
+    allowDecimals: true
   }
 }
 

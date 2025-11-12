@@ -147,16 +147,16 @@ const units = [
   },
   {
     id: 10,
-    title: "Advanced Topics",
-    description: "Master advanced math concepts",
+    title: "Decimals",
+    description: "Master decimal numbers and operations",
     theme: "castle", // 🏰
     color: "from-violet-400 to-purple-700",
     levels: [
-      { id: 46, title: "Decimals", xp: 200 },
-      { id: 47, title: "Money Math", xp: 200 },
-      { id: 48, title: "Time", xp: 200 },
-      { id: 49, title: "Measurement", xp: 250 },
-      { id: 50, title: "Master Review", xp: 500 },
+      { id: 46, title: "Introduction to Decimals", xp: 200 },
+      { id: 47, title: "Tenths and Hundredths", xp: 200 },
+      { id: 48, title: "Adding Decimals", xp: 200 },
+      { id: 49, title: "Subtracting Decimals", xp: 250 },
+      { id: 50, title: "Decimal Master", xp: 500 },
     ]
   }
 ]
