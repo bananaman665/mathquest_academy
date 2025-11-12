@@ -506,7 +506,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Comparing Fractions",
     operation: 'fractions',
     numberRange: { min: 1, max: 10 },
-    questionTypes: ['multiple-choice', 'fraction-builder'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
@@ -922,13 +922,35 @@ function generateQuestionByType(
     case 'multiple-choice': {
       // Generate wrong answers based on operation type
       const isFraction = operation === 'fractions'
-      const wrongAnswers = isFraction && (levelId === 41 || levelId === 45)
-        ? generateWrongAnswers(answer, 3, true, num2)
-        : generateWrongAnswers(answer, 3, false)
       
-      const correctAnswerString = isFraction && (levelId === 41 || levelId === 45)
-        ? `${num1}/${num2}`
-        : String(answer)
+      let wrongAnswers: string[]
+      let correctAnswerString: string
+      
+      if (isFraction && levelId === 42) {
+        // Level 42: Comparison - provide the two fractions as options
+        const fraction1 = `${num1}/${num2}`
+        const fraction2 = `${answer}/${num2}`
+        const greater = num1 > answer ? fraction1 : fraction2
+        correctAnswerString = greater
+        wrongAnswers = [num1 > answer ? fraction2 : fraction1] // The other fraction
+        // Add some other fractions as distractors
+        const distractor1 = `${Math.max(1, num1 - 1)}/${num2}`
+        const distractor2 = `${Math.min(num2 - 1, answer + 1)}/${num2}`
+        if (distractor1 !== fraction1 && distractor1 !== fraction2) wrongAnswers.push(distractor1)
+        if (distractor2 !== fraction1 && distractor2 !== fraction2 && wrongAnswers.length < 3) wrongAnswers.push(distractor2)
+      } else if (isFraction && (levelId === 41 || levelId === 45)) {
+        // Levels 41, 45: Identify fractions
+        wrongAnswers = generateWrongAnswers(answer, 3, true, num2)
+        correctAnswerString = `${num1}/${num2}`
+      } else if (isFraction && (levelId === 43 || levelId === 44)) {
+        // Levels 43, 44: Add/subtract fractions - answer is a fraction
+        wrongAnswers = generateWrongAnswers(answer, 3, true, num2)
+        correctAnswerString = `${answer}/${num2}`
+      } else {
+        // Regular operations
+        wrongAnswers = generateWrongAnswers(answer, 3, false)
+        correctAnswerString = String(answer)
+      }
         
       const allOptions = rng.shuffle([correctAnswerString, ...wrongAnswers])
       
@@ -1060,20 +1082,60 @@ function generateQuestionByType(
     case 'type-answer': {
       let questionText: string
       let explanationText: string
+      let correctAnswerString: string
+      let acceptableAnswersList: string[]
       
       if (operation === 'counting') {
         // For counting questions - "What number comes after X?"
         questionText = `What number comes after ${num1}?`
         explanationText = `The number after ${num1} is ${answer}`
+        correctAnswerString = String(answer)
+        acceptableAnswersList = [String(answer)]
       } else if (operation === 'place-value') {
         // Place value questions
         const placeNames = { 1: 'ones', 10: 'tens', 100: 'hundreds' }
         const placeName = placeNames[num2 as keyof typeof placeNames] || 'ones'
         questionText = `In the number ${num1}, what digit is in the ${placeName} place?`
         explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
+        correctAnswerString = String(answer)
+        acceptableAnswersList = [String(answer)]
+      } else if (operation === 'fractions') {
+        // Fraction questions
+        if (levelId === 42) {
+          // Comparison
+          const fraction1 = `${num1}/${num2}`
+          const fraction2 = `${answer}/${num2}`
+          const greater = num1 > answer ? fraction1 : fraction2
+          questionText = `Which is greater: ${fraction1} or ${fraction2}? (Type the larger fraction)`
+          explanationText = `${greater} is greater because ${num1 > answer ? num1 : answer} parts is more than ${num1 > answer ? answer : num1} parts`
+          correctAnswerString = greater
+          acceptableAnswersList = [greater]
+        } else if (levelId === 43) {
+          // Addition
+          const num3 = answer - num1
+          questionText = `${num1}/${num2} + ${num3}/${num2} = ? (Type as fraction like 3/4)`
+          explanationText = `${num1}/${num2} + ${num3}/${num2} = ${answer}/${num2}`
+          correctAnswerString = `${answer}/${num2}`
+          acceptableAnswersList = [`${answer}/${num2}`]
+        } else if (levelId === 44) {
+          // Subtraction
+          const subtrahend = num1 - answer
+          questionText = `${num1}/${num2} − ${subtrahend}/${num2} = ? (Type as fraction like 2/5)`
+          explanationText = `${num1}/${num2} − ${subtrahend}/${num2} = ${answer}/${num2}`
+          correctAnswerString = `${answer}/${num2}`
+          acceptableAnswersList = [`${answer}/${num2}`]
+        } else {
+          // Default fraction identification
+          questionText = `What fraction is ${num1} out of ${num2}? (Type as fraction)`
+          explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
+          correctAnswerString = `${num1}/${num2}`
+          acceptableAnswersList = [`${num1}/${num2}`]
+        }
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
         explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
+        correctAnswerString = String(answer)
+        acceptableAnswersList = [String(answer)]
       }
 
       return {
@@ -1081,8 +1143,8 @@ function generateQuestionByType(
         levelId,
         type,
         question: questionText,
-        correctAnswer: String(answer),
-        acceptableAnswers: [String(answer)],
+        correctAnswer: correctAnswerString,
+        acceptableAnswers: acceptableAnswersList,
         explanation: explanationText,
         hints: [
           operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
@@ -1090,6 +1152,7 @@ function generateQuestionByType(
           operation === 'subtraction' ? `Take ${num2} away from ${num1}` :
           operation === 'multiplication' ? `${num1} groups of ${num2}` :
           operation === 'place-value' ? `Look at each digit's position in ${num1}` :
+          operation === 'fractions' ? `Remember to use fraction format like 3/4` :
           `How many times does ${num2} go into ${num1}?`,
           `Work it out step by step`
         ],
