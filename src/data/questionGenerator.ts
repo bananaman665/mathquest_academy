@@ -506,7 +506,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Comparing Fractions",
     operation: 'fractions',
     numberRange: { min: 1, max: 10 },
-    questionTypes: ['multiple-choice', 'true-false', 'fraction-builder'],
+    questionTypes: ['multiple-choice', 'fraction-builder'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
@@ -756,6 +756,46 @@ function generateQuestion(
       break
 
     case 'fractions':
+      // Generate proper fraction questions
+      // num1 = numerator, num2 = denominator, answer = correct numerator
+      if (levelId === 41) {
+        // Level 41: Introduction - Simple fractions (1/2, 1/4, 1/3, 2/3, 3/4)
+        const commonFractions = [
+          [1, 2], // 1/2
+          [1, 4], // 1/4
+          [3, 4], // 3/4
+          [1, 3], // 1/3
+          [2, 3], // 2/3
+        ]
+        const fraction = commonFractions[rng.nextInt(0, commonFractions.length - 1)]
+        num1 = fraction[0] // numerator
+        num2 = fraction[1] // denominator
+        answer = num1 // for fraction identification
+      } else if (levelId === 42) {
+        // Level 42: Comparing Fractions (same denominator)
+        num2 = rng.nextInt(2, 8) // denominator
+        num1 = rng.nextInt(1, num2 - 1) // numerator
+        answer = rng.nextInt(1, num2 - 1) // second numerator to compare
+      } else if (levelId === 43) {
+        // Level 43: Adding Fractions (same denominator)
+        num2 = rng.nextInt(2, 8) // denominator
+        num1 = rng.nextInt(1, num2 - 1) // first numerator
+        const num3 = rng.nextInt(1, num2 - num1) // second numerator
+        answer = num1 + num3 // sum of numerators
+      } else if (levelId === 44) {
+        // Level 44: Subtracting Fractions (same denominator)
+        num2 = rng.nextInt(2, 8) // denominator
+        answer = rng.nextInt(1, num2 - 1) // result numerator
+        num1 = rng.nextInt(answer + 1, num2) // starting numerator (must be larger)
+      } else {
+        // Level 45: Mixed fraction practice
+        num2 = rng.nextInt(2, 8) // denominator
+        num1 = rng.nextInt(1, num2) // numerator
+        answer = num1
+      }
+      actualOperation = 'fractions'
+      break
+
     case 'mixed':
     default:
       // For mixed operations, choose operations based on curriculum progression
@@ -835,16 +875,36 @@ function generateQuestionByType(
 
 
   // Generate wrong answers for multiple choice
-  const generateWrongAnswers = (correct: number, count: number = 3): string[] => {
-    const wrong = new Set<number>()
-    while (wrong.size < count) {
-      const offset = rng.nextInt(-5, 5)
-      const wrongAnswer = correct + offset
-      if (wrongAnswer !== correct && wrongAnswer >= 0) {
-        wrong.add(wrongAnswer)
+  const generateWrongAnswers = (correct: number, count: number = 3, isFraction: boolean = false, denominator?: number): string[] => {
+    const wrong = new Set<string>()
+    
+    if (isFraction && denominator) {
+      // For fractions, generate wrong numerators
+      while (wrong.size < count) {
+        const offset = rng.nextInt(-3, 3)
+        const wrongNumerator = correct + offset
+        if (wrongNumerator !== correct && wrongNumerator > 0 && wrongNumerator < denominator) {
+          wrong.add(`${wrongNumerator}/${denominator}`)
+        }
+      }
+      // Ensure we have enough wrong answers
+      while (wrong.size < count) {
+        const randomNum = rng.nextInt(1, denominator)
+        if (randomNum !== correct) {
+          wrong.add(`${randomNum}/${denominator}`)
+        }
+      }
+    } else {
+      // Regular number wrong answers
+      while (wrong.size < count) {
+        const offset = rng.nextInt(-5, 5)
+        const wrongAnswer = correct + offset
+        if (wrongAnswer !== correct && wrongAnswer >= 0) {
+          wrong.add(String(wrongAnswer))
+        }
       }
     }
-    return Array.from(wrong).map(String)
+    return Array.from(wrong)
   }
 
   // Get operation symbol
@@ -860,8 +920,17 @@ function generateQuestionByType(
 
   switch (type) {
     case 'multiple-choice': {
-      const wrongAnswers = generateWrongAnswers(answer, 3)
-      const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
+      // Generate wrong answers based on operation type
+      const isFraction = operation === 'fractions'
+      const wrongAnswers = isFraction && (levelId === 41 || levelId === 45)
+        ? generateWrongAnswers(answer, 3, true, num2)
+        : generateWrongAnswers(answer, 3, false)
+      
+      const correctAnswerString = isFraction && (levelId === 41 || levelId === 45)
+        ? `${num1}/${num2}`
+        : String(answer)
+        
+      const allOptions = rng.shuffle([correctAnswerString, ...wrongAnswers])
       
       let questionText: string
       let explanationText: string
@@ -882,6 +951,32 @@ function generateQuestionByType(
         ]
         questionText = questionFormats[index % questionFormats.length]
         explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
+      } else if (operation === 'fractions') {
+        // Fraction questions
+        if (levelId === 41) {
+          // Level 41: Identify fractions
+          questionText = `What fraction is shown?`
+          explanationText = `The fraction is ${num1}/${num2} (${num1} out of ${num2} parts)`
+        } else if (levelId === 42) {
+          // Level 42: Compare fractions
+          questionText = `Which is greater: ${num1}/${num2} or ${answer}/${num2}?`
+          const greater = num1 > answer ? num1 : answer
+          explanationText = `${greater}/${num2} is greater because ${greater} parts is more than ${num1 === greater ? answer : num1} parts`
+        } else if (levelId === 43) {
+          // Level 43: Add fractions
+          const num3 = answer - num1 // second addend
+          questionText = `${num1}/${num2} + ${num3}/${num2} = ?`
+          explanationText = `${num1}/${num2} + ${num3}/${num2} = ${answer}/${num2}`
+        } else if (levelId === 44) {
+          // Level 44: Subtract fractions
+          const subtrahend = num1 - answer
+          questionText = `${num1}/${num2} − ${subtrahend}/${num2} = ?`
+          explanationText = `${num1}/${num2} − ${subtrahend}/${num2} = ${answer}/${num2}`
+        } else {
+          // Level 45: Mixed
+          questionText = `What fraction is ${num1} out of ${num2}?`
+          explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
+        }
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
         explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
@@ -893,13 +988,14 @@ function generateQuestionByType(
         type,
         question: questionText,
         options: allOptions,
-        correctAnswer: String(answer),
+        correctAnswer: correctAnswerString,
         explanation: explanationText,
         hints: [
           operation === 'addition' ? `Try counting up from ${num1}` :
           operation === 'subtraction' ? `Try counting down from ${num1}` :
           operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
           operation === 'place-value' ? `Look at each digit's position in the number` :
+          operation === 'fractions' ? `Look at how many parts are shaded` :
           `Think about your times tables`,
           `Take your time and work it out step by step`
         ],
@@ -1187,23 +1283,48 @@ function generateQuestionByType(
       const numerator = num1
       const denominator = num2 || 4 // Default to quarters if not specified
       
+      let questionText: string
+      let correctAnswer: string
+      let explanationText: string
+      
+      if (levelId === 41) {
+        // Introduction: "What fraction is shown?"
+        questionText = `What fraction is shown?`
+        correctAnswer = `${numerator}/${denominator}`
+        explanationText = `The fraction shows ${numerator} out of ${denominator} parts: ${numerator}/${denominator}`
+      } else if (levelId === 42) {
+        // Comparing: Show two fractions
+        questionText = `Which fraction is larger?`
+        correctAnswer = numerator > answer ? `${numerator}/${denominator}` : `${answer}/${denominator}`
+        explanationText = `${correctAnswer} is larger because it has more shaded parts`
+      } else if (levelId === 43) {
+        // Adding: Calculate sum
+        const num3 = answer - numerator
+        questionText = `${numerator}/${denominator} + ${num3}/${denominator} = ?`
+        correctAnswer = `${answer}/${denominator}`
+        explanationText = `${numerator}/${denominator} + ${num3}/${denominator} = ${answer}/${denominator}`
+      } else if (levelId === 44) {
+        // Subtracting: Calculate difference
+        const subtrahend = numerator - answer
+        questionText = `${numerator}/${denominator} − ${subtrahend}/${denominator} = ?`
+        correctAnswer = `${answer}/${denominator}`
+        explanationText = `${numerator}/${denominator} − ${subtrahend}/${denominator} = ${answer}/${denominator}`
+      } else {
+        // Level 45: Mixed practice
+        questionText = `What fraction is shown?`
+        correctAnswer = `${numerator}/${denominator}`
+        explanationText = `The fraction is ${numerator}/${denominator}`
+      }
+      
       return {
         id,
         levelId,
         type,
-        question: operation === 'addition' || operation === 'subtraction'
-          ? `${num1}/${num2} ${getOperationSymbol()} ${answer}/${num2} = ?`
-          : `What fraction is shown?`,
+        question: questionText,
         fractionNumerator: numerator,
         fractionDenominator: denominator,
-        correctAnswer: operation === 'addition' ? String((numerator + answer)) :
-                       operation === 'subtraction' ? String((numerator - answer)) :
-                       `${numerator}/${denominator}`,
-        explanation: operation === 'addition' 
-          ? `${numerator}/${denominator} + ${answer}/${denominator} = ${numerator + answer}/${denominator}`
-          : operation === 'subtraction'
-          ? `${numerator}/${denominator} - ${answer}/${denominator} = ${numerator - answer}/${denominator}`
-          : `The fraction shows ${numerator} out of ${denominator} parts`,
+        correctAnswer,
+        explanation: explanationText,
         hints: [
           `Look at how many parts are shaded`,
           `Count the total number of equal parts`
