@@ -56,7 +56,7 @@ class SeededRandom {
 export interface LevelConfig {
   levelId: number
   unit: string // e.g., "Addition 1-10", "Subtraction 1-20"
-  operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'mixed'
+  operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'decimals' | 'mixed'
   numberRange: { min: number; max: number }
   answerRange?: { min: number; max: number } // For subtraction (must be positive), division (no remainders), etc.
   questionTypes: QuestionType[] // Which question types this level should use
@@ -542,9 +542,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   46: {
     levelId: 46,
     unit: "Introduction to Decimals",
-    operation: 'mixed',
+    operation: 'decimals',
     numberRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'type-answer', 'number-line-drag'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'hard',
     allowDecimals: true
@@ -552,9 +552,9 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   47: {
     levelId: 47,
     unit: "Tenths and Hundredths",
-    operation: 'mixed',
+    operation: 'decimals',
     numberRange: { min: 0, max: 10 },
-    questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'hard',
     allowDecimals: true
@@ -562,7 +562,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   48: {
     levelId: 48,
     unit: "Adding Decimals",
-    operation: 'addition',
+    operation: 'decimals',
     numberRange: { min: 0, max: 20 },
     questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
@@ -572,7 +572,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   49: {
     levelId: 49,
     unit: "Subtracting Decimals",
-    operation: 'subtraction',
+    operation: 'decimals',
     numberRange: { min: 0, max: 20 },
     questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
@@ -582,7 +582,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
   50: {
     levelId: 50,
     unit: "Decimal Master",
-    operation: 'mixed',
+    operation: 'decimals',
     numberRange: { min: 0, max: 50 },
     answerRange: { min: 0, max: 100 },
     questionTypes: ['multiple-choice', 'type-answer', 'fill-blank'],
@@ -796,6 +796,58 @@ function generateQuestion(
       actualOperation = 'fractions'
       break
 
+    case 'decimals':
+      // Generate decimal questions
+      // Helper function to generate decimals with specific precision
+      const generateDecimal = (min: number, max: number, decimals: number = 1): number => {
+        const multiplier = Math.pow(10, decimals)
+        const randomInt = rng.nextInt(Math.floor(min * multiplier), Math.floor(max * multiplier))
+        return randomInt / multiplier
+      }
+
+      if (levelId === 46) {
+        // Level 46: Introduction to Decimals - Identify and understand tenths
+        // Questions about what decimal represents (e.g., "0.5 = ?")
+        num1 = generateDecimal(0, 10, 1) // One decimal place (tenths)
+        num2 = 0
+        answer = num1 * 10 // For "0.5 = how many tenths?" answer is 5
+        actualOperation = 'decimals'
+      } else if (levelId === 47) {
+        // Level 47: Tenths and Hundredths - More precision
+        num1 = generateDecimal(0, 10, 2) // Two decimal places (hundredths)
+        num2 = 0
+        answer = num1 * 100 // For understanding place value
+        actualOperation = 'decimals'
+      } else if (levelId === 48) {
+        // Level 48: Adding Decimals
+        num1 = generateDecimal(0, 10, 1)
+        num2 = generateDecimal(0, 10, 1)
+        answer = Math.round((num1 + num2) * 10) / 10 // Round to 1 decimal
+        actualOperation = 'addition'
+      } else if (levelId === 49) {
+        // Level 49: Subtracting Decimals
+        num2 = generateDecimal(0, 10, 1)
+        answer = generateDecimal(0, 10, 1)
+        num1 = Math.round((answer + num2) * 10) / 10 // Ensure positive result
+        actualOperation = 'subtraction'
+      } else {
+        // Level 50: Decimal Master - Mixed operations
+        const decimalOps = ['addition', 'subtraction']
+        const randomOp = decimalOps[Math.floor(rng.next() * decimalOps.length)] as 'addition' | 'subtraction'
+        actualOperation = randomOp
+        
+        if (randomOp === 'addition') {
+          num1 = generateDecimal(0, 25, 2)
+          num2 = generateDecimal(0, 25, 2)
+          answer = Math.round((num1 + num2) * 100) / 100
+        } else {
+          num2 = generateDecimal(0, 25, 2)
+          answer = generateDecimal(0, 25, 2)
+          num1 = Math.round((answer + num2) * 100) / 100
+        }
+      }
+      break
+
     case 'mixed':
     default:
       // For mixed operations, choose operations based on curriculum progression
@@ -871,11 +923,11 @@ function generateQuestionByType(
   const { levelId, visualEmojis } = config
   const id = `${levelId}-${index + 1}`
   // Use actualOperation instead of config.operation for symbol display
-  const operation = actualOperation as 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'mixed'
+  const operation = actualOperation as 'addition' | 'subtraction' | 'multiplication' | 'division' | 'counting' | 'place-value' | 'fractions' | 'decimals' | 'mixed'
 
 
   // Generate wrong answers for multiple choice
-  const generateWrongAnswers = (correct: number, count: number = 3, isFraction: boolean = false, denominator?: number): string[] => {
+  const generateWrongAnswers = (correct: number, count: number = 3, isFraction: boolean = false, denominator?: number, isDecimal: boolean = false): string[] => {
     const wrong = new Set<string>()
     
     if (isFraction && denominator) {
@@ -892,6 +944,18 @@ function generateQuestionByType(
         const randomNum = rng.nextInt(1, denominator)
         if (randomNum !== correct) {
           wrong.add(`${randomNum}/${denominator}`)
+        }
+      }
+    } else if (isDecimal) {
+      // For decimals, generate wrong answers with same precision
+      const precision = correct.toString().split('.')[1]?.length || 1
+      const multiplier = Math.pow(10, precision)
+      
+      while (wrong.size < count) {
+        const offset = rng.nextInt(-5, 5) / multiplier
+        const wrongAnswer = Math.round((correct + offset) * multiplier) / multiplier
+        if (wrongAnswer !== correct && wrongAnswer >= 0) {
+          wrong.add(String(wrongAnswer))
         }
       }
     } else {
@@ -922,6 +986,7 @@ function generateQuestionByType(
     case 'multiple-choice': {
       // Generate wrong answers based on operation type
       const isFraction = operation === 'fractions'
+      const isDecimal = operation === 'decimals' || (config.allowDecimals && levelId >= 46)
       
       let wrongAnswers: string[]
       let correctAnswerString: string
@@ -940,15 +1005,19 @@ function generateQuestionByType(
         if (distractor2 !== fraction1 && distractor2 !== fraction2 && wrongAnswers.length < 3) wrongAnswers.push(distractor2)
       } else if (isFraction && (levelId === 41 || levelId === 45)) {
         // Levels 41, 45: Identify fractions
-        wrongAnswers = generateWrongAnswers(answer, 3, true, num2)
+        wrongAnswers = generateWrongAnswers(answer, 3, true, num2, false)
         correctAnswerString = `${num1}/${num2}`
       } else if (isFraction && (levelId === 43 || levelId === 44)) {
         // Levels 43, 44: Add/subtract fractions - answer is a fraction
-        wrongAnswers = generateWrongAnswers(answer, 3, true, num2)
+        wrongAnswers = generateWrongAnswers(answer, 3, true, num2, false)
         correctAnswerString = `${answer}/${num2}`
+      } else if (isDecimal) {
+        // Decimal operations
+        wrongAnswers = generateWrongAnswers(answer, 3, false, undefined, true)
+        correctAnswerString = String(answer)
       } else {
         // Regular operations
-        wrongAnswers = generateWrongAnswers(answer, 3, false)
+        wrongAnswers = generateWrongAnswers(answer, 3, false, undefined, false)
         correctAnswerString = String(answer)
       }
         
@@ -998,6 +1067,21 @@ function generateQuestionByType(
           // Level 45: Mixed
           questionText = `What fraction is ${num1} out of ${num2}?`
           explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
+        }
+      } else if (operation === 'decimals') {
+        // Decimal questions
+        if (levelId === 46) {
+          // Introduction: Understanding decimal notation
+          questionText = `${num1} = how many tenths?`
+          explanationText = `${num1} equals ${answer} tenths`
+        } else if (levelId === 47) {
+          // Tenths and hundredths
+          questionText = `${num1} = how many hundredths?`
+          explanationText = `${num1} equals ${answer} hundredths`
+        } else {
+          // Addition/subtraction with decimals (levels 48-50)
+          questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+          explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
         }
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
@@ -1131,6 +1215,27 @@ function generateQuestionByType(
           correctAnswerString = `${num1}/${num2}`
           acceptableAnswersList = [`${num1}/${num2}`]
         }
+      } else if (operation === 'decimals') {
+        // Decimal questions
+        if (levelId === 46) {
+          // Tenths
+          questionText = `${num1} = how many tenths?`
+          explanationText = `${num1} equals ${answer} tenths`
+          correctAnswerString = String(answer)
+          acceptableAnswersList = [String(answer)]
+        } else if (levelId === 47) {
+          // Hundredths
+          questionText = `${num1} = how many hundredths?`
+          explanationText = `${num1} equals ${answer} hundredths`
+          correctAnswerString = String(answer)
+          acceptableAnswersList = [String(answer)]
+        } else {
+          // Addition/subtraction with decimals
+          questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+          explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
+          correctAnswerString = String(answer)
+          acceptableAnswersList = [String(answer)]
+        }
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
         explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
@@ -1153,6 +1258,7 @@ function generateQuestionByType(
           operation === 'multiplication' ? `${num1} groups of ${num2}` :
           operation === 'place-value' ? `Look at each digit's position in ${num1}` :
           operation === 'fractions' ? `Remember to use fraction format like 3/4` :
+          operation === 'decimals' ? `Remember to keep the decimal point in the right place` :
           `How many times does ${num2} go into ${num1}?`,
           `Work it out step by step`
         ],
@@ -1225,6 +1331,21 @@ function generateQuestionByType(
         questionText = `What digit is in the ${placeName} place?`
         blanks = [{ text: `${num1} → ___`, answer: String(answer) }]
         explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
+      } else if (operation === 'decimals') {
+        // Decimal questions
+        if (levelId === 46) {
+          questionText = `${num1} = how many tenths?`
+          blanks = [{ text: `${num1} = ___ tenths`, answer: String(answer) }]
+          explanationText = `${num1} equals ${answer} tenths`
+        } else if (levelId === 47) {
+          questionText = `${num1} = how many hundredths?`
+          blanks = [{ text: `${num1} = ___ hundredths`, answer: String(answer) }]
+          explanationText = `${num1} equals ${answer} hundredths`
+        } else {
+          questionText = `Fill in the blank:`
+          blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]
+          explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
+        }
       } else {
         questionText = `Fill in the blank:`
         blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]
@@ -1241,8 +1362,10 @@ function generateQuestionByType(
         explanation: explanationText,
         hints: [
           operation === 'counting' ? `Count forward from ${num1}` :
+          operation === 'decimals' ? `Think about place value in decimals` :
           `What number makes this equation true?`,
           operation === 'counting' ? `What comes next?` :
+          operation === 'decimals' ? `Remember: tenths are 0.1, hundredths are 0.01` :
           `Try solving ${num1} ${getOperationSymbol()} ${num2}`
         ],
         xp: 15
