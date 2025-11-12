@@ -70,7 +70,8 @@ export default function SignInPage() {
               routing="path"
               path="/signin"
               signUpUrl="/signup"
-              redirectUrl="/learn"
+              forceRedirectUrl="/learn"
+              afterSignInUrl="/learn"
             />
           </div>
 
