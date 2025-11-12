@@ -20,7 +20,7 @@ export default function SignUpPage() {
       </header>
 
       {/* Sign Up Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-40 mt-20">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-48 mt-24">
         <div className="max-w-md w-full space-y-8">
           {/* Custom Header */}
           <div className="text-center">
