@@ -281,11 +281,6 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
             {level.xp} XP
           </p>
-          {config.animate && !specialLevel && (
-            <div className="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-bounce z-10">
-              START HERE
-            </div>
-          )}
           {level.status === 'completed' && (
             <div className="absolute bottom-2 right-2 bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full z-10">
               ✓ Completed
