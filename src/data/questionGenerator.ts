@@ -468,7 +468,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Compare 2-Digit Numbers",
     operation: 'place-value',
     numberRange: { min: 10, max: 99 },
-    questionTypes: ['multiple-choice', 'true-false'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
@@ -963,18 +963,21 @@ function generateQuestionByType(
 
     case 'type-answer': {
       let questionText: string
+      let explanationText: string
       
       if (operation === 'counting') {
         // For counting questions - "What number comes after X?"
         questionText = `What number comes after ${num1}?`
+        explanationText = `The number after ${num1} is ${answer}`
       } else if (operation === 'place-value') {
-        // For counting by 10s - "What comes after 40 when counting by 10s?"
-        const skipBy = levelId === 22 ? 10 : 1
-        questionText = skipBy === 10 
-          ? `What comes after ${num1} when counting by ${skipBy}s?`
-          : `${num1} ${getOperationSymbol()} ${num2} = ?`
+        // Place value questions
+        const placeNames = { 1: 'ones', 10: 'tens', 100: 'hundreds' }
+        const placeName = placeNames[num2 as keyof typeof placeNames] || 'ones'
+        questionText = `In the number ${num1}, what digit is in the ${placeName} place?`
+        explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
       } else {
         questionText = `${num1} ${getOperationSymbol()} ${num2} = ?`
+        explanationText = `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`
       }
 
       return {
@@ -984,17 +987,13 @@ function generateQuestionByType(
         question: questionText,
         correctAnswer: String(answer),
         acceptableAnswers: [String(answer)],
-        explanation: operation === 'counting'
-          ? `The number after ${num1} is ${answer}`
-          : operation === 'place-value' && levelId === 22
-          ? `When counting by 10s, after ${num1} comes ${answer}`
-          : `${num1} ${getOperationSymbol()} ${num2} equals ${answer}`,
+        explanation: explanationText,
         hints: [
           operation === 'counting' ? `Count forward: ${num1}, ${answer}...` :
           operation === 'addition' ? `Add ${num1} and ${num2} together` :
           operation === 'subtraction' ? `Take ${num2} away from ${num1}` :
           operation === 'multiplication' ? `${num1} groups of ${num2}` :
-          operation === 'place-value' && levelId === 22 ? `Add 10 to ${num1}` :
+          operation === 'place-value' ? `Look at each digit's position in ${num1}` :
           `How many times does ${num2} go into ${num1}?`,
           `Work it out step by step`
         ],
@@ -1003,7 +1002,7 @@ function generateQuestionByType(
     }
 
     case 'number-sequence': {
-      if (operation === 'place-value' && levelId === 22) {
+      if (operation === 'place-value' && levelId === 37) {
         // Counting by 10s sequence: "10, 20, 30, __, 50"
         const skipBy = 10
         const start = Math.floor(num1 / skipBy) * skipBy // Round to nearest 10
@@ -1060,6 +1059,13 @@ function generateQuestionByType(
         if (process.env.NODE_ENV === 'development') {
           console.log(`[FILL-BLANK-COUNTING] Question: "${questionText}", Answer: ${answer}`)
         }
+      } else if (operation === 'place-value') {
+        // Place value questions
+        const placeNames = { 1: 'ones', 10: 'tens', 100: 'hundreds' }
+        const placeName = placeNames[num2 as keyof typeof placeNames] || 'ones'
+        questionText = `What digit is in the ${placeName} place?`
+        blanks = [{ text: `${num1} → ___`, answer: String(answer) }]
+        explanationText = `In ${num1}, the ${placeName} digit is ${answer}`
       } else {
         questionText = `Fill in the blank:`
         blanks = [{ text: `${num1} ${getOperationSymbol()} ${num2} = ___`, answer: String(answer) }]
