@@ -11,7 +11,7 @@ export default function TutorialDemoPage() {
   const tutorialSteps = [
     {
       title: "Welcome to Mathly! 🎉",
-      description: "Let's take a quick tour to help you get started. This will only take 30 seconds!",
+      description: "Let&apos;s take a quick tour to help you get started. This will only take 30 seconds!",
       target: null,
       position: "center"
     },
@@ -317,7 +317,7 @@ export default function TutorialDemoPage() {
       {!showTutorial && (
         <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-bounce">
           <div className="bg-green-500 text-white px-6 py-3 rounded-full shadow-lg font-bold">
-            ✅ Tutorial Complete! Click "Restart Tutorial" to see it again.
+            ✅ Tutorial Complete! Click &quot;Restart Tutorial&quot; to see it again.
           </div>
         </div>
       )}
