@@ -163,7 +163,7 @@ export default async function LeaderboardsPage() {
           </div>
         </header>
 
-        <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8 pt-32">
+        <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8 pt-24">
           {/* Your Rank Card */}
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex items-center justify-between">
