@@ -697,13 +697,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
   // PRACTICE PHASE - Duolingo-Inspired Clean Theme
   return (
-    <div className="min-h-screen bg-white flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-white flex flex-col max-w-full overflow-x-hidden">
       {/* Progress Bar */}
       <div className="w-full h-4 bg-gray-200 mt-12">
         <div className="bg-green-500 h-4 transition-all duration-500" style={{ width: `${progress}%` }} />
       </div>
 
-      <header className="px-4 py-4 border-b border-gray-200 overflow-x-hidden">
+      <header className="px-4 py-4 border-b border-gray-200 max-w-full overflow-x-hidden">
         <div className="max-w-5xl mx-auto flex justify-between items-center gap-2">
           <Link href="/learn" className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100 flex-shrink-0">
             <X className="w-6 h-6 sm:w-7 sm:h-7" />
