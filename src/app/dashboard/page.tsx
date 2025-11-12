@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prisma'
 import { checkStreakExpiration } from '@/lib/streak'
 import { Suspense } from 'react'
 import { DashboardSkeleton } from '@/components/ui/Skeleton'
+import DashboardTutorialWrapper from '@/components/DashboardTutorialWrapper'
 
 async function DashboardContent() {
   const user = await currentUser()
@@ -42,8 +43,12 @@ async function DashboardContent() {
   const xpForNextLevel = dbUser.currentLevel * 100
   const xpProgress = dbUser.totalXP % 100
   const progressPercentage = (xpProgress / 100) * 100
+  
+  // Check if user is new (created in the last 5 minutes)
+  const isNewUser = new Date().getTime() - new Date(dbUser.createdAt).getTime() < 5 * 60 * 1000
 
   return (
+    <DashboardTutorialWrapper isNewUser={isNewUser}>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Subtle Background Patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
@@ -91,7 +96,7 @@ async function DashboardContent() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div id="progress-card" className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -122,7 +127,7 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div id="streak-stat" className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Current Streak</p>
@@ -134,7 +139,7 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div id="coins-stat" className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Achievements</p>
@@ -148,7 +153,7 @@ async function DashboardContent() {
         </div>
 
         {/* Main CTA */}
-        <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-10 text-white shadow-2xl mb-12">
+        <div id="continue-button" className="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-10 text-white shadow-2xl mb-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -210,6 +215,7 @@ async function DashboardContent() {
         </div>
       </main>
     </div>
+    </DashboardTutorialWrapper>
   )
 }
 
