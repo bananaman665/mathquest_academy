@@ -2,7 +2,7 @@
 
 import { useSearchParams, useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Star, Target, ArrowRight, Flame, Lock, Unlock } from 'lucide-react'
+import { Trophy, Star, Target, ArrowRight, Flame, Lock, Unlock, Sparkles, ThumbsUp, Zap, PartyPopper } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { levelConfigs } from '@/data/questionGenerator'
@@ -98,8 +98,8 @@ export default function LevelCompletePage() {
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-1 sm:mb-2 md:mb-4">
-            Level Complete! 🎉
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-1 sm:mb-2 md:mb-4 flex items-center justify-center gap-3">
+            Level Complete! <PartyPopper className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-600" />
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-4 sm:mb-6 md:mb-8 px-2">
             Amazing work! You&apos;re getting better at math!
@@ -133,25 +133,25 @@ export default function LevelCompletePage() {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
             {accuracy === 100 ? (
               <>
-                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2">🌟</div>
+                <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-yellow-500 mx-auto mb-1 sm:mb-2" />
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Perfect Score!</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-700">You got every question right! You&apos;re a math star!</p>
               </>
             ) : accuracy >= 80 ? (
               <>
-                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2">⭐</div>
+                <Star className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-blue-500 mx-auto mb-1 sm:mb-2" />
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Great Job!</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-700">You did really well! Keep up the awesome work!</p>
               </>
             ) : accuracy >= 60 ? (
               <>
-                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2">👍</div>
+                <ThumbsUp className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-green-500 mx-auto mb-1 sm:mb-2" />
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Good Work!</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-700">You&apos;re learning! Practice makes perfect!</p>
               </>
             ) : (
               <>
-                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2">💪</div>
+                <Zap className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-orange-500 mx-auto mb-1 sm:mb-2" />
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Keep Trying!</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
               </>
