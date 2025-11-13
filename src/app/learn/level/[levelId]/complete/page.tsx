@@ -21,7 +21,7 @@ export default function LevelCompletePage() {
   const [showConfetti, setShowConfetti] = useState(true)
   const [saving, setSaving] = useState(false)
   const [streak, setStreak] = useState<number | null>(null)
-  const [showStreakAnimation, setShowStreakAnimation] = useState(false)
+  // Removed showStreakAnimation to declutter the completion screen
 
   // Get next level info
   const nextLevel = levelConfigs[levelId + 1]
@@ -70,11 +70,9 @@ export default function LevelCompletePage() {
           const data = await response.json()
           console.log('Progress saved:', data)
           
-          // Update streak display
+          // Update streak display (but don't show animation)
           if (data.streak !== undefined) {
             setStreak(data.streak)
-            setShowStreakAnimation(true)
-            setTimeout(() => setShowStreakAnimation(false), 3000)
           }
         }
       } catch (error) {
@@ -88,10 +86,10 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-3 sm:p-4 md:p-6">
-      <div className="max-w-2xl w-full">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pt-safe pb-safe">
+      <div className="max-w-2xl w-full my-auto">
         {/* Success Card */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-12 text-center">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 text-center">
           {/* Trophy Icon */}
           <div className="mb-3 sm:mb-4 md:mb-6">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
@@ -159,23 +157,6 @@ export default function LevelCompletePage() {
               </>
             )}
           </div>
-
-          {/* Streak Notification */}
-          {showStreakAnimation && streak !== null && (
-            <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-300 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-                <Flame className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 animate-pulse" />
-                <div className="text-center sm:text-left">
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-orange-700">
-                    {streak === 1 ? 'Streak Started!' : `${streak} Day Streak!`}
-                  </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-orange-600">
-                    {streak === 1 ? 'Come back tomorrow to keep it going!' : 'Keep learning every day!'}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Next Level Preview - New Feature */}
           {hasNextLevel && nextLevel && (
