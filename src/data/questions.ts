@@ -193,14 +193,23 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn to Count!",
       content: [
-        "Numbers help us count things!",
-        "We use numbers everywhere: counting toys, friends, and stars!",
-        "Let's practice counting from 1 to 10!"
+        "Numbers help us count things around us!",
+        "Each number represents a quantity - how many of something we have.",
+        "We start counting at 1 (one) and go up in order: 1, 2, 3, 4, 5...",
+        "The dots below show exactly how many each number represents!",
+        "Count the dots carefully for each number - this helps you understand what each number means!"
       ],
       examples: [
         { number: "1", visual: "●", word: "one" },
+        { number: "2", visual: "●●", word: "two" },
         { number: "3", visual: "●●●", word: "three" },
-        { number: "5", visual: "●●●●●", word: "five" }
+        { number: "4", visual: "●●●●", word: "four" },
+        { number: "5", visual: "●●●●●", word: "five" },
+        { number: "6", visual: "●●●●●●", word: "six" },
+        { number: "7", visual: "●●●●●●●", word: "seven" },
+        { number: "8", visual: "●●●●●●●●", word: "eight" },
+        { number: "9", visual: "●●●●●●●●●", word: "nine" },
+        { number: "10", visual: "●●●●●●●●●●", word: "ten" }
       ]
     }
   },
@@ -209,13 +218,20 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn Addition!",
       content: [
-        "Addition means putting things together!",
-        "When we add, we get more!",
-        "The + symbol means 'plus' or 'add'"
+        "Addition means putting groups of things together!",
+        "When we add, we combine two or more numbers to get a total.",
+        "The + symbol means 'plus' or 'add' - it tells us to put things together.",
+        "Example: If you have 2 apples and get 3 more, you ADD them: 2 + 3 = 5 apples total!",
+        "The = symbol means 'equals' - it shows us the answer!",
+        "Let's see how addition works with dots:"
       ],
       examples: [
-        { number: "2 + 1", visual: "●● + ●", word: "three" },
-        { number: "3 + 2", visual: "●●● + ●●", word: "five" }
+        { number: "1 + 1 = 2", visual: "● + ● = ●●", word: "one plus one equals two" },
+        { number: "2 + 1 = 3", visual: "●● + ● = ●●●", word: "two plus one equals three" },
+        { number: "2 + 2 = 4", visual: "●● + ●● = ●●●●", word: "two plus two equals four" },
+        { number: "3 + 2 = 5", visual: "●●● + ●● = ●●●●●", word: "three plus two equals five" },
+        { number: "4 + 3 = 7", visual: "●●●● + ●●● = ●●●●●●●", word: "four plus three equals seven" },
+        { number: "5 + 5 = 10", visual: "●●●●● + ●●●●● = ●●●●●●●●●●", word: "five plus five equals ten" }
       ]
     }
   },
@@ -224,28 +240,42 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn Subtraction!",
       content: [
-        "Subtraction means taking things away!",
-        "When we subtract, we get less!",
-        "The − symbol means 'minus' or 'subtract'"
+        "Subtraction means taking things away from a group!",
+        "When we subtract, we remove some items and count what's left.",
+        "The − symbol means 'minus' or 'subtract' - it tells us to take away.",
+        "Example: If you have 5 cookies and eat 2, you SUBTRACT: 5 − 2 = 3 cookies left!",
+        "The answer is always smaller than the first number (unless you subtract 0).",
+        "Watch how we take dots away:"
       ],
       examples: [
-        { number: "5 − 1", visual: "●●●●● → ●●●●", word: "four" },
-        { number: "3 − 2", visual: "●●● → ●", word: "one" }
+        { number: "2 − 1 = 1", visual: "●● → ●", word: "two minus one equals one" },
+        { number: "3 − 1 = 2", visual: "●●● → ●●", word: "three minus one equals two" },
+        { number: "4 − 2 = 2", visual: "●●●● → ●●", word: "four minus two equals two" },
+        { number: "5 − 2 = 3", visual: "●●●●● → ●●●", word: "five minus two equals three" },
+        { number: "6 − 3 = 3", visual: "●●●●●● → ●●●", word: "six minus three equals three" },
+        { number: "10 − 4 = 6", visual: "●●●●●●●●●● → ●●●●●●", word: "ten minus four equals six" }
       ]
     }
   },
   16: {
     title: "Addition & Subtraction Within 20",
     introduction: {
-      title: "Bigger Numbers!",
+      title: "Working with Bigger Numbers!",
       content: [
-        "Now we'll work with numbers up to 20!",
-        "Use what you learned with 1-10!",
-        "Take your time and think it through!"
+        "Now we're ready to work with numbers all the way up to 20!",
+        "These are bigger numbers, but we use the same addition and subtraction skills.",
+        "A helpful strategy: Break numbers into tens and ones.",
+        "Example: 13 is 10 + 3. So 13 + 4 = 10 + 3 + 4 = 10 + 7 = 17",
+        "Another strategy: Count on or count back in your head.",
+        "For 15 − 3, start at 15 and count back: 14, 13, 12. Answer is 12!"
       ],
       examples: [
-        { number: "10 + 5", visual: "●●●●●●●●●● + ●●●●●", word: "fifteen" },
-        { number: "15 − 3", visual: "", word: "twelve" }
+        { number: "10 + 1 = 11", visual: "●●●●●●●●●● + ● = 11", word: "ten plus one equals eleven" },
+        { number: "10 + 5 = 15", visual: "●●●●●●●●●● + ●●●●● = 15", word: "ten plus five equals fifteen" },
+        { number: "12 + 3 = 15", visual: "12 + 3", word: "twelve plus three equals fifteen" },
+        { number: "15 − 3 = 12", visual: "15 − 3", word: "fifteen minus three equals twelve" },
+        { number: "18 − 5 = 13", visual: "18 − 5", word: "eighteen minus five equals thirteen" },
+        { number: "11 + 9 = 20", visual: "11 + 9", word: "eleven plus nine equals twenty" }
       ]
     }
   },
@@ -254,13 +284,20 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Understanding Place Value!",
       content: [
-        "Numbers have different places: ones, tens, hundreds!",
-        "The position of a digit tells us its value!",
-        "42 has 4 tens and 2 ones!"
+        "Every digit in a number has a 'place' that tells us its value!",
+        "In a two-digit number, the first digit is the TENS place, the second is the ONES place.",
+        "Example: In the number 42, the 4 is in the tens place (worth 40) and 2 is in the ones place (worth 2).",
+        "So 42 = 40 + 2 = 4 tens and 2 ones!",
+        "This is super important for understanding bigger numbers and doing math!",
+        "The position of a digit changes its value - that's why we call it 'place value'!"
       ],
       examples: [
-        { number: "23", visual: "2 tens, 3 ones", word: "twenty-three" },
-        { number: "57", visual: "5 tens, 7 ones", word: "fifty-seven" }
+        { number: "23", visual: "2 tens, 3 ones (●●●●●●●●●● + ●●●●●●●●●● + ●●●)", word: "twenty-three" },
+        { number: "35", visual: "3 tens, 5 ones (30 + 5)", word: "thirty-five" },
+        { number: "42", visual: "4 tens, 2 ones (40 + 2)", word: "forty-two" },
+        { number: "57", visual: "5 tens, 7 ones (50 + 7)", word: "fifty-seven" },
+        { number: "68", visual: "6 tens, 8 ones (60 + 8)", word: "sixty-eight" },
+        { number: "91", visual: "9 tens, 1 one (90 + 1)", word: "ninety-one" }
       ]
     }
   },
@@ -269,13 +306,20 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn Multiplication!",
       content: [
-        "Multiplication is repeated addition!",
-        "3 × 4 means '3 groups of 4'!",
-        "It's a faster way to add the same number many times!"
+        "Multiplication is a faster way to add the same number multiple times!",
+        "The × symbol means 'times' or 'groups of'.",
+        "Example: 3 × 4 means '3 groups of 4' or '4 added together 3 times'.",
+        "So 3 × 4 = 4 + 4 + 4 = 12. Much faster than adding!",
+        "The numbers being multiplied are called 'factors', and the answer is the 'product'.",
+        "Multiplication makes math easier when working with groups or repeated addition!"
       ],
       examples: [
-        { number: "2 × 3", visual: "●● + ●● + ●● = 6", word: "six" },
-        { number: "3 × 4", visual: "●●●● + ●●●● + ●●●● = 12", word: "twelve" }
+        { number: "2 × 3 = 6", visual: "●● + ●● + ●● = ●●●●●●", word: "two times three equals six" },
+        { number: "3 × 3 = 9", visual: "●●● + ●●● + ●●● = 9", word: "three times three equals nine" },
+        { number: "4 × 2 = 8", visual: "●●●● + ●●●● = 8", word: "four times two equals eight" },
+        { number: "3 × 4 = 12", visual: "●●●● + ●●●● + ●●●● = 12", word: "three times four equals twelve" },
+        { number: "5 × 2 = 10", visual: "●●●●● + ●●●●● = 10", word: "five times two equals ten" },
+        { number: "2 × 10 = 20", visual: "2 groups of 10", word: "two times ten equals twenty" }
       ]
     }
   },
@@ -284,13 +328,20 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn Division!",
       content: [
-        "Division means sharing equally!",
-        "12 ÷ 3 means '12 shared among 3 groups'!",
-        "It's the opposite of multiplication!"
+        "Division means sharing things equally into groups!",
+        "The ÷ symbol means 'divided by' - it tells us to split things up fairly.",
+        "Example: 12 ÷ 3 means 'split 12 into 3 equal groups' - each group gets 4!",
+        "Division is the opposite of multiplication. If 3 × 4 = 12, then 12 ÷ 3 = 4.",
+        "We can think of it as: 'How many times does this number fit into that number?'",
+        "Division helps us share things fairly and solve real-world problems!"
       ],
       examples: [
-        { number: "6 ÷ 2", visual: "●●● | ●●●", word: "three" },
-        { number: "12 ÷ 4", visual: "●●● | ●●● | ●●● | ●●●", word: "three" }
+        { number: "6 ÷ 2 = 3", visual: "●●● | ●●●", word: "six divided by two equals three" },
+        { number: "8 ÷ 2 = 4", visual: "●●●● | ●●●●", word: "eight divided by two equals four" },
+        { number: "9 ÷ 3 = 3", visual: "●●● | ●●● | ●●●", word: "nine divided by three equals three" },
+        { number: "10 ÷ 2 = 5", visual: "●●●●● | ●●●●●", word: "ten divided by two equals five" },
+        { number: "12 ÷ 3 = 4", visual: "●●●● | ●●●● | ●●●●", word: "twelve divided by three equals four" },
+        { number: "15 ÷ 5 = 3", visual: "3 groups of 5", word: "fifteen divided by five equals three" }
       ]
     }
   },
@@ -299,13 +350,20 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     introduction: {
       title: "Let's Learn Fractions!",
       content: [
-        "Fractions are parts of a whole!",
-        "½ means 'one half' - one piece out of two!",
-        "The top number is what we have, the bottom is how many pieces total!"
+        "Fractions represent parts of a whole - like slices of a pizza!",
+        "A fraction has two numbers: the top (numerator) and bottom (denominator).",
+        "The bottom number tells us how many equal parts the whole is divided into.",
+        "The top number tells us how many of those parts we have.",
+        "Example: ½ means the whole is divided into 2 equal parts, and we have 1 of them.",
+        "Fractions help us share things fairly and measure amounts that aren't whole numbers!"
       ],
       examples: [
-        { number: "½", visual: "◐", word: "one half" },
-        { number: "¼", visual: "◔", word: "one quarter" }
+        { number: "½", visual: "◐ (1 out of 2 equal parts)", word: "one half" },
+        { number: "¼", visual: "◔ (1 out of 4 equal parts)", word: "one quarter" },
+        { number: "¾", visual: "◕ (3 out of 4 equal parts)", word: "three quarters" },
+        { number: "⅓", visual: "1 out of 3 equal parts", word: "one third" },
+        { number: "⅔", visual: "2 out of 3 equal parts", word: "two thirds" },
+        { number: "⅕", visual: "1 out of 5 equal parts", word: "one fifth" }
       ]
     }
   }
