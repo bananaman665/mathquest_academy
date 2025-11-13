@@ -215,10 +215,10 @@ export default function LevelCompletePage() {
             )}
             
             <Link
-              href="/dashboard"
+              href="/learn"
               className="block w-full bg-white border-2 border-gray-300 hover:border-blue-500 active:scale-95 text-gray-700 hover:text-blue-600 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-200 touch-manipulation text-sm sm:text-base"
             >
-              Back to Dashboard
+              Back to Home
             </Link>
           </div>
         </div>
