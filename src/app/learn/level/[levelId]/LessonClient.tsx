@@ -1159,7 +1159,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 currentQuestion.blanks.map((blank, idx) => {
                   const parts = blank.text.split('__');
                   return (
-                    <div key={idx} className="mb-2">
+                    <div key={idx} className="mb-2 text-2xl font-bold text-black">
                       {parts[0]}
                       <input
                         type="text"
@@ -1174,11 +1174,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 })
               ) : (
                 // Simple fill-blank with just correctAnswer
-                <div className="flex items-center gap-4 text-2xl font-bold text-gray-900">
+                <div className="flex items-center gap-4 text-2xl font-bold text-black">
                   <span>{currentQuestion.question.split('___')[0]}</span>
                   <input
                     type="text"
-                    className="bg-transparent text-gray-900 text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded transition-colors"
+                    className="bg-transparent text-black text-2xl font-bold w-24 text-center px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded transition-colors"
                     value={blankAnswers[0] || ''}
                     onChange={e => handleBlankChange(0, e.target.value)}
                     disabled={showExplanation}
