@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
+import { PartyPopper, X } from 'lucide-react'
 
 interface BlockStackingQuestionProps {
   firstNumber: number
@@ -211,12 +212,18 @@ export default function BlockStackingQuestion({
             >
               {isCorrect ? (
                 <div>
-                  <div className="text-3xl mb-2">🎉 Correct!</div>
+                  <div className="text-3xl mb-2 flex items-center justify-center gap-2">
+                    <PartyPopper className="w-7 h-7" />
+                    Correct!
+                  </div>
                   <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens!</div>
                 </div>
               ) : (
                 <div>
-                  <div className="text-3xl mb-2">❌ Not quite</div>
+                  <div className="text-3xl mb-2 flex items-center justify-center gap-2">
+                    <X className="w-7 h-7" />
+                    Not quite
+                  </div>
                   <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens, but need {correctAnswer}</div>
                 </div>
               )}

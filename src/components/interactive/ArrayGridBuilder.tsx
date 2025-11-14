@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { PartyPopper, HelpCircle } from 'lucide-react';
 
 interface ArrayGridBuilderProps {
   targetRows: number;
@@ -175,7 +176,9 @@ export default function ArrayGridBuilder({
               : 'bg-red-100 border-4 border-red-500'
           }`}
         >
-          <div className="text-4xl mb-2">{isCorrect ? '🎉' : '🤔'}</div>
+          <div className="flex items-center justify-center mb-2">
+            {isCorrect ? <PartyPopper className="w-10 h-10 text-green-600" /> : <HelpCircle className="w-10 h-10 text-orange-600" />}
+          </div>
           <div className="text-xl font-bold">
             {isCorrect ? (
               <>

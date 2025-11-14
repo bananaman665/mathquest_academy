@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PartyPopper, HelpCircle, Cog } from 'lucide-react';
 
 interface DivisionMachineProps {
   dividend: number;
@@ -131,7 +132,9 @@ export default function DivisionMachine({
           duration: 0.5
         }}
       >
-        <div className="text-6xl text-center mb-4">⚙️</div>
+        <div className="flex justify-center mb-4">
+          <Cog className="w-16 h-16 text-gray-300" />
+        </div>
         <div className="text-white text-center font-bold text-lg">
           Division Machine
         </div>
@@ -256,7 +259,9 @@ export default function DivisionMachine({
               : 'bg-red-100 border-4 border-red-500'
           }`}
         >
-          <div className="text-4xl mb-2">{isCorrect ? '🎉' : '🤔'}</div>
+          <div className="flex items-center justify-center mb-2">
+            {isCorrect ? <PartyPopper className="w-10 h-10 text-green-600" /> : <HelpCircle className="w-10 h-10 text-orange-600" />}
+          </div>
           <div className="text-xl font-bold">
             {isCorrect ? (
               <>

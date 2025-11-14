@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { PartyPopper, X } from 'lucide-react'
 
 interface NumberLineProps {
   question: string
@@ -244,12 +245,18 @@ export default function NumberLine({
           >
             {isCorrect ? (
               <div>
-                <div className="text-2xl mb-2">🎉 Perfect!</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <PartyPopper className="w-6 h-6" />
+                  Perfect!
+                </div>
                 <div>You found {correctAnswer} on the number line!</div>
               </div>
             ) : (
               <div>
-                <div className="text-2xl mb-2">❌ Not quite</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <X className="w-6 h-6" />
+                  Not quite
+                </div>
                 <div>You marked {markedPosition}, but the correct answer is {correctAnswer}</div>
               </div>
             )}

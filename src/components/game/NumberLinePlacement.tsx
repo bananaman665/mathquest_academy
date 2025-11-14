@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
+import { PartyPopper, X } from 'lucide-react'
 
 interface NumberLinePlacementProps {
   question: string
@@ -218,12 +219,18 @@ export default function NumberLinePlacement({
           >
             {isCorrect ? (
               <div>
-                <div className="text-2xl mb-2">🎉 Perfect Placement!</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <PartyPopper className="w-6 h-6" />
+                  Perfect Placement!
+                </div>
                 <div>{correctPosition} is in the right spot!</div>
               </div>
             ) : (
               <div>
-                <div className="text-2xl mb-2">❌ Not quite right</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <X className="w-6 h-6" />
+                  Not quite right
+                </div>
                 <div>
                   You placed {placedNumber}, but {correctPosition} goes at a different spot
                 </div>
