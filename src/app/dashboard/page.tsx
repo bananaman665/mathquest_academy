@@ -86,7 +86,7 @@ async function DashboardContent() {
             Welcome to Your Math Adventure!
           </h2>
           <p className="mt-2 text-xl text-gray-600">
-            Let's learn and grow your math skills together!
+            Let&apos;s learn and grow your math skills together!
           </p>
         </div>
 
