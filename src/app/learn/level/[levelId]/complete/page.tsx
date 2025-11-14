@@ -181,8 +181,14 @@ export default function LevelCompletePage() {
                     <span className="text-[10px] sm:text-xs px-2 py-1 bg-white rounded-full text-indigo-600 font-medium border border-indigo-200">
                       {nextLevel.totalQuestions} Questions
                     </span>
-                    <span className="text-[10px] sm:text-xs px-2 py-1 bg-white rounded-full text-indigo-600 font-medium border border-indigo-200">
-                      {nextLevel.difficulty === 'easy' ? '⭐ Easy' : nextLevel.difficulty === 'medium' ? '⭐⭐ Medium' : '⭐⭐⭐ Hard'}
+                    <span className="text-[10px] sm:text-xs px-2 py-1 bg-white rounded-full text-indigo-600 font-medium border border-indigo-200 flex items-center gap-1">
+                      {nextLevel.difficulty === 'easy' ? (
+                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Easy</>
+                      ) : nextLevel.difficulty === 'medium' ? (
+                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Medium</>
+                      ) : (
+                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Hard</>
+                      )}
                     </span>
                   </div>
                 </div>

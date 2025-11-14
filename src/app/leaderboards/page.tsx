@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Medal, Crown, Home, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Flame } from 'lucide-react'
+import { Trophy, Medal, Crown, Home, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Flame, Gem } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
@@ -155,7 +155,7 @@ export default async function LeaderboardsPage() {
                   <span className="font-bold text-orange-600">{dbUser.streak || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-xl">
-                  <span className="text-2xl">💎</span>
+                  <Gem className="w-6 h-6 text-blue-600" />
                   <span className="font-bold text-blue-600">{formatXP(dbUser.totalXP || 0)}</span>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap } from 'lucide-react'
+import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { PrismaClient } from '@prisma/client'
 import BottomNav from '@/components/BottomNav'
@@ -474,7 +474,7 @@ export default async function LearnPage() {
                 <div className="bg-green-500 p-2 rounded-xl shadow-md">
                   <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName}!</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName || 'Student'}!</h2>
               </div>
               <p className="text-gray-700 text-base sm:text-lg mb-2">
                 Start your math adventure by completing Level 1!
@@ -552,7 +552,9 @@ export default async function LearnPage() {
 
         {/* Coming Soon */}
         <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-xl sm:rounded-2xl shadow-sm border border-gray-200">
-          <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">🚀</div>
+          <div className="flex justify-center mb-3 sm:mb-4">
+            <Rocket className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-purple-600" />
+          </div>
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 px-4">More Units Coming Soon!</h3>
           <p className="text-gray-600 text-sm sm:text-base px-4">
             Complete the units above to unlock new adventures

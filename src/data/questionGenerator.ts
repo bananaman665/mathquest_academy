@@ -76,7 +76,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Counting 1-10",
     operation: 'counting',
     numberRange: { min: 1, max: 5 },
-    questionTypes: ['bubble-pop', 'tap-select', 'ten-frame', 'multiple-choice'],
+    questionTypes: ['tap-select', 'ten-frame', 'multiple-choice'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🎈', '🍎', '🐶', '🚗']
@@ -86,7 +86,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Counting 1-10",
     operation: 'counting',
     numberRange: { min: 1, max: 10 },
-    questionTypes: ['bubble-pop', 'tap-select', 'ten-frame', 'multiple-choice'],
+    questionTypes: ['tap-select', 'ten-frame', 'multiple-choice'],
     totalQuestions: 10,
     difficulty: 'easy',
     visualEmojis: ['⭐', '🎈', '🍎', '🐶', '🚗', '🌸', '⚽', '🎨']
@@ -1410,29 +1410,6 @@ function generateQuestionByType(
       }
     }
 
-    case 'bubble-pop': {
-      // Generate numbers to show in bubbles (target + some extra numbers)
-      const target = num1 // The number we want students to count to
-      const allNumbers = Array.from({ length: target + 3 }, (_, i) => i + 1) // e.g., for target=5, show 1-8
-      const correctNumbers = Array.from({ length: target }, (_, i) => i + 1) // e.g., [1,2,3,4,5]
-      
-      return {
-        id,
-        levelId,
-        type,
-        question: `Pop the bubbles from 1 to ${target}`,
-        bubbleNumbers: allNumbers,
-        bubbleCorrectAnswers: correctNumbers,
-        correctAnswer: String(target),
-        explanation: `Great job! You counted from 1 to ${target}!`,
-        hints: [
-          `Start with bubble number 1`,
-          `Pop the bubbles in order: 1, 2, 3...`
-        ],
-        xp: 15
-      }
-    }
-
     case 'balance-scale': {
       // For balance scale: Show equation format where user finds missing value
       // Question: num1 + ? = answer
@@ -1600,7 +1577,7 @@ function generateQuestionByType(
     }
 
     default: {
-      // Fallback to multiple choice for unknown question types (tap-select, ten-frame, bubble-pop, etc.)
+      // Fallback to multiple choice for unknown question types (tap-select, ten-frame, etc.)
       const wrongAnswers = generateWrongAnswers(answer, 3)
       const allOptions = rng.shuffle([String(answer), ...wrongAnswers])
 

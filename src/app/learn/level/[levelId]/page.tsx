@@ -32,7 +32,6 @@ function randomizeQuestionTypes(questions: Question[]): Question[] {
     if (q.question.includes('comes after') || 
         q.question.includes('comes before') ||
         q.question.includes('What number comes') ||
-        q.type === 'bubble-pop' ||
         q.type === 'tap-select' ||
         q.type === 'ten-frame') {
       return q

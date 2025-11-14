@@ -39,7 +39,6 @@ export type QuestionType =
   | 'block-stacking'
   | 'number-line-placement'
   | 'ten-frame'
-  | 'bubble-pop'
   // New Interactive Types (Month 1)
   | 'number-line-drag'
   | 'fraction-builder'
@@ -105,9 +104,6 @@ export interface Question {
   correctPosition?: number // The correct number to place on the line
   // Ten frame
   // correctPosition reused for ten-frame (number of dots to show)
-  // Bubble pop
-  bubbleNumbers?: number[] // All numbers to show in bubbles
-  bubbleCorrectAnswers?: number[] // Numbers that should be popped
   
   // New Interactive Types (Month 1)
   // Number Line Drag (enhanced version of number-line-placement)

@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { Trophy, Zap, Target, Sparkles, Rocket, Star, Flame } from "lucide-react"
+import { Trophy, Zap, Target, Sparkles, Rocket, Star, Flame, BookOpen, Gift } from "lucide-react"
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import { checkStreakExpiration } from '@/lib/streak'
@@ -165,7 +165,8 @@ async function DashboardContent() {
                 className="group bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white/50 hover:border-white px-8 py-4 rounded-xl font-bold shadow-lg transition-all duration-300 hover:scale-105 text-center"
               >
                 <span className="flex items-center gap-2 justify-center">
-                  🎯 Take Placement Test
+                  <Target className="w-5 h-5" />
+                  Take Placement Test
                 </span>
               </Link>
               <Link
@@ -184,24 +185,33 @@ async function DashboardContent() {
         {/* Coming Soon Features */}
         <div className="bg-white border-2 border-gray-200 rounded-3xl p-10 shadow-xl">
           <h3 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
-            <span className="text-3xl">🚀</span>
+            <Rocket className="w-8 h-8 text-blue-600" />
             Coming Soon Features
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-lg">
-              <h4 className="font-bold text-gray-900 mb-3 text-lg">📚 Learning Path</h4>
+              <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+                Learning Path
+              </h4>
               <p className="text-sm text-gray-600">
                 Interactive math lessons with instant feedback
               </p>
             </div>
             <div className="bg-purple-50 border-2 border-purple-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:shadow-lg">
-              <h4 className="font-bold text-gray-900 mb-3 text-lg">🎁 Bonus Rounds</h4>
+              <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
+                <Gift className="w-5 h-5 text-purple-600" />
+                Bonus Rounds
+              </h4>
               <p className="text-sm text-gray-600">
                 Special challenges for extra XP and rewards
               </p>
             </div>
             <div className="bg-pink-50 border-2 border-pink-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-pink-400 hover:shadow-lg">
-              <h4 className="font-bold text-gray-900 mb-3 text-lg">🏆 Achievements</h4>
+              <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-pink-600" />
+                Achievements
+              </h4>
               <p className="text-sm text-gray-600">
                 Earn badges and unlock special rewards
               </p>

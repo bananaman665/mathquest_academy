@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
 import NumberLine from '@/components/game/NumberLine'
-import BubblePopMath from '@/components/game/BubblePopMath'
 import { 
   NumberLineDrag, 
   FractionBuilder, 
@@ -1206,38 +1205,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
           )}
 
-          {/* Bubble Pop Math */}
-          {currentQuestion.type === 'bubble-pop' && currentQuestion.bubbleNumbers && currentQuestion.bubbleCorrectAnswers && (
-            <div className="mb-8">
-              <BubblePopMath
-                question={currentQuestion.question}
-                numbers={currentQuestion.bubbleNumbers}
-                correctAnswers={currentQuestion.bubbleCorrectAnswers}
-                onAnswer={(isCorrect) => {
-                  setIsCorrect(isCorrect)
-                  setShowExplanation(true)
-                  if (isCorrect) {
-                    playCorrect()
-                    const xp = currentQuestion.xp * xpMultiplier
-                    setEarnedXP(prev => prev + xp)
-                    setCorrectCount(prev => prev + 1)
-                    setCurrentStreak(prev => prev + 1)
-                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
-                    if (gameMode === 'perfect-streak') {
-                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
-                      setComboMultiplier(newMultiplier)
-                    }
-                  } else {
-                    playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
-                    setCurrentStreak(0)
-                    setComboMultiplier(1)
-                  }
-                }}
-              />
-            </div>
-          )}
-
           {/* Number Line Drag */}
           {currentQuestion.type === 'number-line-drag' && (
             <div className="mb-8">
@@ -1807,48 +1774,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Mini-game */}
           {currentQuestion.type === 'mini-game' && (
             <div className="mb-8">
-              {currentQuestion.gameType === 'balloon-pop' && currentQuestion.bubbleNumbers && currentQuestion.bubbleCorrectAnswers ? (
-                <BubblePopMath
-                  question={currentQuestion.question}
-                  numbers={currentQuestion.bubbleNumbers}
-                  correctAnswers={currentQuestion.bubbleCorrectAnswers}
-                  onAnswer={(isCorrect) => {
-                    setIsCorrect(isCorrect)
-                    setShowExplanation(true)
-                    if (isCorrect) {
-                      playCorrect()
-                      const xp = currentQuestion.xp * xpMultiplier
-                      setEarnedXP(prev => prev + xp)
-                      setCorrectCount(prev => prev + 1)
-                      setCurrentStreak(prev => prev + 1)
-                      setMaxStreak(prev => Math.max(prev, currentStreak + 1))
-                      if (gameMode === 'perfect-streak') {
-                        const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
-                        setComboMultiplier(newMultiplier)
-                      }
-                    } else {
-                      playIncorrect()
-                      setHearts(prev => Math.max(0, prev - 1))
-                      setCurrentStreak(0)
-                      setComboMultiplier(1)
-                    }
-                  }}
-                />
-              ) : (
-                <>
-                  <div className="flex gap-4">
-                    {currentQuestion.options?.map((opt, idx) => (
-                      <button
-                        key={idx}
-                        className={`px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'bg-pink-400 text-black' : 'bg-slate-700 text-pink-300'}`}
-                        onClick={() => handleAnswerSelect(opt)}
-                        disabled={showExplanation}
-                      >{opt}</button>
-                    ))}
-                  </div>
-                  <p className="text-pink-300 mt-2">Mini-game: {currentQuestion.gameType || 'Unknown game type'}</p>
-                </>
-              )}
+              <div className="flex gap-4">
+                {currentQuestion.options?.map((opt, idx) => (
+                  <button
+                    key={idx}
+                    className={`px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'bg-pink-400 text-black' : 'bg-slate-700 text-pink-300'}`}
+                    onClick={() => handleAnswerSelect(opt)}
+                    disabled={showExplanation}
+                  >{opt}</button>
+                ))}
+              </div>
+              <p className="text-pink-300 mt-2">Mini-game: {currentQuestion.gameType || 'Unknown game type'}</p>
             </div>
           )}
 
@@ -2031,8 +1967,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               {/* Extra Hearts Available */}
               {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
                 <div className="bg-green-500/10 rounded-xl p-4 mb-6 border border-green-500/30">
-                  <p className="text-green-300 text-sm font-semibold">
-                    ❤️ {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available
+                  <p className="text-green-300 text-sm font-semibold flex items-center gap-2">
+                    <Heart className="w-5 h-5 fill-green-400 text-green-400" />
+                    {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available
                   </p>
                 </div>
               )}
@@ -2115,8 +2052,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               {/* Combo Multiplier */}
               {comboMultiplier > 1 && (
                 <div className="bg-yellow-50 rounded-xl p-3 mb-6 border-2 border-yellow-200">
-                  <p className="text-yellow-700 text-lg font-bold">
-                    🎯 {comboMultiplier}x Combo Multiplier Active!
+                  <p className="text-yellow-700 text-lg font-bold flex items-center gap-2">
+                    <Target className="w-6 h-6 text-yellow-700" />
+                    {comboMultiplier}x Combo Multiplier Active!
                   </p>
                 </div>
               )}

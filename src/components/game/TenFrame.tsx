@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
+import { PartyPopper, X } from 'lucide-react'
 
 interface TenFrameProps {
   question: string
@@ -184,12 +185,18 @@ export default function TenFrame({
           >
             {isCorrect ? (
               <div>
-                <div className="text-2xl mb-2">🎉 Perfect!</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <PartyPopper className="w-6 h-6" />
+                  Perfect!
+                </div>
                 <div>You showed {correctPosition} in the ten frame!</div>
               </div>
             ) : (
               <div>
-                <div className="text-2xl mb-2">❌ Not quite</div>
+                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
+                  <X className="w-6 h-6" />
+                  Not quite
+                </div>
                 <div>You placed {dotsPlaced}, but the answer is {correctPosition}</div>
               </div>
             )}
