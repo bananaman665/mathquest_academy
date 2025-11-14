@@ -24,6 +24,32 @@ function truncateUsername(name: string | null | undefined): string {
   return username.substring(0, 8) + '...'
 }
 
+// Utility function to get a random solid color based on user ID
+function getAvatarColor(userId: string): string {
+  const colors = [
+    'bg-blue-500',
+    'bg-green-500',
+    'bg-purple-500',
+    'bg-pink-500',
+    'bg-red-500',
+    'bg-indigo-500',
+    'bg-yellow-500',
+    'bg-cyan-500',
+    'bg-teal-500',
+    'bg-orange-500',
+    'bg-violet-500',
+    'bg-rose-500',
+  ]
+  
+  // Simple hash function to get consistent color for same user
+  let hash = 0
+  for (let i = 0; i < userId.length; i++) {
+    hash = userId.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  
+  return colors[Math.abs(hash) % colors.length]
+}
+
 export default async function LeaderboardsPage() {
   const user = await currentUser()
 
@@ -168,7 +194,7 @@ export default async function LeaderboardsPage() {
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center animate-pulse">
+                <div className={`w-16 h-16 ${getAvatarColor(user.id)} rounded-full flex items-center justify-center`}>
                   <span className="text-2xl font-black text-white">#{currentUserRank}</span>
                 </div>
                 <div>
@@ -213,7 +239,7 @@ export default async function LeaderboardsPage() {
                           <span className="text-xl font-black text-gray-400">#{index + 1}</span>
                         )}
                       </div>
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:rotate-12">
+                      <div className={`w-12 h-12 ${getAvatarColor(topUser.id)} rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:rotate-12`}>
                         <span className="text-xl font-black text-white">
                           {(topUser.name || topUser.username || 'U')[0].toUpperCase()}
                         </span>
