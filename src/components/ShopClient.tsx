@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette } from 'lucide-react'
+import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper } from 'lucide-react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface ShopItem {
@@ -85,7 +85,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
       // Success!
       playCorrect()
       setBalance(data.newBalance)
-      setSuccessMessage(`🎉 Successfully purchased ${item.name}!`)
+      setSuccessMessage(`Successfully purchased ${item.name}!`)
       setTimeout(() => setSuccessMessage(null), 3000)
 
     } catch (error) {
@@ -153,7 +153,8 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
 
       {/* Success/Error Messages */}
       {successMessage && (
-        <div className="mb-4 p-4 bg-green-100 border-2 border-green-300 rounded-xl text-green-800 font-bold animate-pulse">
+        <div className="mb-4 p-4 bg-green-100 border-2 border-green-300 rounded-xl text-green-800 font-bold animate-pulse flex items-center gap-2">
+          <PartyPopper className="w-6 h-6" />
           {successMessage}
         </div>
       )}
