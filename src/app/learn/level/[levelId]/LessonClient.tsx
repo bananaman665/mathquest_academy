@@ -841,7 +841,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="bg-gray-50 border-2 border-gray-200 rounded-2xl p-8 mb-10">
               <div className="flex flex-wrap justify-center items-center gap-2 max-w-xl mx-auto">
                 {currentQuestion.visualContent.split('').map((char, index) => (
-                  <span key={index} className="text-5xl">{char}</span>
+                  <span key={index} className="text-5xl text-black">{char}</span>
                 ))}
               </div>
             </div>
