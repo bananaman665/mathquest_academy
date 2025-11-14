@@ -55,7 +55,7 @@ export default async function ShopPage() {
   }))
 
   return (
-    <div className="min-h-screen bg-white flex overflow-x-hidden">
+    <div className="min-h-screen bg-white flex">
       {/* Bottom Navigation - Mobile Only */}
       <BottomNav currentPage="shop" />
       
@@ -119,7 +119,7 @@ export default async function ShopPage() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
+      <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full">
         <header className="fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 bg-white border-b border-gray-200 px-6 py-4 pt-safe-header">
           <div className="flex items-center justify-between">
             <span className="text-2xl font-black text-green-600">Shop</span>

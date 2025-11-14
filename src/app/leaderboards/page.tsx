@@ -67,7 +67,7 @@ export default async function LeaderboardsPage() {
   const currentUserRank = allUsers.findIndex(u => u.id === user.id) + 1
 
   return (
-    <div className="min-h-screen bg-white flex overflow-x-hidden">
+    <div className="min-h-screen bg-white flex">
       {/* Bottom Navigation - Mobile Only */}
       <BottomNav currentPage="leaderboards" />
       

@@ -352,7 +352,7 @@ export default async function LearnPage() {
   const completedLevels = Array.from({ length: dbUser.currentLevel - 1 }, (_, i) => i + 1)
 
   return (
-    <div className="min-h-screen bg-white flex overflow-x-hidden">
+    <div className="min-h-screen bg-white flex">
       {/* Bottom Navigation - Mobile Only */}
       <BottomNav currentPage="learn" />
       
@@ -432,7 +432,7 @@ export default async function LearnPage() {
       </aside>
 
       {/* Main Content - Responsive margin */}
-      <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full overflow-x-hidden">
+      <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full">
         {/* Top Header - FIXED position for always visible with safe area padding */}
         <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-safe pb-4">
