@@ -134,7 +134,7 @@ const units = [
     title: "Fraction Fun",
     description: "Explore parts of a whole",
     theme: "tools", // 🔧
-    color: "from-yellow-400 to-amber-600",
+    color: "bg-yellow-500",
     levels: [
       { id: 41, title: "Introduction to Fractions", xp: 150 },
       { id: 42, title: "Comparing Fractions", xp: 150 },
@@ -148,7 +148,7 @@ const units = [
     title: "Decimals",
     description: "Master decimal numbers and operations",
     theme: "castle", // 🏰
-    color: "from-violet-400 to-purple-700",
+    color: "bg-violet-500",
     levels: [
       { id: 46, title: "Introduction to Decimals", xp: 200 },
       { id: 47, title: "Tenths and Hundredths", xp: 200 },
@@ -182,15 +182,15 @@ function getSpecialLevelType(levelId: number): { isSpecial: boolean; type: strin
     
     switch (cyclePosition) {
       case 0:
-        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'from-yellow-400 to-orange-500' }
+        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'bg-yellow-500' }
       case 1:
-        return { isSpecial: true, type: 'Lightning', emoji: '⚡', color: 'from-blue-400 to-purple-500' }
+        return { isSpecial: true, type: 'Lightning', emoji: '⚡', color: 'bg-blue-500' }
       case 2:
-        return { isSpecial: true, type: 'Perfect Streak', emoji: '🔥', color: 'from-orange-400 to-red-500' }
+        return { isSpecial: true, type: 'Perfect Streak', emoji: '🔥', color: 'bg-orange-500' }
       case 3:
-        return { isSpecial: true, type: 'Boss Battle', emoji: '', color: 'from-red-500 to-purple-600' }
+        return { isSpecial: true, type: 'Boss Battle', emoji: '', color: 'bg-red-500' }
       default:
-        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'from-yellow-400 to-orange-500' }
+        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'bg-yellow-500' }
     }
   }
   
@@ -208,7 +208,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
   const statusConfig = {
     completed: {
       icon: CheckCircle,
-      bgColor: 'bg-gradient-to-br from-green-400 to-green-600',
+      bgColor: 'bg-green-500',
       textColor: 'text-white',
       borderColor: 'border-green-600',
       clickable: true,
@@ -218,7 +218,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
     },
     current: {
       icon: Star,
-      bgColor: 'bg-gradient-to-br from-yellow-400 to-orange-500',
+      bgColor: 'bg-yellow-500',
       textColor: 'text-white',
       borderColor: 'border-yellow-500',
       clickable: true,
@@ -228,7 +228,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
     },
     locked: {
       icon: Lock,
-      bgColor: 'bg-gradient-to-br from-gray-200 to-gray-400',
+      bgColor: 'bg-gray-300',
       textColor: 'text-gray-600',
       borderColor: 'border-gray-400',
       clickable: false,
@@ -251,7 +251,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           href={`/learn/level/${level.id}`}
           className={`
             block relative
-            ${specialLevel ? `bg-gradient-to-br ${specialLevel.color}` : config.bgColor}
+            ${specialLevel ? specialLevel.color : config.bgColor}
             ${config.opacity}
             rounded-xl sm:rounded-2xl p-4 sm:p-6
             border-3 sm:border-4 ${specialLevel ? 'border-yellow-400' : config.borderColor}
@@ -359,7 +359,7 @@ export default async function LearnPage() {
         {/* Logo */}
         <div className="p-6">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center shadow-md">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-black text-green-600">Mathly</span>
@@ -436,22 +436,22 @@ export default async function LearnPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-safe pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
-                <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 to-orange-50 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-orange-100 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
                   <Flame className="w-4 sm:w-5 h-4 sm:h-5 text-orange-600 animate-pulse" />
                   <span className="font-bold text-orange-600 text-sm sm:text-base">{dbUser.streak || 0}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-50 px-3 sm:px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-blue-100 px-3 sm:px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
                   <Gem className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600" />
                   <span className="font-bold text-blue-600 text-sm sm:text-base">{dbUser.totalXP || 0}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-red-100 to-red-50 px-3 sm:px-4 py-2 rounded-xl border border-red-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-red-100 px-3 sm:px-4 py-2 rounded-xl border border-red-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
                   <Heart className="w-4 sm:w-5 h-4 sm:h-5 text-red-600 fill-red-600 animate-pulse" />
                   <span className="font-bold text-red-600 text-sm sm:text-base">5</span>
                 </div>
               </div>
               
               {/* Profile Button */}
-              <Link href="/profile" className="flex items-center gap-2 bg-gradient-to-r from-purple-100 to-purple-50 px-3 sm:px-4 py-2 rounded-xl border border-purple-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+              <Link href="/profile" className="flex items-center gap-2 bg-purple-100 px-3 sm:px-4 py-2 rounded-xl border border-purple-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
                 <User className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
                 <span className="hidden sm:inline font-bold text-purple-600 text-sm">Profile</span>
               </Link>
@@ -462,7 +462,7 @@ export default async function LearnPage() {
         {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header + safe area */}
         <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-40 sm:pt-32 py-6 sm:py-8 pb-24 md:pb-8">
           {/* Welcome Banner - Responsive */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
+          <div className="relative overflow-hidden bg-green-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
             {/* Decorative background elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-200/30 rounded-full blur-2xl"></div>
@@ -493,7 +493,7 @@ export default async function LearnPage() {
               {dbUser.currentLevel === 1 && (
                 <Link
                   href="/placement-test"
-                  className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 sm:gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base"
                 >
                   <Target className="w-5 h-5 sm:w-6 sm:h-6" />
                   <div>
@@ -509,7 +509,7 @@ export default async function LearnPage() {
         {units.map((unit) => (
           <div key={unit.id} className="mb-12 sm:mb-16">
             {/* Unit Header */}
-            <div className={`relative overflow-hidden bg-gradient-to-r ${unit.color} rounded-2xl p-6 sm:p-8 text-white mb-6 sm:mb-8 shadow-2xl border-3 border-white/30 text-center`}>
+            <div className={`relative overflow-hidden ${unit.color} rounded-2xl p-6 sm:p-8 text-white mb-6 sm:mb-8 shadow-2xl border-3 border-white/30 text-center`}>
               {/* Decorative corner elements */}
               <div className="absolute top-0 left-0 w-20 h-20 bg-white/10 rounded-full -translate-x-10 -translate-y-10"></div>
               <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-x-12 translate-y-12"></div>
