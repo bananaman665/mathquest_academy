@@ -31,17 +31,23 @@ model User {
   // Progress tracking
   questionsAnswered Int   @default(0)
   correctAnswers    Int   @default(0)
-  
+
+  // Daily quest tracking
+  dailyXPEarned         Int      @default(0)
+  dailyLessonsCompleted Int      @default(0)
+  lastDailyReset        DateTime @default(now())
+
   // Timestamps
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   lastActiveAt  DateTime  @default(now())
-  
+
   // Relations
   progress      UserProgress[]
   achievements  UserAchievement[]
   learningSessions LearningSession[] @relation("UserLearningSessions")
   inventory     UserInventory[]
+  quests        UserQuest[]
   
   @@map("users")
 }
@@ -238,6 +244,12 @@ enum AchievementCategory {
   SPECIAL
 }
 
+enum QuestType {
+  DAILY
+  WEEKLY
+  SPECIAL
+}
+
 // Shop System
 model ShopItem {
   id          String   @id @default(cuid())
@@ -274,4 +286,53 @@ model UserInventory {
   
   @@unique([userId, itemId])
   @@map("user_inventory")
+}
+
+// Quest System
+model Quest {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  questType   QuestType
+
+  // Requirements stored as JSON
+  // Example: { "type": "xp", "value": 10 }
+  requirement String
+
+  reward      Int      // Diamond/XP reward amount
+  icon        String
+  orderIndex  Int
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+
+  // Relations
+  userQuests  UserQuest[]
+
+  @@map("quests")
+}
+
+model UserQuest {
+  id          String   @id @default(cuid())
+  userId      String
+  questId     String
+
+  progress    Int      @default(0)
+  maxProgress Int      // Goal value (e.g., 10 for "Earn 10 XP")
+  isCompleted Boolean  @default(false)
+  completedAt DateTime?
+  rewardClaimed Boolean @default(false)
+
+  // When this quest expires (for daily/weekly resets)
+  expiresAt   DateTime
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quest       Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questId, expiresAt])
+  @@map("user_quests")
 }

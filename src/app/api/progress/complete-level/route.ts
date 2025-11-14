@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { updateUserStreak } from '@/lib/streak'
 import { prisma } from '@/lib/prisma'
+import { updateQuestProgress } from '@/lib/quests'
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,12 +53,21 @@ export async function POST(request: NextRequest) {
     // Update streak (this also updates lastActiveAt)
     const updatedUser = await updateUserStreak(userId)
 
-    return NextResponse.json({ 
-      success: true, 
+    // Update quest progress
+    const isPerfectScore = correct === total && total > 0
+    const completedQuests = await updateQuestProgress(userId, {
+      xpEarned: xp,
+      lessonsCompleted: 1,
+      isPerfectScore
+    })
+
+    return NextResponse.json({
+      success: true,
       newXP: newTotalXP,
       unlockedLevel: newCurrentLevel,
       streak: updatedUser.streak,
-      longestStreak: updatedUser.longestStreak
+      longestStreak: updatedUser.longestStreak,
+      completedQuests // Return newly completed quests for notifications
     })
   } catch (error) {
     console.error('Error saving progress:', error)

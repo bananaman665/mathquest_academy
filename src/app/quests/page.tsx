@@ -1,10 +1,11 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, CheckCircle, Flame } from 'lucide-react'
+import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, Flame } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
+import QuestsClient from '@/components/QuestsClient'
 
 export default async function QuestsPage() {
   const user = await currentUser()
@@ -26,13 +27,6 @@ export default async function QuestsPage() {
       }
     })
   }
-
-  // Daily quests data
-  const dailyQuests = [
-    { id: 1, title: 'Earn 10 XP', description: 'Complete lessons to earn experience', reward: '10 💎', progress: dbUser.totalXP % 100, max: 10, icon: '⚡' },
-    { id: 2, title: 'Complete 1 Lesson', description: 'Finish any lesson today', reward: '5 💎', progress: 0, max: 1, icon: '📚' },
-    { id: 3, title: 'Perfect Score', description: 'Get all answers correct in one lesson', reward: '15 💎', progress: 0, max: 1, icon: '⭐' },
-  ]
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -127,73 +121,7 @@ export default async function QuestsPage() {
           </div>
 
           {/* Quest Cards */}
-          <div className="space-y-4">
-            {dailyQuests.map((quest) => {
-              const progressPercent = Math.min((quest.progress / quest.max) * 100, 100)
-              const isComplete = quest.progress >= quest.max
-
-              return (
-                <div
-                  key={quest.id}
-                  className={`bg-white border-2 rounded-2xl p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:scale-105 hover:-translate-y-1 ${
-                    isComplete ? 'border-green-300 bg-green-50' : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-start gap-4 flex-1">
-                      <div className="text-4xl transition-transform duration-300 hover:scale-125 hover:rotate-12">{quest.icon}</div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-xl font-bold text-gray-900">{quest.title}</h3>
-                          {isComplete && (
-                            <CheckCircle className="w-6 h-6 text-green-600" />
-                          )}
-                        </div>
-                        <p className="text-gray-600 mb-3">{quest.description}</p>
-                        
-                        {/* Progress Bar */}
-                        <div className="flex items-center gap-3">
-                          <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
-                            <div
-                              className={`h-full rounded-full transition-all duration-500 ease-out ${
-                                isComplete ? 'bg-green-500 animate-pulse' : 'bg-blue-500'
-                              }`}
-                              style={{ width: `${progressPercent}%` }}
-                            ></div>
-                          </div>
-                          <span className="text-sm font-bold text-gray-600 min-w-[60px]">
-                            {quest.progress}/{quest.max}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="ml-4">
-                      <div className="bg-yellow-100 border-2 border-yellow-300 rounded-xl px-4 py-2 transition-all duration-300 hover:scale-110 hover:rotate-3">
-                        <p className="text-sm font-bold text-yellow-800">{quest.reward}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {isComplete ? (
-                    <button
-                      disabled
-                      className="w-full bg-green-600 text-white font-bold py-3 rounded-xl opacity-50 cursor-not-allowed"
-                    >
-                      ✓ Completed!
-                    </button>
-                  ) : (
-                    <Link
-                      href="/learn"
-                      className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-center transition-all duration-300 hover:scale-105 active:scale-95"
-                    >
-                      Start Learning →
-                    </Link>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          <QuestsClient />
 
           {/* Coming Soon Section */}
           <div className="mt-12 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-8 text-center">
@@ -207,7 +135,7 @@ export default async function QuestsPage() {
       </div>
 
       {/* Bottom Navigation for Mobile */}
-      <BottomNav currentPage="achievements" />
+      <BottomNav currentPage="dashboard" />
     </div>
   )
 }
