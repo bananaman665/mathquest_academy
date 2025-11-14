@@ -175,16 +175,16 @@ export default async function ProfilePage() {
               <div className="flex items-center justify-between mb-2">
                 <Award className="w-8 h-8 text-purple-600" />
               </div>
-              <p className="text-sm text-gray-600 font-semibold mb-1">Achievements</p>
+              <p className="text-sm text-gray-600 font-semibold mb-1">Badges</p>
               <p className="text-3xl font-black text-gray-900">{achievements.filter(a => a.unlocked).length}/{achievements.length}</p>
             </div>
           </div>
 
-          {/* Achievements Section */}
+          {/* Badges Section */}
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
               <Trophy className="w-8 h-8 text-yellow-600" />
-              <h2 className="text-2xl font-black text-gray-900">Achievements</h2>
+              <h2 className="text-2xl font-black text-gray-900">Badges</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {achievements.map((achievement) => {
@@ -263,7 +263,7 @@ export default async function ProfilePage() {
                         <Trophy className="w-6 h-6 text-purple-600" />
                       </div>
                       <div className="flex-1">
-                        <p className="font-bold text-gray-900">Achievement unlocked</p>
+                        <p className="font-bold text-gray-900">Badge unlocked</p>
                         <p className="text-sm text-gray-600">First Steps</p>
                       </div>
                       <p className="text-sm text-gray-500">2 days ago</p>
