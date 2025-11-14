@@ -22,7 +22,7 @@ const units = [
     title: "Number Basics",
     description: "Learn to recognize and count numbers 1-10",
     theme: "mountain", // 🏔️
-    color: "from-blue-400 to-blue-600",
+    color: "bg-blue-500",
     levels: [
       { id: 1, title: "Numbers 1-5", xp: 100 },
       { id: 2, title: "Numbers 6-10", xp: 100 },
@@ -36,7 +36,7 @@ const units = [
     title: "Addition Adventures",
     description: "Master adding numbers together",
     theme: "ocean", // 🌊
-    color: "from-cyan-400 to-blue-600",
+    color: "bg-cyan-500",
     levels: [
       { id: 6, title: "Adding to 5", xp: 100 },
       { id: 7, title: "Adding to 10", xp: 100 },
@@ -50,7 +50,7 @@ const units = [
     title: "Subtraction Station",
     description: "Learn to subtract and find differences",
     theme: "forest", // 🌲
-    color: "from-green-400 to-emerald-600",
+    color: "bg-green-500",
     levels: [
       { id: 11, title: "Taking Away", xp: 100 },
       { id: 12, title: "Subtract to 10", xp: 100 },
@@ -64,7 +64,7 @@ const units = [
     title: "Bigger Numbers",
     description: "Work with two-digit numbers",
     theme: "stars", // ⭐
-    color: "from-purple-400 to-pink-600",
+    color: "bg-purple-500",
     levels: [
       { id: 16, title: "Addition 2-Digit", xp: 150 },
       { id: 17, title: "Subtraction 2-Digit", xp: 150 },
@@ -78,7 +78,7 @@ const units = [
     title: "Multiplication Magic",
     description: "Discover the power of multiplication",
     theme: "desert", // 🏜️
-    color: "from-orange-400 to-red-600",
+    color: "bg-orange-500",
     levels: [
       { id: 21, title: "Introduction to Multiplication", xp: 150 },
       { id: 22, title: "Times Tables 2, 5, 10", xp: 150 },
@@ -92,7 +92,7 @@ const units = [
     title: "Division Discovery",
     description: "Learn to divide and share equally",
     theme: "candy", // 🍬
-    color: "from-pink-400 to-rose-600",
+    color: "bg-pink-500",
     levels: [
       { id: 26, title: "Introduction to Division", xp: 150 },
       { id: 27, title: "Division by 2, 5, 10", xp: 150 },
@@ -106,7 +106,7 @@ const units = [
     title: "Review & Practice",
     description: "Master operations within 20",
     theme: "space", // 🚀
-    color: "from-indigo-400 to-blue-700",
+    color: "bg-indigo-500",
     levels: [
       { id: 31, title: "Addition 11-20", xp: 150 },
       { id: 32, title: "Subtraction 11-20", xp: 150 },
@@ -120,7 +120,7 @@ const units = [
     title: "Place Values",
     description: "Understand tens, ones, and hundreds",
     theme: "garden", // 🌺
-    color: "from-emerald-400 to-teal-600",
+    color: "bg-emerald-500",
     levels: [
       { id: 36, title: "Tens and Ones", xp: 150 },
       { id: 37, title: "Counting by 10s", xp: 150 },

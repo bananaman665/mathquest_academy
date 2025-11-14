@@ -11,6 +11,7 @@ import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
 import NumberLine from '@/components/game/NumberLine'
 import NumberKeyboard from '@/components/NumberKeyboard'
+import ConfirmDialog from '@/components/ConfirmDialog'
 import { 
   NumberLineDrag, 
   FractionBuilder, 
@@ -106,6 +107,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [streakMilestone, setStreakMilestone] = useState(0)
   // For interactive components that need manual CHECK button
   const [interactiveSubmitFn, setInteractiveSubmitFn] = useState<(() => void) | null>(null)
+
+  // Confirmation dialog states
+  const [showSkipConfirm, setShowSkipConfirm] = useState(false)
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false)
 
   const currentQuestion = questions[currentQuestionIndex]
   
@@ -589,6 +594,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     playCorrect()
   }
 
+  // Confirmation handlers
+  const handleConfirmSkip = () => {
+    setShowSkipConfirm(false)
+    handleNext()
+  }
+
+  const handleConfirmExit = () => {
+    setShowQuitConfirm(false)
+    handleExitLevel()
+  }
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
@@ -722,9 +738,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
       <header className="px-4 py-4 border-b border-gray-200 max-w-full">
         <div className="max-w-5xl mx-auto flex justify-between items-center gap-2">
-          <Link href="/learn" className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100 flex-shrink-0">
+          <button
+            onClick={() => setShowQuitConfirm(true)}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-xl hover:bg-gray-100 flex-shrink-0"
+          >
             <X className="w-6 h-6 sm:w-7 sm:h-7" />
-          </Link>
+          </button>
           <div className="flex items-center gap-1 sm:gap-3 flex-wrap justify-end">
             {/* Speed Round Timer */}
             {gameMode === 'speed-round' && (
@@ -1872,7 +1891,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {/* Top row on mobile: Skip and Hint */}
                 <div className="flex gap-2 justify-between md:justify-start">
                   <button 
-                    onClick={() => handleNext()} 
+                    onClick={() => setShowSkipConfirm(true)} 
                     className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-700 transition-colors uppercase tracking-wide hover:bg-gray-100 text-sm"
                   >
                     Skip
@@ -2006,7 +2025,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
                 {/* Exit Button */}
                 <button
-                  onClick={handleExitLevel}
+                  onClick={() => setShowQuitConfirm(true)}
                   className="w-full px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide"
                 >
                   <ArrowRight className="w-5 h-5 inline mr-2" />
@@ -2087,6 +2106,30 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           </div>
         </div>
       )}
+
+      {/* Skip Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showSkipConfirm}
+        onClose={() => setShowSkipConfirm(false)}
+        onConfirm={handleConfirmSkip}
+        title="Skip this question?"
+        message="You won't earn XP for skipped questions. Are you sure you want to skip?"
+        confirmText="Skip"
+        cancelText="Keep Learning"
+        variant="warning"
+      />
+
+      {/* Exit/Quit Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showQuitConfirm}
+        onClose={() => setShowQuitConfirm(false)}
+        onConfirm={handleConfirmExit}
+        title="Exit lesson?"
+        message="Your progress will be saved, but you'll return to the Learn page. Are you sure you want to exit?"
+        confirmText="Exit"
+        cancelText="Stay"
+        variant="danger"
+      />
     </div>
   )
 }
