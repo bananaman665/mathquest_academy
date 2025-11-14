@@ -3,11 +3,9 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
-import { PrismaClient } from '@prisma/client'
 import BottomNav from '@/components/BottomNav'
 import { checkStreakExpiration } from '@/lib/streak'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/prisma'
 
 // Type definitions
 type Level = {

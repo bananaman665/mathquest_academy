@@ -10,10 +10,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { itemId, itemPrice, itemName } = await request.json()
+    const { itemId } = await request.json()
 
-    if (!itemId || !itemPrice || !itemName) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    if (!itemId) {
+      return NextResponse.json({ error: 'Missing item ID' }, { status: 400 })
+    }
+
+    // Look up the actual item from database to get the real price
+    const shopItem = await prisma.shopItem.findUnique({
+      where: { id: itemId },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        isActive: true
+      }
+    })
+
+    if (!shopItem) {
+      return NextResponse.json({ error: 'Item not found' }, { status: 404 })
+    }
+
+    if (!shopItem.isActive) {
+      return NextResponse.json({ error: 'Item not available' }, { status: 400 })
     }
 
     // Get user's current XP
@@ -26,11 +45,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Check if user has enough XP
-    if (user.totalXP < itemPrice) {
-      return NextResponse.json({ 
+    // Check if user has enough XP (using SERVER-SIDE price, not client price!)
+    if (user.totalXP < shopItem.price) {
+      return NextResponse.json({
         error: 'Insufficient XP',
-        message: `You need ${itemPrice - user.totalXP} more XP to purchase this item.`
+        message: `You need ${shopItem.price - user.totalXP} more XP to purchase this item.`
       }, { status: 400 })
     }
 
@@ -46,10 +65,10 @@ export async function POST(request: NextRequest) {
 
     // Perform the purchase in a transaction
     const result = await prisma.$transaction(async (tx) => {
-      // Deduct XP from user
+      // Deduct XP from user (using actual price from database)
       const updatedUser = await tx.user.update({
         where: { id: userId },
-        data: { totalXP: { decrement: itemPrice } },
+        data: { totalXP: { decrement: shopItem.price } },
         select: { totalXP: true }
       })
 
@@ -82,7 +101,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: `Successfully purchased ${itemName}!`,
+      message: `Successfully purchased ${shopItem.name}!`,
       newBalance: result.updatedUser.totalXP,
       inventoryItem: result.inventoryItem
     })

@@ -73,8 +73,6 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           itemId: item.id,
-          itemPrice: item.price,
-          itemName: item.name,
         }),
       })
 
