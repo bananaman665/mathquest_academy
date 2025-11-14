@@ -16,8 +16,8 @@ export function isPremiumLevel(levelId: number): boolean {
  * Check if user has premium access
  * For now, we'll check if they have a flag in the database
  */
-export function hasUserPurchasedPremium(user: { hasPremium?: boolean }): boolean {
-  return user.hasPremium === true
+export function hasUserPurchasedPremium(user: { isPremium?: boolean }): boolean {
+  return user.isPremium === true
 }
 
 /**

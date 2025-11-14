@@ -98,7 +98,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [correctCount, setCorrectCount] = useState(0)
   const [hearts, setHearts] = useState(5)
   const [showGameOverModal, setShowGameOverModal] = useState(false)
-  const [isPremium, setIsPremium] = useState(false) // TODO: Get from user context
+  const [isPremium, setIsPremium] = useState(false)
   const [showHints, setShowHints] = useState(false)
   const [hintsUsed, setHintsUsed] = useState(0)
   const [showStreakMilestone, setShowStreakMilestone] = useState(false)
@@ -123,6 +123,23 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       document.body.style.top = ''
       document.body.style.width = ''
     }
+  }, [])
+
+  // Fetch user premium status
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/user')
+        if (response.ok) {
+          const data = await response.json()
+          setIsPremium(data.isPremium || false)
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+        setIsPremium(false)
+      }
+    }
+    fetchUserData()
   }, [])
 
   // Timer effects for Speed Round

@@ -35,42 +35,22 @@ export async function POST(request: NextRequest) {
     const multiplier = effect.multiplier || 2
     const durationSeconds = effect.duration || 3600
 
-    // Decrement the quantity
+    // Set expiration time
+    const expirationDate = new Date()
+    expirationDate.setSeconds(expirationDate.getSeconds() + durationSeconds)
+
+    // Activate the XP Boost by setting isActive and expiresAt on the existing item
     const updatedInventory = await prisma.userInventory.update({
       where: {
         id: inventoryItem.id
       },
       data: {
-        quantity: { decrement: 1 }
-      },
-      include: {
-        item: true
-      }
-    })
-
-    // Set expiration time
-    const expirationDate = new Date()
-    expirationDate.setSeconds(expirationDate.getSeconds() + durationSeconds)
-
-    // Update or create the active XP Boost item
-    await prisma.userInventory.upsert({
-      where: {
-        userId_itemId: {
-          userId,
-          itemId: 'xp-boost-active'
-        }
-      },
-      create: {
-        userId,
-        itemId: 'xp-boost-active',
-        quantity: 1,
+        quantity: { decrement: 1 },
         isActive: true,
         expiresAt: expirationDate
       },
-      update: {
-        isActive: true,
-        expiresAt: expirationDate,
-        quantity: { increment: 1 }
+      include: {
+        item: true
       }
     })
 

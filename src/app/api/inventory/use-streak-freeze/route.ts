@@ -34,32 +34,22 @@ export async function POST(request: NextRequest) {
     const effect = inventoryItem.item.effect ? JSON.parse(inventoryItem.item.effect) : { duration: 1 }
     const durationDays = effect.duration || 1
 
-    // Decrement the quantity
+    // Update user's streak protection - set an expiration date
+    const expirationDate = new Date()
+    expirationDate.setDate(expirationDate.getDate() + durationDays)
+
+    // Activate the Streak Freeze by setting isActive and expiresAt on the existing item
     const updatedInventory = await prisma.userInventory.update({
       where: {
         id: inventoryItem.id
       },
       data: {
-        quantity: { decrement: 1 }
+        quantity: { decrement: 1 },
+        isActive: true,
+        expiresAt: expirationDate
       },
       include: {
         item: true
-      }
-    })
-
-    // Update user's streak protection - set an expiration date
-    const expirationDate = new Date()
-    expirationDate.setDate(expirationDate.getDate() + durationDays)
-
-    // Store streak freeze in a way that we can check it (we'll add a field to User model if needed)
-    // For now, we'll use metadata or store it in the inventory item's expiresAt field
-    await prisma.userInventory.create({
-      data: {
-        userId,
-        itemId: 'streak-freeze-active', // Virtual item to track active freeze
-        quantity: 1,
-        isActive: true,
-        expiresAt: expirationDate
       }
     })
 

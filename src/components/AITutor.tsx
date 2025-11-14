@@ -30,7 +30,7 @@ export default function AITutor({ question, correctAnswer, userAnswer, isOpen, o
     try {
       const response = await fetch('/api/user')
       const data = await response.json()
-      setIsPremium(data.hasPremium || false)
+      setIsPremium(data.isPremium || false)
     } catch (error) {
       console.error('Error checking premium status:', error)
       setIsPremium(false)
