@@ -86,7 +86,7 @@ async function DashboardContent() {
             Welcome to Your Math Adventure!
           </h2>
           <p className="mt-2 text-xl text-gray-600">
-            Ready to start earning XP and leveling up your math skills?
+            Let's learn and grow your math skills together!
           </p>
         </div>
 
@@ -188,19 +188,19 @@ async function DashboardContent() {
             Coming Soon Features
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-lg">
+            <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-lg">
               <h4 className="font-bold text-gray-900 mb-3 text-lg">📚 Learning Path</h4>
               <p className="text-sm text-gray-600">
                 Interactive math lessons with instant feedback
               </p>
             </div>
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:shadow-lg">
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:shadow-lg">
               <h4 className="font-bold text-gray-900 mb-3 text-lg">🎁 Bonus Rounds</h4>
               <p className="text-sm text-gray-600">
                 Special challenges for extra XP and rewards
               </p>
             </div>
-            <div className="bg-gradient-to-br from-pink-50 to-blue-50 border-2 border-pink-200 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-pink-400 hover:shadow-lg">
+            <div className="bg-pink-50 border-2 border-pink-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-pink-400 hover:shadow-lg">
               <h4 className="font-bold text-gray-900 mb-3 text-lg">🏆 Achievements</h4>
               <p className="text-sm text-gray-600">
                 Earn badges and unlock special rewards

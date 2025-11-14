@@ -92,7 +92,7 @@ export default function LevelCompletePage() {
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 text-center">
           {/* Trophy Icon */}
           <div className="mb-3 sm:mb-4 md:mb-6">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-yellow-400 rounded-full flex items-center justify-center mx-auto shadow-lg">
               <Trophy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
             </div>
           </div>
@@ -108,29 +108,29 @@ export default function LevelCompletePage() {
           {/* Stats Grid - Improved mobile spacing */}
           <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
             {/* XP Earned */}
-            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-yellow-200 touch-manipulation">
-              <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 sm:mb-2" />
+            <div className="bg-yellow-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-yellow-300 touch-manipulation">
+              <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-600 mx-auto mb-1 sm:mb-2" />
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-700">{xp}</div>
               <div className="text-[10px] sm:text-xs md:text-sm text-yellow-600 font-medium">XP Earned</div>
             </div>
 
             {/* Correct Answers */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-green-200 touch-manipulation">
-              <Target className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 sm:mb-2" />
+            <div className="bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-green-300 touch-manipulation">
+              <Target className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-600 mx-auto mb-1 sm:mb-2" />
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-green-700">{correct}/{total}</div>
               <div className="text-[10px] sm:text-xs md:text-sm text-green-600 font-medium">Correct</div>
             </div>
 
             {/* Accuracy */}
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-blue-200 touch-manipulation">
-              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 sm:mb-2" />
+            <div className="bg-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-blue-300 touch-manipulation">
+              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600 mx-auto mb-1 sm:mb-2" />
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-700">{accuracy}%</div>
               <div className="text-[10px] sm:text-xs md:text-sm text-blue-600 font-medium">Accuracy</div>
             </div>
           </div>
 
           {/* Performance Message */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
+          <div className="bg-purple-50 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8 border-2 border-purple-200">
             {accuracy === 100 ? (
               <>
                 <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-yellow-500 mx-auto mb-1 sm:mb-2" />
@@ -160,9 +160,9 @@ export default function LevelCompletePage() {
 
           {/* Next Level Preview - New Feature */}
           {hasNextLevel && nextLevel && (
-            <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
+            <div className="bg-indigo-50 border-2 border-indigo-300 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
               <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
                   <Unlock className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
                 <div className="flex-1 text-left">
@@ -216,7 +216,7 @@ export default function LevelCompletePage() {
             
             <Link
               href="/learn"
-              className="block w-full bg-white border-2 border-gray-300 hover:border-blue-500 active:scale-95 text-gray-700 hover:text-blue-600 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-200 touch-manipulation text-sm sm:text-base"
+              className="block w-full bg-gray-100 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-200 active:scale-95 text-gray-700 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-200 touch-manipulation text-sm sm:text-base"
             >
               Back to Home
             </Link>
