@@ -87,7 +87,7 @@ textarea {
 }
 
 .pt-safe-header {
-  padding-top: calc(env(safe-area-inset-top) + 1rem);
+  padding-top: calc(env(safe-area-inset-top) + 0.5rem);
 }
 
 /* Special class for OAuth pages to push content below notch */

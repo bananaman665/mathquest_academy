@@ -156,7 +156,7 @@ async function DashboardContent() {
                 <h3 className="text-3xl font-black">Start Your Math Adventure!</h3>
               </div>
               <p className="text-white/90 text-lg">
-                Begin with Level 1 and unlock your learning path
+                Have fun while learning! Level up and unlock your learning path.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
