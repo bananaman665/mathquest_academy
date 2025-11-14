@@ -10,6 +10,7 @@ import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
 import NumberLine from '@/components/game/NumberLine'
+import NumberKeyboard from '@/components/NumberKeyboard'
 import { 
   NumberLineDrag, 
   FractionBuilder, 
@@ -1013,14 +1014,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Type Answer */}
           {currentQuestion.type === 'type-answer' && (
             <div className="mb-8">
-              <input
-                type="text"
+              <NumberKeyboard
                 value={typedAnswer}
-                onChange={(e) => setTypedAnswer(e.target.value)}
+                onChange={setTypedAnswer}
                 disabled={showExplanation}
-                placeholder="Type your answer here..."
-                className="w-full max-w-md mx-auto block px-6 py-4 text-2xl text-center bg-white text-black rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 font-bold placeholder:text-gray-400"
-                autoFocus
+                allowNegative={true}
+                allowDecimal={false}
+                maxLength={10}
               />
             </div>
           )}
