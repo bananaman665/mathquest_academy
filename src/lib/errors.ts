@@ -178,10 +178,14 @@ export const logger = {
     // In production, send to logging service (e.g., Sentry, LogRocket)
   },
   warn: (message: string, data?: unknown) => {
-    console.warn(`[WARN] ${message}`, data)
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[WARN] ${message}`, data)
+    }
   },
   info: (message: string, data?: unknown) => {
-    console.info(`[INFO] ${message}`, data)
+    if (process.env.NODE_ENV === 'development') {
+      console.info(`[INFO] ${message}`, data)
+    }
   },
   debug: (message: string, data?: unknown) => {
     if (process.env.NODE_ENV === 'development') {

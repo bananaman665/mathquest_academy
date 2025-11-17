@@ -31,8 +31,6 @@ export async function checkAndResetDailyQuests(userId: string) {
         lastDailyReset: now
       }
     })
-
-    console.log(`✅ Reset daily quests for user ${userId}`)
   }
 }
 

@@ -49,12 +49,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   // Check if XP Boost is active
   const xpBoostActive = inventoryHook.hasActiveItem('XP Boost')
   const xpMultiplier = xpBoostActive ? 2 : 1
-  
-  // Log inventory status
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Inventory loaded:', inventoryHook.inventory.length, 'items')
-  }
-  
+
   // Game mode state
   const [gameTimer, setGameTimer] = useState(gameMode === 'speed-round' ? 60 : 0)
   const [questionTimer, setQuestionTimer] = useState(gameMode === 'lightning' ? 10 : 0)
@@ -79,11 +74,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const router = useRouter()
   const { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete } = useSoundEffects()
   const [phase, setPhase] = useState<'intro' | 'practice'>('intro')
-  
-  // Log sound effects loaded
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Sound effects ready:', { playCorrect, playIncorrect, playLevelComplete, stopLevelComplete })
-  }
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   // For type-answer questions
@@ -447,38 +437,21 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     } else if (currentQuestion.type === 'type-answer') {
       const userAnswer = typedAnswer.trim()
       const acceptable = currentQuestion.acceptableAnswers || []
-      
-      // Debug logging
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Type-answer validation:', {
-          userAnswer,
-          typedAnswer,
-          correctAnswer: currentQuestion.correctAnswer,
-          acceptableAnswers: acceptable,
-        })
-      }
-      
+
       // Check acceptableAnswers if they exist
       if (acceptable.length > 0) {
         correct = acceptable.some(ans => {
           const normalizedAns = ans.trim()
           const normalizedUser = userAnswer
           const matches = normalizedAns.toLowerCase() === normalizedUser.toLowerCase()
-          if (process.env.NODE_ENV === 'development') {
-            console.log(`Comparing "${normalizedAns}" with "${normalizedUser}":`, matches)
-          }
           // Case-insensitive comparison
           return matches
         })
-      } 
+      }
       // Fall back to correctAnswer
       else if (currentQuestion.correctAnswer) {
         const normalizedCorrect = currentQuestion.correctAnswer.trim()
         correct = normalizedCorrect.toLowerCase() === userAnswer.toLowerCase()
-      }
-      
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Final result:', correct)
       }
     } else if (currentQuestion.type === 'match-equation') {
       correct = !equationMatched.some(m => !m)

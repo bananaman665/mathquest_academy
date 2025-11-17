@@ -43,9 +43,6 @@ export default function LevelCompletePage() {
     return () => clearTimeout(timer)
   }, [])
 
-  console.log('Saving status:', saving)
-  console.log('Show confetti:', showConfetti)
-
   useEffect(() => {
     // Save progress to database
     const saveProgress = async () => {
@@ -68,8 +65,7 @@ export default function LevelCompletePage() {
           console.error('Failed to save progress')
         } else {
           const data = await response.json()
-          console.log('Progress saved:', data)
-          
+
           // Update streak display (but don't show animation)
           if (data.streak !== undefined) {
             setStreak(data.streak)

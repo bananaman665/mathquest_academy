@@ -655,10 +655,6 @@ function generateQuestion(
         num2 = rng.nextInt(numberRange.min, numberRange.max)
       }
       answer = num1 + num2
-      // Debug logging for addition with 0
-      if (process.env.NODE_ENV === 'development' && (num2 === 0 || num1 === 0)) {
-        console.log(`[DEBUG] Addition: ${num1} + ${num2} = ${answer}`)
-      }
       break
 
     case 'subtraction':
@@ -1321,9 +1317,6 @@ function generateQuestionByType(
         questionText = `What number comes after ${num1}?`
         blanks = [{ text: `${num1}, ___`, answer: String(answer) }]
         explanationText = `The number after ${num1} is ${answer}`
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[FILL-BLANK-COUNTING] Question: "${questionText}", Answer: ${answer}`)
-        }
       } else if (operation === 'place-value') {
         // Place value questions
         const placeNames = { 1: 'ones', 10: 'tens', 100: 'hundreds' }

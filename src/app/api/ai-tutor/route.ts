@@ -92,8 +92,6 @@ export const POST = withErrorHandling(async (req: Request) => {
     // Fallback to simple explanation generator if OpenAI fails
     const fallbackExplanation = generateFallbackExplanation(question, correctAnswer, userAnswer, userQuestion)
 
-    console.log('Using fallback explanation:', fallbackExplanation)
-
     return apiSuccess({
       explanation: fallbackExplanation,
       fallback: true,
