@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
               <li>We use industry-standard security measures to protect children&apos;s data</li>
             </ul>
             <p className="text-gray-700 leading-relaxed">
-              If you are a parent or guardian and believe your child has provided us with personal information without your consent, please contact us at <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a>.
+              If you are a parent or guardian and believe your child has provided us with personal information without your consent, please contact us at <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a>.
             </p>
           </section>
 
@@ -135,7 +135,7 @@ export default function PrivacyPolicy() {
               <li><strong>Data Portability:</strong> Request your data in a machine-readable format</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
-              To exercise these rights, please contact us at <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a>.
+              To exercise these rights, please contact us at <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a>.
             </p>
           </section>
 
@@ -181,8 +181,8 @@ export default function PrivacyPolicy() {
               If you have any questions about this Privacy Policy or our privacy practices, please contact us:
             </p>
             <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:privacy@mathly.app" className="text-blue-600 hover:underline">privacy@mathly.app</a></p>
-              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:support@mathly.app" className="text-blue-600 hover:underline">support@mathly.app</a></p>
+              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a></p>
+              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a></p>
             </div>
           </section>
 

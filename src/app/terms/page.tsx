@@ -237,8 +237,8 @@ export default function TermsOfService() {
               If you have any questions about these Terms of Service, please contact us:
             </p>
             <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:legal@mathlify.app" className="text-blue-600 hover:underline">legal@mathlify.app</a></p>
-              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:support@mathlify.app" className="text-blue-600 hover:underline">support@mathlify.app</a></p>
+              <p className="text-gray-700"><strong>Email:</strong> <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a></p>
+              <p className="text-gray-700 mt-2"><strong>Support:</strong> <a href="mailto:andrewsahakian9@gmail.com" className="text-blue-600 hover:underline">andrewsahakian9@gmail.com</a></p>
             </div>
           </section>
 
