@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 import { checkStreakExpiration } from '@/lib/streak'
 import { prisma } from '@/lib/prisma'
 
@@ -358,12 +359,7 @@ export default async function LearnPage() {
       <aside className="hidden md:flex w-40 lg:w-64 bg-white border-r border-gray-200 fixed h-full flex-col text-xs lg:text-base">
         {/* Logo */}
         <div className="p-6">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center shadow-md">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-black text-green-600">Mathly</span>
-          </Link>
+          <Logo size="md" showText={true} href="/dashboard" />
         </div>
 
         {/* Navigation */}

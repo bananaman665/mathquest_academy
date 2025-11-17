@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Home, Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles } from 'lucide-react'
+import { Menu, X, Home, Trophy, Target, ShoppingBag, User, MoreHorizontal } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 interface MobileSidebarProps {
   currentPage: 'learn' | 'leaderboards' | 'quests' | 'shop' | 'profile' | 'dashboard'
@@ -55,12 +56,9 @@ export default function MobileSidebar({ currentPage }: MobileSidebarProps) {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6">
-            <Link href="/dashboard" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
-              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-black text-green-600">Mathly</span>
-            </Link>
+            <div onClick={() => setIsOpen(false)}>
+              <Logo size="md" showText={true} href="/dashboard" />
+            </div>
           </div>
 
           {/* Navigation */}
