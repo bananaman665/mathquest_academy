@@ -687,11 +687,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   return (
     <div className="min-h-screen bg-white flex flex-col max-w-full">
       {/* Progress Bar */}
-      <div className="w-full h-4 bg-gray-200 fixed top-0 left-0 right-0 z-50 mt-safe">
+      <div className="w-full h-4 bg-gray-200 fixed safe-top left-0 right-0 z-50">
         <div className="bg-green-500 h-4 transition-all duration-500" style={{ width: `${progress}%` }} />
       </div>
 
-      <header className="px-4 py-4 border-b border-gray-200 bg-white fixed top-4 left-0 right-0 z-40 pt-safe-header">
+      <header className="px-4 py-4 border-b border-gray-200 bg-white fixed left-0 right-0 z-40" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 1rem)' }}>
         <div className="max-w-5xl mx-auto flex justify-between items-center gap-2">
           <button
             onClick={() => setShowQuitConfirm(true)}
@@ -766,7 +766,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32 pt-32">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 6rem)' }}>
         <div className="w-full max-w-3xl">
           {!currentQuestion ? (
             <div className="text-center py-10">

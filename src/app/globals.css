@@ -148,3 +148,8 @@ textarea {
 .oauth-page-wrapper .cl-card {
   margin-top: max(env(safe-area-inset-top), 20px);
 }
+
+/* Safe area utility for fixed elements */
+.safe-top {
+  top: env(safe-area-inset-top, 0px);
+}
