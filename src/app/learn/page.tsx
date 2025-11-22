@@ -232,7 +232,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
       bgColor: 'bg-gray-300',
       textColor: 'text-gray-600',
       borderColor: 'border-gray-400',
-      clickable: false,
+      clickable: true, // Allow testing locked lessons
       opacity: 'opacity-60',
       animate: false,
       shadowColor: 'shadow-gray-400/30'
