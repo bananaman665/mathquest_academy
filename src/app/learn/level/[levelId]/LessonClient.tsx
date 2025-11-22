@@ -775,19 +775,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
           ) : (
             <>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-gray-700 font-bold text-sm uppercase tracking-wide">
-              {currentQuestion.type === 'visual-count' ? 'Count the items' : 
-               currentQuestion.type === 'number-sequence' ? 'Number sequence' : 
-               currentQuestion.type === 'type-answer' ? 'Type your answer' :
-               currentQuestion.type === 'match-equation' ? 'Match equations' : 'Math question'}
-            </span>
-          </div>
-
-
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-10 leading-tight">{currentQuestion.question}</h2>
 
           {/* Hints Display */}
