@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Award, TrendingUp, Calendar, Flame, BookOpen, Zap, Star } from 'lucide-react'
+import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Award, TrendingUp, Calendar, Flame, BookOpen, Zap, Star, CheckCircle, Lock } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
@@ -113,11 +113,11 @@ export default async function ProfilePage() {
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8 pt-32">
+        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-20 md:pb-8 pt-28">
           {/* Profile Header */}
-          <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 md:p-8 mb-8 text-white">
+          <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-5 md:p-7 mb-8 text-white">
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-              <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
                 <User className="w-10 h-10 md:w-12 md:h-12 text-blue-600" />
               </div>
               <div className="flex-1 text-center md:text-left">
@@ -146,7 +146,7 @@ export default async function ProfilePage() {
 
           {/* Statistics Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               <div className="flex items-center justify-between mb-2">
                 <TrendingUp className="w-8 h-8 text-green-600" />
                 <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-full">+12%</span>
@@ -155,7 +155,7 @@ export default async function ProfilePage() {
               <p className="text-3xl font-black text-gray-900">{accuracy}%</p>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               <div className="flex items-center justify-between mb-2">
                 <Calendar className="w-8 h-8 text-blue-600" />
               </div>
@@ -163,7 +163,7 @@ export default async function ProfilePage() {
               <p className="text-3xl font-black text-gray-900">{Math.max(dbUser.streak || 0, levelsCompleted)}</p>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               <div className="flex items-center justify-between mb-2">
                 <Flame className="w-8 h-8 text-orange-600" />
               </div>
@@ -171,7 +171,7 @@ export default async function ProfilePage() {
               <p className="text-3xl font-black text-gray-900">{dbUser.streak || 0}</p>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               <div className="flex items-center justify-between mb-2">
                 <Award className="w-8 h-8 text-purple-600" />
               </div>
@@ -186,7 +186,7 @@ export default async function ProfilePage() {
               <Trophy className="w-8 h-8 text-yellow-600" />
               <h2 className="text-2xl font-black text-gray-900">Badges</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
               {achievements.map((achievement) => {
                 const AchievementIcon = achievement.icon
                 
@@ -207,13 +207,15 @@ export default async function ProfilePage() {
                         <h3 className="font-bold text-gray-900 mb-1">{achievement.name}</h3>
                         <p className="text-sm text-gray-600">{achievement.description}</p>
                         {achievement.unlocked && (
-                          <span className="inline-block text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full mt-2">
-                            ✓ Unlocked
+                          <span className="inline-flex items-center gap-1 text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full mt-2">
+                            <CheckCircle className="w-3 h-3" />
+                            Unlocked
                           </span>
                         )}
                         {!achievement.unlocked && (
-                          <span className="inline-block text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full mt-2">
-                            🔒 Locked
+                          <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full mt-2">
+                            <Lock className="w-3 h-3" />
+                            Locked
                           </span>
                         )}
                       </div>
@@ -230,7 +232,7 @@ export default async function ProfilePage() {
               <Calendar className="w-8 h-8 text-blue-600" />
               <h2 className="text-2xl font-black text-gray-900">Recent Activity</h2>
             </div>
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               {levelsCompleted > 0 ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-4 pb-4 border-b border-gray-200">
@@ -290,7 +292,7 @@ export default async function ProfilePage() {
               <User className="w-8 h-8 text-gray-700" />
               <h2 className="text-2xl font-black text-gray-900">Account Settings</h2>
             </div>
-            <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
+            <div className="bg-white border-2 border-gray-200 rounded-2xl p-5 md:p-7">
               {/* Sign Out Button - Moved to top for visibility */}
               <div className="mb-6 pb-6 border-b border-gray-200">
                 <SignOutButton />

@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, Flame } from 'lucide-react'
+import { Trophy, Target, ShoppingBag, User, MoreHorizontal, Sparkles, Home, Zap, Flame, Gem, Gift } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
@@ -90,13 +90,13 @@ export default async function QuestsPage() {
           <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <h1 className="text-2xl font-black text-gray-900">Daily Quests</h1>
-              <div className="flex items-center gap-3 md:gap-6">
+              <div className="flex items-center gap-4 md:gap-6">
                 <div className="flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-xl">
                   <Flame className="w-6 h-6 text-orange-600 animate-pulse" />
                   <span className="font-bold text-orange-600">{dbUser.streak || 0}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-xl">
-                  <span className="text-2xl">💎</span>
+                  <Gem className="w-6 h-6 text-blue-600" />
                   <span className="font-bold text-blue-600">{dbUser.totalXP || 0}</span>
                 </div>
               </div>
@@ -104,11 +104,11 @@ export default async function QuestsPage() {
           </div>
         </header>
 
-        <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8">
+        <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 pb-20 md:pb-8">
           {/* Info Banner */}
-          <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-6 mb-8">
+          <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-4 md:p-6 mb-8">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -125,7 +125,9 @@ export default async function QuestsPage() {
 
           {/* Coming Soon Section */}
           <div className="mt-12 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-8 text-center">
-            <div className="text-6xl mb-4">🎁</div>
+            <div className="flex justify-center mb-4">
+              <Gift className="w-16 h-16 text-purple-600" />
+            </div>
             <h3 className="text-2xl font-black text-gray-900 mb-2">Weekly Challenges Coming Soon!</h3>
             <p className="text-gray-600">
               Complete special weekly challenges for even bigger rewards

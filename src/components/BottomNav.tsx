@@ -18,7 +18,7 @@ export default function BottomNav({ currentPage }: BottomNavProps) {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 z-50 shadow-lg">
-      <div className="flex items-center justify-around px-2 py-2 pb-safe">
+      <div className="flex items-center justify-around px-3 py-3 pb-safe">
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = currentPage === item.id
@@ -27,7 +27,7 @@ export default function BottomNav({ currentPage }: BottomNavProps) {
             <Link
               key={item.id}
               href={item.href}
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 min-w-[60px] ${
+              className={`flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl transition-all duration-200 min-w-[60px] ${
                 isActive 
                   ? 'text-green-600' 
                   : 'text-gray-500 active:text-green-600'

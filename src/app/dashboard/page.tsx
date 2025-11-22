@@ -55,7 +55,7 @@ async function DashboardContent() {
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4 pt-14 sm:pt-4">
+          <div className="flex justify-between items-center py-4 pt-safe-header">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Sparkles className="w-6 h-6 text-white" />
@@ -75,7 +75,7 @@ async function DashboardContent() {
       </header>
 
       {/* Dashboard Content */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-24">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-20">
         {/* Welcome Message */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-purple-50 border border-purple-200 px-6 py-3 rounded-full mb-6">
@@ -91,8 +91,8 @@ async function DashboardContent() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 mb-12">
+          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Current Level</p>
@@ -102,7 +102,7 @@ async function DashboardContent() {
                 <Target className="w-7 h-7 text-white" />
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-6">
               <div className="bg-gray-200 rounded-full h-3 overflow-hidden">
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }}></div>
               </div>
@@ -110,7 +110,7 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Total XP</p>
@@ -122,7 +122,7 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Current Streak</p>
@@ -134,7 +134,7 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Achievements</p>

@@ -70,7 +70,7 @@ export default async function AchievementsPage() {
             <p className="text-gray-600 text-lg">
               {earnedAchievements.length} of {achievements.length} unlocked
             </p>
-            <div className="w-full bg-gray-200 rounded-full h-3 mt-4">
+            <div className="w-full bg-gray-200 rounded-full h-3 mt-4 mb-6">
               <div
                 className="bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full transition-all duration-500"
                 style={{ width: `${achievements.length > 0 ? (earnedAchievements.length / achievements.length) * 100 : 0}%` }}
@@ -79,7 +79,7 @@ export default async function AchievementsPage() {
           </div>
         </div>
 
-        <div className="pt-48 px-4 pb-4">
+        <div className="pt-32 px-4 pb-4">
         {/* Badge Categories */}
         <div className="grid gap-8">
           {/* Earned Badges */}
@@ -103,13 +103,13 @@ export default async function AchievementsPage() {
                 </Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {earnedAchievements.map((achievement) => {
                   const BadgeIcon = achievement.icon
                   return (
                     <div
                       key={achievement.id}
-                      className={`border-2 rounded-xl p-6 ${getCategoryColor(achievement.category)} relative overflow-hidden shadow-md`}
+                      className={`border-2 rounded-xl p-5 ${getCategoryColor(achievement.category)} relative overflow-hidden shadow-md`}
                     >
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200">
@@ -122,8 +122,9 @@ export default async function AchievementsPage() {
                         <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">
-                          ✓ Unlocked
+                        <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" />
+                          Unlocked
                         </span>
                         <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
                           {achievement.category}
@@ -143,13 +144,13 @@ export default async function AchievementsPage() {
                 <Lock className="w-6 h-6 text-gray-400" />
                 Locked Badges ({lockedAchievements.length})
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {lockedAchievements.map((achievement) => {
                   const BadgeIcon = achievement.icon
                   return (
                     <div
                       key={achievement.id}
-                      className="border-2 border-gray-300 bg-gray-50 rounded-xl p-6 relative overflow-hidden opacity-75"
+                      className="border-2 border-gray-300 bg-gray-50 rounded-xl p-5 relative overflow-hidden opacity-75"
                     >
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gray-200 border-2 border-gray-300">
@@ -162,8 +163,9 @@ export default async function AchievementsPage() {
                         <Lock className="w-6 h-6 text-gray-400 flex-shrink-0" />
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">
-                          🔒 Locked
+                        <span className="text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full flex items-center gap-1">
+                          <Lock className="w-3 h-3" />
+                          Locked
                         </span>
                         <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
                           {achievement.category}
@@ -213,7 +215,7 @@ export default async function AchievementsPage() {
         </div>
 
         {/* Back to Dashboard */}
-        <div className="text-center mt-8 pb-24 md:pb-8">
+        <div className="text-center mt-8 pb-20 md:pb-8">
           <Link
             href="/dashboard"
             className="inline-block bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-all"

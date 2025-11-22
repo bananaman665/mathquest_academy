@@ -175,26 +175,26 @@ function getLevelStatus(levelId: number, userCurrentLevel: number, completedLeve
 
 // Helper function to determine if level is a special challenge (Duolingo-style)
 // Pattern: Every 4th level is special (3 normal + 1 special, repeating)
-function getSpecialLevelType(levelId: number): { isSpecial: boolean; type: string; emoji: string; color: string } | null {
+function getSpecialLevelType(levelId: number): { isSpecial: boolean; type: string; color: string } | null {
   // Only every 4th level is special
   if (levelId % 4 === 0) {
     // Cycle through different special modes for variety
     const cyclePosition = Math.floor(levelId / 4) % 4
-    
+
     switch (cyclePosition) {
       case 0:
-        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'bg-yellow-500' }
+        return { isSpecial: true, type: 'Speed Round', color: 'bg-yellow-500' }
       case 1:
-        return { isSpecial: true, type: 'Lightning', emoji: '⚡', color: 'bg-blue-500' }
+        return { isSpecial: true, type: 'Lightning', color: 'bg-blue-500' }
       case 2:
-        return { isSpecial: true, type: 'Perfect Streak', emoji: '🔥', color: 'bg-orange-500' }
+        return { isSpecial: true, type: 'Perfect Streak', color: 'bg-orange-500' }
       case 3:
-        return { isSpecial: true, type: 'Boss Battle', emoji: '', color: 'bg-red-500' }
+        return { isSpecial: true, type: 'Boss Battle', color: 'bg-red-500' }
       default:
-        return { isSpecial: true, type: 'Speed Round', emoji: '⚡', color: 'bg-yellow-500' }
+        return { isSpecial: true, type: 'Speed Round', color: 'bg-yellow-500' }
     }
   }
-  
+
   // Levels 1, 2, 3, 5, 6, 7, 9, 10, 11, etc. are normal
   return null
 }
@@ -246,7 +246,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
   const specialLevel = getSpecialLevelType(level.id)
 
   return (
-    <div className={`w-full max-w-xs ${positionClasses[position]} mb-6 sm:mb-8`}>
+    <div className={`w-full max-w-xs ${positionClasses[position]} mb-8`}>
       {config.clickable ? (
         <Link
           href={`/learn/level/${level.id}`}
@@ -254,7 +254,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             block relative
             ${specialLevel ? specialLevel.color : config.bgColor}
             ${config.opacity}
-            rounded-xl sm:rounded-2xl p-4 sm:p-6
+            rounded-xl sm:rounded-2xl p-3 sm:p-5
             border-3 sm:border-4 ${specialLevel ? 'border-yellow-400' : config.borderColor}
             shadow-lg sm:shadow-xl ${config.shadowColor}
             transform transition-all duration-300 ease-in-out
@@ -291,7 +291,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           block relative
           ${config.bgColor}
           ${config.opacity}
-          rounded-xl sm:rounded-2xl p-4 sm:p-6
+          rounded-xl sm:rounded-2xl p-3 sm:p-5
           border-3 sm:border-4 ${config.borderColor}
           shadow-lg
         `}>
@@ -309,11 +309,6 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           </p>
         </div>
       )}
-      
-      {/* Connection Line to Next Level - Hidden on mobile, visible md+ */}
-      <div className="hidden md:flex justify-center mt-4">
-        <div className="w-1 h-8 bg-gray-300 rounded-full"></div>
-      </div>
     </div>
   )
 }
@@ -431,7 +426,7 @@ export default async function LearnPage() {
         <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-safe pb-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-wrap">
+              <div className="flex items-center gap-3 sm:gap-6 flex-wrap">
                 <div className="flex items-center gap-2 bg-orange-100 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
                   <Flame className="w-4 sm:w-5 h-4 sm:h-5 text-orange-600 animate-pulse" />
                   <span className="font-bold text-orange-600 text-sm sm:text-base">{dbUser.streak || 0}</span>
@@ -456,9 +451,9 @@ export default async function LearnPage() {
         </header>
 
         {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header + safe area */}
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-40 sm:pt-32 py-6 sm:py-8 pb-24 md:pb-8">
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-28 sm:pt-24 py-6 sm:py-8 pb-20 md:pb-8">
           {/* Welcome Banner - Responsive */}
-          <div className="relative overflow-hidden bg-green-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
+          <div className="relative overflow-hidden bg-green-50 border-2 border-green-200 rounded-2xl p-3 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
             {/* Decorative background elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-200/30 rounded-full blur-2xl"></div>

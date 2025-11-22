@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper } from 'lucide-react'
+import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle } from 'lucide-react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface ShopItem {
@@ -122,7 +122,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
 
       // Success!
       playCorrect()
-      setSuccessMessage(`✨ ${data.message}`)
+      setSuccessMessage(data.message)
       setTimeout(() => setSuccessMessage(null), 4000)
 
     } catch (error) {
@@ -138,7 +138,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
   return (
     <div>
       {/* Balance Display */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-4 md:p-6 mb-8">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-600 font-semibold mb-1">Your Balance</p>
@@ -179,11 +179,11 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
             return (
               <div
                 key={item.id}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 md:p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
               >
                 <div className="text-center mb-4">
                   <div className="mb-4 flex justify-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
                       <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
                     </div>
                   </div>
@@ -191,14 +191,15 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
 
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
                     <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
                     <p className="text-lg font-black text-yellow-800">{item.price}</p>
                   </div>
                   {canAfford ? (
-                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse">
-                      ✓ Can afford
+                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      Can afford
                     </span>
                   ) : (
                     <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
@@ -251,11 +252,11 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
             return (
               <div
                 key={item.id}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 md:p-6 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
               >
                 <div className="text-center mb-4">
                   <div className="mb-4 flex justify-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
                       <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
                     </div>
                   </div>
@@ -263,14 +264,15 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
 
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
                     <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
                     <p className="text-lg font-black text-yellow-800">{item.price}</p>
                   </div>
                   {canAfford ? (
-                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse">
-                      ✓ Can afford
+                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      Can afford
                     </span>
                   ) : (
                     <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">

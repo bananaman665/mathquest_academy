@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { PartyPopper, X } from 'lucide-react'
 
 interface NumberLinePlacementProps {
@@ -32,27 +31,6 @@ export default function NumberLinePlacement({
       setLineWidth(lineRef.current.offsetWidth)
     }
   }, [])
-
-  const handleDragEnd = (result: DropResult) => {
-    const { source, destination } = result
-
-    if (!destination || !lineRef.current) return
-
-    // Calculate which number was dropped based on position
-    const rect = lineRef.current.getBoundingClientRect()
-    const dropX = destination.droppableId === 'number-line' ? parseInt(destination.droppableId.split('-')[2] || '0') : 0
-
-    // More sophisticated calculation based on where they dropped
-    if (source.droppableId === 'staging' && destination.droppableId.startsWith('number-line')) {
-      // Extract position from drop coordinates
-      const range = numberLineMax - numberLineMin
-      const relativeX = parseInt(destination.droppableId.split('-')[2] || '0')
-      const number = Math.round(numberLineMin + (relativeX / 100) * range)
-
-      setDraggedPosition(number)
-      setPlacedNumber(number)
-    }
-  }
 
   const handleLineClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!lineRef.current) return
@@ -101,40 +79,9 @@ export default function NumberLinePlacement({
       <div className="text-center">
         <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
         <p className="text-gray-300 text-lg">
-          Tap or drag the <span className="font-bold text-blue-400">{correctPosition}</span> to its correct position on the number line
+          Tap where <span className="font-bold text-blue-400">{correctPosition}</span> should go on the number line
         </p>
       </div>
-
-      {/* Staging Area */}
-      <Droppable droppableId="staging">
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={`flex justify-center p-6 rounded-lg border-2 transition-colors ${
-              snapshot.isDraggingOver
-                ? 'border-green-400 bg-green-500/10'
-                : 'border-slate-600 bg-slate-800/50'
-            }`}
-          >
-            <Draggable draggableId={`number-${correctPosition}`} index={0}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  className={`w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full shadow-lg border-2 border-blue-300 flex items-center justify-center cursor-grab transition-all ${
-                    snapshot.isDragging ? 'opacity-50 shadow-2xl scale-110' : 'hover:shadow-xl'
-                  }`}
-                >
-                  <span className="text-2xl font-bold text-white">{correctPosition}</span>
-                </div>
-              )}
-            </Draggable>
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
 
       {/* Number Line */}
       <div className="w-full max-w-2xl">

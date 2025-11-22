@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Consistent spacing scale */
+  --spacing-xs: 0.5rem;  /* 8px */
+  --spacing-sm: 0.75rem; /* 12px */
+  --spacing-md: 1rem;    /* 16px */
+  --spacing-lg: 1.5rem;  /* 24px */
+  --spacing-xl: 2rem;    /* 32px */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,11 +118,23 @@ textarea {
 
 /* Safe area insets for different phone models */
 .pt-safe {
-  padding-top: max(env(safe-area-inset-top), 3rem);
+  padding-top: max(env(safe-area-inset-top), 2rem);
 }
 
 .pt-safe-header {
   padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+}
+
+.mt-safe {
+  margin-top: env(safe-area-inset-top);
+}
+
+.px-safe {
+  padding-inline: max(env(safe-area-inset-left), 1rem) max(env(safe-area-inset-right), 1rem);
+}
+
+.pb-safe-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 5rem);
 }
 
 /* Special class for OAuth pages to push content below notch */

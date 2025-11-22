@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Check, X, Heart, Sparkles, ArrowRight, Target } from 'lucide-react'
+import { Check, X, Heart, Sparkles, ArrowRight, Target, CheckCircle, XCircle } from 'lucide-react'
 import { placementTestQuestions, calculatePlacementLevel, getPlacementTestFeedback } from '@/data/placementTest'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
@@ -90,7 +90,7 @@ export default function PlacementTestClient() {
               <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Target className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">Placement Test 🎯</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">Placement Test</h1>
               <p className="text-xl text-gray-600">Find your perfect starting point!</p>
             </div>
 
@@ -107,19 +107,19 @@ export default function PlacementTestClient() {
                 <h3 className="text-lg font-bold text-gray-900 mb-3">What to expect:</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">✓</span>
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <span>10 questions covering counting, addition, and subtraction</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">✓</span>
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <span>Takes about 3-5 minutes</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">✓</span>
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <span>Questions get progressively harder</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">✓</span>
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <span>We&apos;ll recommend the best starting level for you</span>
                   </li>
                 </ul>
@@ -204,7 +204,7 @@ export default function PlacementTestClient() {
                 onClick={handleAcceptPlacement}
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105"
               >
-                Start at Level {recommendedLevel} 🚀
+                Start at Level {recommendedLevel}
               </button>
               
               <Link
@@ -220,87 +220,129 @@ export default function PlacementTestClient() {
     )
   }
 
-  // TEST PHASE - Duolingo Style
+  // TEST PHASE - Clean White Design
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-800 to-slate-900 flex flex-col">
-      <div className="w-full bg-slate-700 h-1">
-        <div className="bg-purple-500 h-1 transition-all duration-500" style={{ width: `${progress}%` }} />
+    <div className="min-h-screen bg-white flex flex-col max-w-full">
+      {/* Progress Bar */}
+      <div className="w-full h-4 bg-gray-200 fixed top-0 left-0 right-0 z-50 mt-safe">
+        <div className="bg-green-500 h-4 transition-all duration-500" style={{ width: `${progress}%` }} />
       </div>
 
-      <header className="px-4 py-4">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <Link href="/placement-test" onClick={() => setPhase('intro')} className="text-slate-400 hover:text-white transition-colors">
+      <header className="px-4 py-4 border-b border-gray-200 bg-white fixed top-4 left-0 right-0 z-40 pt-safe-header">
+        <div className="max-w-5xl mx-auto flex justify-between items-center gap-2">
+          <Link href="/placement-test" onClick={() => setPhase('intro')} className="text-gray-400 hover:text-gray-700 transition-colors">
             <X className="w-8 h-8" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-red-50 px-3 py-1.5 rounded-xl">
             <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-            <span className="text-red-500 font-bold text-xl">{hearts}</span>
+            <span className="text-red-600 font-bold text-xl">{hearts}</span>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32 pt-32">
         <div className="w-full max-w-3xl">
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <span className="text-purple-400 font-bold text-sm uppercase tracking-wide">
+            <span className="text-gray-500 font-bold text-sm uppercase tracking-wide">
               Question {currentQuestionIndex + 1} of {placementTestQuestions.length}
             </span>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-12">{currentQuestion.question}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-12">{currentQuestion.question}</h2>
 
-          {currentQuestion.visualContent && (
-            <div className="bg-slate-700/50 rounded-2xl p-8 mb-12 border-2 border-slate-600">
+          {currentQuestion.visualContent && currentQuestion.type === 'visual-count' ? (
+            <div className="bg-gray-50 rounded-2xl p-8 mb-12 border-2 border-gray-200">
+              <p className="text-center text-gray-600 font-semibold mb-6">Tap the correct number of boxes</p>
+              <div className="grid grid-cols-5 gap-3 max-w-md mx-auto">
+                {Array.from({ length: 10 }).map((_, index) => {
+                  const boxNumber = index + 1
+                  const isSelected = selectedAnswer === boxNumber.toString()
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerSelect(boxNumber.toString())}
+                      disabled={showExplanation}
+                      className={`
+                        aspect-square rounded-xl border-4 transition-all duration-200
+                        ${isSelected
+                          ? 'bg-blue-500 border-blue-600 scale-110 shadow-lg'
+                          : 'bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50'
+                        }
+                        ${showExplanation && boxNumber.toString() === currentQuestion.correctAnswer
+                          ? 'bg-green-500 border-green-600'
+                          : ''
+                        }
+                        ${showExplanation && isSelected && boxNumber.toString() !== currentQuestion.correctAnswer
+                          ? 'bg-red-500 border-red-600'
+                          : ''
+                        }
+                        disabled:cursor-not-allowed
+                      `}
+                    >
+                      <span className={`text-2xl font-bold ${isSelected || showExplanation ? 'text-white' : 'text-gray-700'}`}>
+                        {boxNumber}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+              <div className="mt-6 text-center">
+                <p className="text-sm text-gray-500">Count: {currentQuestion.visualContent}</p>
+              </div>
+            </div>
+          ) : currentQuestion.visualContent ? (
+            <div className="bg-gray-50 rounded-2xl p-8 mb-12 border-2 border-gray-200">
               <div className="flex flex-wrap justify-center items-center gap-2 max-w-xl mx-auto">
                 {currentQuestion.visualContent.split('').map((char, index) => (
                   <span key={index} className="text-5xl">{char}</span>
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
 
-          <div className="grid grid-cols-2 gap-4 mb-8">
+          <div className={`grid grid-cols-2 gap-4 mb-8 ${currentQuestion.type === 'visual-count' ? 'hidden' : ''}`}>
             {currentQuestion.options.map((option, index) => {
               const isSelected = selectedAnswer === option
               const isCorrectOption = option === currentQuestion.correctAnswer
-              
+
               let cardClass = "relative p-8 rounded-2xl border-4 transition-all duration-200 cursor-pointer "
-              
+
               if (showExplanation) {
                 if (isCorrectOption) {
-                  cardClass += "bg-green-600 border-green-500 shadow-lg shadow-green-500/50"
+                  cardClass += "bg-green-50 border-green-500 shadow-lg"
                 } else if (isSelected && !isCorrect) {
-                  cardClass += "bg-red-600 border-red-500 shadow-lg shadow-red-500/50"
+                  cardClass += "bg-red-50 border-red-500 shadow-lg"
                 } else {
-                  cardClass += "bg-slate-700 border-slate-600 opacity-50"
+                  cardClass += "bg-gray-50 border-gray-200 opacity-50"
                 }
               } else {
                 if (isSelected) {
-                  cardClass += "bg-purple-600 border-purple-500 shadow-lg shadow-purple-500/50"
+                  cardClass += "bg-blue-50 border-blue-500 shadow-lg"
                 } else {
-                  cardClass += "bg-slate-700 border-slate-600 hover:border-slate-500 hover:bg-slate-600"
+                  cardClass += "bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50"
                 }
               }
 
               return (
                 <button key={option} onClick={() => handleAnswerSelect(option)} disabled={showExplanation} className={cardClass}>
-                  <div className="absolute top-3 right-3 w-6 h-6 bg-slate-800/50 rounded-full flex items-center justify-center">
-                    <span className="text-xs text-slate-300">{index + 1}</span>
+                  <div className="absolute top-3 right-3 w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
+                    <span className="text-xs text-gray-600 font-bold">{index + 1}</span>
                   </div>
-                  <div className="text-4xl font-bold text-white text-center">{option}</div>
+                  <div className="text-4xl font-bold text-gray-900 text-center">{option}</div>
                   {showExplanation && isCorrectOption && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
                         <Check className="w-10 h-10 text-green-600" />
                       </div>
                     </div>
                   )}
                   {showExplanation && isSelected && !isCorrect && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
                         <X className="w-10 h-10 text-red-600" />
                       </div>
                     </div>
@@ -311,14 +353,14 @@ export default function PlacementTestClient() {
           </div>
 
           {showExplanation && (
-            <div className={`rounded-2xl p-6 mb-8 border-2 ${isCorrect ? 'bg-green-900/30 border-green-500/50' : 'bg-red-900/30 border-red-500/50'}`}>
+            <div className={`rounded-2xl p-6 mb-8 border-2 ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}`}>
               <div className="flex items-start gap-3">
-                {isCorrect ? <Check className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" /> : <X className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />}
+                {isCorrect ? <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" /> : <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />}
                 <div>
-                  <h3 className={`font-bold text-lg mb-2 ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
-                    {isCorrect ? '✓ Correct!' : '✗ Not quite!'}
+                  <h3 className={`font-bold text-lg mb-2 ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                    {isCorrect ? 'Correct!' : 'Not quite!'}
                   </h3>
-                  <p className={isCorrect ? 'text-green-200' : 'text-red-200'}>{currentQuestion.explanation}</p>
+                  <p className={isCorrect ? 'text-green-700' : 'text-red-700'}>{currentQuestion.explanation}</p>
                 </div>
               </div>
             </div>
@@ -326,21 +368,21 @@ export default function PlacementTestClient() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-800 border-t-2 border-slate-700 px-4 py-6">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-6 pb-safe">
         <div className="max-w-5xl mx-auto flex justify-between items-center gap-4">
           {!showExplanation ? (
             <>
-              <button onClick={() => handleNext()} className="px-8 py-3 rounded-xl font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wide">
+              <button onClick={() => handleNext()} className="px-8 py-3 rounded-xl font-bold text-gray-400 hover:text-gray-700 transition-colors uppercase tracking-wide">
                 Skip
               </button>
               <button onClick={handleSubmit} disabled={!selectedAnswer} className={`px-12 py-4 rounded-xl font-bold text-white uppercase tracking-wide transition-all ${
-                selectedAnswer ? 'bg-purple-500 hover:bg-purple-600 shadow-lg hover:shadow-xl' : 'bg-slate-600 cursor-not-allowed opacity-50'
+                selectedAnswer ? 'bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl' : 'bg-gray-300 cursor-not-allowed opacity-50'
               }`}>
                 Check
               </button>
             </>
           ) : (
-            <button onClick={handleNext} className="w-full px-12 py-4 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all shadow-lg hover:shadow-xl">
+            <button onClick={handleNext} className="w-full px-12 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl uppercase tracking-wide transition-all shadow-lg hover:shadow-xl">
               {currentQuestionIndex < placementTestQuestions.length - 1 ? 'Continue' : 'See Results'}
             </button>
           )}

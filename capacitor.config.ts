@@ -6,8 +6,8 @@ const productionUrl = 'https://mathquest-academy.vercel.app';
 // Development URL - use your local network IP for testing on device
 const devUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
 
-// Use production URL by default, set CAPACITOR_DEV=true to use dev server
-const serverUrl = process.env.CAPACITOR_DEV === 'true' ? devUrl : productionUrl;
+// Force production URL for iOS
+const serverUrl = productionUrl; // Changed from: process.env.CAPACITOR_DEV === 'true' ? devUrl : productionUrl;
 
 const config: CapacitorConfig = {
   appId: 'com.mathly.app',

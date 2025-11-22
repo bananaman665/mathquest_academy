@@ -126,11 +126,11 @@ export default async function ShopPage() {
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8 pt-32 sm:pt-28">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-20 md:pb-8 pt-28 sm:pt-24">
           <ShopClient items={itemsWithColors} userBalance={dbUser.totalXP} />
 
           {/* Info Card */}
-          <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-2xl p-6">
+          <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-2xl p-4 md:p-6">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-6 h-6 text-white" />
