@@ -83,6 +83,16 @@ export default function LevelCompletePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pt-safe pb-safe">
+      {/* Loading Spinner Overlay */}
+      {saving && (
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-700 font-semibold">Saving progress...</p>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-2xl w-full my-auto">
         {/* Success Card */}
         <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6 md:p-10 text-center border-2 border-green-200">

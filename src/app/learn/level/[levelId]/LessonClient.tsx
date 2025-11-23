@@ -96,6 +96,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [streakMilestone, setStreakMilestone] = useState(0)
   // For interactive components that need manual CHECK button
   const [interactiveSubmitFn, setInteractiveSubmitFn] = useState<(() => void) | null>(null)
+  // Loading state for async operations
+  const [isProcessing, setIsProcessing] = useState(false)
 
   // Confirmation dialog states
   const [showSkipConfirm, setShowSkipConfirm] = useState(false)
@@ -127,6 +129,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         setGameTimer(prev => {
           if (prev <= 1) {
             // Time's up!
+            setIsProcessing(true)
             router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${currentQuestionIndex + 1}&mode=speed-round`)
             return 0
           }
@@ -259,6 +262,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       // Perfect Streak mode: End if we've got 10 in a row
       if (gameMode === 'perfect-streak' && newStreak >= 10) {
         setTimeout(() => {
+          setIsProcessing(true)
           router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
         }, 1000)
       }
@@ -310,6 +314,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       // Perfect Streak mode: End if we've got 10 in a row
       if (gameMode === 'perfect-streak' && newStreak >= 10) {
         setTimeout(() => {
+          setIsProcessing(true)
           router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
         }, 1000)
       }
@@ -361,6 +366,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       // Perfect Streak mode: End if we've got 10 in a row
       if (gameMode === 'perfect-streak' && newStreak >= 10) {
         setTimeout(() => {
+          setIsProcessing(true)
           router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
         }, 1000)
       }
@@ -497,6 +503,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       // Perfect Streak mode: End if we've got 10 in a row
       if (gameMode === 'perfect-streak' && newStreak >= 10) {
         setTimeout(() => {
+          setIsProcessing(true)
           router.push(`/learn/level/${levelId}/complete?xp=${earnedXP + earnedPoints}&correct=${correctCount + 1}&total=${currentQuestionIndex + 1}&mode=perfect-streak&perfect=true`)
         }, 1000)
       }
@@ -509,6 +516,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       // Perfect Streak mode: End immediately on wrong answer
       if (gameMode === 'perfect-streak') {
         setTimeout(() => {
+          setIsProcessing(true)
           router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${currentQuestionIndex + 1}&mode=perfect-streak&failed=true`)
         }, 2000)
       }
@@ -544,6 +552,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   // Game Over Modal Handlers
   const handleExitLevel = () => {
     stopLevelComplete() // Stop music if playing
+    setIsProcessing(true)
     router.push('/learn')
   }
 
@@ -588,6 +597,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }
       setShowExplanation(false)
     } else {
+      setIsProcessing(true)
       router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${questions.length}`)
     }
   }
@@ -691,6 +701,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   // PRACTICE PHASE - Duolingo-Inspired Clean Theme
   return (
     <div className="min-h-screen bg-white flex flex-col max-w-full">
+      {/* Loading Spinner Overlay */}
+      {isProcessing && (
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-700 font-semibold">Loading...</p>
+          </div>
+        </div>
+      )}
+
       {/* White background extension for safe area */}
       <div className="w-full fixed top-0 left-0 right-0 bg-white z-50" style={{ height: 'calc(env(safe-area-inset-top, 0px) + 1rem + 4px)' }} />
       

@@ -25,20 +25,19 @@ export default function SkipCounter({
   const correct = currentJumps === numJumps;
 
   const handleJump = () => {
-    if (currentJumps < numJumps + 2) {
+    if (currentJumps < numJumps + 2 && !submitted) {
       const nextValue = (currentJumps + 1) * skipBy;
       const newJumpCount = currentJumps + 1;
       setCurrentJumps(newJumpCount);
       setJumpHistory(prev => [...prev, nextValue]);
-      setSubmitted(false);
-      
+
       // Auto-submit when target is reached
       if (newJumpCount === numJumps) {
         setTimeout(() => {
           setSubmitted(true);
           setIsCorrect(true);
           onAnswer(true);
-        }, 500); // Small delay to show the final jump
+        }, 500);
       }
     }
   };
@@ -47,12 +46,7 @@ export default function SkipCounter({
     setCurrentJumps(0);
     setJumpHistory([0]);
     setSubmitted(false);
-  };
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-    setIsCorrect(correct);
-    onAnswer(correct);
+    setIsCorrect(false);
   };
 
   return (
@@ -62,13 +56,13 @@ export default function SkipCounter({
         <div className="text-lg font-medium text-gray-600 mb-2">
           Skip count by {skipBy}s
         </div>
-        <div className="text-3xl font-bold text-purple-600">
+        <div className="text-3xl font-bold text-blue-600">
           {skipBy} × {currentJumps} = {currentValue}
         </div>
       </div>
 
       {/* Number Line */}
-      <div className="relative w-full max-w-4xl h-32 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border-4 border-blue-300 p-4 overflow-x-auto">
+      <div className="relative w-full max-w-4xl h-32 bg-blue-50 rounded-2xl border-4 border-blue-300 p-4 overflow-x-auto">
         <div className="relative h-full flex items-center">
           {/* Number markers */}
           {Array.from({ length: Math.floor(maxValue / skipBy) + 1 }).map((_, i) => {
@@ -84,7 +78,7 @@ export default function SkipCounter({
                 style={{ left: `${position}%`, transform: 'translateX(-50%)' }}
               >
                 {/* Tick mark */}
-                <div className={`w-1 h-8 mx-auto ${isVisited ? 'bg-green-500' : 'bg-gray-300'}`} />
+                <div className={`w-1 h-8 mx-auto ${isVisited ? 'bg-green-600' : 'bg-gray-300'}`} />
                 {/* Number label */}
                 <div className={`text-center mt-1 text-sm font-bold ${
                   isVisited ? 'text-green-600' : 'text-gray-500'
@@ -169,13 +163,13 @@ export default function SkipCounter({
         {jumpHistory.map((value, i) => (
           <motion.div
             key={i}
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: i * 0.1 }}
             className={`px-4 py-2 rounded-lg font-bold text-lg ${
               i === jumpHistory.length - 1
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                : 'bg-green-100 text-green-700'
+                ? 'bg-blue-500 text-white border-2 border-blue-400'
+                : 'bg-green-100 text-green-700 border-2 border-green-300'
             }`}
           >
             {value}
@@ -184,25 +178,27 @@ export default function SkipCounter({
       </div>
 
       {/* Controls */}
-      <div className="flex gap-4">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleJump}
-          disabled={currentJumps >= numJumps + 2}
-          className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl font-bold rounded-full shadow-lg disabled:from-gray-300 disabled:to-gray-400"
-        >
-          Jump! (+{skipBy})
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleReset}
-          className="px-6 py-3 bg-gray-200 text-gray-700 text-lg font-bold rounded-full shadow"
-        >
-          Reset
-        </motion.button>
-      </div>
+      {!submitted && (
+        <div className="flex gap-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleJump}
+            disabled={currentJumps >= numJumps + 2}
+            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
+          >
+            Jump! (+{skipBy})
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleReset}
+            className="px-6 py-4 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 text-lg font-bold rounded-xl shadow transition-colors"
+          >
+            Reset
+          </motion.button>
+        </div>
+      )}
 
       {/* Feedback */}
       {submitted && (
