@@ -656,7 +656,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           {example.number}
                         </div>
                         <div className="flex-1 overflow-x-auto">
-                          <div className="text-2xl sm:text-3xl whitespace-nowrap pb-2">{example.visual}</div>
+                          <div className="text-2xl sm:text-3xl text-black whitespace-nowrap pb-2">{example.visual}</div>
                         </div>
                       </div>
                       <div className="text-base sm:text-lg text-gray-700 font-semibold mt-2 ml-12 sm:ml-16">{example.word}</div>
