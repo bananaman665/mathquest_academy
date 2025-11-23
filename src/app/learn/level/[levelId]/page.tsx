@@ -24,7 +24,7 @@ function getGameModeForLevel(levelId: number): GameMode {
 
 // Helper function to randomly convert questions to type-answer or match-equation
 function randomizeQuestionTypes(questions: Question[]): Question[] {
-  return questions.map((q, index) => {
+  return questions.map((q) => {
     const rand = Math.random()
     
     // Skip randomization for counting questions (they have specific question format)
@@ -69,14 +69,24 @@ function randomizeQuestionTypes(questions: Question[]): Question[] {
     if (rand >= 0.1 && rand < 0.2 && (q.type === 'multiple-choice' || q.type === 'number-sequence') && q.correctAnswer && !isNaN(Number(q.correctAnswer))) {
       const answer = q.correctAnswer
       const num = parseInt(answer)
-      
-      // Create simple equations that equal the answer
+
+      // Create equations with DIFFERENT answers (fixed bug - was all same answer)
+      // Generate 3 different target numbers near the original answer
+      const answer1 = num
+      const answer2 = num + 2
+      const answer3 = Math.max(1, num - 2) // Avoid negative answers
+
+      // Create simple equations that match their respective answers
       const equations = [
-        { equation: `${num} + 0`, answer: answer },
-        { equation: `${num - 1} + 1`, answer: answer },
-        { equation: `${num + 1} - 1`, answer: answer },
-      ].filter(e => parseInt(e.equation.split(/[+\-]/)[0]) >= 0) // Keep only valid equations
-      
+        { equation: `${answer1} + 0`, answer: String(answer1) },
+        { equation: `${answer2 - 1} + 1`, answer: String(answer2) },
+        { equation: `${answer3 + 1} - 1`, answer: String(answer3) },
+      ].filter(e => {
+        // Validate all numbers in equation are positive
+        const parts = e.equation.split(/[+\-]/).map(p => parseInt(p.trim()))
+        return parts.every(p => p >= 0)
+      })
+
       if (equations.length >= 2) {
         return {
           ...q,
