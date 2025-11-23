@@ -1,18 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface SkipCounterProps {
   skipBy: number;
   numJumps: number;
   onAnswer: (correct: boolean) => void;
+  onSubmitReady?: (submitFn: (() => void) | null) => void;
 }
 
 export default function SkipCounter({
   skipBy,
   numJumps,
-  onAnswer
+  onAnswer,
+  onSubmitReady
 }: SkipCounterProps) {
   const [currentJumps, setCurrentJumps] = useState(0);
   const [jumpHistory, setJumpHistory] = useState<number[]>([0]);
@@ -22,7 +24,17 @@ export default function SkipCounter({
   const maxValue = skipBy * numJumps + 10;
   const currentValue = currentJumps * skipBy;
   const targetValue = numJumps * skipBy;
-  const correct = currentJumps === numJumps;
+
+  // Register submit function with parent when student has made jumps
+  useEffect(() => {
+    if (onSubmitReady && !submitted) {
+      if (currentJumps > 0) {
+        onSubmitReady(() => handleSubmit);
+      } else {
+        onSubmitReady(null);
+      }
+    }
+  }, [currentJumps, submitted, onSubmitReady]);
 
   const handleJump = () => {
     if (currentJumps < numJumps + 2 && !submitted) {
@@ -186,38 +198,24 @@ export default function SkipCounter({
 
       {/* Controls */}
       {!submitted && (
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-4">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleJump}
-              disabled={currentJumps >= numJumps + 2}
-              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
-            >
-              Jump! (+{skipBy})
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleReset}
-              className="px-6 py-4 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 text-lg font-bold rounded-xl shadow transition-colors"
-            >
-              Reset
-            </motion.button>
-          </div>
-          {currentJumps > 0 && (
-            <motion.button
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSubmit}
-              className="w-full px-8 py-4 bg-green-500 hover:bg-green-600 text-white text-xl font-bold rounded-xl shadow-lg transition-colors"
-            >
-              Submit Answer
-            </motion.button>
-          )}
+        <div className="flex gap-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleJump}
+            disabled={currentJumps >= numJumps + 2}
+            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
+          >
+            Jump! (+{skipBy})
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleReset}
+            className="px-6 py-4 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 text-lg font-bold rounded-xl shadow transition-colors"
+          >
+            Reset
+          </motion.button>
         </div>
       )}
 

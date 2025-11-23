@@ -1576,6 +1576,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 key={`skip-counter-${currentQuestionIndex}-${currentQuestion.id}`}
                 skipBy={currentQuestion.skipCountBy || 5}
                 numJumps={currentQuestion.skipCountJumps || 4}
+                onSubmitReady={setInteractiveSubmitFn}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
