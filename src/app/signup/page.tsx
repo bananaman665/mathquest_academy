@@ -34,6 +34,14 @@ export default function SignUpPage() {
             Join Mathly
           </h1>
           <p className="text-gray-600">Start your math adventure today!</p>
+          <div className="mt-4">
+            <p className="text-sm text-gray-600">
+              Already have an account?{' '}
+              <Link href="/signin" className="font-semibold text-blue-600 hover:text-blue-700 underline">
+                Sign in here
+              </Link>
+            </p>
+          </div>
         </div>
           </div>
 
