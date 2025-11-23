@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 interface BalanceScaleProps {
@@ -24,6 +24,12 @@ export default function BalanceScale({
 }: BalanceScaleProps) {
   const [userAnswer, setUserAnswer] = useState<number>(0)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+
+  // Reset state when question changes
+  useEffect(() => {
+    setUserAnswer(0)
+    setHasSubmitted(false)
+  }, [question, correctAnswer])
 
   const calculateSideTotal = (side: number[], includeUser: boolean = false) => {
     const values = side.map((val, idx) => 
