@@ -849,59 +849,21 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
 
-                // Define vibrant solid color schemes for each option
-                const colorSchemes = [
-                  {
-                    bg: 'bg-blue-500',
-                    bgHover: 'hover:bg-blue-600',
-                    border: 'border-blue-400',
-                    shadow: 'shadow-blue-500/30',
-                    badge: 'bg-blue-700/80',
-                    ring: 'ring-blue-400'
-                  },
-                  {
-                    bg: 'bg-purple-500',
-                    bgHover: 'hover:bg-purple-600',
-                    border: 'border-purple-400',
-                    shadow: 'shadow-purple-500/30',
-                    badge: 'bg-purple-700/80',
-                    ring: 'ring-purple-400'
-                  },
-                  {
-                    bg: 'bg-pink-500',
-                    bgHover: 'hover:bg-pink-600',
-                    border: 'border-pink-400',
-                    shadow: 'shadow-pink-500/30',
-                    badge: 'bg-pink-700/80',
-                    ring: 'ring-pink-400'
-                  },
-                  {
-                    bg: 'bg-orange-500',
-                    bgHover: 'hover:bg-orange-600',
-                    border: 'border-orange-400',
-                    shadow: 'shadow-orange-500/30',
-                    badge: 'bg-orange-700/80',
-                    ring: 'ring-orange-400'
-                  },
-                ]
-
-                const colors = colorSchemes[index % colorSchemes.length]
-
-                let cardClass = "relative group p-6 sm:p-8 rounded-3xl transition-all duration-300 cursor-pointer overflow-hidden "
+                let cardClass = "relative p-6 sm:p-8 rounded-2xl transition-all duration-200 cursor-pointer "
 
                 if (showExplanation) {
                   if (isCorrectOption) {
-                    cardClass += "bg-green-500 border-4 border-green-400 shadow-2xl shadow-green-500/50 scale-105"
+                    cardClass += "bg-green-600 border-4 border-green-500 shadow-lg"
                   } else if (isSelected && !isCorrect) {
-                    cardClass += "bg-red-500 border-4 border-red-400 shadow-2xl shadow-red-500/50 scale-95"
+                    cardClass += "bg-red-500 border-4 border-red-400 shadow-lg"
                   } else {
-                    cardClass += `${colors.bg} border-4 ${colors.border} opacity-40 scale-95`
+                    cardClass += "bg-green-100 border-4 border-green-200 opacity-50"
                   }
                 } else {
                   if (isSelected) {
-                    cardClass += `${colors.bg} border-4 ${colors.border} shadow-2xl ${colors.shadow} scale-105 ring-4 ${colors.ring}`
+                    cardClass += "bg-green-500 border-4 border-green-400 shadow-xl scale-105"
                   } else {
-                    cardClass += `${colors.bg} ${colors.bgHover} border-4 ${colors.border} shadow-xl ${colors.shadow} hover:scale-105 hover:shadow-2xl active:scale-95`
+                    cardClass += "bg-green-100 hover:bg-green-200 border-4 border-green-300 shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
                   }
                 }
 
@@ -912,25 +874,19 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     disabled={showExplanation}
                     className={cardClass}
                   >
-                    {/* Animated shimmer effect */}
-                    {!showExplanation && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-                    )}
-
                     {/* Option number badge */}
-                    <div className={`absolute top-4 right-4 w-8 h-8 ${colors.badge} backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30 shadow-lg`}>
-                      <span className="text-sm font-black text-white">{index + 1}</span>
+                    <div className="absolute top-3 right-3 w-7 h-7 bg-green-700 rounded-full flex items-center justify-center shadow">
+                      <span className="text-xs font-bold text-white">{index + 1}</span>
                     </div>
 
                     {/* Answer text */}
-                    <div className="relative z-10 text-3xl sm:text-4xl font-black text-white text-center break-words drop-shadow-lg">
+                    <div className={`text-3xl sm:text-4xl font-bold text-center break-words ${
+                      showExplanation
+                        ? (isCorrectOption || (isSelected && !isCorrect)) ? 'text-white' : 'text-green-800'
+                        : isSelected ? 'text-white' : 'text-green-900'
+                    }`}>
                       {option}
                     </div>
-
-                    {/* Selection pulse animation */}
-                    {isSelected && !showExplanation && (
-                      <div className="absolute inset-0 rounded-3xl border-4 border-white/50 animate-ping"></div>
-                    )}
                   </button>
                 )
               })}
