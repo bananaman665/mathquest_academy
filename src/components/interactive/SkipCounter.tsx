@@ -212,7 +212,7 @@ export default function SkipCounter({
           }`}
         >
           <div className="text-4xl mb-2">{isCorrect ? '🎉' : '🤔'}</div>
-          <div className="text-xl font-bold">
+          <div className="text-xl font-bold text-gray-900">
             {isCorrect ? (
               <>
                 Perfect! {numJumps} jumps of {skipBy} = {targetValue}!
