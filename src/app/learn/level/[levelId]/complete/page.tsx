@@ -82,75 +82,128 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pt-safe pb-safe">
-      <div className="max-w-2xl w-full my-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 flex items-center justify-center p-3 sm:p-4 md:p-6 pt-safe pb-safe relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-yellow-200 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-200 rounded-full blur-3xl opacity-40 animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse delay-500"></div>
+      </div>
+
+      <div className="max-w-2xl w-full my-auto relative z-10">
         {/* Success Card */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 text-center">
-          {/* Trophy Icon */}
-          <div className="mb-3 sm:mb-4 md:mb-6">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-yellow-400 rounded-full flex items-center justify-center mx-auto shadow-lg">
-              <Trophy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
+        <div className="bg-white rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 text-center relative overflow-hidden border-4 border-purple-200">
+          {/* Decorative corner elements */}
+          <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-br-full opacity-50"></div>
+          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-300 to-pink-300 rounded-bl-full opacity-50"></div>
+
+          {/* Trophy Icon with celebration */}
+          <div className="mb-4 sm:mb-6 relative">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto shadow-2xl animate-bounce border-4 border-yellow-300">
+              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-white drop-shadow-lg" strokeWidth={2.5} />
             </div>
+            {/* Sparkles around trophy */}
+            <Sparkles className="absolute top-0 right-1/4 w-8 h-8 text-yellow-400 animate-pulse" />
+            <Sparkles className="absolute bottom-0 left-1/4 w-6 h-6 text-pink-400 animate-pulse delay-300" />
+            <Star className="absolute top-1/4 right-1/3 w-6 h-6 text-purple-400 fill-purple-400 animate-pulse delay-500" />
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-1 sm:mb-2 md:mb-4 flex items-center justify-center gap-3">
-            Level Complete! <PartyPopper className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-600" />
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-2 sm:mb-3 flex items-center justify-center gap-3 flex-wrap">
+            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+              Level Complete!
+            </span>
+            <PartyPopper className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-purple-600 animate-bounce" />
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-4 sm:mb-6 md:mb-8 px-2">
+          <p className="text-base sm:text-xl md:text-2xl text-gray-700 mb-6 sm:mb-8 px-2 font-semibold">
             Amazing work! You&apos;re getting better at math!
           </p>
 
-          {/* Stats Grid - Improved mobile spacing */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
+          {/* Stats Grid - Vibrant redesign */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
             {/* XP Earned */}
-            <div className="bg-yellow-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-yellow-300 touch-manipulation">
-              <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-600 mx-auto mb-1 sm:mb-2" />
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-700">{xp}</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-yellow-600 font-medium">XP Earned</div>
+            <div className="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-8 shadow-xl hover:scale-105 transition-transform touch-manipulation border-4 border-yellow-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+              <div className="relative z-10">
+                <div className="bg-white/30 backdrop-blur-sm rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-2 shadow-lg">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white fill-white drop-shadow" />
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-lg">{xp}</div>
+                <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold uppercase tracking-wide">XP Earned</div>
+              </div>
             </div>
 
             {/* Correct Answers */}
-            <div className="bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-green-300 touch-manipulation">
-              <Target className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-600 mx-auto mb-1 sm:mb-2" />
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-green-700">{correct}/{total}</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-green-600 font-medium">Correct</div>
+            <div className="bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-8 shadow-xl hover:scale-105 transition-transform touch-manipulation border-4 border-green-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+              <div className="relative z-10">
+                <div className="bg-white/30 backdrop-blur-sm rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-2 shadow-lg">
+                  <Target className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white drop-shadow" />
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-lg">{correct}/{total}</div>
+                <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold uppercase tracking-wide">Correct</div>
+              </div>
             </div>
 
             {/* Accuracy */}
-            <div className="bg-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border-2 border-blue-300 touch-manipulation">
-              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600 mx-auto mb-1 sm:mb-2" />
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-700">{accuracy}%</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-blue-600 font-medium">Accuracy</div>
+            <div className="bg-gradient-to-br from-blue-400 to-purple-600 rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-8 shadow-xl hover:scale-105 transition-transform touch-manipulation border-4 border-blue-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+              <div className="relative z-10">
+                <div className="bg-white/30 backdrop-blur-sm rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto mb-2 shadow-lg">
+                  <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white fill-white drop-shadow" />
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-lg">{accuracy}%</div>
+                <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold uppercase tracking-wide">Accuracy</div>
+              </div>
             </div>
           </div>
 
-          {/* Performance Message */}
-          <div className="bg-purple-50 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8 border-2 border-purple-200">
+          {/* Performance Message - Vibrant cards */}
+          <div className="mb-6 sm:mb-8">
             {accuracy === 100 ? (
-              <>
-                <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-yellow-500 mx-auto mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Perfect Score!</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-700">You got every question right! You&apos;re a math star!</p>
-              </>
+              <div className="bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-4 border-yellow-300 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="bg-white/30 backdrop-blur-sm rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-3 shadow-xl">
+                    <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-lg" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 drop-shadow-lg">Perfect Score!</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-white/95 font-semibold">You got every question right! You&apos;re a math star!</p>
+                </div>
+              </div>
             ) : accuracy >= 80 ? (
-              <>
-                <Star className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-blue-500 mx-auto mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Great Job!</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-700">You did really well! Keep up the awesome work!</p>
-              </>
+              <div className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-4 border-blue-300 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="bg-white/30 backdrop-blur-sm rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-3 shadow-xl">
+                    <Star className="w-8 h-8 sm:w-10 sm:h-10 text-white fill-white drop-shadow-lg" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 drop-shadow-lg">Great Job!</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-white/95 font-semibold">You did really well! Keep up the awesome work!</p>
+                </div>
+              </div>
             ) : accuracy >= 60 ? (
-              <>
-                <ThumbsUp className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-green-500 mx-auto mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Good Work!</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-700">You&apos;re learning! Practice makes perfect!</p>
-              </>
+              <div className="bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-4 border-green-300 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="bg-white/30 backdrop-blur-sm rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-3 shadow-xl">
+                    <ThumbsUp className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-lg" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 drop-shadow-lg">Good Work!</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-white/95 font-semibold">You&apos;re learning! Practice makes perfect!</p>
+                </div>
+              </div>
             ) : (
-              <>
-                <Zap className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-orange-500 mx-auto mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Keep Trying!</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
-              </>
+              <div className="bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-4 border-orange-300 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="bg-white/30 backdrop-blur-sm rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-3 shadow-xl">
+                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white fill-white drop-shadow-lg" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 drop-shadow-lg">Keep Trying!</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-white/95 font-semibold">Don&apos;t give up! You&apos;ll get better with practice!</p>
+                </div>
+              </div>
             )}
           </div>
 
@@ -192,33 +245,37 @@ export default function LevelCompletePage() {
             </div>
           )}
 
-          {/* Action Buttons - Improved mobile touch targets */}
-          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          {/* Action Buttons - Vibrant redesign */}
+          <div className="space-y-3 sm:space-y-4">
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 touch-manipulation"
+                className="block w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 active:scale-95 text-white font-black py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl transform transition-all duration-200 hover:scale-105 touch-manipulation border-4 border-purple-300 relative overflow-hidden group"
               >
-                <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <span className="relative z-10 flex items-center justify-center gap-3 text-base sm:text-lg md:text-xl drop-shadow-lg">
                   Continue to Next Level
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 touch-manipulation"
+                className="block w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 active:scale-95 text-white font-black py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl transform transition-all duration-200 hover:scale-105 touch-manipulation border-4 border-purple-300 relative overflow-hidden group"
               >
-                <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <span className="relative z-10 flex items-center justify-center gap-3 text-base sm:text-lg md:text-xl drop-shadow-lg">
                   Back to Learn
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
             )}
-            
+
             <Link
               href="/learn"
-              className="block w-full bg-gray-100 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-200 active:scale-95 text-gray-700 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-200 touch-manipulation text-sm sm:text-base"
+              className="block w-full bg-white border-4 border-gray-300 hover:border-purple-400 hover:bg-purple-50 active:scale-95 text-gray-800 font-black py-4 sm:py-5 px-6 sm:px-8 rounded-2xl transition-all duration-200 hover:scale-105 touch-manipulation text-base sm:text-lg shadow-lg"
             >
               Back to Home
             </Link>
