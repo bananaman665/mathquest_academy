@@ -373,6 +373,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }
 
   const handleSubmit = () => {
+    // Prevent submitting if no hearts left
+    if (hearts === 0) {
+      setShowGameOverModal(true)
+      return
+    }
+
     // Handle interactive components with their own submit logic
     if (interactiveSubmitFn && (
       currentQuestion.type === 'array-grid-builder' ||
@@ -385,7 +391,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       interactiveSubmitFn()
       return
     }
-    
+
     let correct = false
     if (currentQuestion.type === 'multiple-choice' || 
         currentQuestion.type === 'audio' || 
@@ -541,13 +547,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     router.push('/learn')
   }
 
-  const handlePayGemsToContinue = async () => {
-    // TODO: Implement gem payment system
-    // For now, just restore 5 hearts
-    setHearts(5)
-    setShowGameOverModal(false)
-    playCorrect()
-  }
 
   // Confirmation handlers
   const handleConfirmSkip = () => {
@@ -561,6 +560,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }
 
   const handleNext = () => {
+    // Prevent advancing if no hearts left
+    if (hearts === 0) {
+      setShowGameOverModal(true)
+      return
+    }
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
       setSelectedAnswer(null)
@@ -1897,75 +1902,94 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
       {/* Game Over Modal - Ran Out of Hearts */}
       {showGameOverModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-black rounded-3xl p-8 max-w-sm w-full shadow-2xl border-2 border-red-500 animate-in scale-95">
-            {/* Close button */}
-            <button
-              onClick={() => setShowGameOverModal(false)}
-              className="absolute top-4 right-4 text-white hover:text-red-200 transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
+        <div className="fixed inset-0 bg-white/95 backdrop-blur-md flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border-4 border-red-400 relative overflow-hidden">
+            {/* Animated background elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-red-100 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-100 rounded-full blur-2xl opacity-50 animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 w-28 h-28 bg-purple-100 rounded-full blur-2xl opacity-50 animate-pulse delay-500"></div>
+            </div>
 
             {/* Content */}
-            <div className="text-center">
-              <div className="mb-6 text-6xl">💔</div>
-              
-              <h2 className="text-3xl font-black text-red-500 mb-2">Oh no!</h2>
-              <p className="text-gray-300 text-lg mb-8">You ran out of hearts</p>
+            <div className="text-center relative z-10">
+              {/* Broken Heart Animation */}
+              <div className="mb-6 flex justify-center">
+                <div className="relative animate-bounce">
+                  <Heart className="w-32 h-32 text-red-500 fill-red-500 drop-shadow-2xl" strokeWidth={2} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-1 h-40 bg-white rotate-45 absolute"></div>
+                  </div>
+                </div>
+              </div>
 
-              {/* Progress Text */}
-              <div className="bg-red-500/10 rounded-xl p-4 mb-8 border border-red-500/30">
-                <p className="text-gray-300 font-semibold mb-1">Level Progress</p>
-                <p className="text-2xl font-bold text-white">
-                  {correctCount} / {questions.length} Questions
+              <h2 className="text-4xl font-black text-gray-900 mb-2 bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
+                Out of Hearts!
+              </h2>
+              <p className="text-gray-700 text-lg mb-6 font-semibold">Don&apos;t give up! You&apos;re learning!</p>
+
+              {/* Progress Display */}
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6 border-2 border-orange-200 shadow-lg">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-700 font-bold text-sm uppercase tracking-wide">Your Progress</span>
+                  <Target className="w-5 h-5 text-orange-500" />
+                </div>
+                <p className="text-4xl font-black text-transparent bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text mb-1">
+                  {correctCount} / {questions.length}
                 </p>
+                <p className="text-gray-600 text-sm font-medium">Questions Correct</p>
+                {earnedXP > 0 && (
+                  <div className="mt-3 pt-3 border-t border-orange-200">
+                    <div className="flex items-center justify-center gap-2">
+                      <Zap className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      <span className="text-lg font-bold text-orange-600">+{earnedXP} XP Earned</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Extra Hearts Available */}
               {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
-                <div className="bg-green-500/10 rounded-xl p-4 mb-6 border border-green-500/30">
-                  <p className="text-green-300 text-sm font-semibold flex items-center gap-2">
-                    <Heart className="w-5 h-5 fill-green-400 text-green-400" />
-                    {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available
-                  </p>
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 mb-6 border-2 border-green-300 shadow-md">
+                  <div className="flex items-center justify-center gap-2">
+                    <Heart className="w-6 h-6 fill-green-500 text-green-500 animate-pulse" />
+                    <p className="text-green-700 text-base font-bold">
+                      {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available!
+                    </p>
+                  </div>
                 </div>
               )}
 
               {/* Action Buttons */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* Use Extra Hearts Button - Only show if available */}
                 {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
                   <button
                     onClick={handleUseExtraHearts}
-                    className="w-full px-6 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-lg rounded-xl transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 uppercase tracking-wide flex items-center justify-center gap-3 group"
                   >
-                    <Heart className="w-5 h-5 fill-current" />
-                    Use Extra Hearts
+                    <Heart className="w-6 h-6 fill-current group-hover:animate-pulse" />
+                    Refill Hearts & Continue
                   </button>
                 )}
 
                 {/* Exit Button */}
                 <button
-                  onClick={() => setShowQuitConfirm(true)}
-                  className="w-full px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide"
+                  onClick={handleExitLevel}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-black text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl uppercase tracking-wide flex items-center justify-center gap-2"
                 >
-                  <ArrowRight className="w-5 h-5 inline mr-2" />
                   Exit Level
-                </button>
-
-                {/* Pay Gems to Continue Button */}
-                <button
-                  onClick={handlePayGemsToContinue}
-                  className="w-full px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg uppercase tracking-wide flex items-center justify-center gap-2"
-                >
-                  <Sparkles className="w-5 h-5" />
-                  Pay Gems to Continue
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Tip Text */}
-              <p className="text-gray-400 text-sm mt-6">💡 Tip: Buy extra hearts in the shop to keep going!</p>
+              <div className="mt-6 bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
+                <p className="text-blue-800 text-sm font-semibold flex items-center justify-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Visit the Shop to stock up on Extra Hearts!
+                </p>
+              </div>
             </div>
           </div>
         </div>
