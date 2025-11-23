@@ -20,7 +20,7 @@ export default function SignInPage() {
       </header>
 
       {/* Sign In Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-48 mt-24">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 pt-24">
         <div className="max-w-md w-full space-y-8">
           {/* Custom Header */}
           <div className="text-center">
