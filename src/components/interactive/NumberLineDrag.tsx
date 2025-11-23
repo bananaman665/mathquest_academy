@@ -181,7 +181,7 @@ export default function NumberLineDrag({
           )
         })}
 
-        {/* Draggable Marker - Much Better Design */}
+        {/* Draggable Marker */}
         <motion.div
           className="absolute top-1/2 cursor-grab active:cursor-grabbing z-20"
           style={{
@@ -190,123 +190,84 @@ export default function NumberLineDrag({
           }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleMouseDown}
-          whileTap={{ scale: 1.15 }}
+          whileTap={{ scale: 1.1 }}
           animate={{
-            scale: hasSubmitted ? 1 : isDragging ? 1.15 : 1,
+            scale: hasSubmitted ? 1 : isDragging ? 1.1 : 1,
             y: isDragging ? -5 : 0
           }}
         >
           <div className={`relative ${hasSubmitted ? 'pointer-events-none' : ''}`}>
             {/* Current Position Display - Above Marker */}
-            <motion.div
-              className={`absolute -top-20 left-1/2 -translate-x-1/2 px-5 py-3 rounded-2xl font-bold text-white text-2xl shadow-2xl border-4 border-white ${
+            <div
+              className={`absolute -top-16 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl font-bold text-white text-xl shadow-lg border-2 ${
                 hasSubmitted
                   ? Math.round(currentPosition) === correctAnswer
-                    ? 'bg-gradient-to-br from-green-400 to-green-600'
-                    : 'bg-gradient-to-br from-red-400 to-red-600'
-                  : 'bg-gradient-to-br from-blue-500 to-blue-700'
+                    ? 'bg-green-600 border-green-500'
+                    : 'bg-red-500 border-red-400'
+                  : 'bg-blue-500 border-blue-400'
               }`}
-              animate={{
-                scale: isDragging ? [1, 1.1, 1] : 1
-              }}
-              transition={{
-                duration: 0.5,
-                repeat: isDragging ? Infinity : 0
-              }}
             >
               <div className="flex items-center gap-2">
                 {hasSubmitted && (
-                  <span className="text-2xl">
+                  <span className="text-xl">
                     {Math.round(currentPosition) === correctAnswer ? '✓' : '✗'}
                   </span>
                 )}
                 <span>{Math.round(currentPosition)}</span>
               </div>
               {/* Arrow pointing down */}
-              <div 
-                className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent ${
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent ${
                   hasSubmitted
                     ? Math.round(currentPosition) === correctAnswer
                       ? 'border-t-green-600'
-                      : 'border-t-red-600'
-                    : 'border-t-blue-700'
+                      : 'border-t-red-500'
+                    : 'border-t-blue-500'
                 }`}
               ></div>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
 
         </div>
       </div>
 
-      {/* Submit Button - Much Better */}
+      {/* Submit Button */}
       {!hasSubmitted && (
         <div className="text-center">
           <motion.button
             onClick={handleSubmit}
-            className="group relative px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold text-xl rounded-full shadow-2xl overflow-hidden"
+            className="px-10 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-xl rounded-xl shadow-lg transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* Animated background shine */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
-              animate={{
-                x: ['-100%', '200%']
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            <span className="relative z-10 flex items-center gap-3">
-              <span>Submit Answer</span>
-              <span className="text-2xl group-hover:scale-125 transition-transform">✨</span>
-            </span>
+            Submit Answer
           </motion.button>
         </div>
       )}
 
-      {/* Result - Enhanced */}
+      {/* Result */}
       {hasSubmitted && (
         <motion.div
           className="text-center"
-          initial={{ scale: 0, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          transition={{ type: 'spring', duration: 0.6, bounce: 0.4 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}
         >
           {Math.round(currentPosition) === correctAnswer ? (
-            <div className="bg-gradient-to-br from-green-50 to-emerald-100 border-4 border-green-500 rounded-3xl p-8 shadow-2xl">
-              <motion.div 
-                className="text-7xl mb-3"
-                animate={{
-                  rotate: [0, -10, 10, -10, 10, 0],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ duration: 0.6 }}
-              >
-                🎉
-              </motion.div>
-              <div className="text-3xl font-bold text-green-700 mb-2">Perfect!</div>
-              <div className="text-lg text-green-600 mt-2">
+            <div className="bg-green-100 border-4 border-green-500 rounded-2xl p-6 shadow-lg">
+              <div className="text-5xl mb-2">🎉</div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">Perfect!</div>
+              <div className="text-lg text-gray-700">
                 {correctAnswer} is the correct answer!
               </div>
             </div>
           ) : (
-            <div className="bg-gradient-to-br from-red-50 to-pink-100 border-4 border-red-500 rounded-3xl p-8 shadow-2xl">
-              <motion.div 
-                className="text-7xl mb-3"
-                animate={{
-                  x: [-10, 10, -10, 10, 0]
-                }}
-                transition={{ duration: 0.5 }}
-              >
-                🤔
-              </motion.div>
-              <div className="text-3xl font-bold text-red-700 mb-2">Not quite!</div>
-              <div className="text-lg text-red-600 mt-2">
-                The correct answer is <span className="font-bold text-2xl">{correctAnswer}</span>
+            <div className="bg-red-100 border-4 border-red-500 rounded-2xl p-6 shadow-lg">
+              <div className="text-5xl mb-2">🤔</div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">Not quite!</div>
+              <div className="text-lg text-gray-700">
+                The correct answer is <span className="font-bold text-xl text-gray-900">{correctAnswer}</span>
               </div>
             </div>
           )}
