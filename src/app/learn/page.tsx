@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket } from 'lucide-react'
+import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket, BookOpen } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import BottomNav from '@/components/BottomNav'
 import Logo from '@/components/Logo'
@@ -460,8 +460,8 @@ export default async function LearnPage() {
             
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-green-500 p-2 rounded-xl shadow-md">
-                  <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                <div className="bg-blue-500 p-2 rounded-xl shadow-md">
+                  <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName || 'Student'}!</h2>
               </div>
