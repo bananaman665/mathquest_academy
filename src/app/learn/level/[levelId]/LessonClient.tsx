@@ -1574,8 +1574,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <SkipCounter
                 key={`skip-counter-${currentQuestionIndex}-${currentQuestion.id}`}
-                skipBy={currentQuestion.skipCountBy || 5}
-                numJumps={currentQuestion.skipCountJumps || 4}
+                skipBy={currentQuestion.skipCountBy ?? 5}
+                numJumps={currentQuestion.skipCountJumps ?? 4}
                 onSubmitReady={setInteractiveSubmitFn}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
