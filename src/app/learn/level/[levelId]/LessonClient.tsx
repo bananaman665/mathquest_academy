@@ -844,45 +844,110 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
           {/* Multiple Choice & Number Sequence - use same UI */}
           {(currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'number-sequence') && currentQuestion.options && (
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               {currentQuestion.options.map((option, index) => {
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
-                let cardClass = "relative p-4 sm:p-8 rounded-2xl border-4 transition-all duration-200 cursor-pointer "
+
+                // Define vibrant color schemes for each option
+                const colorSchemes = [
+                  {
+                    bg: 'from-blue-400 to-blue-600',
+                    bgHover: 'from-blue-500 to-blue-700',
+                    border: 'border-blue-300',
+                    shadow: 'shadow-blue-500/30',
+                    badge: 'bg-blue-700/80',
+                    ring: 'ring-blue-400'
+                  },
+                  {
+                    bg: 'from-purple-400 to-purple-600',
+                    bgHover: 'from-purple-500 to-purple-700',
+                    border: 'border-purple-300',
+                    shadow: 'shadow-purple-500/30',
+                    badge: 'bg-purple-700/80',
+                    ring: 'ring-purple-400'
+                  },
+                  {
+                    bg: 'from-pink-400 to-pink-600',
+                    bgHover: 'from-pink-500 to-pink-700',
+                    border: 'border-pink-300',
+                    shadow: 'shadow-pink-500/30',
+                    badge: 'bg-pink-700/80',
+                    ring: 'ring-pink-400'
+                  },
+                  {
+                    bg: 'from-orange-400 to-orange-600',
+                    bgHover: 'from-orange-500 to-orange-700',
+                    border: 'border-orange-300',
+                    shadow: 'shadow-orange-500/30',
+                    badge: 'bg-orange-700/80',
+                    ring: 'ring-orange-400'
+                  },
+                ]
+
+                const colors = colorSchemes[index % colorSchemes.length]
+
+                let cardClass = "relative group p-6 sm:p-8 rounded-3xl transition-all duration-300 cursor-pointer overflow-hidden "
+
                 if (showExplanation) {
                   if (isCorrectOption) {
-                    cardClass += "bg-green-600 border-green-500 shadow-lg shadow-green-500/50"
+                    cardClass += "bg-gradient-to-br from-green-400 to-green-600 border-4 border-green-300 shadow-2xl shadow-green-500/50 scale-105 animate-pulse"
                   } else if (isSelected && !isCorrect) {
-                    cardClass += "bg-red-600 border-red-500 shadow-lg shadow-red-500/50"
+                    cardClass += "bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-300 shadow-2xl shadow-red-500/50 scale-95"
                   } else {
-                    cardClass += "bg-slate-700 border-slate-600 opacity-50"
+                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} opacity-40 scale-95`
                   }
                 } else {
                   if (isSelected) {
-                    cardClass += "bg-blue-600 border-blue-500 shadow-lg shadow-blue-500/50"
+                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} shadow-2xl ${colors.shadow} scale-105 ring-4 ${colors.ring}`
                   } else {
-                    cardClass += "bg-slate-700 border-slate-600 hover:border-slate-500 hover:bg-slate-600"
+                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} shadow-xl ${colors.shadow} hover:scale-105 hover:shadow-2xl active:scale-95`
                   }
                 }
+
                 return (
-                  <button key={option} onClick={() => handleAnswerSelect(option)} disabled={showExplanation} className={cardClass}>
-                    <div className="absolute top-3 right-3 w-6 h-6 bg-slate-800/50 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-slate-300">{index + 1}</span>
+                  <button
+                    key={option}
+                    onClick={() => handleAnswerSelect(option)}
+                    disabled={showExplanation}
+                    className={cardClass}
+                  >
+                    {/* Animated shimmer effect */}
+                    {!showExplanation && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+                    )}
+
+                    {/* Option number badge */}
+                    <div className={`absolute top-4 right-4 w-8 h-8 ${colors.badge} backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30 shadow-lg`}>
+                      <span className="text-sm font-black text-white">{index + 1}</span>
                     </div>
-                    <div className="text-2xl sm:text-4xl font-bold text-white text-center break-words">{option}</div>
+
+                    {/* Answer text */}
+                    <div className="relative z-10 text-3xl sm:text-4xl font-black text-white text-center break-words drop-shadow-lg">
+                      {option}
+                    </div>
+
+                    {/* Correct answer overlay */}
                     {showExplanation && isCorrectOption && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                          <Check className="w-10 h-10 text-green-600" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-green-600/20 backdrop-blur-sm">
+                        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl animate-bounce">
+                          <Check className="w-12 h-12 text-green-600 stroke-[3]" />
                         </div>
                       </div>
                     )}
+
+                    {/* Wrong answer overlay */}
                     {showExplanation && isSelected && !isCorrect && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                          <X className="w-10 h-10 text-red-600" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-red-600/20 backdrop-blur-sm">
+                        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                          <X className="w-12 h-12 text-red-600 stroke-[3]" />
                         </div>
                       </div>
+                    )}
+
+                    {/* Selection pulse animation */}
+                    {isSelected && !showExplanation && (
+                      <div className="absolute inset-0 rounded-3xl border-4 border-white/50 animate-ping"></div>
                     )}
                   </button>
                 )
