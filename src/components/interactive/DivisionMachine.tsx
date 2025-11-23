@@ -178,11 +178,8 @@ export default function DivisionMachine({
         </div>
         <div className="flex flex-wrap gap-4 justify-center min-h-[100px]">
           {outputGroups.map((group, groupIdx) => (
-            <motion.div
+            <div
               key={groupIdx}
-              initial={{ scale: 0, y: -50 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 200 }}
               className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-xl p-3 border-3 shadow-md`}
             >
               <div className="text-xs font-bold text-gray-700 mb-1 text-center">
@@ -198,7 +195,7 @@ export default function DivisionMachine({
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
