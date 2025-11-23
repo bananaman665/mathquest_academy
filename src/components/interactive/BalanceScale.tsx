@@ -44,9 +44,13 @@ export default function BalanceScale({
   const isBalanced = leftTotal === rightTotal
   const tiltAngle = hasSubmitted ? 0 : Math.max(-15, Math.min(15, (leftTotal - rightTotal) * 2))
 
-  const handleNumberClick = (num: number) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (hasSubmitted) return
-    setUserAnswer(num)
+    const value = e.target.value
+    // Only allow positive integers
+    if (value === '' || /^[0-9]+$/.test(value)) {
+      setUserAnswer(value === '' ? 0 : parseInt(value))
+    }
   }
 
   const handleSubmit = () => {
@@ -75,7 +79,7 @@ export default function BalanceScale({
       </div>
 
       {/* Balance Scale Visualization - Adjusted for mobile */}
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-xl p-4 sm:p-8 mb-4 sm:mb-6 overflow-visible">
+      <div className="bg-blue-50 rounded-2xl shadow-lg p-4 sm:p-8 mb-4 sm:mb-6 overflow-visible">
         <div className="relative h-64 sm:h-80">
           {/* Scale Base - Smaller */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-full">
@@ -215,46 +219,40 @@ export default function BalanceScale({
         </div>
       )}
 
-      {/* Number Selector */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
-        <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">
-          Select the Missing Value:
+      {/* Number Input */}
+      <div className="bg-blue-50 rounded-2xl shadow-lg p-6 mb-6">
+        <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">
+          Enter the Missing Value:
         </h4>
-        <div className="grid grid-cols-5 gap-2 sm:gap-3">
-          {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
-            <button
-              key={num}
-              onClick={() => handleNumberClick(num)}
-              disabled={hasSubmitted}
-              className={`h-12 sm:h-16 rounded-xl font-bold text-lg sm:text-xl transition-all ${
-                userAnswer === num
-                  ? hasSubmitted
-                    ? num === correctAnswer
-                      ? 'bg-green-500 text-white border-4 border-green-600 shadow-lg'
-                      : 'bg-red-500 text-white border-4 border-red-600 shadow-lg'
-                    : 'bg-blue-500 text-white border-4 border-blue-600 shadow-lg'
-                  : hasSubmitted
-                  ? num === correctAnswer
-                    ? 'bg-green-100 text-green-800 border-2 border-green-400'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-blue-400 hover:bg-blue-50 active:scale-95'
-              }`}
-            >
-              {num}
-            </button>
-          ))}
+        <div className="flex justify-center">
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={userAnswer === 0 ? '' : userAnswer}
+            onChange={handleInputChange}
+            disabled={hasSubmitted}
+            placeholder="Type a number..."
+            className={`w-48 px-6 py-4 text-center text-3xl font-bold rounded-xl border-4 transition-all ${
+              hasSubmitted
+                ? userAnswer === correctAnswer
+                  ? 'bg-green-100 border-green-500 text-green-700'
+                  : 'bg-red-100 border-red-500 text-red-700'
+                : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
+            } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
+          />
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-3 sm:gap-4 justify-center mb-4 sm:mb-6">
+      <div className="flex gap-4 justify-center mb-6">
         <button
           onClick={handleClear}
           disabled={hasSubmitted || userAnswer === 0}
-          className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-white transition-all text-sm sm:text-base ${
+          className={`px-6 py-3 rounded-xl font-bold text-white transition-all ${
             hasSubmitted || userAnswer === 0
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gray-500 hover:bg-gray-600 active:scale-95'
+              : 'bg-gray-500 hover:bg-gray-600'
           }`}
         >
           Clear
@@ -263,10 +261,10 @@ export default function BalanceScale({
         <button
           onClick={handleSubmit}
           disabled={hasSubmitted || userAnswer === 0}
-          className={`px-6 sm:px-8 py-2 sm:py-3 rounded-full font-bold text-white text-base sm:text-lg transition-all ${
+          className={`px-8 py-3 rounded-xl font-bold text-white text-lg transition-all ${
             hasSubmitted || userAnswer === 0
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 shadow-lg'
+              : 'bg-green-500 hover:bg-green-600 shadow-lg'
           }`}
         >
           Submit Answer
@@ -278,25 +276,25 @@ export default function BalanceScale({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 sm:p-6 rounded-lg text-center font-bold text-base sm:text-lg ${
+          className={`p-6 rounded-2xl text-center font-bold text-lg border-4 shadow-lg ${
             userAnswer === correctAnswer
-              ? 'bg-green-100 text-green-800'
-              : 'bg-red-100 text-red-800'
+              ? 'bg-green-100 border-green-500 text-gray-900'
+              : 'bg-red-100 border-red-500 text-gray-900'
           }`}
         >
           {userAnswer === correctAnswer ? (
             <>
-              🎉 Perfect! The scale is balanced!
-              <br />
-              <span className="text-sm">Both sides equal {leftTotal}!</span>
+              <div className="text-4xl mb-2">🎉</div>
+              <div className="text-xl mb-1">Perfect! The scale is balanced!</div>
+              <div className="text-base text-gray-700">Both sides equal {leftTotal}!</div>
             </>
           ) : (
             <>
-              ❌ Not quite. The correct answer is {correctAnswer}.
-              <br />
-              <span className="text-sm">
+              <div className="text-4xl mb-2">🤔</div>
+              <div className="text-xl mb-1">Not quite. The correct answer is {correctAnswer}.</div>
+              <div className="text-base text-gray-700">
                 With {correctAnswer}, both sides would equal {rightTotal}.
-              </span>
+              </div>
             </>
           )}
         </motion.div>
