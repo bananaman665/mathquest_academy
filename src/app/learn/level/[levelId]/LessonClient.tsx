@@ -1573,6 +1573,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {currentQuestion.type === 'skip-counter' && (
             <div className="mb-8">
               <SkipCounter
+                key={`skip-counter-${currentQuestionIndex}-${currentQuestion.id}`}
                 skipBy={currentQuestion.skipCountBy || 5}
                 numJumps={currentQuestion.skipCountJumps || 4}
                 onAnswer={(isCorrect) => {
