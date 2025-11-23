@@ -849,36 +849,36 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
 
-                // Define vibrant color schemes for each option
+                // Define vibrant solid color schemes for each option
                 const colorSchemes = [
                   {
-                    bg: 'from-blue-400 to-blue-600',
-                    bgHover: 'from-blue-500 to-blue-700',
-                    border: 'border-blue-300',
+                    bg: 'bg-blue-500',
+                    bgHover: 'hover:bg-blue-600',
+                    border: 'border-blue-400',
                     shadow: 'shadow-blue-500/30',
                     badge: 'bg-blue-700/80',
                     ring: 'ring-blue-400'
                   },
                   {
-                    bg: 'from-purple-400 to-purple-600',
-                    bgHover: 'from-purple-500 to-purple-700',
-                    border: 'border-purple-300',
+                    bg: 'bg-purple-500',
+                    bgHover: 'hover:bg-purple-600',
+                    border: 'border-purple-400',
                     shadow: 'shadow-purple-500/30',
                     badge: 'bg-purple-700/80',
                     ring: 'ring-purple-400'
                   },
                   {
-                    bg: 'from-pink-400 to-pink-600',
-                    bgHover: 'from-pink-500 to-pink-700',
-                    border: 'border-pink-300',
+                    bg: 'bg-pink-500',
+                    bgHover: 'hover:bg-pink-600',
+                    border: 'border-pink-400',
                     shadow: 'shadow-pink-500/30',
                     badge: 'bg-pink-700/80',
                     ring: 'ring-pink-400'
                   },
                   {
-                    bg: 'from-orange-400 to-orange-600',
-                    bgHover: 'from-orange-500 to-orange-700',
-                    border: 'border-orange-300',
+                    bg: 'bg-orange-500',
+                    bgHover: 'hover:bg-orange-600',
+                    border: 'border-orange-400',
                     shadow: 'shadow-orange-500/30',
                     badge: 'bg-orange-700/80',
                     ring: 'ring-orange-400'
@@ -891,17 +891,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
                 if (showExplanation) {
                   if (isCorrectOption) {
-                    cardClass += "bg-gradient-to-br from-green-400 to-green-600 border-4 border-green-300 shadow-2xl shadow-green-500/50 scale-105 animate-pulse"
+                    cardClass += "bg-green-500 border-4 border-green-400 shadow-2xl shadow-green-500/50 scale-105"
                   } else if (isSelected && !isCorrect) {
-                    cardClass += "bg-gradient-to-br from-red-400 to-red-600 border-4 border-red-300 shadow-2xl shadow-red-500/50 scale-95"
+                    cardClass += "bg-red-500 border-4 border-red-400 shadow-2xl shadow-red-500/50 scale-95"
                   } else {
-                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} opacity-40 scale-95`
+                    cardClass += `${colors.bg} border-4 ${colors.border} opacity-40 scale-95`
                   }
                 } else {
                   if (isSelected) {
-                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} shadow-2xl ${colors.shadow} scale-105 ring-4 ${colors.ring}`
+                    cardClass += `${colors.bg} border-4 ${colors.border} shadow-2xl ${colors.shadow} scale-105 ring-4 ${colors.ring}`
                   } else {
-                    cardClass += `bg-gradient-to-br ${colors.bg} border-4 ${colors.border} shadow-xl ${colors.shadow} hover:scale-105 hover:shadow-2xl active:scale-95`
+                    cardClass += `${colors.bg} ${colors.bgHover} border-4 ${colors.border} shadow-xl ${colors.shadow} hover:scale-105 hover:shadow-2xl active:scale-95`
                   }
                 }
 
@@ -926,24 +926,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     <div className="relative z-10 text-3xl sm:text-4xl font-black text-white text-center break-words drop-shadow-lg">
                       {option}
                     </div>
-
-                    {/* Correct answer overlay */}
-                    {showExplanation && isCorrectOption && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-green-600/20 backdrop-blur-sm">
-                        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl animate-bounce">
-                          <Check className="w-12 h-12 text-green-600 stroke-[3]" />
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Wrong answer overlay */}
-                    {showExplanation && isSelected && !isCorrect && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-red-600/20 backdrop-blur-sm">
-                        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                          <X className="w-12 h-12 text-red-600 stroke-[3]" />
-                        </div>
-                      </div>
-                    )}
 
                     {/* Selection pulse animation */}
                     {isSelected && !showExplanation && (
