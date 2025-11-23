@@ -727,29 +727,6 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
             )}
             
-            {/* Streak Counter */}
-            {currentStreak > 0 && (
-              <div className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 font-bold transition-all duration-300 ${
-                currentStreak >= 20 
-                  ? 'bg-gradient-to-r from-purple-100 to-pink-100 border-purple-400 text-purple-600 animate-pulse shadow-lg' 
-                  : currentStreak >= 15
-                  ? 'bg-gradient-to-r from-pink-100 to-orange-100 border-pink-400 text-pink-600 shadow-md'
-                  : currentStreak >= 10 
-                  ? 'bg-purple-100 border-purple-400 text-purple-600 shadow-md' 
-                  : currentStreak >= 5 
-                  ? 'bg-orange-100 border-orange-400 text-orange-600' 
-                  : 'bg-blue-100 border-blue-400 text-blue-600'
-              }`}>
-                <Flame className={`w-4 h-4 sm:w-5 sm:h-5 text-orange-600 ${currentStreak >= 10 ? 'animate-pulse' : ''}`} />
-                <span className="text-base sm:text-lg">{currentStreak}</span>
-                {comboMultiplier > 1 && (
-                  <span className="text-xs sm:text-sm font-black bg-white/50 px-1.5 sm:px-2 py-0.5 rounded-full">
-                    {comboMultiplier}x
-                  </span>
-                )}
-              </div>
-            )}
-            
             {xpBoostActive && (
               <div className="flex items-center gap-1 sm:gap-2 bg-yellow-100 px-2 sm:px-3 py-1 sm:py-2 rounded-xl border-2 border-yellow-400">
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 fill-yellow-600" />
