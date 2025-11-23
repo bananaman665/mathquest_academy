@@ -42,15 +42,6 @@ export default function SkipCounter({
       const newJumpCount = currentJumps + 1;
       setCurrentJumps(newJumpCount);
       setJumpHistory(prev => [...prev, nextValue]);
-
-      // Auto-submit when target is reached
-      if (newJumpCount === numJumps) {
-        setTimeout(() => {
-          setSubmitted(true);
-          setIsCorrect(true);
-          onAnswer(true);
-        }, 500);
-      }
     }
   };
 
