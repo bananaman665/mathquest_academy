@@ -49,6 +49,13 @@ export default function SkipCounter({
     setIsCorrect(false);
   };
 
+  const handleSubmit = () => {
+    const correct = currentJumps === numJumps;
+    setSubmitted(true);
+    setIsCorrect(correct);
+    onAnswer(correct);
+  };
+
   return (
     <div className="flex flex-col items-center gap-6 p-6">
       {/* Info Display */}
@@ -179,24 +186,38 @@ export default function SkipCounter({
 
       {/* Controls */}
       {!submitted && (
-        <div className="flex gap-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleJump}
-            disabled={currentJumps >= numJumps + 2}
-            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
-          >
-            Jump! (+{skipBy})
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleReset}
-            className="px-6 py-4 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 text-lg font-bold rounded-xl shadow transition-colors"
-          >
-            Reset
-          </motion.button>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleJump}
+              disabled={currentJumps >= numJumps + 2}
+              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
+            >
+              Jump! (+{skipBy})
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleReset}
+              className="px-6 py-4 bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 text-lg font-bold rounded-xl shadow transition-colors"
+            >
+              Reset
+            </motion.button>
+          </div>
+          {currentJumps > 0 && (
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleSubmit}
+              className="w-full px-8 py-4 bg-green-500 hover:bg-green-600 text-white text-xl font-bold rounded-xl shadow-lg transition-colors"
+            >
+              Submit Answer
+            </motion.button>
+          )}
         </div>
       )}
 
