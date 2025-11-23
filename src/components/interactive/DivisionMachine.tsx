@@ -99,15 +99,12 @@ export default function DivisionMachine({
         </div>
         <div className="flex flex-wrap gap-2 justify-center min-h-[80px]">
           {inputItems.map((item, i) => (
-            <motion.div
+            <div
               key={item}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', delay: i * 0.05 }}
               className="text-3xl"
             >
               {emoji}
-            </motion.div>
+            </div>
           ))}
         </div>
         <motion.button
@@ -193,15 +190,12 @@ export default function DivisionMachine({
               </div>
               <div className="flex flex-wrap gap-1">
                 {group.map((item, itemIdx) => (
-                  <motion.div
+                  <div
                     key={item}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: itemIdx * 0.1 }}
                     className="text-2xl"
                   >
                     {emoji}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
