@@ -25,14 +25,10 @@ export default function SkipCounter({
   const currentValue = currentJumps * skipBy;
   const targetValue = numJumps * skipBy;
 
-  // Register submit function with parent when student has made jumps
+  // Register submit function with parent (always available, even for 0 jumps)
   useEffect(() => {
     if (onSubmitReady && !submitted) {
-      if (currentJumps > 0) {
-        onSubmitReady(() => handleSubmit);
-      } else {
-        onSubmitReady(null);
-      }
+      onSubmitReady(() => handleSubmit);
     }
   }, [currentJumps, submitted, onSubmitReady]);
 
