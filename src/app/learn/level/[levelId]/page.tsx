@@ -70,22 +70,56 @@ function randomizeQuestionTypes(questions: Question[]): Question[] {
       const answer = q.correctAnswer
       const num = parseInt(answer)
 
-      // Create equations with DIFFERENT answers (fixed bug - was all same answer)
-      // Generate 3 different target numbers near the original answer
-      const answer1 = num
-      const answer2 = num + 2
-      const answer3 = Math.max(1, num - 2) // Avoid negative answers
+      // Determine operation type based on level ID
+      // Levels 21-25: Multiplication unit
+      // Levels 26-30: Division unit  
+      // Others: Addition/Subtraction
+      const levelId = q.levelId
+      let equations: Array<{ equation: string; answer: string }> = []
 
-      // Create simple equations that match their respective answers
-      const equations = [
-        { equation: `${answer1} + 0`, answer: String(answer1) },
-        { equation: `${answer2 - 1} + 1`, answer: String(answer2) },
-        { equation: `${answer3 + 1} - 1`, answer: String(answer3) },
-      ].filter(e => {
-        // Validate all numbers in equation are positive
-        const parts = e.equation.split(/[+\-]/).map(p => parseInt(p.trim()))
-        return parts.every(p => p >= 0)
-      })
+      if (levelId >= 21 && levelId <= 25) {
+        // MULTIPLICATION UNIT - Create multiplication equations
+        const answer1 = num
+        const answer2 = num + 3
+        const answer3 = Math.max(1, num - 3)
+
+        equations = [
+          { equation: `${answer1} × 1`, answer: String(answer1) },
+          { equation: `${Math.floor(answer2 / 2)} × 2`, answer: String(Math.floor(answer2 / 2) * 2) },
+          { equation: `${Math.floor(answer3 / 2)} × 2`, answer: String(Math.floor(answer3 / 2) * 2) },
+        ].filter(e => {
+          const result = parseInt(e.answer)
+          return result > 0 && result <= 144 // Keep within times table range
+        })
+      } else if (levelId >= 26 && levelId <= 30) {
+        // DIVISION UNIT - Create division equations
+        const answer1 = num
+        const answer2 = num + 2
+        const answer3 = Math.max(1, num - 2)
+
+        equations = [
+          { equation: `${answer1 * 2} ÷ 2`, answer: String(answer1) },
+          { equation: `${answer2 * 3} ÷ 3`, answer: String(answer2) },
+          { equation: `${answer3 * 4} ÷ 4`, answer: String(answer3) },
+        ].filter(e => {
+          const result = parseInt(e.answer)
+          return result > 0 && result <= 100
+        })
+      } else {
+        // ADDITION/SUBTRACTION - Original logic
+        const answer1 = num
+        const answer2 = num + 2
+        const answer3 = Math.max(1, num - 2)
+
+        equations = [
+          { equation: `${answer1} + 0`, answer: String(answer1) },
+          { equation: `${answer2 - 1} + 1`, answer: String(answer2) },
+          { equation: `${answer3 + 1} - 1`, answer: String(answer3) },
+        ].filter(e => {
+          const parts = e.equation.split(/[+\-]/).map(p => parseInt(p.trim()))
+          return parts.every(p => p >= 0)
+        })
+      }
 
       if (equations.length >= 2) {
         return {
