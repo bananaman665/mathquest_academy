@@ -11,6 +11,7 @@ interface BalanceScaleProps {
   correctAnswer: number
   showEquals?: boolean // Show as equation format
   onAnswer: (isCorrect: boolean, userAnswer: number) => void
+  onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
 export default function BalanceScale({
@@ -20,7 +21,8 @@ export default function BalanceScale({
   missingValue = 0,
   correctAnswer,
   showEquals = true,
-  onAnswer
+  onAnswer,
+  onSubmitReady
 }: BalanceScaleProps) {
   const [userAnswer, setUserAnswer] = useState<number>(0)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -30,6 +32,17 @@ export default function BalanceScale({
     setUserAnswer(0)
     setHasSubmitted(false)
   }, [question, correctAnswer])
+
+  // Register submit function with parent
+  useEffect(() => {
+    if (onSubmitReady && !hasSubmitted) {
+      if (userAnswer > 0) {
+        onSubmitReady(() => handleSubmit)
+      } else {
+        onSubmitReady(null)
+      }
+    }
+  }, [userAnswer, hasSubmitted, onSubmitReady])
 
   const calculateSideTotal = (side: number[], includeUser: boolean = false) => {
     const values = side.map((val, idx) => 
@@ -58,12 +71,6 @@ export default function BalanceScale({
     const isCorrect = userAnswer === correctAnswer
     setHasSubmitted(true)
     onAnswer(isCorrect, userAnswer)
-  }
-
-  const handleClear = () => {
-    if (!hasSubmitted) {
-      setUserAnswer(0)
-    }
   }
 
   return (
@@ -183,33 +190,6 @@ export default function BalanceScale({
               : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
           } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
         />
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex gap-4 justify-center mb-6">
-        <button
-          onClick={handleClear}
-          disabled={hasSubmitted || userAnswer === 0}
-          className={`px-6 py-3 rounded-xl font-bold text-white transition-all ${
-            hasSubmitted || userAnswer === 0
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gray-500 hover:bg-gray-600'
-          }`}
-        >
-          Clear
-        </button>
-
-        <button
-          onClick={handleSubmit}
-          disabled={hasSubmitted || userAnswer === 0}
-          className={`px-8 py-3 rounded-xl font-bold text-white text-lg transition-all ${
-            hasSubmitted || userAnswer === 0
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-green-500 hover:bg-green-600 shadow-lg'
-          }`}
-        >
-          Submit Answer
-        </button>
       </div>
 
       {/* Result Message */}

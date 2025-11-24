@@ -392,7 +392,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       currentQuestion.type === 'skip-counter' ||
       currentQuestion.type === 'fair-share' ||
       currentQuestion.type === 'division-machine' ||
-      currentQuestion.type === 'fill-the-jar'
+      currentQuestion.type === 'fill-the-jar' ||
+      currentQuestion.type === 'balance-scale'
     )) {
       interactiveSubmitFn()
       return
@@ -1402,6 +1403,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 missingValue={1}
                 correctAnswer={parseInt(currentQuestion.correctAnswer || '0')}
                 showEquals={true}
+                onSubmitReady={setInteractiveSubmitFn}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1884,7 +1886,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'skip-counter' ||
                         currentQuestion.type === 'fair-share' ||
                         currentQuestion.type === 'division-machine' ||
-                        currentQuestion.type === 'fill-the-jar'
+                        currentQuestion.type === 'fill-the-jar' ||
+                        currentQuestion.type === 'balance-scale'
                       ? !interactiveSubmitFn // Enabled when component provides submit function
                       : !selectedAnswer
                   }
@@ -1906,7 +1909,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'skip-counter' ||
                         currentQuestion.type === 'fair-share' ||
                         currentQuestion.type === 'division-machine' ||
-                        currentQuestion.type === 'fill-the-jar'
+                        currentQuestion.type === 'fill-the-jar' ||
+                        currentQuestion.type === 'balance-scale'
                       ? !!interactiveSubmitFn // Enabled when component provides submit function
                       : !!selectedAnswer)
                       ? 'bg-green-500 hover:bg-green-600 shadow-lg'
