@@ -1922,9 +1922,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
             </>
           ) : (
-            <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200 shadow-lg">
-              {currentQuestionIndex < questions.length - 1 ? 'Continue' : 'Complete'}
-            </button>
+            <div className="flex flex-col gap-3">
+              {/* Feedback Label */}
+              <div className={`text-center py-2 px-4 rounded-lg font-bold text-lg ${
+                isCorrect ? 'text-green-700' : 'text-red-700'
+              }`}>
+                {isCorrect ? 'Correct!' : 'Incorrect'}
+              </div>
+              <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200 shadow-lg">
+                {currentQuestionIndex < questions.length - 1 ? 'Continue' : 'Complete'}
+              </button>
+            </div>
           )}
         </div>
       </div> 

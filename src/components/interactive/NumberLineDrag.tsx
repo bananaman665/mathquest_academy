@@ -245,34 +245,6 @@ export default function NumberLineDrag({
           </motion.button>
         </div>
       )}
-
-      {/* Result */}
-      {hasSubmitted && (
-        <motion.div
-          className="text-center"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {Math.round(currentPosition) === correctAnswer ? (
-            <div className="bg-green-100 border-4 border-green-500 rounded-2xl p-6 shadow-lg">
-              <div className="text-5xl mb-2">🎉</div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">Perfect!</div>
-              <div className="text-lg text-gray-700">
-                {correctAnswer} is the correct answer!
-              </div>
-            </div>
-          ) : (
-            <div className="bg-red-100 border-4 border-red-500 rounded-2xl p-6 shadow-lg">
-              <div className="text-5xl mb-2">🤔</div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">Not quite!</div>
-              <div className="text-lg text-gray-700">
-                The correct answer is <span className="font-bold text-xl text-gray-900">{correctAnswer}</span>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      )}
     </div>
   )
 }

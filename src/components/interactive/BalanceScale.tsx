@@ -173,7 +173,7 @@ export default function BalanceScale({
       </div>
 
       {/* Number Input */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center">
         <input
           type="text"
           inputMode="numeric"
@@ -191,35 +191,6 @@ export default function BalanceScale({
           } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
         />
       </div>
-
-      {/* Result Message */}
-      {hasSubmitted && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={`p-6 rounded-2xl text-center font-bold text-lg border-4 shadow-lg ${
-            userAnswer === correctAnswer
-              ? 'bg-green-100 border-green-500 text-gray-900'
-              : 'bg-red-100 border-red-500 text-gray-900'
-          }`}
-        >
-          {userAnswer === correctAnswer ? (
-            <>
-              <div className="text-4xl mb-2">🎉</div>
-              <div className="text-xl mb-1">Perfect! The scale is balanced!</div>
-              <div className="text-base text-gray-700">Both sides equal {leftTotal}!</div>
-            </>
-          ) : (
-            <>
-              <div className="text-4xl mb-2">🤔</div>
-              <div className="text-xl mb-1">Not quite. The correct answer is {correctAnswer}.</div>
-              <div className="text-base text-gray-700">
-                With {correctAnswer}, both sides would equal {rightTotal}.
-              </div>
-            </>
-          )}
-        </motion.div>
-      )}
     </div>
   )
 }

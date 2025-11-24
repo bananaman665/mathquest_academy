@@ -205,32 +205,6 @@ export default function SkipCounter({
           </motion.button>
         </div>
       )}
-
-      {/* Feedback */}
-      {submitted && (
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className={`text-center p-6 rounded-2xl ${
-            isCorrect
-              ? 'bg-green-100 border-4 border-green-500'
-              : 'bg-red-100 border-4 border-red-500'
-          }`}
-        >
-          <div className="text-4xl mb-2">{isCorrect ? '🎉' : '🤔'}</div>
-          <div className="text-xl font-bold text-gray-900">
-            {isCorrect ? (
-              <>
-                Perfect! {numJumps} jumps of {skipBy} = {targetValue}!
-              </>
-            ) : (
-              <>
-                Try again! Make exactly {numJumps} jumps of {skipBy}
-              </>
-            )}
-          </div>
-        </motion.div>
-      )}
     </div>
   );
 }
