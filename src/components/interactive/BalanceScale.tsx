@@ -69,13 +69,8 @@ export default function BalanceScale({
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
       {/* Question */}
-      <div className="text-center mb-4 sm:mb-6">
-        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">{question}</h3>
-        {showEquals && (
-          <p className="text-lg sm:text-2xl text-gray-600">
-            Find the missing value to balance the scale
-          </p>
-        )}
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold text-gray-800">{question}</h3>
       </div>
 
       {/* Balance Scale Visualization - Adjusted for mobile */}
@@ -167,81 +162,27 @@ export default function BalanceScale({
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Balance Status Indicator */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2">
-            <motion.div
-              animate={{
-                scale: isBalanced && userAnswer > 0 ? [1, 1.2, 1] : 1,
-                opacity: isBalanced && userAnswer > 0 ? 1 : 0.3
-              }}
-              transition={{ duration: 0.5, repeat: isBalanced && !hasSubmitted ? Infinity : 0 }}
-              className={`text-4xl ${
-                isBalanced && userAnswer > 0 ? '⚖️' : '❓'
-              }`}
-            >
-              {isBalanced && userAnswer > 0 ? '⚖️' : '⚖️'}
-            </motion.div>
-            <p className={`text-center font-bold ${
-              isBalanced && userAnswer > 0 ? 'text-green-600' : 'text-gray-400'
-            }`}>
-              {isBalanced && userAnswer > 0 ? 'Balanced!' : 'Not Balanced'}
-            </p>
-          </div>
         </div>
       </div>
 
-      {/* Equation Display */}
-      {showEquals && (
-        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6">
-          <div className="text-center">
-            <p className="text-xl sm:text-3xl font-bold text-gray-800 mb-2">
-              {leftSide.map((val, idx) => (
-                <span key={idx}>
-                  {idx > 0 && ' + '}
-                  <span className={idx === missingValue && val === 0 ? 'text-blue-600' : ''}>
-                    {idx === missingValue && val === 0 ? (userAnswer || '?') : val}
-                  </span>
-                </span>
-              ))}
-              {' = '}
-              {rightSide.map((val, idx) => (
-                <span key={idx}>
-                  {idx > 0 && ' + '}
-                  {val}
-                </span>
-              ))}
-            </p>
-            <p className="text-lg sm:text-xl text-gray-600">
-              {leftTotal} {isBalanced ? '=' : leftTotal > rightTotal ? '>' : '<'} {rightTotal}
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Number Input */}
-      <div className="bg-blue-50 rounded-2xl shadow-lg p-6 mb-6">
-        <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">
-          Enter the Missing Value:
-        </h4>
-        <div className="flex justify-center">
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={userAnswer === 0 ? '' : userAnswer}
-            onChange={handleInputChange}
-            disabled={hasSubmitted}
-            placeholder="Type a number..."
-            className={`w-48 px-6 py-4 text-center text-3xl font-bold rounded-xl border-4 transition-all ${
-              hasSubmitted
-                ? userAnswer === correctAnswer
-                  ? 'bg-green-100 border-green-500 text-green-700'
-                  : 'bg-red-100 border-red-500 text-red-700'
-                : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
-            } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
-          />
-        </div>
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          value={userAnswer === 0 ? '' : userAnswer}
+          onChange={handleInputChange}
+          disabled={hasSubmitted}
+          placeholder="?"
+          className={`w-32 px-6 py-4 text-center text-3xl font-bold rounded-xl border-4 transition-all ${
+            hasSubmitted
+              ? userAnswer === correctAnswer
+                ? 'bg-green-100 border-green-500 text-green-700'
+                : 'bg-red-100 border-red-500 text-red-700'
+              : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
+          } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
+        />
       </div>
 
       {/* Action Buttons */}
