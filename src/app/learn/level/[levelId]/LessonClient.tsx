@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target, Lightbulb } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
@@ -1796,43 +1795,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               />
             </div>
           )}
-
-          {showExplanation && currentQuestion.type !== 'number-line-placement' && (
-            <div className={`rounded-2xl p-6 mb-8 border-2 ${
-              isCorrect 
-                ? 'bg-green-50 border-green-500' 
-                : 'bg-red-50 border-red-500'
-            }`}>
-              <div className="flex items-start gap-3">
-                {isCorrect ? (
-                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Check className="w-7 h-7 text-white" />
-                  </div>
-                ) : (
-                  <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <X className="w-7 h-7 text-white" />
-                  </div>
-                )}
-                <div>
-                  <h3 className={`font-bold text-xl mb-2 ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                    {isCorrect ? 'Awesome!' : 'Not quite'}
-                  </h3>
-                  <p className={`text-base leading-relaxed ${isCorrect ? 'text-green-800' : 'text-red-800'}`}>
-                    {currentQuestion.explanation}
-                  </p>
-                  {isCorrect && (
-                    <div className="mt-3 inline-flex items-center gap-2 bg-yellow-100 border border-yellow-400 px-3 py-1 rounded-lg">
-                      <span className="text-yellow-600 font-bold">
-                        +{currentQuestion.xp * xpMultiplier} XP
-                        {xpBoostActive && <span className="ml-1 text-xs">(2x)</span>}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-            </>
+</>
           )}
         </div>
       </main>
@@ -1861,7 +1824,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       }}
                       className="px-4 py-3 rounded-xl font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
                     >
-                      <Image src="/icon.png" alt="" width={20} height={20} className="opacity-90" />
+                      <Lightbulb size={20} className="opacity-90" />
                       Hint
                     </button>
                   )}
@@ -1925,12 +1888,45 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </>
           ) : (
             <div className="flex flex-col gap-3">
-              {/* Feedback Label */}
-              <div className={`text-center py-2 px-4 rounded-lg font-bold text-lg ${
-                isCorrect ? 'text-green-700' : 'text-red-700'
+              {/* Compact Feedback Display */}
+              <div className={`flex items-center gap-3 p-3 rounded-xl border-2 ${
+                isCorrect
+                  ? 'bg-green-50 border-green-500'
+                  : 'bg-red-50 border-red-500'
               }`}>
-                {isCorrect ? 'Correct!' : 'Incorrect'}
+                {/* Icon */}
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                  isCorrect ? 'bg-green-500' : 'bg-red-500'
+                }`}>
+                  {isCorrect ? (
+                    <Check className="w-6 h-6 text-white" />
+                  ) : (
+                    <X className="w-6 h-6 text-white" />
+                  )}
+                </div>
+
+                {/* Feedback Text */}
+                <div className="flex-1 min-w-0">
+                  <h3 className={`font-bold text-base ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                    {isCorrect ? 'Awesome!' : 'Not quite'}
+                  </h3>
+                  <p className={`text-sm leading-snug line-clamp-2 ${isCorrect ? 'text-green-800' : 'text-red-800'}`}>
+                    {currentQuestion.explanation}
+                  </p>
+                </div>
+
+                {/* XP Badge */}
+                {isCorrect && (
+                  <div className="flex-shrink-0 bg-yellow-100 border border-yellow-400 px-3 py-1.5 rounded-lg">
+                    <span className="text-yellow-700 font-bold text-sm whitespace-nowrap">
+                      +{currentQuestion.xp * xpMultiplier} XP
+                      {xpBoostActive && <span className="ml-1 text-xs">(2x)</span>}
+                    </span>
+                  </div>
+                )}
               </div>
+
+              {/* Continue Button */}
               <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200 shadow-lg">
                 {currentQuestionIndex < questions.length - 1 ? 'Continue' : 'Complete'}
               </button>
