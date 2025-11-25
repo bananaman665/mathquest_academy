@@ -80,8 +80,28 @@ export default function BalanceScale({
         <h3 className="text-2xl font-bold text-gray-800">{question}</h3>
       </div>
 
+      {/* Number Input */}
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          value={userAnswer === 0 ? '' : userAnswer}
+          onChange={handleInputChange}
+          disabled={hasSubmitted}
+          placeholder="?"
+          className={`w-32 px-6 py-4 text-center text-3xl font-bold rounded-xl border-4 transition-all ${
+            hasSubmitted
+              ? userAnswer === correctAnswer
+                ? 'bg-green-100 border-green-500 text-green-700'
+                : 'bg-red-100 border-red-500 text-red-700'
+              : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
+          } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
+        />
+      </div>
+
       {/* Balance Scale Visualization - Adjusted for mobile */}
-      <div className="bg-blue-50 rounded-2xl shadow-lg p-4 sm:p-8 mb-4 sm:mb-6 overflow-visible">
+      <div className="bg-blue-50 rounded-2xl shadow-lg p-4 sm:p-8 overflow-visible">
         <div className="relative h-64 sm:h-80">
           {/* Scale Base - Smaller */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-full">
@@ -170,26 +190,6 @@ export default function BalanceScale({
             </motion.div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Number Input */}
-      <div className="flex justify-center">
-        <input
-          type="text"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          value={userAnswer === 0 ? '' : userAnswer}
-          onChange={handleInputChange}
-          disabled={hasSubmitted}
-          placeholder="?"
-          className={`w-32 px-6 py-4 text-center text-3xl font-bold rounded-xl border-4 transition-all ${
-            hasSubmitted
-              ? userAnswer === correctAnswer
-                ? 'bg-green-100 border-green-500 text-green-700'
-                : 'bg-red-100 border-red-500 text-red-700'
-              : 'bg-white border-blue-400 text-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300'
-          } ${hasSubmitted ? 'cursor-not-allowed' : ''}`}
-        />
       </div>
     </div>
   )
