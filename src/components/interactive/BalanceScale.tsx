@@ -104,13 +104,13 @@ export default function BalanceScale({
       <div className="bg-blue-50 rounded-2xl shadow-lg p-4 sm:p-8 overflow-visible">
         <div className="relative h-64 sm:h-80">
           {/* Scale Base - Smaller */}
-          <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-full">
+          <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-full">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 sm:w-4 h-10 sm:h-16 bg-gradient-to-b from-gray-500 to-gray-700"></div>
           </div>
 
           {/* Scale Beam - Responsive width */}
           <motion.div
-            className="absolute bottom-28 sm:bottom-44 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-3 sm:h-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full shadow-2xl origin-center"
+            className="absolute bottom-36 sm:bottom-52 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-3 sm:h-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full shadow-2xl origin-center"
             animate={{
               rotate: hasSubmitted 
                 ? isBalanced ? 0 : (leftTotal > rightTotal ? -8 : 8)
