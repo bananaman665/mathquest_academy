@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
@@ -943,7 +944,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="bg-purple-900 text-white px-6 py-3 rounded-lg shadow-lg cursor-grab text-xl font-bold"
+                                className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg cursor-grab text-xl font-bold"
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
                               >
                                 {num}
@@ -963,10 +964,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`bg-gray-800 text-purple-300 px-6 py-3 rounded-lg shadow text-xl font-semibold min-w-[120px] min-h-[48px] flex items-center justify-center border-2 ${snapshot.isDraggingOver ? 'border-purple-400' : 'border-transparent'}`}
+                            className={`bg-white text-gray-700 px-6 py-3 rounded-lg shadow text-xl font-semibold min-w-[120px] min-h-[48px] flex items-center justify-center border-2 ${snapshot.isDraggingOver ? 'border-blue-400' : 'border-gray-300'}`}
                           >
                             {matched[idx] ? (
-                              <span className="text-purple-100 font-bold text-xl">{matched[idx]}</span>
+                              <span className="text-blue-600 font-bold text-xl">{matched[idx]}</span>
                             ) : (
                               <span>{word}</span>
                             )}
@@ -1858,9 +1859,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           setHintsUsed(prev => prev + 1)
                         }
                       }}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
                     >
-                      💡 Hint
+                      <Image src="/icon.png" alt="" width={20} height={20} className="opacity-90" />
+                      Hint
                     </button>
                   )}
                 </div>
