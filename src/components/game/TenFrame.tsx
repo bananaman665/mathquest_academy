@@ -9,6 +9,21 @@ interface TenFrameProps {
   onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
+/**
+ * TenFrame Component - Interactive ten-frame counting exercise
+ *
+ * Displays a 5x2 grid of boxes where users tap to toggle dots on/off,
+ * then submit their answer to check if they placed the correct number of dots.
+ *
+ * CRITICAL: This component uses refs extensively to prevent auto-submit bugs.
+ * DO NOT convert refs to direct state/callback usage without understanding why.
+ *
+ * Auto-submit bug prevention strategy:
+ * 1. Uses refs for placedDots, correctPosition, and onAnswer
+ * 2. Registers submit function ONCE on mount (not on every render)
+ * 3. Submit function closure captures refs (always has latest values)
+ * 4. Prevents infinite re-render loops caused by parent callback changes
+ */
 export default function TenFrame({
   question,
   correctPosition,
@@ -16,11 +31,15 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [placedDots, setPlacedDots] = useState<boolean[]>(Array(10).fill(false))
+
+  // Refs to prevent handleSubmit recreation and auto-submit bugs
   const placedDotsRef = useRef(placedDots)
   const correctPositionRef = useRef(correctPosition)
   const onAnswerRef = useRef(onAnswer)
+  const hasInteractedRef = useRef(false)
+  const hasSubmittedRef = useRef(false)
 
-  // Keep refs in sync
+  // Keep refs in sync with current values
   useEffect(() => {
     placedDotsRef.current = placedDots
   }, [placedDots])
@@ -33,7 +52,15 @@ export default function TenFrame({
     onAnswerRef.current = onAnswer
   }, [onAnswer])
 
+  // Reset state when question changes
+  useEffect(() => {
+    setPlacedDots(Array(10).fill(false))
+    hasInteractedRef.current = false
+    hasSubmittedRef.current = false
+  }, [correctPosition])
+
   const handleFrameClick = (index: number) => {
+    hasInteractedRef.current = true
     // Toggle the dot on/off
     const newPlaced = [...placedDots]
     newPlaced[index] = !newPlaced[index]
@@ -46,12 +73,22 @@ export default function TenFrame({
   useEffect(() => {
     if (onSubmitReady) {
       const submitFn = () => {
+        // Prevent submission if user hasn't interacted
+        if (!hasInteractedRef.current) {
+          return
+        }
+        // Prevent double submission
+        if (hasSubmittedRef.current) {
+          return
+        }
+        hasSubmittedRef.current = true
+
         const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
         const correct = currentDotsPlaced === correctPositionRef.current
         onAnswerRef.current(correct)
       }
       onSubmitReady(submitFn)
-      
+
       return () => {
         onSubmitReady(null)
       }
