@@ -396,7 +396,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       currentQuestion.type === 'remainder-boxes' ||
       currentQuestion.type === 'fill-the-jar' ||
       currentQuestion.type === 'balance-scale' ||
-      currentQuestion.type === 'block-stacking'
+      currentQuestion.type === 'block-stacking' ||
+      currentQuestion.type === 'ten-frame'
     )) {
       interactiveSubmitFn()
       return
@@ -1023,6 +1024,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   question={currentQuestion.question}
                   correctPosition={currentQuestion.correctPosition}
                   onAnswer={handleTenFrameAnswer}
+                  onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
                 />
               )}
             </div>
@@ -1892,7 +1894,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'remainder-boxes' ||
                         currentQuestion.type === 'fill-the-jar' ||
                         currentQuestion.type === 'balance-scale' ||
-                        currentQuestion.type === 'block-stacking'
+                        currentQuestion.type === 'block-stacking' ||
+                        currentQuestion.type === 'ten-frame'
                       ? !interactiveSubmitFn // Enabled when component provides submit function
                       : !selectedAnswer
                   }
