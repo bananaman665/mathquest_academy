@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle } from 'lucide-react'
+import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle, Gift, Clock, Sparkles, Shield, Flame, FastForward, Brain } from 'lucide-react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface ShopItem {
@@ -26,6 +26,13 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Lightbulb,
   Trophy,
   Palette,
+  Gift,
+  Clock,
+  Sparkles,
+  Shield,
+  Flame,
+  FastForward,
+  Brain,
 }
 
 export default function ShopClient({ items, userBalance }: ShopClientProps) {
