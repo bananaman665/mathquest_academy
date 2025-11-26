@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface TenFrameProps {
   question: string
@@ -16,14 +16,24 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
+  const userAnswerRef = useRef<string>('')
+
+  // Keep answer in ref to avoid recreating handleSubmit
+  useEffect(() => {
+    userAnswerRef.current = userAnswer
+  }, [userAnswer])
 
   const handleSubmit = useCallback(() => {
-    const answer = parseInt(userAnswer)
+    const answer = parseInt(userAnswerRef.current)
+    if (isNaN(answer)) {
+      onAnswer(false)
+      return
+    }
     const isCorrect = answer === correctPosition
     onAnswer(isCorrect)
-  }, [userAnswer, correctPosition, onAnswer])
+  }, [correctPosition, onAnswer])
 
-  // Register submit function with parent
+  // Register submit function with parent ONCE
   useEffect(() => {
     if (onSubmitReady) {
       onSubmitReady(handleSubmit)
