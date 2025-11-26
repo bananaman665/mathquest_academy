@@ -27,7 +27,8 @@ import ArrayGridBuilder from '@/components/interactive/ArrayGridBuilder'
 import GroupMaker from '@/components/interactive/GroupMaker'
 import SkipCounter from '@/components/interactive/SkipCounter'
 import FairShare from '@/components/interactive/FairShare'
-import DivisionMachine from '@/components/interactive/DivisionMachine'
+import ArrayDivision from '@/components/game/ArrayDivision'
+import RemainderBoxes from '@/components/game/RemainderBoxes'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { useInventory } from '@/hooks/useInventory'
 
@@ -391,7 +392,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       currentQuestion.type === 'group-maker' ||
       currentQuestion.type === 'skip-counter' ||
       currentQuestion.type === 'fair-share' ||
-      currentQuestion.type === 'division-machine' ||
+      currentQuestion.type === 'array-division' ||
+      currentQuestion.type === 'remainder-boxes' ||
       currentQuestion.type === 'fill-the-jar' ||
       currentQuestion.type === 'balance-scale' ||
       currentQuestion.type === 'block-stacking'
@@ -1638,14 +1640,48 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
           )}
 
-          {/* Division Machine */}
-          {currentQuestion.type === 'division-machine' && (
+          {/* Array Division */}
+          {currentQuestion.type === 'array-division' && (
             <div className="mb-8">
-              <DivisionMachine
-                dividend={currentQuestion.divisionDividend || 15}
-                divisor={currentQuestion.divisionDivisor || 5}
-                emoji={currentQuestion.divisionEmoji || '⭐'}
-                onAnswer={(isCorrect) => {
+              <ArrayDivision
+                totalItems={currentQuestion.arrayDivisionTotal || 15}
+                divisor={currentQuestion.arrayDivisionDivisor || 5}
+                question={currentQuestion.question}
+                onSubmitReady={setInteractiveSubmitFn}
+                onAnswer={(isCorrect: boolean) => {
+                  setIsCorrect(isCorrect)
+                  setShowExplanation(true)
+                  if (isCorrect) {
+                    playCorrect()
+                    const xp = currentQuestion.xp * xpMultiplier
+                    setEarnedXP(prev => prev + xp)
+                    setCorrectCount(prev => prev + 1)
+                    setCurrentStreak(prev => prev + 1)
+                    setMaxStreak(prev => Math.max(prev, currentStreak + 1))
+                    if (gameMode === 'perfect-streak') {
+                      const newMultiplier = Math.min(Math.floor((currentStreak + 1) / 3) + 1, 5)
+                      setComboMultiplier(newMultiplier)
+                    }
+                  } else {
+                    playIncorrect()
+                    setHearts(prev => Math.max(0, prev - 1))
+                    setCurrentStreak(0)
+                    setComboMultiplier(1)
+                  }
+                }}
+              />
+            </div>
+          )}
+
+          {/* Remainder Boxes */}
+          {currentQuestion.type === 'remainder-boxes' && (
+            <div className="mb-8">
+              <RemainderBoxes
+                totalItems={currentQuestion.remainderTotal || 17}
+                itemsPerBox={currentQuestion.remainderPerBox || 5}
+                question={currentQuestion.question}
+                onSubmitReady={setInteractiveSubmitFn}
+                onAnswer={(isCorrect: boolean) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
                   if (isCorrect) {
@@ -1852,7 +1888,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'group-maker' ||
                         currentQuestion.type === 'skip-counter' ||
                         currentQuestion.type === 'fair-share' ||
-                        currentQuestion.type === 'division-machine' ||
+                        currentQuestion.type === 'array-division' ||
+                        currentQuestion.type === 'remainder-boxes' ||
                         currentQuestion.type === 'fill-the-jar' ||
                         currentQuestion.type === 'balance-scale' ||
                         currentQuestion.type === 'block-stacking'
@@ -1876,7 +1913,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'group-maker' ||
                         currentQuestion.type === 'skip-counter' ||
                         currentQuestion.type === 'fair-share' ||
-                        currentQuestion.type === 'division-machine' ||
+                        currentQuestion.type === 'array-division' ||
+                        currentQuestion.type === 'remainder-boxes' ||
                         currentQuestion.type === 'fill-the-jar' ||
                         currentQuestion.type === 'balance-scale'
                       ? !!interactiveSubmitFn // Enabled when component provides submit function

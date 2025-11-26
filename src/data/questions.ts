@@ -54,7 +54,8 @@ export type QuestionType =
   | 'group-maker'
   | 'skip-counter'
   | 'fair-share'
-  | 'division-machine'
+  | 'array-division'
+  | 'remainder-boxes'
 
 export interface Question {
   id: string
@@ -163,10 +164,13 @@ export interface Question {
   fairShareGroups?: number // Number of groups to share among
   fairShareEmoji?: string // Emoji for items (e.g., '🍪', '🍕')
   
-  // Division Machine
-  divisionDividend?: number // Total items to divide
-  divisionDivisor?: number // Size of each group
-  divisionEmoji?: string // Emoji for items (e.g., '⭐', '🎯')
+  // Array Division (Division - Visual Array)
+  arrayDivisionTotal?: number // Total items in array
+  arrayDivisionDivisor?: number // Divisor (rows or columns)
+  
+  // Remainder Boxes (Division with Remainders)
+  remainderTotal?: number // Total items to divide
+  remainderPerBox?: number // Items per box
 }
 
 export interface LevelData {

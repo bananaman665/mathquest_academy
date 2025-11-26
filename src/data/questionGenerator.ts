@@ -353,7 +353,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'division',
     numberRange: { min: 2, max: 50 },
     answerRange: { min: 1, max: 10 },
-    questionTypes: ['division-machine', 'multiple-choice', 'type-answer'],
+    questionTypes: ['array-division', 'multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'medium',
     allowRemainders: false
@@ -375,7 +375,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'division',
     numberRange: { min: 3, max: 50 },
     answerRange: { min: 1, max: 12 },
-    questionTypes: ['multiple-choice', 'type-answer', 'division-machine'],
+    questionTypes: ['multiple-choice', 'type-answer', 'remainder-boxes'],
     totalQuestions: 10,
     difficulty: 'hard',
     allowRemainders: true
@@ -1550,20 +1550,39 @@ function generateQuestionByType(
       }
     }
 
-    case 'division-machine': {
+    case 'array-division': {
       return {
         id,
         levelId,
         type,
-        question: `${num1} ÷ ${num2} = ?`,
-        divisionDividend: num1,
-        divisionDivisor: num2,
-        divisionEmoji: '⭐',
+        question: `Arrange ${num1} stars to show ${num1} ÷ ${num2}`,
+        arrayDivisionTotal: num1,
+        arrayDivisionDivisor: num2,
         correctAnswer: String(answer),
-        explanation: `${num1} ÷ ${num2} = ${answer}`,
+        explanation: `${num1} ÷ ${num2} = ${answer}. You can arrange ${num1} stars into ${num2} rows of ${answer} or ${answer} rows of ${num2}`,
         hints: [
-          `Divide to find the answer`,
-          `Use division to find out`
+          `Try making arrays with ${num2} rows or ${num2} columns`,
+          `Division can be shown as an array`
+        ],
+        xp: 15
+      }
+    }
+
+    case 'remainder-boxes': {
+      const quotient = Math.floor(num1 / num2)
+      const remainder = num1 % num2
+      return {
+        id,
+        levelId,
+        type,
+        question: `Put stars in boxes of ${num2}`,
+        remainderTotal: num1,
+        remainderPerBox: num2,
+        correctAnswer: remainder > 0 ? `${quotient}R${remainder}` : String(quotient),
+        explanation: `${num1} ÷ ${num2} = ${quotient}${remainder > 0 ? ` R${remainder}` : ''}. You can make ${quotient} full boxes${remainder > 0 ? ` with ${remainder} left over` : ''}`,
+        hints: [
+          `Fill boxes with exactly ${num2} stars each`,
+          `Count how many full boxes you can make`
         ],
         xp: 15
       }
