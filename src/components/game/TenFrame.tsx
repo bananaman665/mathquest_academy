@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 interface TenFrameProps {
   question: string
@@ -16,48 +16,51 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
-  const userAnswerRef = useRef<string>('')
-  const onAnswerRef = useRef(onAnswer)
-  const correctPositionRef = useRef(correctPosition)
+  const [hasRegistered, setHasRegistered] = useState(false)
 
-  // Keep refs in sync
+  // Register submit function only ONCE on mount using a flag
   useEffect(() => {
-    userAnswerRef.current = userAnswer
-  }, [userAnswer])
+    if (onSubmitReady && !hasRegistered) {
+      const submitFn = () => {
+        const answer = parseInt(userAnswer)
+        
+        // Don't submit if no answer entered
+        if (isNaN(answer) || userAnswer === '') {
+          onAnswer(false)
+          return
+        }
 
-  useEffect(() => {
-    onAnswerRef.current = onAnswer
-  }, [onAnswer])
-
-  useEffect(() => {
-    correctPositionRef.current = correctPosition
-  }, [correctPosition])
-
-  // Create handleSubmit ONCE - never recreated, never has dependencies that change
-  const handleSubmit = useCallback(() => {
-    const answer = parseInt(userAnswerRef.current)
-    
-    // Don't submit if no answer entered
-    if (isNaN(answer) || userAnswerRef.current === '') {
-      onAnswerRef.current(false)
-      return
-    }
-
-    const isCorrect = answer === correctPositionRef.current
-    onAnswerRef.current(isCorrect)
-  }, []) // NO dependencies - function never changes
-
-  // Register submit function ONCE when component mounts
-  useEffect(() => {
-    if (onSubmitReady) {
-      onSubmitReady(handleSubmit)
-    }
-    return () => {
-      if (onSubmitReady) {
+        const isCorrect = answer === correctPosition
+        onAnswer(isCorrect)
+      }
+      
+      onSubmitReady(submitFn)
+      setHasRegistered(true)
+      
+      return () => {
         onSubmitReady(null)
       }
     }
-  }, [onSubmitReady, handleSubmit])
+  }, []) // Empty dependency array - only run once
+  
+  // Update the submit function when answer changes
+  useEffect(() => {
+    if (hasRegistered && onSubmitReady) {
+      const submitFn = () => {
+        const answer = parseInt(userAnswer)
+        
+        if (isNaN(answer) || userAnswer === '') {
+          onAnswer(false)
+          return
+        }
+
+        const isCorrect = answer === correctPosition
+        onAnswer(isCorrect)
+      }
+      
+      onSubmitReady(submitFn)
+    }
+  }, [userAnswer, correctPosition, onAnswer, hasRegistered, onSubmitReady])
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
