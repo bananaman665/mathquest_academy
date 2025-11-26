@@ -21,6 +21,7 @@ export default function ArrayDivision({
   const [currentConfigIndex, setCurrentConfigIndex] = useState<number>(0)
   const [selectedRows, setSelectedRows] = useState<number>(0)
   const [selectedCols, setSelectedCols] = useState<number>(0)
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null)
 
   const quotient = totalItems / divisor
 
@@ -42,15 +43,25 @@ export default function ArrayDivision({
   // Navigation handlers
   const handleNext = () => {
     if (currentConfigIndex < configurations.length - 1) {
+      setSlideDirection('left')
       setCurrentConfigIndex(prev => prev + 1)
     }
   }
 
   const handlePrev = () => {
     if (currentConfigIndex > 0) {
+      setSlideDirection('right')
       setCurrentConfigIndex(prev => prev - 1)
     }
   }
+
+  // Reset slide direction after animation
+  useEffect(() => {
+    if (slideDirection) {
+      const timer = setTimeout(() => setSlideDirection(null), 300)
+      return () => clearTimeout(timer)
+    }
+  }, [slideDirection])
 
   // Register submit function with parent
   useEffect(() => {
@@ -80,8 +91,30 @@ export default function ArrayDivision({
 
   return (
     <div className="flex flex-col items-center gap-4 pt-3 px-3 pb-24">
-      {/* Instruction */}
-      <div className="text-center mb-2">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(-100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}} />
+        {/* Instruction */}
+        <div className="text-center mb-2">
         <p className="text-xl sm:text-2xl font-bold text-gray-900">
           Arrange {totalItems} stars to show {totalItems} ÷ {divisor}
         </p>
@@ -96,15 +129,25 @@ export default function ArrayDivision({
       </div>
 
       {/* Single Array Configuration Card */}
-      <div className="w-full max-w-md">
-        <button
-          onClick={handleConfigSelect}
-          className={`w-full p-6 rounded-xl border-2 transition-all ${
-            selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
-              ? 'border-blue-500 bg-blue-50 shadow-lg'
-              : 'border-gray-300 bg-white hover:border-gray-400 hover:shadow'
-          }`}
+      <div className="w-full max-w-md overflow-hidden">
+        <div
+          key={currentConfigIndex}
+          style={{
+            animation: slideDirection
+              ? slideDirection === 'left'
+                ? 'slideInLeft 300ms ease-out'
+                : 'slideInRight 300ms ease-out'
+              : 'none'
+          }}
         >
+          <button
+            onClick={handleConfigSelect}
+            className={`w-full p-6 rounded-xl border-2 ${
+              selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
+                ? 'border-blue-500 bg-blue-50 shadow-lg'
+                : 'border-gray-300 bg-white hover:border-gray-400 hover:shadow'
+            }`}
+          >
           <div className="text-center mb-4">
             <span className="text-lg font-bold text-gray-700">
               {currentConfig.rows} × {currentConfig.cols}
@@ -133,7 +176,8 @@ export default function ArrayDivision({
           <div className="text-center mt-4 text-sm font-semibold text-gray-600">
             {currentConfig.rows} rows of {currentConfig.cols}
           </div>
-        </button>
+          </button>
+        </div>
       </div>
 
       {/* Navigation Arrows */}
