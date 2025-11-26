@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface TenFrameProps {
   question: string
@@ -16,6 +16,22 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [placedDots, setPlacedDots] = useState<boolean[]>(Array(10).fill(false))
+  const placedDotsRef = useRef(placedDots)
+  const correctPositionRef = useRef(correctPosition)
+  const onAnswerRef = useRef(onAnswer)
+
+  // Keep refs in sync
+  useEffect(() => {
+    placedDotsRef.current = placedDots
+  }, [placedDots])
+
+  useEffect(() => {
+    correctPositionRef.current = correctPosition
+  }, [correctPosition])
+
+  useEffect(() => {
+    onAnswerRef.current = onAnswer
+  }, [onAnswer])
 
   const handleFrameClick = (index: number) => {
     // Toggle the dot on/off
@@ -26,12 +42,13 @@ export default function TenFrame({
 
   const dotsPlaced = placedDots.filter(d => d).length
 
-  // Register submit function with parent
+  // Register submit function ONCE with parent
   useEffect(() => {
     if (onSubmitReady) {
       const submitFn = () => {
-        const correct = dotsPlaced === correctPosition
-        onAnswer(correct)
+        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
+        const correct = currentDotsPlaced === correctPositionRef.current
+        onAnswerRef.current(correct)
       }
       onSubmitReady(submitFn)
       
@@ -39,7 +56,7 @@ export default function TenFrame({
         onSubmitReady(null)
       }
     }
-  }, [dotsPlaced, correctPosition, onAnswer, onSubmitReady])
+  }, [onSubmitReady]) // Only depends on onSubmitReady
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
