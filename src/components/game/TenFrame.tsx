@@ -17,47 +17,20 @@ export default function TenFrame({
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
 
-  // Use refs to prevent unnecessary recreations
-  const userAnswerRef = useRef<string>('')
-  const onAnswerRef = useRef(onAnswer)
-  const hasSubmittedRef = useRef(false)
-
-  // Keep refs in sync
-  useEffect(() => {
-    userAnswerRef.current = userAnswer
-  }, [userAnswer])
-
-  useEffect(() => {
-    onAnswerRef.current = onAnswer
-  }, [onAnswer])
-
-  // Create stable handleSubmit that never recreates
   const handleSubmit = useCallback(() => {
-    // Prevent double submission
-    if (hasSubmittedRef.current) {
-      return
-    }
-
-    const answer = parseInt(userAnswerRef.current)
-
+    const answer = parseInt(userAnswer)
+    
     // Don't submit if no answer entered
-    if (isNaN(answer) || userAnswerRef.current === '') {
+    if (isNaN(answer) || userAnswer === '') {
+      onAnswer(false)
       return
     }
-
-    // Mark as submitted to prevent double submission
-    hasSubmittedRef.current = true
 
     const isCorrect = answer === correctPosition
-    onAnswerRef.current(isCorrect)
-  }, [correctPosition]) // Only depends on correctPosition, not onAnswer
+    onAnswer(isCorrect)
+  }, [userAnswer, correctPosition, onAnswer])
 
-  // Reset submitted flag when question changes
-  useEffect(() => {
-    hasSubmittedRef.current = false
-  }, [correctPosition])
-
-  // Register submit function with parent ONCE on mount
+  // Register submit function with parent
   useEffect(() => {
     if (onSubmitReady) {
       onSubmitReady(handleSubmit)
@@ -67,8 +40,7 @@ export default function TenFrame({
         onSubmitReady(null)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSubmitReady]) // Intentionally NOT including handleSubmit to register only once
+  }, [onSubmitReady, handleSubmit])
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
