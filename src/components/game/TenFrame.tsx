@@ -74,6 +74,9 @@ export default function TenFrame({
     newPlaced[index] = !newPlaced[index]
     setPlacedDots(newPlaced)
 
+    // Calculate new dot count
+    const newDotsPlaced = newPlaced.filter(d => d).length
+
     // On first interaction, register submit function (enables check button)
     if (!hasInteractedRef.current) {
       hasInteractedRef.current = true
@@ -91,6 +94,16 @@ export default function TenFrame({
         }
         onSubmitReadyRef.current(submitFn)
       }
+    }
+
+    // Auto-submit when user reaches the correct number of dots
+    if (newDotsPlaced === correctPositionRef.current && !hasSubmittedRef.current) {
+      hasSubmittedRef.current = true
+      // Use setTimeout to ensure state update completes first
+      setTimeout(() => {
+        const correct = newDotsPlaced === correctPositionRef.current
+        onAnswerRef.current(correct)
+      }, 300)
     }
   }
 
