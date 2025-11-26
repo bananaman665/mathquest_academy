@@ -82,7 +82,7 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 py-3 px-3">
+      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-6">
         {/* Question */}
         <div className="text-center">
           <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{question}</h3>
@@ -194,7 +194,7 @@ export default function BlockStackingQuestion({
         {!showFeedback && (
           <button
             onClick={handleSubmit}
-            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 active:scale-95 text-white font-bold py-3 px-8 rounded-xl transition-all text-base sm:text-lg shadow-lg"
+            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 active:scale-95 text-white font-bold py-3 px-8 rounded-xl transition-all text-base sm:text-lg shadow-lg mb-2"
           >
             Check Answer
           </button>
