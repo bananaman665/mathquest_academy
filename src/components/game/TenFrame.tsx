@@ -38,6 +38,7 @@ export default function TenFrame({
   const onAnswerRef = useRef(onAnswer)
   const hasInteractedRef = useRef(false)
   const hasSubmittedRef = useRef(false)
+  const onSubmitReadyRef = useRef(onSubmitReady)
 
   // Keep refs in sync with current values
   useEffect(() => {
@@ -52,50 +53,48 @@ export default function TenFrame({
     onAnswerRef.current = onAnswer
   }, [onAnswer])
 
+  useEffect(() => {
+    onSubmitReadyRef.current = onSubmitReady
+  }, [onSubmitReady])
+
   // Reset state when question changes
   useEffect(() => {
     setPlacedDots(Array(10).fill(false))
     hasInteractedRef.current = false
     hasSubmittedRef.current = false
+    // Clear submit function on new question
+    if (onSubmitReadyRef.current) {
+      onSubmitReadyRef.current(null)
+    }
   }, [correctPosition])
 
   const handleFrameClick = (index: number) => {
-    hasInteractedRef.current = true
     // Toggle the dot on/off
     const newPlaced = [...placedDots]
     newPlaced[index] = !newPlaced[index]
     setPlacedDots(newPlaced)
+
+    // On first interaction, register submit function (enables check button)
+    if (!hasInteractedRef.current) {
+      hasInteractedRef.current = true
+
+      if (onSubmitReadyRef.current) {
+        const submitFn = () => {
+          if (hasSubmittedRef.current) {
+            return
+          }
+          hasSubmittedRef.current = true
+
+          const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
+          const correct = currentDotsPlaced === correctPositionRef.current
+          onAnswerRef.current(correct)
+        }
+        onSubmitReadyRef.current(submitFn)
+      }
+    }
   }
 
   const dotsPlaced = placedDots.filter(d => d).length
-
-  // Register submit function ONCE with parent
-  useEffect(() => {
-    if (onSubmitReady) {
-      const submitFn = () => {
-        // Only prevent submission if user DEFINITELY hasn't interacted
-        // AND there are no dots placed (to catch edge cases)
-        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
-        if (!hasInteractedRef.current && currentDotsPlaced === 0) {
-          return
-        }
-
-        // Prevent double submission
-        if (hasSubmittedRef.current) {
-          return
-        }
-        hasSubmittedRef.current = true
-
-        const correct = currentDotsPlaced === correctPositionRef.current
-        onAnswerRef.current(correct)
-      }
-      onSubmitReady(submitFn)
-
-      return () => {
-        onSubmitReady(null)
-      }
-    }
-  }, [onSubmitReady]) // Only depends on onSubmitReady
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
