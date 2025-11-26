@@ -16,24 +16,48 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
-  const userAnswerRef = useRef<string>('')
 
-  // Keep answer in ref to avoid recreating handleSubmit
+  // Use refs to prevent unnecessary recreations
+  const userAnswerRef = useRef<string>('')
+  const onAnswerRef = useRef(onAnswer)
+  const hasSubmittedRef = useRef(false)
+
+  // Keep refs in sync
   useEffect(() => {
     userAnswerRef.current = userAnswer
   }, [userAnswer])
 
+  useEffect(() => {
+    onAnswerRef.current = onAnswer
+  }, [onAnswer])
+
+  // Create stable handleSubmit that never recreates
   const handleSubmit = useCallback(() => {
-    const answer = parseInt(userAnswerRef.current)
-    if (isNaN(answer)) {
-      onAnswer(false)
+    // Prevent double submission
+    if (hasSubmittedRef.current) {
       return
     }
-    const isCorrect = answer === correctPosition
-    onAnswer(isCorrect)
-  }, [correctPosition, onAnswer])
 
-  // Register submit function with parent ONCE
+    const answer = parseInt(userAnswerRef.current)
+
+    // Don't submit if no answer entered
+    if (isNaN(answer) || userAnswerRef.current === '') {
+      return
+    }
+
+    // Mark as submitted to prevent double submission
+    hasSubmittedRef.current = true
+
+    const isCorrect = answer === correctPosition
+    onAnswerRef.current(isCorrect)
+  }, [correctPosition]) // Only depends on correctPosition, not onAnswer
+
+  // Reset submitted flag when question changes
+  useEffect(() => {
+    hasSubmittedRef.current = false
+  }, [correctPosition])
+
+  // Register submit function with parent ONCE on mount
   useEffect(() => {
     if (onSubmitReady) {
       onSubmitReady(handleSubmit)
@@ -43,7 +67,8 @@ export default function TenFrame({
         onSubmitReady(null)
       }
     }
-  }, [onSubmitReady, handleSubmit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSubmitReady]) // Intentionally NOT including handleSubmit to register only once
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
@@ -108,10 +133,18 @@ export default function TenFrame({
           type="number"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
+          onKeyDown={(e) => {
+            // Prevent Enter key from triggering form submission or other defaults
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              e.stopPropagation()
+            }
+          }}
           placeholder="Type your answer"
           className="w-32 px-4 py-3 text-2xl font-bold text-center border-4 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none"
           min="0"
           max="10"
+          inputMode="numeric"
         />
       </div>
     </div>
