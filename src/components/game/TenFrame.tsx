@@ -73,17 +73,19 @@ export default function TenFrame({
   useEffect(() => {
     if (onSubmitReady) {
       const submitFn = () => {
-        // Prevent submission if user hasn't interacted
-        if (!hasInteractedRef.current) {
+        // Only prevent submission if user DEFINITELY hasn't interacted
+        // AND there are no dots placed (to catch edge cases)
+        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
+        if (!hasInteractedRef.current && currentDotsPlaced === 0) {
           return
         }
+
         // Prevent double submission
         if (hasSubmittedRef.current) {
           return
         }
         hasSubmittedRef.current = true
 
-        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
         const correct = currentDotsPlaced === correctPositionRef.current
         onAnswerRef.current(correct)
       }
