@@ -11,6 +11,7 @@ interface BlockStackingQuestionProps {
   correctAnswer: number
   onAnswer: (isCorrect: boolean) => void
   question: string
+  onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
 export default function BlockStackingQuestion({
@@ -20,6 +21,7 @@ export default function BlockStackingQuestion({
   correctAnswer,
   onAnswer,
   question,
+  onSubmitReady,
 }: BlockStackingQuestionProps) {
   const [stackBlocks, setStackBlocks] = useState<string[]>([])
   const [trashBlocks, setTrashBlocks] = useState<string[]>([])
@@ -38,6 +40,18 @@ export default function BlockStackingQuestion({
       setTrashBlocks([])
     }
   }, [operation, firstNumber, secondNumber])
+
+  // Register submit function with parent
+  useEffect(() => {
+    if (onSubmitReady && !showFeedback) {
+      onSubmitReady(() => handleSubmit)
+    }
+    return () => {
+      if (onSubmitReady) {
+        onSubmitReady(null)
+      }
+    }
+  }, [onSubmitReady, showFeedback, stackBlocks])
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result
@@ -188,16 +202,6 @@ export default function BlockStackingQuestion({
             </div>
           </div>
         </div>
-
-        {/* Submit Button */}
-        {!showFeedback && (
-          <button
-            onClick={handleSubmit}
-            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 active:scale-95 text-white font-bold py-3 px-8 rounded-xl transition-all text-base sm:text-lg shadow-lg mb-2"
-          >
-            Check Answer
-          </button>
-        )}
 
         {/* Feedback */}
         {showFeedback && (

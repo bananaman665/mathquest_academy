@@ -393,7 +393,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       currentQuestion.type === 'fair-share' ||
       currentQuestion.type === 'division-machine' ||
       currentQuestion.type === 'fill-the-jar' ||
-      currentQuestion.type === 'balance-scale'
+      currentQuestion.type === 'balance-scale' ||
+      currentQuestion.type === 'block-stacking'
     )) {
       interactiveSubmitFn()
       return
@@ -1006,6 +1007,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer.toString()) : 0}
                   onAnswer={handleBlockStackingAnswer}
                   question={currentQuestion.question}
+                  onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
                 />
               )}
             </div>
@@ -1852,7 +1854,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'fair-share' ||
                         currentQuestion.type === 'division-machine' ||
                         currentQuestion.type === 'fill-the-jar' ||
-                        currentQuestion.type === 'balance-scale'
+                        currentQuestion.type === 'balance-scale' ||
+                        currentQuestion.type === 'block-stacking'
                       ? !interactiveSubmitFn // Enabled when component provides submit function
                       : !selectedAnswer
                   }
