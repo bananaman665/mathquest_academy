@@ -227,44 +227,44 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
             </button>
 
             {/* Item Card */}
-            <div className="bg-white border-4 border-gray-200 rounded-3xl p-8 shadow-2xl max-w-md mx-auto">
+            <div className="bg-white border-4 border-gray-200 rounded-3xl p-6 shadow-2xl max-w-sm mx-auto">
               {/* Category Badge */}
-              <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 {isPowerUp ? (
                   <>
-                    <Zap className="w-6 h-6 text-yellow-600" />
-                    <span className="text-lg font-black text-yellow-600">POWER-UP</span>
+                    <Zap className="w-5 h-5 text-yellow-600" />
+                    <span className="text-sm font-black text-yellow-600">POWER-UP</span>
                   </>
                 ) : (
                   <>
-                    <Palette className="w-6 h-6 text-purple-600" />
-                    <span className="text-lg font-black text-purple-600">COSMETIC</span>
+                    <Palette className="w-5 h-5 text-purple-600" />
+                    <span className="text-sm font-black text-purple-600">COSMETIC</span>
                   </>
                 )}
               </div>
 
-              <div className="text-center mb-6">
-                <div className="mb-6 flex justify-center">
-                  <div className="w-32 h-32 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl flex items-center justify-center border-4 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
-                    <ItemIcon className={`w-20 h-20 ${item.color} transition-transform duration-300`} />
+              <div className="text-center mb-4">
+                <div className="mb-4 flex justify-center">
+                  <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
+                    <ItemIcon className={`w-12 h-12 ${item.color} transition-transform duration-300`} />
                   </div>
                 </div>
-                <h3 className="text-3xl font-black text-gray-900 mb-3">{item.name}</h3>
-                <p className="text-lg text-gray-600">{item.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
+                <p className="text-sm text-gray-600">{item.description}</p>
               </div>
 
-              <div className="flex items-center justify-between mb-6">
-                <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-3 border-yellow-300 rounded-xl px-6 py-3 flex items-center gap-3">
-                  <Gem className="w-6 h-6 text-yellow-800 animate-pulse" />
-                  <p className="text-2xl font-black text-yellow-800">{item.price}</p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
+                  <Gem className="w-5 h-5 text-yellow-800 animate-pulse" />
+                  <p className="text-lg font-black text-yellow-800">{item.price}</p>
                 </div>
                 {canAfford ? (
-                  <span className="text-sm font-bold text-green-600 bg-green-100 px-4 py-2 rounded-full animate-pulse flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" />
+                  <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
                     Can afford
                   </span>
                 ) : (
-                  <span className="text-sm font-bold text-red-600 bg-red-100 px-4 py-2 rounded-full">
+                  <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
                     Need {item.price - balance} more
                   </span>
                 )}
@@ -273,7 +273,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               <button
                 onClick={() => handlePurchase(item)}
                 disabled={!canAfford || isPurchasing}
-                className={`w-full font-bold py-4 rounded-xl transition-all duration-300 text-lg ${
+                className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
                   canAfford && !isPurchasing
                     ? `${isPowerUp ? 'bg-blue-600 hover:bg-blue-700' : 'bg-purple-600 hover:bg-purple-700'} text-white hover:scale-105 active:scale-95`
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
@@ -285,7 +285,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               <button
                 onClick={() => handleUseItem(item)}
                 disabled={usingItem === item.id}
-                className={`w-full font-bold py-4 rounded-xl transition-all duration-300 mt-3 text-lg ${
+                className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
                   usingItem !== item.id
                     ? `${isPowerUp ? 'bg-green-600 hover:bg-green-700' : 'bg-pink-600 hover:bg-pink-700'} text-white hover:scale-105 active:scale-95`
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
