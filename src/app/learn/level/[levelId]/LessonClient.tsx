@@ -772,7 +772,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-32" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 6rem)' }}>
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-40" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 6rem)' }}>
         <div className="w-full max-w-3xl">
           {!currentQuestion ? (
             <div className="text-center py-10">
