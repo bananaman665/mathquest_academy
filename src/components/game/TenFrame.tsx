@@ -79,19 +79,13 @@ export default function TenFrame({
     // Calculate new dot count
     const newDotsPlaced = newPlaced.filter(d => d).length
 
-    // Enable check button ONLY when user reaches the correct number of dots
+    // Enable check button AND auto-submit when user reaches the correct number of dots
     if (newDotsPlaced === correctPositionRef.current && onSubmitReadyRef.current) {
-      const submitFn = () => {
-        if (hasSubmittedRef.current) {
-          return
-        }
+      if (!hasSubmittedRef.current) {
         hasSubmittedRef.current = true
-
-        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
-        const correct = currentDotsPlaced === correctPositionRef.current
-        onAnswerRef.current(correct)
+        // They have the correct number! Answer is always correct when count matches
+        onAnswerRef.current(true)
       }
-      onSubmitReadyRef.current(submitFn)
     } else if (newDotsPlaced !== correctPositionRef.current && onSubmitReadyRef.current) {
       // Disable check button if they remove dots and no longer have correct amount
       onSubmitReadyRef.current(null)
