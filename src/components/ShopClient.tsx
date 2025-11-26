@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle, Gift, Clock, Sparkles, Shield, Flame, FastForward, Brain, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle, Gift, Clock, Sparkles, Shield, Flame, FastForward, Brain } from 'lucide-react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface ShopItem {
@@ -43,6 +43,28 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [currentItemIndex, setCurrentItemIndex] = useState(0)
   const { playCorrect, playIncorrect } = useSoundEffects()
+  
+  const touchStartX = useRef<number>(0)
+  const touchEndX = useRef<number>(0)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current - touchEndX.current > 50) {
+      // Swiped left - go to next
+      handleNext()
+    }
+    if (touchEndX.current - touchStartX.current > 50) {
+      // Swiped right - go to previous
+      handlePrev()
+    }
+  }
 
   const handleNext = () => {
     if (currentItemIndex < items.length - 1) {
@@ -200,34 +222,14 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         const isPowerUp = item.category === 'power-ups'
 
         return (
-          <div className="relative">
-            {/* Navigation Buttons */}
-            <button
-              onClick={handlePrev}
-              disabled={currentItemIndex === 0}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                currentItemIndex === 0
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 shadow-lg'
-              }`}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            <button
-              onClick={handleNext}
-              disabled={currentItemIndex === items.length - 1}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                currentItemIndex === items.length - 1
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 shadow-lg'
-              }`}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-
+          <div>
             {/* Item Card */}
-            <div className="bg-white border-4 border-gray-200 rounded-3xl p-6 shadow-2xl max-w-sm mx-auto">
+            <div 
+              className="bg-white border-4 border-gray-200 rounded-3xl p-6 shadow-2xl max-w-sm mx-auto"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {/* Category Badge */}
               <div className="flex items-center justify-center gap-2 mb-4">
                 {isPowerUp ? (
@@ -293,6 +295,13 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               >
                 {usingItem === item.id ? (isPowerUp ? 'Using...' : 'Equipping...') : (isPowerUp ? 'Use Item' : 'Equip')}
               </button>
+            </div>
+
+            {/* Swipe Context Message */}
+            <div className="text-center mt-6">
+              <p className="text-sm text-gray-500 font-medium">
+                Swipe right to see the next item
+              </p>
             </div>
           </div>
         )
