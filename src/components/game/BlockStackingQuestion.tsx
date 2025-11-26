@@ -82,11 +82,10 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-6">
-        {/* Question */}
-        <div className="text-center">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{question}</h3>
-          <p className="text-gray-900 font-medium text-sm sm:text-base">
+      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-24">
+        {/* Instruction */}
+        <div className="text-center mb-2">
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">
             {operation === 'add'
               ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from down to up`
               : `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from up to down`}
