@@ -17,25 +17,35 @@ export default function TenFrame({
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
   const userAnswerRef = useRef<string>('')
+  const onAnswerRef = useRef(onAnswer)
+  const correctPositionRef = useRef(correctPosition)
 
-  // Keep ref in sync with state
+  // Keep refs in sync
   useEffect(() => {
     userAnswerRef.current = userAnswer
   }, [userAnswer])
 
-  // Create handleSubmit ONCE - it never changes
+  useEffect(() => {
+    onAnswerRef.current = onAnswer
+  }, [onAnswer])
+
+  useEffect(() => {
+    correctPositionRef.current = correctPosition
+  }, [correctPosition])
+
+  // Create handleSubmit ONCE - never recreated, never has dependencies that change
   const handleSubmit = useCallback(() => {
     const answer = parseInt(userAnswerRef.current)
     
     // Don't submit if no answer entered
     if (isNaN(answer) || userAnswerRef.current === '') {
-      onAnswer(false)
+      onAnswerRef.current(false)
       return
     }
 
-    const isCorrect = answer === correctPosition
-    onAnswer(isCorrect)
-  }, [correctPosition, onAnswer])
+    const isCorrect = answer === correctPositionRef.current
+    onAnswerRef.current(isCorrect)
+  }, []) // NO dependencies - function never changes
 
   // Register submit function ONCE when component mounts
   useEffect(() => {
