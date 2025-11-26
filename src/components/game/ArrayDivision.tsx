@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Star } from 'lucide-react'
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface ArrayDivisionProps {
   totalItems: number
@@ -18,6 +18,7 @@ export default function ArrayDivision({
   question,
   onSubmitReady,
 }: ArrayDivisionProps) {
+  const [currentConfigIndex, setCurrentConfigIndex] = useState<number>(0)
   const [selectedRows, setSelectedRows] = useState<number>(0)
   const [selectedCols, setSelectedCols] = useState<number>(0)
 
@@ -36,6 +37,20 @@ export default function ArrayDivision({
   }
 
   const configurations = getArrayConfigurations()
+  const currentConfig = configurations[currentConfigIndex]
+
+  // Navigation handlers
+  const handleNext = () => {
+    if (currentConfigIndex < configurations.length - 1) {
+      setCurrentConfigIndex(prev => prev + 1)
+    }
+  }
+
+  const handlePrev = () => {
+    if (currentConfigIndex > 0) {
+      setCurrentConfigIndex(prev => prev - 1)
+    }
+  }
 
   // Register submit function with parent
   useEffect(() => {
@@ -58,9 +73,9 @@ export default function ArrayDivision({
     onAnswer(correct)
   }
 
-  const handleConfigSelect = (rows: number, cols: number) => {
-    setSelectedRows(rows)
-    setSelectedCols(cols)
+  const handleConfigSelect = () => {
+    setSelectedRows(currentConfig.rows)
+    setSelectedCols(currentConfig.cols)
   }
 
   return (
@@ -75,59 +90,86 @@ export default function ArrayDivision({
         </p>
       </div>
 
-      {/* Array Configuration Options */}
-      <div className="w-full max-w-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {configurations.map((config, idx) => {
-            const isSelected = selectedRows === config.rows && selectedCols === config.cols
+      {/* Flashcard Navigation Counter */}
+      <div className="text-sm font-semibold text-gray-500">
+        Option {currentConfigIndex + 1} of {configurations.length}
+      </div>
 
-            return (
-              <button
-                key={idx}
-                onClick={() => handleConfigSelect(config.rows, config.cols)}
-                className={`p-4 rounded-xl border-2 ${
-                  isSelected
-                    ? 'border-blue-500 bg-blue-50 shadow-lg'
-                    : 'border-gray-300 bg-white hover:border-gray-400 hover:shadow'
+      {/* Single Array Configuration Card */}
+      <div className="w-full max-w-md">
+        <button
+          onClick={handleConfigSelect}
+          className={`w-full p-6 rounded-xl border-2 transition-all ${
+            selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
+              ? 'border-blue-500 bg-blue-50 shadow-lg'
+              : 'border-gray-300 bg-white hover:border-gray-400 hover:shadow'
+          }`}
+        >
+          <div className="text-center mb-4">
+            <span className="text-lg font-bold text-gray-700">
+              {currentConfig.rows} × {currentConfig.cols}
+            </span>
+          </div>
+
+          {/* Array Grid */}
+          <div
+            className="inline-grid gap-1.5 mx-auto"
+            style={{
+              gridTemplateColumns: `repeat(${currentConfig.cols}, minmax(0, 1fr))`
+            }}
+          >
+            {Array.from({ length: totalItems }).map((_, starIdx) => (
+              <Star
+                key={starIdx}
+                className={`w-7 h-7 sm:w-8 sm:h-8 ${
+                  selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
+                    ? 'text-blue-500 fill-blue-500'
+                    : 'text-yellow-500 fill-yellow-500'
                 }`}
-              >
-                <div className="text-center mb-3">
-                  <span className="text-sm font-bold text-gray-700">
-                    {config.rows} × {config.cols}
-                  </span>
-                </div>
+              />
+            ))}
+          </div>
 
-                {/* Array Grid */}
-                <div
-                  className="inline-grid gap-1 mx-auto"
-                  style={{
-                    gridTemplateColumns: `repeat(${config.cols}, minmax(0, 1fr))`
-                  }}
-                >
-                  {Array.from({ length: totalItems }).map((_, starIdx) => (
-                    <Star
-                      key={starIdx}
-                      className={`w-6 h-6 ${
-                        isSelected
-                          ? 'text-blue-500 fill-blue-500'
-                          : 'text-yellow-500 fill-yellow-500'
-                      }`}
-                    />
-                  ))}
-                </div>
+          <div className="text-center mt-4 text-sm font-semibold text-gray-600">
+            {currentConfig.rows} rows of {currentConfig.cols}
+          </div>
+        </button>
+      </div>
 
-                <div className="text-center mt-3 text-xs font-semibold text-gray-600">
-                  {config.rows} rows of {config.cols}
-                </div>
-              </button>
-            )
-          })}
+      {/* Navigation Arrows */}
+      <div className="flex items-center gap-6">
+        <button
+          onClick={handlePrev}
+          disabled={currentConfigIndex === 0}
+          className={`p-3 rounded-full transition-all ${
+            currentConfigIndex === 0
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95 shadow-lg'
+          }`}
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <div className="text-gray-400 text-sm font-medium">
+          Swipe to see more
         </div>
+
+        <button
+          onClick={handleNext}
+          disabled={currentConfigIndex === configurations.length - 1}
+          className={`p-3 rounded-full transition-all ${
+            currentConfigIndex === configurations.length - 1
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95 shadow-lg'
+          }`}
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
       </div>
 
       {/* Division Explanation */}
       {selectedRows > 0 && selectedCols > 0 && (
-        <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-4 max-w-md">
+        <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-4 max-w-md w-full">
           <div className="text-center space-y-2">
             <div className="text-lg font-bold text-gray-800">
               {totalItems} ÷ {selectedRows} = {selectedCols}
