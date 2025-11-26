@@ -224,8 +224,8 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         return (
           <div>
             {/* Item Card */}
-            <div 
-              className="bg-white border-4 border-gray-200 rounded-3xl p-6 shadow-2xl max-w-sm mx-auto"
+            <div
+              className="bg-white border-4 border-gray-200 rounded-3xl p-6 max-w-sm mx-auto"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
