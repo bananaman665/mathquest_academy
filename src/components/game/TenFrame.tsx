@@ -69,6 +69,8 @@ export default function TenFrame({
   }, [correctPosition])
 
   const handleFrameClick = (index: number) => {
+    hasInteractedRef.current = true
+    
     // Toggle the dot on/off
     const newPlaced = [...placedDots]
     newPlaced[index] = !newPlaced[index]
@@ -77,33 +79,22 @@ export default function TenFrame({
     // Calculate new dot count
     const newDotsPlaced = newPlaced.filter(d => d).length
 
-    // On first interaction, register submit function (enables check button)
-    if (!hasInteractedRef.current) {
-      hasInteractedRef.current = true
-
-      if (onSubmitReadyRef.current) {
-        const submitFn = () => {
-          if (hasSubmittedRef.current) {
-            return
-          }
-          hasSubmittedRef.current = true
-
-          const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
-          const correct = currentDotsPlaced === correctPositionRef.current
-          onAnswerRef.current(correct)
+    // Enable check button ONLY when user reaches the correct number of dots
+    if (newDotsPlaced === correctPositionRef.current && onSubmitReadyRef.current) {
+      const submitFn = () => {
+        if (hasSubmittedRef.current) {
+          return
         }
-        onSubmitReadyRef.current(submitFn)
-      }
-    }
+        hasSubmittedRef.current = true
 
-    // Auto-submit when user reaches the correct number of dots
-    if (newDotsPlaced === correctPositionRef.current && !hasSubmittedRef.current) {
-      hasSubmittedRef.current = true
-      // Use setTimeout to ensure state update completes first
-      setTimeout(() => {
-        const correct = newDotsPlaced === correctPositionRef.current
+        const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
+        const correct = currentDotsPlaced === correctPositionRef.current
         onAnswerRef.current(correct)
-      }, 300)
+      }
+      onSubmitReadyRef.current(submitFn)
+    } else if (newDotsPlaced !== correctPositionRef.current && onSubmitReadyRef.current) {
+      // Disable check button if they remove dots and no longer have correct amount
+      onSubmitReadyRef.current(null)
     }
   }
 
