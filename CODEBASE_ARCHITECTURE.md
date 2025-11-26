@@ -39,11 +39,11 @@ mathquest-academy/
 │   │   └── ...                # Other pages (dashboard, profile, etc.)
 │   ├── components/
 │   │   ├── game/              # Game-style question components
-│   │   │   ├── BlockStackingQuestion.tsx
-│   │   │   ├── BubblePopMath.tsx
-│   │   │   ├── NumberLine.tsx
-│   │   │   ├── NumberLinePlacement.tsx
-│   │   │   └── TenFrame.tsx
+│   │   │   ├── BlockStackingQuestion.tsx  # Drag-drop blocks to build addition/subtraction
+│   │   │   ├── BubblePopMath.tsx          # Pop bubbles with correct answers
+│   │   │   ├── NumberLine.tsx             # Number line visualization
+│   │   │   ├── NumberLinePlacement.tsx    # Place numbers on number line
+│   │   │   └── TenFrame.tsx               # Display dots in 2x5 grid for counting (user types answer)
 │   │   ├── interactive/       # Interactive learning components
 │   │   │   ├── ArrayGridBuilder.tsx
 │   │   │   ├── BalanceScale.tsx
@@ -160,25 +160,26 @@ The question generator creates math questions dynamically instead of hardcoding 
 - Show hints and explanations
 
 **Question Types → Components Mapping:**
-| Question Type | Component |
-|--------------|-----------|
-| `multiple-choice` | Radio buttons with options |
-| `type-answer` | Text input field |
-| `block-stacking` | `BlockStackingQuestion` |
-| `ten-frame` | `TenFrame` |
-| `bubble-pop` | `BubblePopMath` |
-| `number-line-drag` | `NumberLineDrag` |
-| `balance-scale` | `BalanceScale` |
-| `fraction-builder` | `FractionBuilder` |
-| `array-grid-builder` | `ArrayGridBuilder` |
-| `skip-counter` | `SkipCounter` |
-| `fair-share` | `FairShare` |
-| `division-machine` | `DivisionMachine` |
-| `fill-the-jar` | `FillTheJar` |
-| `graph-plotter` | `GraphPlotter` |
-| `clock-setter` | `ClockSetter` |
-| `money-counter` | `MoneyCounter` |
-| ... and more |
+| Question Type | Component | Description |
+|--------------|-----------|-------------|
+| `multiple-choice` | Radio buttons | User selects one answer from 4 options |
+| `type-answer` | Text input field | User types numeric answer |
+| `block-stacking` | `BlockStackingQuestion` | Drag-drop blocks to visualize addition/subtraction |
+| `ten-frame` | `TenFrame` | Shows dots in 2x5 grid, user counts and types answer |
+| `bubble-pop` | `BubblePopMath` | Interactive bubble popping game |
+| `number-line-drag` | `NumberLineDrag` | Drag numbers onto correct positions on number line |
+| `balance-scale` | `BalanceScale` | Balance equation by finding missing value |
+| `fraction-builder` | `FractionBuilder` | Build visual fraction representations |
+| `array-grid-builder` | `ArrayGridBuilder` | Build arrays to understand multiplication |
+| `skip-counter` | `SkipCounter` | Count by 2s, 5s, 10s with interactive feedback |
+| `fair-share` | `FairShare` | Divide items equally among groups |
+| `array-division` | `ArrayDivision` | Visual array-based division with flashcard navigation |
+| `remainder-boxes` | `RemainderBoxes` | Division with remainders using drag-drop |
+| `fill-the-jar` | `FillTheJar` | Fill containers to target amounts |
+| `graph-plotter` | `GraphPlotter` | Plot points on coordinate grid |
+| `clock-setter` | `ClockSetter` | Set clock hands to correct time |
+| `money-counter` | `MoneyCounter` | Count coins and bills |
+| ... and more ||
 
 ### 4. Curriculum Structure
 
@@ -307,6 +308,50 @@ interface QuestionComponentProps {
   onAnswer: (userAnswer: string, isCorrect: boolean) => void
 }
 ```
+
+### Interactive Question Components
+
+#### TenFrame Component (`src/components/game/TenFrame.tsx`)
+**Purpose:** Visual counting aid showing dots in a 2x5 grid (10 total boxes)
+
+**How it works:**
+1. Displays `correctPosition` number of dots pre-filled in the grid
+2. Dots fill left-to-right, top row first (positions 0-4), then bottom row (5-9)
+3. User observes the dots and types their count in a number input
+4. Uses `onSubmitReady` callback pattern to register submit function with parent
+5. Validates answer when CHECK button is clicked (not on input change)
+
+**Key Implementation Details:**
+- Uses refs to prevent auto-submit issues: `userAnswerRef`, `onAnswerRef`, `correctPositionRef`
+- `handleSubmit` has NO dependencies `[]` to ensure stability and prevent recreation
+- Refs are synced via `useEffect` to always have current values
+- Empty answer returns `false` instead of crashing with `NaN`
+
+**Common Bugs Fixed (Nov 2024):**
+- ❌ Was allowing users to PLACE dots (wrong behavior)
+- ✅ Now DISPLAYS dots for users to COUNT
+- ❌ Was auto-submitting on component mount
+- ✅ Now stable submit function prevents auto-submit
+- ❌ Was recreating submit function on every keystroke
+- ✅ Now uses refs to keep function stable
+
+#### ArrayDivision Component
+**Purpose:** Visual division using arrays with flashcard navigation
+
+**How it works:**
+- Shows division problems as arrays (e.g., 12 dots in 3 groups)
+- Flashcard-style interface: one problem at a time
+- Users navigate with left/right swipe or arrow buttons
+- No scrolling required - mobile-friendly
+
+#### RemainderBoxes Component  
+**Purpose:** Division with remainders using drag-drop visualization
+
+**How it works:**
+- Displays total items to divide and number of boxes
+- Users drag items into boxes equally
+- Leftover items = remainder
+- Visual learning of division with remainders concept
 
 ## Recent Changes (Dec 2024)
 
