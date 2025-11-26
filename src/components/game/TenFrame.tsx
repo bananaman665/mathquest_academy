@@ -16,21 +16,28 @@ export default function TenFrame({
   onSubmitReady,
 }: TenFrameProps) {
   const [userAnswer, setUserAnswer] = useState<string>('')
+  const userAnswerRef = useRef<string>('')
 
+  // Keep ref in sync with state
+  useEffect(() => {
+    userAnswerRef.current = userAnswer
+  }, [userAnswer])
+
+  // Create handleSubmit ONCE - it never changes
   const handleSubmit = useCallback(() => {
-    const answer = parseInt(userAnswer)
+    const answer = parseInt(userAnswerRef.current)
     
     // Don't submit if no answer entered
-    if (isNaN(answer) || userAnswer === '') {
+    if (isNaN(answer) || userAnswerRef.current === '') {
       onAnswer(false)
       return
     }
 
     const isCorrect = answer === correctPosition
     onAnswer(isCorrect)
-  }, [userAnswer, correctPosition, onAnswer])
+  }, [correctPosition, onAnswer])
 
-  // Register submit function with parent
+  // Register submit function ONCE when component mounts
   useEffect(() => {
     if (onSubmitReady) {
       onSubmitReady(handleSubmit)
