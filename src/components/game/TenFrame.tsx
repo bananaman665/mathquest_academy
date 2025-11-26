@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface TenFrameProps {
   question: string
@@ -17,18 +17,6 @@ export default function TenFrame({
 }: TenFrameProps) {
   const [placedDots, setPlacedDots] = useState<boolean[]>(Array(10).fill(false))
 
-  // Register submit function with parent
-  useEffect(() => {
-    if (onSubmitReady) {
-      onSubmitReady(() => handleSubmit)
-    }
-    return () => {
-      if (onSubmitReady) {
-        onSubmitReady(null)
-      }
-    }
-  }, [onSubmitReady, placedDots])
-
   const handleFrameClick = (index: number) => {
     // Toggle the dot on/off
     const newPlaced = [...placedDots]
@@ -36,11 +24,23 @@ export default function TenFrame({
     setPlacedDots(newPlaced)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const dotsPlaced = placedDots.filter(d => d).length
     const correct = dotsPlaced === correctPosition
     onAnswer(correct)
-  }
+  }, [placedDots, correctPosition, onAnswer])
+
+  // Register submit function with parent
+  useEffect(() => {
+    if (onSubmitReady) {
+      onSubmitReady(handleSubmit)
+    }
+    return () => {
+      if (onSubmitReady) {
+        onSubmitReady(null)
+      }
+    }
+  }, [onSubmitReady, handleSubmit])
 
   return (
     <div className="flex flex-col items-center gap-8 py-8">

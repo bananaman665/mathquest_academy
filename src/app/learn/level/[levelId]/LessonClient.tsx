@@ -279,17 +279,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const handleTenFrameAnswer = (isCorrect: boolean) => {
     setIsCorrect(isCorrect)
     setShowExplanation(true)
-    
+
     if (isCorrect) {
       playCorrect()
-      
+
       // Update streak
       const newStreak = currentStreak + 1
       setCurrentStreak(newStreak)
       if (newStreak > maxStreak) {
         setMaxStreak(newStreak)
       }
-      
+
       // Check for milestone celebration
       checkStreakMilestone(newStreak)
       
