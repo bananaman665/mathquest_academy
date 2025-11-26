@@ -1130,11 +1130,11 @@ function generateQuestionByType(
 
     case 'number-line-drag': {
       // Smart range calculation to avoid overcrowding
-      // Show maximum 10-12 numbers on the line
-      const rangeSize = 10
+      // Show maximum 5 numbers on the line
+      const rangeSize = 5
       let min = Math.max(0, answer - Math.floor(rangeSize / 2))
       let max = min + rangeSize
-      
+
       // If answer is near the start, adjust
       if (answer < rangeSize / 2) {
         min = 0
