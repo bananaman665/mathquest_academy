@@ -61,25 +61,25 @@ export default async function AchievementsPage() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="fixed top-0 left-0 right-0 bg-gradient-to-br from-purple-50 to-blue-50 pt-safe-header pb-4 px-4 z-10">
+        <div className="fixed top-0 left-0 right-0 bg-gradient-to-br from-purple-50 to-blue-50 pt-safe-header pb-3 px-4 z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <Trophy className="w-8 h-8 text-yellow-600" />
-              <h1 className="text-4xl font-black text-gray-900">Badges</h1>
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <Trophy className="w-7 h-7 text-yellow-600" />
+              <h1 className="text-3xl font-black text-gray-900">Badges</h1>
             </div>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-base">
               {earnedAchievements.length} of {achievements.length} unlocked
             </p>
-            <div className="w-full bg-gray-200 rounded-full h-3 mt-4 mb-6">
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-3">
               <div
-                className="bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full transition-all duration-500"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 h-2.5 rounded-full transition-all duration-500"
                 style={{ width: `${achievements.length > 0 ? (earnedAchievements.length / achievements.length) * 100 : 0}%` }}
               ></div>
             </div>
           </div>
         </div>
 
-        <div className="pt-32 px-4 pb-4">
+        <div className="pt-28 px-4 pb-4">
         {/* Badge Categories */}
         <div className="grid gap-8">
           {/* Earned Badges */}
