@@ -136,24 +136,6 @@ export default async function ShopPage() {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-20 md:pb-8 pt-28 sm:pt-24">
           <ShopClient items={itemsWithColors} userBalance={dbUser.totalXP} />
-
-          {/* Info Card */}
-          <div className="bg-gradient-to-br from-green-50 to-blue-50 border border-green-200 rounded-2xl p-4 md:p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2">How to earn more gems?</h3>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• Complete lessons and earn XP</li>
-                  <li>• Finish daily quests for bonus rewards</li>
-                  <li>• Maintain your learning streak</li>
-                  <li>• Get perfect scores on lessons</li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </main>
       </div>
     </div>

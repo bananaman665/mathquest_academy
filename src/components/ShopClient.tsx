@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle, Gift, Clock, Sparkles, Shield, Flame, FastForward, Brain } from 'lucide-react'
+import { Heart, Zap, Gem, Lightbulb, Snowflake, Trophy, Palette, PartyPopper, CheckCircle, Gift, Clock, Sparkles, Shield, Flame, FastForward, Brain, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 
 interface ShopItem {
@@ -41,7 +41,20 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
   const [usingItem, setUsingItem] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [currentItemIndex, setCurrentItemIndex] = useState(0)
   const { playCorrect, playIncorrect } = useSoundEffects()
+
+  const handleNext = () => {
+    if (currentItemIndex < items.length - 1) {
+      setCurrentItemIndex(currentItemIndex + 1)
+    }
+  }
+
+  const handlePrev = () => {
+    if (currentItemIndex > 0) {
+      setCurrentItemIndex(currentItemIndex - 1)
+    }
+  }
 
   const getUseEndpoint = (itemId: string): string => {
     switch(itemId) {
@@ -171,151 +184,119 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         </div>
       )}
 
-      {/* Power-ups Section */}
-      <div className="mb-12">
-        <div className="flex items-center gap-3 mb-4">
-          <Zap className="w-8 h-8 text-yellow-600" />
-          <h2 className="text-2xl font-black text-gray-900">Power-ups</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.filter(item => item.category === 'power-ups').map((item) => {
-            const canAfford = balance >= item.price
-            const ItemIcon = iconMap[item.icon] || Heart
-            const isPurchasing = purchasingItem === item.id
-
-            return (
-              <div
-                key={item.id}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-4 md:p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-              >
-                <div className="text-center mb-4">
-                  <div className="mb-4 flex justify-center">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
-                      <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
-                </div>
-
-                <div className="flex items-center justify-between mb-3">
-                  <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
-                    <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
-                    <p className="text-lg font-black text-yellow-800">{item.price}</p>
-                  </div>
-                  {canAfford ? (
-                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" />
-                      Can afford
-                    </span>
-                  ) : (
-                    <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
-                      Need {item.price - balance} more
-                    </span>
-                  )}
-                </div>
-
-                <button
-                  onClick={() => handlePurchase(item)}
-                  disabled={!canAfford || isPurchasing}
-                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
-                    canAfford && !isPurchasing
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 active:scale-95'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
-                </button>
-                
-                <button
-                  onClick={() => handleUseItem(item)}
-                  disabled={usingItem === item.id}
-                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
-                    usingItem !== item.id
-                      ? 'bg-green-600 hover:bg-green-700 text-white hover:scale-105 active:scale-95'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {usingItem === item.id ? 'Using...' : 'Use Item'}
-                </button>
-              </div>
-            )
-          })}
-        </div>
+      {/* Item Navigation Counter */}
+      <div className="text-center mb-4">
+        <p className="text-sm font-bold text-gray-600">
+          Item {currentItemIndex + 1} of {items.length}
+        </p>
       </div>
 
-      {/* Cosmetics Section */}
-      <div className="mb-12">
-        <div className="flex items-center gap-3 mb-4">
-          <Palette className="w-8 h-8 text-purple-600" />
-          <h2 className="text-2xl font-black text-gray-900">Cosmetics</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.filter(item => item.category === 'cosmetics').map((item) => {
-            const canAfford = balance >= item.price
-            const ItemIcon = iconMap[item.icon] || Trophy
-            const isPurchasing = purchasingItem === item.id
+      {/* Single Item Display (Flashcard Style) */}
+      {items.length > 0 && (() => {
+        const item = items[currentItemIndex]
+        const canAfford = balance >= item.price
+        const ItemIcon = iconMap[item.icon] || Heart
+        const isPurchasing = purchasingItem === item.id
+        const isPowerUp = item.category === 'power-ups'
 
-            return (
-              <div
-                key={item.id}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-4 md:p-6 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-              >
-                <div className="text-center mb-4">
-                  <div className="mb-4 flex justify-center">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border-2 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
-                      <ItemIcon className={`w-10 h-10 ${item.color} transition-transform duration-300`} />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
-                </div>
+        return (
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <button
+              onClick={handlePrev}
+              disabled={currentItemIndex === 0}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                currentItemIndex === 0
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 shadow-lg'
+              }`}
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
 
-                <div className="flex items-center justify-between mb-3">
-                  <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl px-4 py-2 flex items-center gap-2">
-                    <Gem className="w-4 h-4 text-yellow-800 animate-pulse" />
-                    <p className="text-lg font-black text-yellow-800">{item.price}</p>
-                  </div>
-                  {canAfford ? (
-                    <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full animate-pulse flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" />
-                      Can afford
-                    </span>
-                  ) : (
-                    <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">
-                      Need {item.price - balance} more
-                    </span>
-                  )}
-                </div>
+            <button
+              onClick={handleNext}
+              disabled={currentItemIndex === items.length - 1}
+              className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                currentItemIndex === items.length - 1
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 shadow-lg'
+              }`}
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
 
-                <button
-                  onClick={() => handlePurchase(item)}
-                  disabled={!canAfford || isPurchasing}
-                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
-                    canAfford && !isPurchasing
-                      ? 'bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 active:scale-95'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
-                </button>
-
-                <button
-                  onClick={() => handleUseItem(item)}
-                  disabled={usingItem === item.id}
-                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
-                    usingItem !== item.id
-                      ? 'bg-pink-600 hover:bg-pink-700 text-white hover:scale-105 active:scale-95'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {usingItem === item.id ? 'Equipping...' : 'Equip'}
-                </button>
+            {/* Item Card */}
+            <div className="bg-white border-4 border-gray-200 rounded-3xl p-8 shadow-2xl max-w-md mx-auto">
+              {/* Category Badge */}
+              <div className="flex items-center justify-center gap-2 mb-6">
+                {isPowerUp ? (
+                  <>
+                    <Zap className="w-6 h-6 text-yellow-600" />
+                    <span className="text-lg font-black text-yellow-600">POWER-UP</span>
+                  </>
+                ) : (
+                  <>
+                    <Palette className="w-6 h-6 text-purple-600" />
+                    <span className="text-lg font-black text-purple-600">COSMETIC</span>
+                  </>
+                )}
               </div>
-            )
-          })}
-        </div>
-      </div>
+
+              <div className="text-center mb-6">
+                <div className="mb-6 flex justify-center">
+                  <div className="w-32 h-32 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl flex items-center justify-center border-4 border-gray-200 transition-all duration-300 hover:rotate-6 hover:scale-110">
+                    <ItemIcon className={`w-20 h-20 ${item.color} transition-transform duration-300`} />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-black text-gray-900 mb-3">{item.name}</h3>
+                <p className="text-lg text-gray-600">{item.description}</p>
+              </div>
+
+              <div className="flex items-center justify-between mb-6">
+                <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 border-3 border-yellow-300 rounded-xl px-6 py-3 flex items-center gap-3">
+                  <Gem className="w-6 h-6 text-yellow-800 animate-pulse" />
+                  <p className="text-2xl font-black text-yellow-800">{item.price}</p>
+                </div>
+                {canAfford ? (
+                  <span className="text-sm font-bold text-green-600 bg-green-100 px-4 py-2 rounded-full animate-pulse flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
+                    Can afford
+                  </span>
+                ) : (
+                  <span className="text-sm font-bold text-red-600 bg-red-100 px-4 py-2 rounded-full">
+                    Need {item.price - balance} more
+                  </span>
+                )}
+              </div>
+
+              <button
+                onClick={() => handlePurchase(item)}
+                disabled={!canAfford || isPurchasing}
+                className={`w-full font-bold py-4 rounded-xl transition-all duration-300 text-lg ${
+                  canAfford && !isPurchasing
+                    ? `${isPowerUp ? 'bg-blue-600 hover:bg-blue-700' : 'bg-purple-600 hover:bg-purple-700'} text-white hover:scale-105 active:scale-95`
+                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
+              </button>
+              
+              <button
+                onClick={() => handleUseItem(item)}
+                disabled={usingItem === item.id}
+                className={`w-full font-bold py-4 rounded-xl transition-all duration-300 mt-3 text-lg ${
+                  usingItem !== item.id
+                    ? `${isPowerUp ? 'bg-green-600 hover:bg-green-700' : 'bg-pink-600 hover:bg-pink-700'} text-white hover:scale-105 active:scale-95`
+                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                {usingItem === item.id ? (isPowerUp ? 'Using...' : 'Equipping...') : (isPowerUp ? 'Use Item' : 'Equip')}
+              </button>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
