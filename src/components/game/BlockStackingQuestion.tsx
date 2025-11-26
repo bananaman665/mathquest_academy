@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
-import { PartyPopper, X } from 'lucide-react'
 
 interface BlockStackingQuestionProps {
   firstNumber: number
@@ -25,8 +24,6 @@ export default function BlockStackingQuestion({
 }: BlockStackingQuestionProps) {
   const [stackBlocks, setStackBlocks] = useState<string[]>([])
   const [trashBlocks, setTrashBlocks] = useState<string[]>([])
-  const [showFeedback, setShowFeedback] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(false)
 
   // Initialize blocks based on operation
   useEffect(() => {
@@ -43,7 +40,7 @@ export default function BlockStackingQuestion({
 
   // Register submit function with parent
   useEffect(() => {
-    if (onSubmitReady && !showFeedback) {
+    if (onSubmitReady) {
       onSubmitReady(() => handleSubmit)
     }
     return () => {
@@ -51,7 +48,7 @@ export default function BlockStackingQuestion({
         onSubmitReady(null)
       }
     }
-  }, [onSubmitReady, showFeedback, stackBlocks])
+  }, [onSubmitReady, stackBlocks])
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result
@@ -78,20 +75,7 @@ export default function BlockStackingQuestion({
 
   const handleSubmit = () => {
     const correct = stackBlocks.length === correctAnswer
-    setIsCorrect(correct)
-    setShowFeedback(true)
     onAnswer(correct)
-  }
-
-  const handleReset = () => {
-    setShowFeedback(false)
-    if (operation === 'add') {
-      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `stack-block-${i}`))
-      setTrashBlocks(Array.from({ length: secondNumber }, (_, i) => `trash-block-${i}`))
-    } else {
-      setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `block-${i}`))
-      setTrashBlocks([])
-    }
   }
 
   return (
@@ -202,46 +186,6 @@ export default function BlockStackingQuestion({
             </div>
           </div>
         </div>
-
-        {/* Feedback */}
-        {showFeedback && (
-          <div className="w-full max-w-md px-4">
-            <div
-              className={`p-5 rounded-xl text-center font-bold text-base sm:text-lg ${
-                isCorrect
-                  ? 'bg-green-500/20 text-green-300 border-2 border-green-500'
-                  : 'bg-red-500/20 text-red-300 border-2 border-red-500'
-              }`}
-            >
-              {isCorrect ? (
-                <div>
-                  <div className="text-3xl mb-2 flex items-center justify-center gap-2">
-                    <PartyPopper className="w-7 h-7" />
-                    Correct!
-                  </div>
-                  <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens!</div>
-                </div>
-              ) : (
-                <div>
-                  <div className="text-3xl mb-2 flex items-center justify-center gap-2">
-                    <X className="w-7 h-7" />
-                    Not quite
-                  </div>
-                  <div className="text-sm sm:text-base">You have {stackBlocks.length} tokens, but need {correctAnswer}</div>
-                </div>
-              )}
-            </div>
-
-            {!isCorrect && (
-              <button
-                onClick={handleReset}
-                className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg"
-              >
-                Try Again
-              </button>
-            )}
-          </div>
-        )}
       </div>
     </DragDropContext>
   )
