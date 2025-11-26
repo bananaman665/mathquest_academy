@@ -1019,14 +1019,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Ten Frame Question */}
           {currentQuestion.type === 'ten-frame' && currentQuestion.correctPosition !== undefined && (
             <div className="mb-8">
-              {!showExplanation && (
-                <TenFrame
-                  question={currentQuestion.question}
-                  correctPosition={currentQuestion.correctPosition}
-                  onAnswer={handleTenFrameAnswer}
-                  onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
-                />
-              )}
+              <TenFrame
+                question={currentQuestion.question}
+                correctPosition={currentQuestion.correctPosition}
+                onAnswer={handleTenFrameAnswer}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
+              />
             </div>
           )}
 
