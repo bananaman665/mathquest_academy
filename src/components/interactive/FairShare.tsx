@@ -66,27 +66,18 @@ export default function FairShare({
     }
   }, [groupCounts, remainingItems, submitted, itemsPerGroup, remainder]);
 
-  const colors = [
-    'from-red-200 to-red-300 border-red-400',
-    'from-blue-200 to-blue-300 border-blue-400',
-    'from-green-200 to-green-300 border-green-400',
-    'from-yellow-200 to-yellow-300 border-yellow-400',
-    'from-purple-200 to-purple-300 border-purple-400',
-    'from-pink-200 to-pink-300 border-pink-400',
-  ];
-
   return (
     <div className="flex flex-col items-center gap-3 p-3 pb-24">
       {/* Instructions */}
       <div className="text-center">
-        <div className="text-lg font-bold text-gray-800">
+        <div className="text-lg font-bold text-black">
           Share {totalItems} dots equally among {numGroups} groups
         </div>
       </div>
 
       {/* Remaining Items */}
       <motion.div
-        className="bg-gradient-to-r from-orange-200 to-yellow-200 rounded-xl p-3 border-2 border-orange-400"
+        className="bg-white rounded-xl p-3 border-2 border-black"
         animate={{ scale: remainingItems > 0 ? [1, 1.05, 1] : 1 }}
         transition={{ repeat: remainingItems > 0 ? Infinity : 0, duration: 1 }}
       >
@@ -95,7 +86,7 @@ export default function FairShare({
             <Circle key={i} className="w-6 h-6 fill-blue-500 text-blue-500" />
           ))}
         </div>
-        <div className="text-center mt-1 text-lg font-bold text-orange-700">
+        <div className="text-center mt-1 text-lg font-bold text-black">
           {remainingItems} left
         </div>
       </motion.div>
@@ -107,17 +98,17 @@ export default function FairShare({
             key={groupIdx}
             onClick={() => handleDistribute(groupIdx)}
             disabled={remainingItems === 0}
-            className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-xl p-3 border-2 min-w-[100px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50`}
+            className="bg-green-500 text-white rounded-xl p-3 border-2 border-green-500 min-w-[100px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <div className="text-xs font-bold text-gray-700 mb-1 text-center">
+            <div className="text-xs font-bold text-white mb-1 text-center">
               Group {groupIdx + 1}
             </div>
             <div className="flex flex-wrap gap-0.5 justify-center mb-1 min-h-[40px]">
               {Array.from({ length: count }).map((_, itemIdx) => (
-                <Circle key={itemIdx} className="w-5 h-5 fill-blue-500 text-blue-500" />
+                <Circle key={itemIdx} className="w-5 h-5 fill-white text-white" />
               ))}
             </div>
-            <div className="text-center text-sm font-bold text-gray-800">
+            <div className="text-center text-sm font-bold text-white">
               {count}
             </div>
           </button>
