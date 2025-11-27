@@ -129,31 +129,13 @@ export default function FairShare({
         ))}
       </div>
 
-      {/* Division Display */}
-      <div className="flex items-center gap-2 text-xl font-bold">
-        <span className="text-orange-600">{distributedCount}</span>
-        <span className="text-gray-600">÷</span>
-        <span className="text-purple-600">{numGroups}</span>
-        <span className="text-gray-600">=</span>
-        <span className="text-green-600">
-          {Math.floor(distributedCount / numGroups)}
-          {distributedCount % numGroups > 0 && ` R${distributedCount % numGroups}`}
-        </span>
-      </div>
-
       {/* Controls */}
       <div className="flex gap-2">
         <button
           onClick={handleAutoDistribute}
-          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm font-bold rounded-full"
+          className="px-4 py-2 bg-blue-500 text-white text-sm font-bold rounded-full"
         >
           Auto Share
-        </button>
-        <button
-          onClick={handleReset}
-          className="px-4 py-2 bg-gray-200 text-gray-700 text-sm font-bold rounded-full"
-        >
-          Reset
         </button>
       </div>
     </div>
