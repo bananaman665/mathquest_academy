@@ -52,11 +52,5 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Mathly needs access to your camera to scan math problems and provide instant help.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Mathly needs access to your photos to help you solve math problems from images.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This allows us to provide you with personalized learning experiences and track your progress.</string>
 </dict>
 </plist>
