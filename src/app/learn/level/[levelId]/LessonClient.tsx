@@ -1614,7 +1614,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <FairShare
                 totalItems={currentQuestion.fairShareTotal || 12}
                 numGroups={currentQuestion.fairShareGroups || 3}
-                emoji={currentQuestion.fairShareEmoji || '🍪'}
+                emoji={currentQuestion.fairShareEmoji || '🔵'}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
