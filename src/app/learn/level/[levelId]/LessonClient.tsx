@@ -1104,14 +1104,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`bg-white text-black px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
-                              snapshot.isDraggingOver && !equationMatched[idx] ? 'border-blue-500 scale-105' :
-                              equationMatched[idx] ? 'border-green-500' : 'border-black'
+                            className={`px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
+                              snapshot.isDraggingOver && !equationMatched[idx] ? 'bg-white text-black border-blue-500 scale-105' :
+                              equationMatched[idx] ? 'bg-green-500 text-white border-green-500' : 'bg-white text-black border-black'
                             }`}
                           >
                             {equationMatched[idx] ? (
                               <>
-                                <span className="text-blue-500 font-bold text-2xl">{equationMatched[idx]}</span>
+                                <span className="text-white font-bold text-2xl">{equationMatched[idx]}</span>
                                 <button
                                   onClick={() => {
                                     // Remove equation from matched and add back to equation items
