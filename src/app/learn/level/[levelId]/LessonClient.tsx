@@ -1152,34 +1152,85 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 // Complex blanks with structured format
                 currentQuestion.blanks.map((blank, idx) => {
                   const parts = blank.text.split('__');
+                  const userAnswer = blankAnswers[idx] || '';
+                  const isAnswered = userAnswer.trim() !== '';
+                  const isCorrectBlank = showExplanation && blank.answer === userAnswer.trim();
+                  const isIncorrectBlank = showExplanation && isAnswered && !isCorrectBlank;
+                  
+                  let inputClass = "mx-2 px-4 py-2 rounded-xl text-2xl font-bold w-32 text-center border-4 transition-all duration-200 ";
+                  
+                  if (showExplanation) {
+                    if (isCorrectBlank) {
+                      inputClass += "bg-green-500 text-white border-green-400";
+                    } else if (isIncorrectBlank) {
+                      inputClass += "bg-red-500 text-white border-red-400";
+                    } else {
+                      inputClass += "bg-white text-black border-gray-300";
+                    }
+                  } else {
+                    if (isAnswered) {
+                      inputClass += "bg-blue-500 text-white border-blue-400";
+                    } else {
+                      inputClass += "bg-white text-gray-400 border-blue-300 focus:border-blue-500";
+                    }
+                  }
+                  
                   return (
-                    <div key={idx} className="mb-2 text-2xl font-bold text-black">
-                      {parts[0]}
+                    <div key={idx} className="mb-4 text-2xl font-bold text-black flex items-center justify-center">
+                      <span className="mr-2">{parts[0]}</span>
                       <input
                         type="text"
-                        className="mx-2 px-2 py-1 rounded bg-slate-700 text-white border-0 outline-none"
-                        value={blankAnswers[idx] || ''}
+                        className={inputClass}
+                        value={userAnswer}
                         onChange={e => handleBlankChange(idx, e.target.value)}
                         disabled={showExplanation}
+                        placeholder="?"
                       />
-                      {parts[1]}
+                      <span className="ml-2">{parts[1]}</span>
                     </div>
                   );
                 })
               ) : (
                 // Simple fill-blank with just correctAnswer
-                <div className="flex items-center gap-4 text-2xl font-bold text-black">
-                  <span>{currentQuestion.question.split('___')[0]}</span>
-                  <input
-                    type="text"
-                    className="bg-slate-100 text-black text-2xl font-bold w-24 text-center px-2 py-1 border-0 outline-none focus:ring-2 focus:ring-blue-500 rounded transition-colors"
-                    value={blankAnswers[0] || ''}
-                    onChange={e => handleBlankChange(0, e.target.value)}
-                    disabled={showExplanation}
-                    placeholder="?"
-                  />
-                  <span>{currentQuestion.question.split('___')[1] || ''}</span>
-                </div>
+                (() => {
+                  const userAnswer = blankAnswers[0] || '';
+                  const isAnswered = userAnswer.trim() !== '';
+                  const isCorrectAnswer = showExplanation && currentQuestion.correctAnswer === userAnswer.trim();
+                  const isIncorrectAnswer = showExplanation && isAnswered && !isCorrectAnswer;
+                  
+                  let inputClass = "px-6 py-3 rounded-xl text-2xl font-bold w-32 text-center border-4 transition-all duration-200 ";
+                  
+                  if (showExplanation) {
+                    if (isCorrectAnswer) {
+                      inputClass += "bg-green-500 text-white border-green-400";
+                    } else if (isIncorrectAnswer) {
+                      inputClass += "bg-red-500 text-white border-red-400";
+                    } else {
+                      inputClass += "bg-white text-black border-gray-300";
+                    }
+                  } else {
+                    if (isAnswered) {
+                      inputClass += "bg-blue-500 text-white border-blue-400";
+                    } else {
+                      inputClass += "bg-white text-gray-400 border-blue-300 focus:border-blue-500";
+                    }
+                  }
+                  
+                  return (
+                    <div className="flex items-center justify-center gap-4 text-2xl font-bold text-black">
+                      <span>{currentQuestion.question.split('___')[0]}</span>
+                      <input
+                        type="text"
+                        className={inputClass}
+                        value={userAnswer}
+                        onChange={e => handleBlankChange(0, e.target.value)}
+                        disabled={showExplanation}
+                        placeholder="?"
+                      />
+                      <span>{currentQuestion.question.split('___')[1] || ''}</span>
+                    </div>
+                  );
+                })()
               )}
             </div>
           )}
