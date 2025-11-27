@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PartyPopper, HelpCircle } from 'lucide-react';
 
@@ -24,6 +24,39 @@ export default function ArrayGridBuilder({
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
+  // Refs to prevent auto-submit bugs
+  const rowsRef = useRef(rows);
+  const colsRef = useRef(cols);
+  const targetRowsRef = useRef(targetRows);
+  const targetColsRef = useRef(targetCols);
+  const onAnswerRef = useRef(onAnswer);
+  const submittedRef = useRef(submitted);
+
+  // Keep refs in sync
+  useEffect(() => {
+    rowsRef.current = rows;
+  }, [rows]);
+
+  useEffect(() => {
+    colsRef.current = cols;
+  }, [cols]);
+
+  useEffect(() => {
+    targetRowsRef.current = targetRows;
+  }, [targetRows]);
+
+  useEffect(() => {
+    targetColsRef.current = targetCols;
+  }, [targetCols]);
+
+  useEffect(() => {
+    onAnswerRef.current = onAnswer;
+  }, [onAnswer]);
+
+  useEffect(() => {
+    submittedRef.current = submitted;
+  }, [submitted]);
+
   const currentTotal = rows * cols;
   const targetTotal = targetRows * targetCols;
   const correct = rows === targetRows && cols === targetCols;
@@ -34,17 +67,27 @@ export default function ArrayGridBuilder({
     onAnswer(correct);
   };
 
-  // Expose submit function to parent
+  // Expose submit function to parent - ONLY register once
   useEffect(() => {
-    if (onSubmitReady && !submitted) {
-      onSubmitReady(handleSubmit);
-    }
-    return () => {
-      if (onSubmitReady) {
+    if (onSubmitReady) {
+      const submitFn = () => {
+        if (submittedRef.current) return;
+        
+        const currentRows = rowsRef.current;
+        const currentCols = colsRef.current;
+        const isCorrect = currentRows === targetRowsRef.current && currentCols === targetColsRef.current;
+        
+        setSubmitted(true);
+        setIsCorrect(isCorrect);
+        onAnswerRef.current(isCorrect);
+      };
+      onSubmitReady(submitFn);
+      
+      return () => {
         onSubmitReady(() => {});
-      }
-    };
-  }, [onSubmitReady, submitted, rows, cols]);
+      };
+    }
+  }, [onSubmitReady]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));
