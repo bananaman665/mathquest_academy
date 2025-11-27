@@ -1045,17 +1045,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Match Equation - Drag equations to answers */}
           {currentQuestion.type === 'match-equation' && currentQuestion.equations && (
             <div className="mb-8">
-              <p className="text-white mb-4">Drag each equation to its answer:</p>
-              <div className="flex gap-12 justify-center">
+              <p className="text-center text-2xl font-bold text-gray-800 mb-6">Drag each equation to its answer</p>
+              <div className="flex gap-8 justify-center items-start">
                 <DragDropContext
                   onDragEnd={result => {
                     if (!result.destination || result.destination.droppableId === 'equations') return;
-                    
+
                     const answerIdx = parseInt(result.destination.droppableId.replace('answer-', ''), 10);
-                    
+
                     // Don't allow dropping if the answer box already has an equation
                     if (equationMatched[answerIdx]) return;
-                    
+
                     const eqIdx = result.source.index;
                     setEquationMatched(prev => {
                       const updated = [...prev];
@@ -1068,15 +1068,18 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {/* Draggable equations */}
                   <Droppable droppableId="equations">
                     {(provided) => (
-                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-4">
+                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-3">
+                        <div className="text-sm font-bold text-gray-600 mb-1 text-center">EQUATIONS</div>
                         {equationItems.map((eq, idx) => (
                           <Draggable key={eq} draggableId={eq} index={idx}>
-                            {(provided) => (
+                            {(provided, snapshot) => (
                               <div
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="bg-purple-900 text-white px-6 py-3 rounded-lg shadow-lg cursor-grab text-xl font-bold"
+                                className={`bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-xl shadow-lg cursor-grab text-2xl font-bold border-2 border-blue-400 transition-all ${
+                                  snapshot.isDragging ? 'rotate-3 scale-105 shadow-2xl' : 'hover:shadow-xl'
+                                }`}
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
                               >
                                 {eq}
@@ -1089,10 +1092,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     )}
                   </Droppable>
                   {/* Droppable answer targets */}
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="text-sm font-bold text-gray-600 mb-1 text-center">ANSWERS</div>
                     {answerBoxes.map((answer, idx) => (
-                      <Droppable 
-                        droppableId={`answer-${idx}`} 
+                      <Droppable
+                        droppableId={`answer-${idx}`}
                         key={answer}
                         isDropDisabled={!!equationMatched[idx]}
                       >
@@ -1100,14 +1104,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`bg-gray-800 text-purple-300 px-6 py-3 rounded-lg shadow text-xl font-semibold min-w-[120px] min-h-[48px] flex items-center justify-between gap-2 border-2 ${
-                              snapshot.isDraggingOver && !equationMatched[idx] ? 'border-purple-400' : 
-                              equationMatched[idx] ? 'border-green-500' : 'border-transparent'
+                            className={`bg-white text-gray-800 px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
+                              snapshot.isDraggingOver && !equationMatched[idx] ? 'border-blue-500 bg-blue-50 scale-105' :
+                              equationMatched[idx] ? 'border-green-500 bg-green-50' : 'border-gray-300'
                             }`}
                           >
                             {equationMatched[idx] ? (
                               <>
-                                <span className="text-purple-100 font-bold text-xl">{equationMatched[idx]}</span>
+                                <span className="text-blue-600 font-bold text-2xl">{equationMatched[idx]}</span>
                                 <button
                                   onClick={() => {
                                     // Remove equation from matched and add back to equation items
@@ -1122,13 +1126,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                     }
                                   }}
                                   disabled={showExplanation}
-                                  className="text-red-400 hover:text-red-300 bg-red-900/30 hover:bg-red-900/50 rounded-full p-1 transition-colors"
+                                  className="text-red-500 hover:text-red-600 bg-red-100 hover:bg-red-200 rounded-full p-1.5 transition-colors"
                                 >
                                   <X className="w-5 h-5" />
                                 </button>
                               </>
                             ) : (
-                              <span>{answer}</span>
+                              <span className="text-gray-700 font-bold text-3xl">{answer}</span>
                             )}
                             {provided.placeholder}
                           </div>
