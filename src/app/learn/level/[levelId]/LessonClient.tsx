@@ -1917,7 +1917,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'array-division' ||
                         currentQuestion.type === 'remainder-boxes' ||
                         currentQuestion.type === 'fill-the-jar' ||
-                        currentQuestion.type === 'balance-scale'
+                        currentQuestion.type === 'balance-scale' ||
+                        currentQuestion.type === 'block-stacking' ||
+                        currentQuestion.type === 'ten-frame'
                       ? !!interactiveSubmitFn // Enabled when component provides submit function
                       : !!selectedAnswer)
                       ? 'bg-green-500 hover:bg-green-600 shadow-lg'
