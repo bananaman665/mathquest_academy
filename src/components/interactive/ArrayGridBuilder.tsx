@@ -78,16 +78,19 @@ export default function ArrayGridBuilder({
     const newRows = Math.max(1, Math.min(10, rows + delta));
     setRows(newRows);
 
-    // Check if answer is correct with new rows (use current cols value, not ref)
+    // Check if answer is correct with new rows
     const isCorrect = newRows === targetRowsRef.current && cols === targetColsRef.current;
 
     // Auto-submit when user reaches the correct answer
-    if (isCorrect) {
+    if (isCorrect && onSubmitReadyRef.current) {
       if (!hasSubmittedRef.current) {
         hasSubmittedRef.current = true;
         // They have the correct answer! Answer is always correct when both match
         onAnswerRef.current(true);
       }
+    } else if (!isCorrect && onSubmitReadyRef.current) {
+      // Disable check button if they don't have correct answer
+      onSubmitReadyRef.current(null);
     }
   };
 
@@ -97,16 +100,19 @@ export default function ArrayGridBuilder({
     const newCols = Math.max(1, Math.min(10, cols + delta));
     setCols(newCols);
 
-    // Check if answer is correct with new cols (use current rows value, not ref)
+    // Check if answer is correct with new cols
     const isCorrect = rows === targetRowsRef.current && newCols === targetColsRef.current;
 
     // Auto-submit when user reaches the correct answer
-    if (isCorrect) {
+    if (isCorrect && onSubmitReadyRef.current) {
       if (!hasSubmittedRef.current) {
         hasSubmittedRef.current = true;
         // They have the correct answer! Answer is always correct when both match
         onAnswerRef.current(true);
       }
+    } else if (!isCorrect && onSubmitReadyRef.current) {
+      // Disable check button if they don't have correct answer
+      onSubmitReadyRef.current(null);
     }
   };
 
