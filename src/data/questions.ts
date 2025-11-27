@@ -162,7 +162,6 @@ export interface Question {
   // Fair Share (Division)
   fairShareTotal?: number // Total items to share
   fairShareGroups?: number // Number of groups to share among
-  fairShareEmoji?: string // Emoji for items (e.g., '🍪', '🍕')
   
   // Array Division (Division - Visual Array)
   arrayDivisionTotal?: number // Total items in array

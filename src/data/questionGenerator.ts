@@ -1539,9 +1539,8 @@ function generateQuestionByType(
         question: `${num1} ÷ ${groups} = ?`,
         fairShareTotal: num1,
         fairShareGroups: groups,
-        fairShareEmoji: '🍪',
         correctAnswer: String(perGroup),
-        explanation: `${num1} ÷ ${groups} = ${perGroup} cookies each`,
+        explanation: `${num1} ÷ ${groups} = ${perGroup} items each`,
         hints: [
           `Divide the total by the number of friends`,
           `Make equal groups`
