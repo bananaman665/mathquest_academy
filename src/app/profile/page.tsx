@@ -113,7 +113,7 @@ export default async function ProfilePage() {
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-20 md:pb-8 pt-28">
+        <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 pb-20 md:pb-8 pt-32 sm:pt-28">
           {/* Profile Header */}
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-5 md:p-7 mb-8 text-white">
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
