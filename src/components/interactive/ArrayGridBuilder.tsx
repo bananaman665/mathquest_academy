@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PartyPopper, HelpCircle } from 'lucide-react';
 
@@ -24,72 +24,22 @@ export default function ArrayGridBuilder({
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  // Refs to prevent auto-submit bugs
-  const rowsRef = useRef(rows);
-  const colsRef = useRef(cols);
-  const targetRowsRef = useRef(targetRows);
-  const targetColsRef = useRef(targetCols);
-  const onAnswerRef = useRef(onAnswer);
-  const submittedRef = useRef(submitted);
-
-  // Keep refs in sync
-  useEffect(() => {
-    rowsRef.current = rows;
-  }, [rows]);
-
-  useEffect(() => {
-    colsRef.current = cols;
-  }, [cols]);
-
-  useEffect(() => {
-    targetRowsRef.current = targetRows;
-  }, [targetRows]);
-
-  useEffect(() => {
-    targetColsRef.current = targetCols;
-  }, [targetCols]);
-
-  useEffect(() => {
-    onAnswerRef.current = onAnswer;
-  }, [onAnswer]);
-
-  useEffect(() => {
-    submittedRef.current = submitted;
-  }, [submitted]);
-
   const currentTotal = rows * cols;
   const targetTotal = targetRows * targetCols;
   const correct = rows === targetRows && cols === targetCols;
 
-  const handleSubmit = () => {
-    setSubmitted(true);
-    setIsCorrect(correct);
-    onAnswer(correct);
-  };
-
-  // Expose submit function to parent - register/unregister when answer correctness changes
+  // Simple submit function that always works
   useEffect(() => {
-    if (onSubmitReady) {
-      // Check if current values are correct using state, not refs
-      const isCorrect = rows === targetRows && cols === targetCols;
-      
-      if (isCorrect && !submitted) {
-        // Enable check button only when correct
-        const submitFn = () => {
-          if (submittedRef.current) return;
-          
-          submittedRef.current = true;
-          setSubmitted(true);
-          setIsCorrect(true);
-          onAnswerRef.current(true);
-        };
-        onSubmitReady(submitFn);
-      } else {
-        // Disable check button
-        onSubmitReady(() => {});
-      }
+    if (onSubmitReady && !submitted) {
+      onSubmitReady(() => {
+        if (submitted) return;
+        const isCorrect = rows === targetRows && cols === targetCols;
+        setSubmitted(true);
+        setIsCorrect(isCorrect);
+        onAnswer(isCorrect);
+      });
     }
-  }, [onSubmitReady, rows, cols, submitted, targetRows, targetCols]);
+  }, [onSubmitReady, submitted, rows, cols, targetRows, targetCols, onAnswer]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));
@@ -97,12 +47,11 @@ export default function ArrayGridBuilder({
     setSubmitted(false);
     
     // Auto-submit when correct answer is reached
-    if (newRows === targetRows && cols === targetCols && !submittedRef.current) {
-      submittedRef.current = true;
+    if (newRows === targetRows && cols === targetCols && !submitted) {
       setTimeout(() => {
         setSubmitted(true);
         setIsCorrect(true);
-        onAnswerRef.current(true);
+        onAnswer(true);
       }, 300);
     }
   };
@@ -113,12 +62,11 @@ export default function ArrayGridBuilder({
     setSubmitted(false);
     
     // Auto-submit when correct answer is reached
-    if (rows === targetRows && newCols === targetCols && !submittedRef.current) {
-      submittedRef.current = true;
+    if (rows === targetRows && newCols === targetCols && !submitted) {
       setTimeout(() => {
         setSubmitted(true);
         setIsCorrect(true);
-        onAnswerRef.current(true);
+        onAnswer(true);
       }, 300);
     }
   };
