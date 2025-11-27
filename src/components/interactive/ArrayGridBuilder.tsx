@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PartyPopper, HelpCircle } from 'lucide-react';
 
@@ -9,7 +9,7 @@ interface ArrayGridBuilderProps {
   targetCols: number;
   emoji?: string;
   onAnswer: (correct: boolean) => void;
-  onSubmitReady?: (submitFn: () => void) => void;
+  onSubmitReady?: (submitFn: (() => void) | null) => void;
 }
 
 export default function ArrayGridBuilder({
@@ -24,52 +24,100 @@ export default function ArrayGridBuilder({
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  const currentTotal = rows * cols;
-  const targetTotal = targetRows * targetCols;
-  const correct = rows === targetRows && cols === targetCols;
+  // Refs to prevent auto-submit bugs (copied from TenFrame)
+  const rowsRef = useRef(rows);
+  const colsRef = useRef(cols);
+  const targetRowsRef = useRef(targetRows);
+  const targetColsRef = useRef(targetCols);
+  const onAnswerRef = useRef(onAnswer);
+  const hasInteractedRef = useRef(false);
+  const hasSubmittedRef = useRef(false);
+  const onSubmitReadyRef = useRef(onSubmitReady);
 
-  // Simple submit function that always works
+  // Keep refs in sync with current values
   useEffect(() => {
-    if (onSubmitReady && !submitted) {
-      onSubmitReady(() => {
-        if (submitted) return;
-        const isCorrect = rows === targetRows && cols === targetCols;
-        setSubmitted(true);
-        setIsCorrect(isCorrect);
-        onAnswer(isCorrect);
-      });
+    rowsRef.current = rows;
+  }, [rows]);
+
+  useEffect(() => {
+    colsRef.current = cols;
+  }, [cols]);
+
+  useEffect(() => {
+    targetRowsRef.current = targetRows;
+  }, [targetRows]);
+
+  useEffect(() => {
+    targetColsRef.current = targetCols;
+  }, [targetCols]);
+
+  useEffect(() => {
+    onAnswerRef.current = onAnswer;
+  }, [onAnswer]);
+
+  useEffect(() => {
+    onSubmitReadyRef.current = onSubmitReady;
+  }, [onSubmitReady]);
+
+  // Reset state when question changes
+  useEffect(() => {
+    setRows(1);
+    setCols(1);
+    setSubmitted(false);
+    hasInteractedRef.current = false;
+    hasSubmittedRef.current = false;
+    // Clear submit function on new question
+    if (onSubmitReadyRef.current) {
+      onSubmitReadyRef.current(null);
     }
-  }, [onSubmitReady, submitted, rows, cols, targetRows, targetCols, onAnswer]);
+  }, [targetRows, targetCols]);
 
   const handleRowChange = (delta: number) => {
+    hasInteractedRef.current = true;
+    
     const newRows = Math.max(1, Math.min(10, rows + delta));
     setRows(newRows);
-    setSubmitted(false);
-    
-    // Auto-submit when correct answer is reached
-    if (newRows === targetRows && cols === targetCols && !submitted) {
-      setTimeout(() => {
-        setSubmitted(true);
-        setIsCorrect(true);
-        onAnswer(true);
-      }, 300);
+
+    // Check if answer is correct with new rows
+    const isCorrect = newRows === targetRowsRef.current && colsRef.current === targetColsRef.current;
+
+    // Enable check button AND auto-submit when user reaches the correct answer
+    if (isCorrect && onSubmitReadyRef.current) {
+      if (!hasSubmittedRef.current) {
+        hasSubmittedRef.current = true;
+        // They have the correct answer! Answer is always correct when both match
+        onAnswerRef.current(true);
+      }
+    } else if (!isCorrect && onSubmitReadyRef.current) {
+      // Disable check button if they don't have correct answer
+      onSubmitReadyRef.current(null);
     }
   };
 
   const handleColChange = (delta: number) => {
+    hasInteractedRef.current = true;
+    
     const newCols = Math.max(1, Math.min(10, cols + delta));
     setCols(newCols);
-    setSubmitted(false);
-    
-    // Auto-submit when correct answer is reached
-    if (rows === targetRows && newCols === targetCols && !submitted) {
-      setTimeout(() => {
-        setSubmitted(true);
-        setIsCorrect(true);
-        onAnswer(true);
-      }, 300);
+
+    // Check if answer is correct with new cols
+    const isCorrect = rowsRef.current === targetRowsRef.current && newCols === targetColsRef.current;
+
+    // Enable check button AND auto-submit when user reaches the correct answer
+    if (isCorrect && onSubmitReadyRef.current) {
+      if (!hasSubmittedRef.current) {
+        hasSubmittedRef.current = true;
+        // They have the correct answer! Answer is always correct when both match
+        onAnswerRef.current(true);
+      }
+    } else if (!isCorrect && onSubmitReadyRef.current) {
+      // Disable check button if they don't have correct answer
+      onSubmitReadyRef.current(null);
     }
   };
+
+  const currentTotal = rows * cols;
+  const targetTotal = targetRows * targetCols;
 
   return (
     <div className="flex flex-col items-center gap-6 p-6">
