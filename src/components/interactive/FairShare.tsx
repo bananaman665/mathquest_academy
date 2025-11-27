@@ -23,6 +23,13 @@ export default function FairShare({
   const itemsPerGroup = Math.floor(totalItems / numGroups);
   const remainder = totalItems % numGroups;
 
+  // Reset state when question changes
+  useEffect(() => {
+    setGroupCounts(Array(numGroups).fill(0));
+    setRemainingItems(totalItems);
+    setSubmitted(false);
+  }, [totalItems, numGroups]);
+
   const handleDistribute = (groupIndex: number) => {
     if (remainingItems > 0) {
       const newCounts = [...groupCounts];
