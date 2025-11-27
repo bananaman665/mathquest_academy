@@ -73,46 +73,50 @@ export default function ArrayGridBuilder({
   }, [targetRows, targetCols]);
 
   const handleRowChange = (delta: number) => {
-    hasInteractedRef.current = true;
-
     const newRows = Math.max(1, Math.min(10, rows + delta));
     setRows(newRows);
 
-    // Check if answer is correct with new rows
-    const isCorrect = newRows === targetRowsRef.current && cols === targetColsRef.current;
+    // On first interaction, register submit function (enables check button)
+    if (!hasInteractedRef.current) {
+      hasInteractedRef.current = true;
 
-    // Auto-submit when user reaches the correct answer
-    if (isCorrect && onSubmitReadyRef.current) {
-      if (!hasSubmittedRef.current) {
-        hasSubmittedRef.current = true;
-        // They have the correct answer! Answer is always correct when both match
-        onAnswerRef.current(true);
+      if (onSubmitReadyRef.current) {
+        const submitFn = () => {
+          if (hasSubmittedRef.current) {
+            return;
+          }
+          hasSubmittedRef.current = true;
+
+          // Check if answer is correct when Check button is clicked
+          const isCorrect = rowsRef.current === targetRowsRef.current && colsRef.current === targetColsRef.current;
+          onAnswerRef.current(isCorrect);
+        };
+        onSubmitReadyRef.current(submitFn);
       }
-    } else if (!isCorrect && onSubmitReadyRef.current) {
-      // Disable check button if they don't have correct answer
-      onSubmitReadyRef.current(null);
     }
   };
 
   const handleColChange = (delta: number) => {
-    hasInteractedRef.current = true;
-
     const newCols = Math.max(1, Math.min(10, cols + delta));
     setCols(newCols);
 
-    // Check if answer is correct with new cols
-    const isCorrect = rows === targetRowsRef.current && newCols === targetColsRef.current;
+    // On first interaction, register submit function (enables check button)
+    if (!hasInteractedRef.current) {
+      hasInteractedRef.current = true;
 
-    // Auto-submit when user reaches the correct answer
-    if (isCorrect && onSubmitReadyRef.current) {
-      if (!hasSubmittedRef.current) {
-        hasSubmittedRef.current = true;
-        // They have the correct answer! Answer is always correct when both match
-        onAnswerRef.current(true);
+      if (onSubmitReadyRef.current) {
+        const submitFn = () => {
+          if (hasSubmittedRef.current) {
+            return;
+          }
+          hasSubmittedRef.current = true;
+
+          // Check if answer is correct when Check button is clicked
+          const isCorrect = rowsRef.current === targetRowsRef.current && colsRef.current === targetColsRef.current;
+          onAnswerRef.current(isCorrect);
+        };
+        onSubmitReadyRef.current(submitFn);
       }
-    } else if (!isCorrect && onSubmitReadyRef.current) {
-      // Disable check button if they don't have correct answer
-      onSubmitReadyRef.current(null);
     }
   };
 
