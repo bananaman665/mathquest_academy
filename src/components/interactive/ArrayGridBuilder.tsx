@@ -67,13 +67,13 @@ export default function ArrayGridBuilder({
     onAnswer(correct);
   };
 
-  // Expose submit function to parent - ONLY register once when correct
+  // Expose submit function to parent - register/unregister when answer correctness changes
   useEffect(() => {
     if (onSubmitReady) {
-      // Check if current values are correct
-      const isCorrect = rowsRef.current === targetRowsRef.current && colsRef.current === targetColsRef.current;
+      // Check if current values are correct using state, not refs
+      const isCorrect = rows === targetRows && cols === targetCols;
       
-      if (isCorrect && !submittedRef.current) {
+      if (isCorrect && !submitted) {
         // Enable check button only when correct
         const submitFn = () => {
           if (submittedRef.current) return;
@@ -89,7 +89,7 @@ export default function ArrayGridBuilder({
         onSubmitReady(() => {});
       }
     }
-  }, [onSubmitReady, rows, cols, submitted]);
+  }, [onSubmitReady, rows, cols, submitted, targetRows, targetCols]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));
