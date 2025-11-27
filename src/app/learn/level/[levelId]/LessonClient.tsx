@@ -1045,7 +1045,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Match Equation - Drag equations to answers */}
           {currentQuestion.type === 'match-equation' && currentQuestion.equations && (
             <div className="mb-8">
-              <p className="text-center text-2xl font-bold text-gray-800 mb-6">Drag each equation to its answer</p>
+              <p className="text-center text-2xl font-bold text-black mb-6">Drag each equation to its answer</p>
               <div className="flex gap-8 justify-center items-start">
                 <DragDropContext
                   onDragEnd={result => {
@@ -1069,7 +1069,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   <Droppable droppableId="equations">
                     {(provided) => (
                       <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-3">
-                        <div className="text-sm font-bold text-gray-600 mb-1 text-center">EQUATIONS</div>
+                        <div className="text-sm font-bold text-black mb-1 text-center">EQUATIONS</div>
                         {equationItems.map((eq, idx) => (
                           <Draggable key={eq} draggableId={eq} index={idx}>
                             {(provided, snapshot) => (
@@ -1077,7 +1077,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className={`bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-xl shadow-lg cursor-grab text-2xl font-bold border-2 border-blue-400 transition-all ${
+                                className={`bg-blue-500 text-white px-8 py-4 rounded-xl shadow-lg cursor-grab text-2xl font-bold border-2 border-blue-500 transition-all ${
                                   snapshot.isDragging ? 'rotate-3 scale-105 shadow-2xl' : 'hover:shadow-xl'
                                 }`}
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
@@ -1093,7 +1093,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   </Droppable>
                   {/* Droppable answer targets */}
                   <div className="flex flex-col gap-3">
-                    <div className="text-sm font-bold text-gray-600 mb-1 text-center">ANSWERS</div>
+                    <div className="text-sm font-bold text-black mb-1 text-center">ANSWERS</div>
                     {answerBoxes.map((answer, idx) => (
                       <Droppable
                         droppableId={`answer-${idx}`}
@@ -1104,14 +1104,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`bg-white text-gray-800 px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
-                              snapshot.isDraggingOver && !equationMatched[idx] ? 'border-blue-500 bg-blue-50 scale-105' :
-                              equationMatched[idx] ? 'border-green-500 bg-green-50' : 'border-gray-300'
+                            className={`bg-white text-black px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
+                              snapshot.isDraggingOver && !equationMatched[idx] ? 'border-blue-500 scale-105' :
+                              equationMatched[idx] ? 'border-green-500' : 'border-black'
                             }`}
                           >
                             {equationMatched[idx] ? (
                               <>
-                                <span className="text-blue-600 font-bold text-2xl">{equationMatched[idx]}</span>
+                                <span className="text-blue-500 font-bold text-2xl">{equationMatched[idx]}</span>
                                 <button
                                   onClick={() => {
                                     // Remove equation from matched and add back to equation items
@@ -1126,13 +1126,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                     }
                                   }}
                                   disabled={showExplanation}
-                                  className="text-red-500 hover:text-red-600 bg-red-100 hover:bg-red-200 rounded-full p-1.5 transition-colors"
+                                  className="text-white bg-black hover:bg-gray-800 rounded-full p-1.5 transition-colors"
                                 >
                                   <X className="w-5 h-5" />
                                 </button>
                               </>
                             ) : (
-                              <span className="text-gray-700 font-bold text-3xl">{answer}</span>
+                              <span className="text-black font-bold text-3xl">{answer}</span>
                             )}
                             {provided.placeholder}
                           </div>
