@@ -93,12 +93,32 @@ export default function ArrayGridBuilder({
     const newRows = Math.max(1, Math.min(10, rows + delta));
     setRows(newRows);
     setSubmitted(false);
+    
+    // Auto-submit when user reaches the correct answer
+    if (newRows === targetRowsRef.current && cols === targetColsRef.current && !submittedRef.current) {
+      submittedRef.current = true;
+      setTimeout(() => {
+        setSubmitted(true);
+        setIsCorrect(true);
+        onAnswerRef.current(true);
+      }, 300);
+    }
   };
 
   const handleColChange = (delta: number) => {
     const newCols = Math.max(1, Math.min(10, cols + delta));
     setCols(newCols);
     setSubmitted(false);
+    
+    // Auto-submit when user reaches the correct answer
+    if (rows === targetRowsRef.current && newCols === targetColsRef.current && !submittedRef.current) {
+      submittedRef.current = true;
+      setTimeout(() => {
+        setSubmitted(true);
+        setIsCorrect(true);
+        onAnswerRef.current(true);
+      }, 300);
+    }
   };
 
   return (
