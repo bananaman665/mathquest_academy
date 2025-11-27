@@ -13,7 +13,7 @@ interface FairShareProps {
 export default function FairShare({
   totalItems,
   numGroups,
-  emoji = '🍪',
+  emoji = '🔵',
   onAnswer
 }: FairShareProps) {
   const [groupCounts, setGroupCounts] = useState<number[]>(Array(numGroups).fill(0));
@@ -22,7 +22,6 @@ export default function FairShare({
 
   const itemsPerGroup = Math.floor(totalItems / numGroups);
   const remainder = totalItems % numGroups;
-  const distributedCount = groupCounts.reduce((a, b) => a + b, 0);
 
   const handleDistribute = (groupIndex: number) => {
     if (remainingItems > 0) {
@@ -39,12 +38,6 @@ export default function FairShare({
     const newCounts = Array(numGroups).fill(perGroup);
     setGroupCounts(newCounts);
     setRemainingItems(remainder);
-    setSubmitted(false);
-  };
-
-  const handleReset = () => {
-    setGroupCounts(Array(numGroups).fill(0));
-    setRemainingItems(totalItems);
     setSubmitted(false);
   };
 
