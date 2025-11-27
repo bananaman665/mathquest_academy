@@ -1186,7 +1186,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         disabled={showExplanation}
                         placeholder="?"
                       />
-                      <span className="ml-2">{parts[1]}</span>
+                      {parts[1] && parts[1] !== '_' && <span className="ml-2">{parts[1]}</span>}
                     </div>
                   );
                 })
@@ -1227,7 +1227,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         disabled={showExplanation}
                         placeholder="?"
                       />
-                      <span>{currentQuestion.question.split('___')[1] || ''}</span>
+                      {currentQuestion.question.split('___')[1] && currentQuestion.question.split('___')[1] !== '_' && (
+                        <span>{currentQuestion.question.split('___')[1]}</span>
+                      )}
                     </div>
                   );
                 })()
