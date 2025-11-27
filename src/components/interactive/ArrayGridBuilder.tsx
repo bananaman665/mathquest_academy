@@ -67,58 +67,40 @@ export default function ArrayGridBuilder({
     onAnswer(correct);
   };
 
-  // Expose submit function to parent - ONLY register once
+  // Expose submit function to parent - ONLY register once when correct
   useEffect(() => {
     if (onSubmitReady) {
-      const submitFn = () => {
-        if (submittedRef.current) return;
-        
-        const currentRows = rowsRef.current;
-        const currentCols = colsRef.current;
-        const isCorrect = currentRows === targetRowsRef.current && currentCols === targetColsRef.current;
-        
-        setSubmitted(true);
-        setIsCorrect(isCorrect);
-        onAnswerRef.current(isCorrect);
-      };
-      onSubmitReady(submitFn);
+      // Check if current values are correct
+      const isCorrect = rowsRef.current === targetRowsRef.current && colsRef.current === targetColsRef.current;
       
-      return () => {
+      if (isCorrect && !submittedRef.current) {
+        // Enable check button only when correct
+        const submitFn = () => {
+          if (submittedRef.current) return;
+          
+          submittedRef.current = true;
+          setSubmitted(true);
+          setIsCorrect(true);
+          onAnswerRef.current(true);
+        };
+        onSubmitReady(submitFn);
+      } else {
+        // Disable check button
         onSubmitReady(() => {});
-      };
+      }
     }
-  }, [onSubmitReady]);
+  }, [onSubmitReady, rows, cols, submitted]);
 
   const handleRowChange = (delta: number) => {
     const newRows = Math.max(1, Math.min(10, rows + delta));
     setRows(newRows);
     setSubmitted(false);
-    
-    // Auto-submit when user reaches the correct answer
-    if (newRows === targetRowsRef.current && cols === targetColsRef.current && !submittedRef.current) {
-      submittedRef.current = true;
-      setTimeout(() => {
-        setSubmitted(true);
-        setIsCorrect(true);
-        onAnswerRef.current(true);
-      }, 300);
-    }
   };
 
   const handleColChange = (delta: number) => {
     const newCols = Math.max(1, Math.min(10, cols + delta));
     setCols(newCols);
     setSubmitted(false);
-    
-    // Auto-submit when user reaches the correct answer
-    if (rows === targetRowsRef.current && newCols === targetColsRef.current && !submittedRef.current) {
-      submittedRef.current = true;
-      setTimeout(() => {
-        setSubmitted(true);
-        setIsCorrect(true);
-        onAnswerRef.current(true);
-      }, 300);
-    }
   };
 
   return (
