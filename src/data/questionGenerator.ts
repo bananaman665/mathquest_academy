@@ -310,7 +310,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'multiplication',
     numberRange: { min: 1, max: 10 },
     answerRange: { min: 1, max: 60 },
-    questionTypes: ['multiple-choice', 'type-answer', 'array-grid-builder'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'hard'
   },
