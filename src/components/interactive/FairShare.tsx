@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Circle } from 'lucide-react';
 
 interface FairShareProps {
   totalItems: number;
   numGroups: number;
-  emoji?: string;
   onAnswer: (correct: boolean) => void;
 }
 
 export default function FairShare({
   totalItems,
   numGroups,
-  emoji = '🔵',
   onAnswer
 }: FairShareProps) {
   const [groupCounts, setGroupCounts] = useState<number[]>(Array(numGroups).fill(0));
@@ -81,7 +80,7 @@ export default function FairShare({
       {/* Instructions */}
       <div className="text-center">
         <div className="text-lg font-bold text-gray-800">
-          Share {totalItems} {emoji} equally among {numGroups} groups
+          Share {totalItems} dots equally among {numGroups} groups
         </div>
       </div>
 
@@ -93,9 +92,7 @@ export default function FairShare({
       >
         <div className="flex flex-wrap gap-1 justify-center max-w-md">
           {Array.from({ length: remainingItems }).map((_, i) => (
-            <div key={i} className="text-2xl">
-              {emoji}
-            </div>
+            <Circle key={i} className="w-6 h-6 fill-blue-500 text-blue-500" />
           ))}
         </div>
         <div className="text-center mt-1 text-lg font-bold text-orange-700">
@@ -117,9 +114,7 @@ export default function FairShare({
             </div>
             <div className="flex flex-wrap gap-0.5 justify-center mb-1 min-h-[40px]">
               {Array.from({ length: count }).map((_, itemIdx) => (
-                <div key={itemIdx} className="text-xl">
-                  {emoji}
-                </div>
+                <Circle key={itemIdx} className="w-5 h-5 fill-blue-500 text-blue-500" />
               ))}
             </div>
             <div className="text-center text-sm font-bold text-gray-800">
