@@ -98,7 +98,7 @@ export default function FairShare({
             key={groupIdx}
             onClick={() => handleDistribute(groupIdx)}
             disabled={remainingItems === 0}
-            className="bg-green-500 text-white rounded-xl p-3 border-2 border-green-500 min-w-[100px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+            className="bg-green-500 text-white rounded-xl p-3 border-2 border-green-500 min-w-[100px] cursor-pointer disabled:cursor-not-allowed"
           >
             <div className="text-xs font-bold text-white mb-1 text-center">
               Group {groupIdx + 1}
