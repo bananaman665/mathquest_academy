@@ -636,56 +636,43 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </header>
 
         <main className="relative max-w-2xl mx-auto px-4 pt-48 sm:pt-40 py-8 pb-24">
-          <div className="bg-white border-2 border-gray-200 rounded-3xl shadow-2xl p-6 sm:p-10 mb-6">
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <BookOpen className="w-10 h-10 text-white" />
-              </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 mb-3">{introduction.title}</h1>
-              <p className="text-gray-600 text-lg sm:text-xl">Let&apos;s learn something new!</p>
+          <div className="space-y-8">
+            {/* Title Section */}
+            <div className="text-center">
+              <h1 className="text-3xl sm:text-4xl font-black text-black mb-2">{introduction.title}</h1>
             </div>
 
-            <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-10">
+            {/* Content Section */}
+            <div className="bg-white rounded-xl p-6 space-y-4">
               {introduction.content.map((paragraph, index) => (
-                <p key={index} className="text-lg sm:text-xl text-gray-700 leading-relaxed">{paragraph}</p>
+                <p key={index} className="text-lg text-gray-800 leading-relaxed">{paragraph}</p>
               ))}
             </div>
 
+            {/* Examples Section */}
             {introduction.examples && introduction.examples.length > 0 && (
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-blue-600" />
-                  Examples:
-                </h3>
-                <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-black">Examples</h3>
+                <div className="space-y-3">
                   {introduction.examples.map((example, index) => (
-                    <div key={index} className="bg-white border-2 border-blue-200 rounded-xl p-4 sm:p-6 hover:border-blue-400 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="text-3xl sm:text-4xl font-black text-blue-600 min-w-fit">
-                          {example.number}
-                        </div>
-                        <div className="flex-1 overflow-x-auto">
-                          <div className="text-2xl sm:text-3xl text-black whitespace-nowrap pb-2">{example.visual}</div>
-                        </div>
-                      </div>
-                      <div className="text-base sm:text-lg text-gray-700 font-semibold mt-2 ml-12 sm:ml-16">{example.word}</div>
+                    <div key={index} className="bg-white border-2 border-gray-200 rounded-xl p-4">
+                      <div className="text-2xl text-black mb-2">{example.visual}</div>
+                      <div className="text-base text-gray-700">{example.word}</div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-          </div>
 
-          <div className="text-center sticky bottom-4">
-            <button
-              onClick={handleStartPractice}
-              className="group bg-blue-600 hover:bg-blue-700 text-white font-black py-4 sm:py-5 px-12 sm:px-16 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg sm:text-xl w-full sm:w-auto"
-            >
-              <span className="flex items-center justify-center gap-3">
+            {/* Start Button */}
+            <div className="text-center pt-4">
+              <button
+                onClick={handleStartPractice}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-16 rounded-xl text-xl w-full sm:w-auto transition-colors"
+              >
                 Start Practice
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
+              </button>
+            </div>
           </div>
         </main>
       </div>
