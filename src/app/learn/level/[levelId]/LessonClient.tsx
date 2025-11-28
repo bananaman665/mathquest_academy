@@ -622,13 +622,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   // INTRODUCTION PHASE
   if (phase === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl"></div>
-        </div>
-
+      <div className="min-h-screen bg-white">
         <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4 pt-16 sm:pt-6">
@@ -636,8 +630,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
                 <span className="font-semibold">Back to Path</span>
               </Link>
-              <div className="flex items-center gap-2 bg-purple-50 border border-purple-200 px-4 py-2 rounded-xl">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
+              <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-md">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span className="font-bold text-gray-900">Level {levelId}</span>
@@ -646,10 +640,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           </div>
         </header>
 
-        <main className="relative max-w-2xl mx-auto px-4 pt-32 sm:pt-28 py-8 pb-24">
+        <main className="relative max-w-2xl mx-auto px-4 pt-48 sm:pt-40 py-8 pb-24">
           <div className="bg-white border-2 border-gray-200 rounded-3xl shadow-2xl p-6 sm:p-10 mb-6">
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <BookOpen className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 mb-3">{introduction.title}</h1>
@@ -663,16 +657,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             </div>
 
             {introduction.examples && introduction.examples.length > 0 && (
-              <div className="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-2xl p-6 sm:p-8">
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 sm:p-8">
                 <h3 className="text-xl sm:text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-purple-600" />
+                  <Sparkles className="w-6 h-6 text-blue-600" />
                   Examples:
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   {introduction.examples.map((example, index) => (
-                    <div key={index} className="bg-white border-2 border-purple-200 rounded-xl p-4 sm:p-6 hover:border-purple-400 hover:shadow-lg transition-all duration-300">
+                    <div key={index} className="bg-white border-2 border-blue-200 rounded-xl p-4 sm:p-6 hover:border-blue-400 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent min-w-fit">
+                        <div className="text-3xl sm:text-4xl font-black text-blue-600 min-w-fit">
                           {example.number}
                         </div>
                         <div className="flex-1 overflow-x-auto">
@@ -690,7 +684,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           <div className="text-center sticky bottom-4">
             <button
               onClick={handleStartPractice}
-              className="group bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white font-black py-4 sm:py-5 px-12 sm:px-16 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg sm:text-xl w-full sm:w-auto"
+              className="group bg-blue-600 hover:bg-blue-700 text-white font-black py-4 sm:py-5 px-12 sm:px-16 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg sm:text-xl w-full sm:w-auto"
             >
               <span className="flex items-center justify-center gap-3">
                 Start Practice
