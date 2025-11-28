@@ -84,7 +84,7 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-24">
+      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-24 overflow-hidden">
         {/* Instruction */}
         <div className="text-center mb-2">
           <p className="text-2xl sm:text-3xl font-bold text-gray-900">
