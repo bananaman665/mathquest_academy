@@ -457,7 +457,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         correct = normalizedCorrect.toLowerCase() === userAnswer.toLowerCase()
       }
     } else if (currentQuestion.type === 'match-equation') {
-      correct = !equationMatched.some(m => !m)
+      // Check if all equation-answer pairs are correctly matched
+      if (equationMatched.some(m => !m)) {
+        // Not all boxes are filled
+        correct = false
+      } else {
+        // All boxes are filled - now verify each match is correct
+        correct = currentQuestion.equations?.every((pair, idx) => {
+          return equationMatched[idx] === pair.equation
+        }) || false
+      }
     } else if (currentQuestion.type === 'block-stacking') {
       // Block stacking is handled in the component itself
       // This is just for structure - actual validation happens in BlockStackingQuestion
@@ -1173,8 +1182,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Match Equation - Drag equations to answers */}
           {currentQuestion.type === 'match-equation' && currentQuestion.equations && (
             <div className="mb-8">
-              <p className="text-center text-2xl font-bold text-black mb-6">Drag each equation to its answer</p>
-              <div className="flex gap-8 justify-center items-start">
+              <p className="text-center text-3xl font-bold text-black mb-8">Drag each equation to its answer</p>
+              <div className="flex gap-12 justify-center items-start flex-wrap">
                 <DragDropContext
                   onDragEnd={result => {
                     if (!result.destination || result.destination.droppableId === 'equations') return;
@@ -1196,8 +1205,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {/* Draggable equations */}
                   <Droppable droppableId="equations">
                     {(provided) => (
-                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-3">
-                        <div className="text-sm font-bold text-black mb-1 text-center">EQUATIONS</div>
+                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-4 min-w-[200px]">
+                        <div className="text-base font-bold text-black mb-2 text-center uppercase tracking-wide">Equations</div>
                         {equationItems.map((eq, idx) => (
                           <Draggable key={eq} draggableId={eq} index={idx}>
                             {(provided, snapshot) => (
@@ -1205,8 +1214,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className={`bg-blue-500 text-white px-8 py-4 rounded-xl shadow-lg cursor-grab text-2xl font-bold border-2 border-blue-500 transition-all ${
-                                  snapshot.isDragging ? 'rotate-3 scale-105 shadow-2xl' : 'hover:shadow-xl'
+                                className={`bg-blue-500 text-white px-8 py-5 rounded-xl cursor-grab text-2xl font-bold border-4 border-black transition-all ${
+                                  snapshot.isDragging ? 'scale-110' : 'hover:scale-105'
                                 }`}
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
                               >
@@ -1220,8 +1229,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     )}
                   </Droppable>
                   {/* Droppable answer targets */}
-                  <div className="flex flex-col gap-3">
-                    <div className="text-sm font-bold text-black mb-1 text-center">ANSWERS</div>
+                  <div className="flex flex-col gap-4 min-w-[200px]">
+                    <div className="text-base font-bold text-black mb-2 text-center uppercase tracking-wide">Answers</div>
                     {answerBoxes.map((answer, idx) => (
                       <Droppable
                         droppableId={`answer-${idx}`}
@@ -1232,9 +1241,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`px-8 py-4 rounded-xl shadow-md text-2xl font-bold min-w-[140px] min-h-[64px] flex items-center justify-between gap-3 border-2 transition-all ${
+                            className={`px-8 py-5 rounded-xl text-2xl font-bold min-w-[180px] min-h-[76px] flex items-center justify-between gap-3 border-4 transition-all ${
                               snapshot.isDraggingOver && !equationMatched[idx] ? 'bg-white text-black border-blue-500 scale-105' :
-                              equationMatched[idx] ? 'bg-green-500 text-white border-green-500' : 'bg-white text-black border-black'
+                              equationMatched[idx] ? 'bg-green-500 text-white border-black' : 'bg-white text-black border-black'
                             }`}
                           >
                             {equationMatched[idx] ? (
@@ -1254,13 +1263,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                     }
                                   }}
                                   disabled={showExplanation}
-                                  className="text-white bg-black hover:bg-gray-800 rounded-full p-1.5 transition-colors"
+                                  className="text-white bg-black hover:bg-white hover:text-black border-2 border-white rounded-full p-2 transition-colors"
                                 >
-                                  <X className="w-5 h-5" />
+                                  <X className="w-4 h-4" />
                                 </button>
                               </>
                             ) : (
-                              <span className="text-black font-bold text-3xl">{answer}</span>
+                              <span className="text-black font-bold text-3xl text-center w-full">{answer}</span>
                             )}
                             {provided.placeholder}
                           </div>
