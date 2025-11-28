@@ -74,7 +74,7 @@ export default function BalanceScale({
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 overflow-hidden">
       {/* Question */}
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800">{question}</h3>
