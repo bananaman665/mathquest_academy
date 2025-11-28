@@ -933,7 +933,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       updated[wordIdx] = numbers[numIdx];
                       return updated;
                     });
-                    setNumbers(prev => prev.filter((_, idx) => idx !== numIdx));
+                    // Don't remove numbers - keep them visible
                   }}
                 >
                   {/* Draggable numbers */}
