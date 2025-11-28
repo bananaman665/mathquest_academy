@@ -11,6 +11,7 @@ interface BlockStackingQuestionProps {
   onAnswer: (isCorrect: boolean) => void
   question: string
   onSubmitReady?: (submitFn: (() => void) | null) => void
+  disabled?: boolean
 }
 
 export default function BlockStackingQuestion({
@@ -21,6 +22,7 @@ export default function BlockStackingQuestion({
   onAnswer,
   question,
   onSubmitReady,
+  disabled = false,
 }: BlockStackingQuestionProps) {
   const [stackBlocks, setStackBlocks] = useState<string[]>([])
   const [trashBlocks, setTrashBlocks] = useState<string[]>([])
@@ -51,6 +53,8 @@ export default function BlockStackingQuestion({
   }, [onSubmitReady, stackBlocks])
 
   const handleDragEnd = (result: DropResult) => {
+    if (disabled) return
+
     const { source, destination, draggableId } = result
 
     if (!destination) return

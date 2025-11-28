@@ -1002,17 +1002,16 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Block Stacking Question */}
           {currentQuestion.type === 'block-stacking' && currentQuestion.firstNumber !== undefined && currentQuestion.secondNumber !== undefined && currentQuestion.operation && (
             <div className="mb-8">
-              {!showExplanation && (
-                <BlockStackingQuestion
-                  firstNumber={currentQuestion.firstNumber}
-                  secondNumber={currentQuestion.secondNumber}
-                  operation={currentQuestion.operation}
-                  correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer.toString()) : 0}
-                  onAnswer={handleBlockStackingAnswer}
-                  question={currentQuestion.question}
-                  onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
-                />
-              )}
+              <BlockStackingQuestion
+                firstNumber={currentQuestion.firstNumber}
+                secondNumber={currentQuestion.secondNumber}
+                operation={currentQuestion.operation}
+                correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer.toString()) : 0}
+                onAnswer={handleBlockStackingAnswer}
+                question={currentQuestion.question}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
+                disabled={showExplanation}
+              />
             </div>
           )}
 
