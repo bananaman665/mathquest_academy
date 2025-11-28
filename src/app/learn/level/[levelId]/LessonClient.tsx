@@ -1182,8 +1182,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Match Equation - Drag equations to answers */}
           {currentQuestion.type === 'match-equation' && currentQuestion.equations && (
             <div className="mb-8">
-              <p className="text-center text-3xl font-bold text-black mb-8">Drag each equation to its answer</p>
-              <div className="flex gap-12 justify-center items-start">
+              <p className="text-center text-2xl sm:text-3xl font-bold text-black mb-6">Drag each equation to its answer</p>
+              <div className="flex gap-3 sm:gap-6 justify-center items-start">
                 <DragDropContext
                   onDragEnd={result => {
                     if (!result.destination || result.destination.droppableId === 'equations') return;
@@ -1205,8 +1205,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {/* Draggable equations */}
                   <Droppable droppableId="equations">
                     {(provided) => (
-                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-4 min-w-[200px]">
-                        <div className="text-base font-bold text-black mb-2 text-center uppercase tracking-wide">Equations</div>
+                      <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-2 sm:gap-3 flex-1 max-w-[45%]">
+                        <div className="text-xs sm:text-sm font-bold text-black mb-1 text-center uppercase tracking-wide">Equations</div>
                         {equationItems.map((eq, idx) => (
                           <Draggable key={eq} draggableId={eq} index={idx}>
                             {(provided, snapshot) => (
@@ -1214,7 +1214,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className={`bg-blue-500 text-white px-8 py-5 rounded-xl cursor-grab text-2xl font-bold border-4 border-black transition-all ${
+                                className={`bg-blue-500 text-white px-3 py-3 sm:px-6 sm:py-4 rounded-xl cursor-grab text-lg sm:text-xl font-bold border-4 border-black transition-all ${
                                   snapshot.isDragging ? 'scale-110' : 'hover:scale-105'
                                 }`}
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
@@ -1229,8 +1229,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     )}
                   </Droppable>
                   {/* Droppable answer targets */}
-                  <div className="flex flex-col gap-4 min-w-[200px]">
-                    <div className="text-base font-bold text-black mb-2 text-center uppercase tracking-wide">Answers</div>
+                  <div className="flex flex-col gap-2 sm:gap-3 flex-1 max-w-[45%]">
+                    <div className="text-xs sm:text-sm font-bold text-black mb-1 text-center uppercase tracking-wide">Answers</div>
                     {answerBoxes.map((answer, idx) => (
                       <Droppable
                         droppableId={`answer-${idx}`}
@@ -1241,14 +1241,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`px-8 py-5 rounded-xl text-2xl font-bold min-w-[180px] min-h-[76px] flex items-center justify-between gap-3 border-4 transition-all ${
+                            className={`px-3 py-3 sm:px-6 sm:py-4 rounded-xl text-lg sm:text-xl font-bold min-h-[60px] sm:min-h-[72px] flex items-center justify-between gap-2 border-4 transition-all ${
                               snapshot.isDraggingOver && !equationMatched[idx] ? 'bg-white text-black border-blue-500 scale-105' :
                               equationMatched[idx] ? 'bg-green-500 text-white border-black' : 'bg-white text-black border-black'
                             }`}
                           >
                             {equationMatched[idx] ? (
                               <>
-                                <span className="text-white font-bold text-2xl">{equationMatched[idx]}</span>
+                                <span className="text-white font-bold text-lg sm:text-xl flex-1 text-center">{equationMatched[idx]}</span>
                                 <button
                                   onClick={() => {
                                     // Remove equation from matched and add back to equation items
@@ -1263,13 +1263,13 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                     }
                                   }}
                                   disabled={showExplanation}
-                                  className="text-white bg-black hover:bg-white hover:text-black border-2 border-white rounded-full p-2 transition-colors"
+                                  className="text-white bg-black hover:bg-white hover:text-black border-2 border-white rounded-full p-1.5 transition-colors flex-shrink-0"
                                 >
-                                  <X className="w-4 h-4" />
+                                  <X className="w-3 h-3 sm:w-4 sm:h-4" />
                                 </button>
                               </>
                             ) : (
-                              <span className="text-black font-bold text-3xl text-center w-full">{answer}</span>
+                              <span className="text-black font-bold text-2xl sm:text-3xl text-center w-full">{answer}</span>
                             )}
                             {provided.placeholder}
                           </div>
