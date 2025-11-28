@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
-import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target, Lightbulb } from 'lucide-react'
+import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target, Lightbulb, Shield, Gift, FastForward, Brain } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
@@ -98,6 +98,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [interactiveSubmitFn, setInteractiveSubmitFn] = useState<(() => void) | null>(null)
   // Loading state for async operations
   const [isProcessing, setIsProcessing] = useState(false)
+  // Power-up usage tracking
+  const [freebieUsedOnQuestion, setFreebieUsedOnQuestion] = useState(false)
+  const [skipUsedOnQuestion, setSkipUsedOnQuestion] = useState(false)
+  const [megaBrainUsed, setMegaBrainUsed] = useState(false)
+  const [eliminatedAnswers, setEliminatedAnswers] = useState<string[]>([])
 
   // Confirmation dialog states
   const [showSkipConfirm, setShowSkipConfirm] = useState(false)
@@ -150,7 +155,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             setIsCorrect(false)
             setShowExplanation(true)
             playIncorrect()
-            setHearts(prev => Math.max(0, prev - 1))
+            handleHeartLoss()
             setCurrentStreak(0)
             setComboMultiplier(1)
             return 0
@@ -268,7 +273,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }
     } else {
       playIncorrect()
-      setHearts(prev => Math.max(0, prev - 1))
+      handleHeartLoss()
       setCurrentStreak(0)
       setComboMultiplier(1)
     }
@@ -320,7 +325,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }
     } else {
       playIncorrect()
-      setHearts(prev => Math.max(0, prev - 1))
+      handleHeartLoss()
       setCurrentStreak(0)
       setComboMultiplier(1)
     }
@@ -372,7 +377,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }
     } else {
       playIncorrect()
-      setHearts(prev => Math.max(0, prev - 1))
+      handleHeartLoss()
       setCurrentStreak(0)
       setComboMultiplier(1)
     }
@@ -513,7 +518,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }
     } else {
       playIncorrect() // Play error sound
-      setHearts(prev => Math.max(0, prev - 1))
+      handleHeartLoss()
       setCurrentStreak(0)
       setComboMultiplier(1)
       
@@ -544,12 +549,148 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       playCorrect()
       setHearts(prev => Math.min(prev + data.heartsAdded, 10))
       setShowGameOverModal(false)
-      
+
       // Refetch inventory to update extra hearts count
       await inventoryHook.refetch()
     } catch (error) {
       console.error('Error using extra hearts:', error)
       playIncorrect()
+    }
+  }
+
+  // Handle heart loss with Shield protection
+  const handleHeartLoss = () => {
+    // Check if Shield is active
+    const hasActiveShield = inventoryHook.inventory.find(
+      item => item.itemId === 'shield' && item.isActive
+    )
+
+    if (hasActiveShield) {
+      // Shield protects from heart loss - deactivate it
+      fetch('/api/inventory/deactivate-shield', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(response => {
+          if (response.ok) {
+            // Shield consumed - refetch inventory to update UI
+            inventoryHook.refetch()
+          }
+        })
+        .catch(error => {
+          console.error('Error deactivating shield:', error)
+        })
+
+      // Don't lose a heart - shield protects
+      return
+    }
+
+    // No shield - lose a heart normally
+    setHearts(prev => Math.max(0, prev - 1))
+  }
+
+  // Handle using Freebie power-up
+  const handleUseFreebie = async () => {
+    if (freebieUsedOnQuestion) return
+
+    try {
+      const response = await fetch('/api/inventory/use-freebie', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to use freebie')
+      }
+
+      // Success - auto-solve the question
+      setFreebieUsedOnQuestion(true)
+      setIsCorrect(true)
+      setShowExplanation(true)
+      playCorrect()
+
+      // Award XP and update streak
+      const newStreak = currentStreak + 1
+      setCurrentStreak(newStreak)
+      if (newStreak > maxStreak) setMaxStreak(newStreak)
+
+      const baseXP = currentQuestion.xp || 10
+      const earnedPoints = Math.floor(baseXP * xpMultiplier * comboMultiplier)
+      setEarnedXP(prev => prev + earnedPoints)
+      setCorrectCount(prev => prev + 1)
+
+      // Refetch inventory
+      await inventoryHook.refetch()
+    } catch (error) {
+      console.error('Error using freebie:', error)
+    }
+  }
+
+  // Handle using Skip Token power-up
+  const handleUseSkipToken = async () => {
+    if (skipUsedOnQuestion) return
+
+    try {
+      const response = await fetch('/api/inventory/use-skip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to use skip token')
+      }
+
+      // Success - skip to next question without penalty
+      setSkipUsedOnQuestion(true)
+
+      // Refetch inventory
+      await inventoryHook.refetch()
+
+      // Move to next question
+      handleNext()
+    } catch (error) {
+      console.error('Error using skip token:', error)
+    }
+  }
+
+  // Handle using Mega Brain power-up
+  const handleUseMegaBrain = async () => {
+    if (megaBrainUsed || !currentQuestion.options) return
+
+    try {
+      const response = await fetch('/api/inventory/use-mega-brain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to use Mega Brain')
+      }
+
+      // Success - eliminate wrong answers
+      setMegaBrainUsed(true)
+
+      const wrongAnswers = currentQuestion.options.filter(
+        opt => opt !== currentQuestion.correctAnswer
+      )
+
+      // Eliminate 2 random wrong answers
+      const toEliminate = wrongAnswers
+        .sort(() => Math.random() - 0.5)
+        .slice(0, data.eliminateCount || 2)
+
+      setEliminatedAnswers(toEliminate)
+
+      // Refetch inventory
+      await inventoryHook.refetch()
+    } catch (error) {
+      console.error('Error using Mega Brain:', error)
     }
   }
 
@@ -586,6 +727,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       setMultiSelected([])
       setBlankAnswers([])
       setInteractiveSubmitFn(null) // Reset interactive component submit function
+      setFreebieUsedOnQuestion(false) // Reset power-up flags
+      setSkipUsedOnQuestion(false)
+      setMegaBrainUsed(false)
+      setEliminatedAnswers([])
       // Reset drag-and-drop state for next question
       const nextQuestion = questions[currentQuestionIndex + 1]
       if (nextQuestion.type === 'drag-and-drop' && nextQuestion.pairs) {
@@ -732,14 +877,22 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 <span className="text-lg sm:text-xl">{questionTimer}s</span>
               </div>
             )}
-            
+
+            {/* Shield Active Indicator */}
+            {inventoryHook.inventory.find(item => item.itemId === 'shield' && item.isActive) && (
+              <div className="flex items-center gap-1 sm:gap-2 bg-blue-100 px-2 sm:px-3 py-1 sm:py-2 rounded-xl border-2 border-blue-400">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                <span className="text-blue-600 font-bold text-xs sm:text-sm">Shield</span>
+              </div>
+            )}
+
             {xpBoostActive && (
               <div className="flex items-center gap-1 sm:gap-2 bg-yellow-100 px-2 sm:px-3 py-1 sm:py-2 rounded-xl border-2 border-yellow-400">
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 fill-yellow-600" />
                 <span className="text-yellow-600 font-bold text-xs sm:text-sm">2x XP</span>
               </div>
             )}
-            
+
             {gameMode === 'normal' && (
               <div className="flex items-center gap-1 sm:gap-2 bg-red-100 px-2 sm:px-4 py-1 sm:py-2 rounded-xl">
                 <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 fill-red-500" />
@@ -798,7 +951,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Visual Count - Show answer options */}
           {currentQuestion.type === 'visual-count' && currentQuestion.options && (
             <div className="grid grid-cols-2 gap-4 mb-8">
-              {currentQuestion.options.map((option, index) => {
+              {currentQuestion.options.filter(opt => !eliminatedAnswers.includes(opt)).map((option, index) => {
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
                 let cardClass = "relative p-8 rounded-2xl border-2 transition-all duration-200 cursor-pointer "
@@ -846,7 +999,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {/* Multiple Choice & Number Sequence - use same UI */}
           {(currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'number-sequence') && currentQuestion.options && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              {currentQuestion.options.map((option, index) => {
+              {currentQuestion.options.filter(opt => !eliminatedAnswers.includes(opt)).map((option, index) => {
                 const isSelected = selectedAnswer === option
                 const isCorrectOption = option === currentQuestion.correctAnswer
 
@@ -1252,7 +1405,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1285,7 +1438,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1318,7 +1471,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1353,7 +1506,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1386,7 +1539,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1420,7 +1573,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1456,7 +1609,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1490,7 +1643,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1532,7 +1685,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1565,7 +1718,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1598,7 +1751,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1631,7 +1784,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1662,7 +1815,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1695,7 +1848,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1728,7 +1881,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     }
                   } else {
                     playIncorrect()
-                    setHearts(prev => Math.max(0, prev - 1))
+                    handleHeartLoss()
                     setCurrentStreak(0)
                     setComboMultiplier(1)
                   }
@@ -1769,7 +1922,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="mb-8">
               <audio controls src={currentQuestion.audioUrl} className="mb-4" />
               <div className="grid grid-cols-2 gap-4">
-                {currentQuestion.options?.map((opt, idx) => (
+                {currentQuestion.options?.filter(opt => !eliminatedAnswers.includes(opt)).map((opt, idx) => (
                   <button
                     key={idx}
                     className={`bg-blue-600 text-white px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'border-4 border-green-400' : ''}`}
@@ -1834,7 +1987,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {currentQuestion.type === 'mini-game' && (
             <div className="mb-8">
               <div className="flex gap-4">
-                {currentQuestion.options?.map((opt, idx) => (
+                {currentQuestion.options?.filter(opt => !eliminatedAnswers.includes(opt)).map((opt, idx) => (
                   <button
                     key={idx}
                     className={`px-6 py-4 rounded-xl font-bold ${selectedAnswer === opt ? 'bg-pink-400 text-black' : 'bg-slate-700 text-pink-300'}`}
@@ -1875,14 +2028,42 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <>
               {/* Mobile: Stack buttons vertically */}
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-                {/* Top row on mobile: Skip and Hint */}
-                <div className="flex gap-2 justify-between md:justify-start">
-                  <button 
-                    onClick={() => setShowSkipConfirm(true)} 
-                    className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-700 transition-colors uppercase tracking-wide hover:bg-gray-100 text-sm"
-                  >
-                    Skip
-                  </button>
+                {/* Top row on mobile: Power-ups and actions */}
+                <div className="flex gap-2 flex-wrap justify-between md:justify-start">
+                  {/* Freebie Button */}
+                  {inventoryHook.getItemQuantity('freebie') > 0 && !freebieUsedOnQuestion && (
+                    <button
+                      onClick={handleUseFreebie}
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                    >
+                      <Gift size={20} />
+                      Freebie
+                    </button>
+                  )}
+
+                  {/* Skip Token Button */}
+                  {inventoryHook.getItemQuantity('skip-token') > 0 && !skipUsedOnQuestion && (
+                    <button
+                      onClick={handleUseSkipToken}
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                    >
+                      <FastForward size={20} />
+                      Skip
+                    </button>
+                  )}
+
+                  {/* Mega Brain Button - Only for multiple choice questions */}
+                  {inventoryHook.getItemQuantity('mega-brain') > 0 && !megaBrainUsed && currentQuestion.options && currentQuestion.options.length > 2 && (
+                    <button
+                      onClick={handleUseMegaBrain}
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                    >
+                      <Brain size={20} />
+                      Mega Brain
+                    </button>
+                  )}
+
+                  {/* Hint Button */}
                   {currentQuestion.hints && currentQuestion.hints.length > 0 && (
                     <button
                       onClick={() => {

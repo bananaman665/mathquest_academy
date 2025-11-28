@@ -221,6 +221,10 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         const isPurchasing = purchasingItem === item.id
         const isPowerUp = item.category === 'power-ups'
 
+        // V2 items that aren't available yet
+        const v2Items = ['mega-brain', 'time-warp', 'combo-master', 'lucky-charm']
+        const isV2Item = v2Items.includes(item.id)
+
         return (
           <div>
             {/* Item Card */}
@@ -231,17 +235,26 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               onTouchEnd={handleTouchEnd}
             >
               {/* Category Badge */}
-              <div className="flex items-center justify-center gap-2 mb-4">
-                {isPowerUp ? (
-                  <>
-                    <Zap className="w-5 h-5 text-yellow-600" />
-                    <span className="text-sm font-black text-yellow-600">POWER-UP</span>
-                  </>
-                ) : (
-                  <>
-                    <Palette className="w-5 h-5 text-purple-600" />
-                    <span className="text-sm font-black text-purple-600">COSMETIC</span>
-                  </>
+              <div className="flex flex-col items-center justify-center gap-2 mb-4">
+                <div className="flex items-center gap-2">
+                  {isPowerUp ? (
+                    <>
+                      <Zap className="w-5 h-5 text-yellow-600" />
+                      <span className="text-sm font-black text-yellow-600">POWER-UP</span>
+                    </>
+                  ) : (
+                    <>
+                      <Palette className="w-5 h-5 text-purple-600" />
+                      <span className="text-sm font-black text-purple-600">COSMETIC</span>
+                    </>
+                  )}
+                </div>
+
+                {/* V2 Badge */}
+                {isV2Item && (
+                  <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-3 py-1 rounded-full">
+                    <span className="text-xs font-black">COMING IN V2</span>
+                  </div>
                 )}
               </div>
 
@@ -273,28 +286,32 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               </div>
 
               <button
-                onClick={() => handlePurchase(item)}
-                disabled={!canAfford || isPurchasing}
+                onClick={() => !isV2Item && handlePurchase(item)}
+                disabled={!canAfford || isPurchasing || isV2Item}
                 className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
-                  canAfford && !isPurchasing
+                  isV2Item
+                    ? 'bg-gradient-to-r from-orange-400 to-pink-400 text-white cursor-not-allowed'
+                    : canAfford && !isPurchasing
                     ? `${isPowerUp ? 'bg-blue-600 hover:bg-blue-700' : 'bg-purple-600 hover:bg-purple-700'} text-white hover:scale-105 active:scale-95`
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                {isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
+                {isV2Item ? 'Coming Soon in V2' : isPurchasing ? 'Purchasing...' : canAfford ? 'Buy Now' : 'Not Enough Gems'}
               </button>
-              
-              <button
-                onClick={() => handleUseItem(item)}
-                disabled={usingItem === item.id}
-                className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
-                  usingItem !== item.id
-                    ? `${isPowerUp ? 'bg-green-600 hover:bg-green-700' : 'bg-pink-600 hover:bg-pink-700'} text-white hover:scale-105 active:scale-95`
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                }`}
-              >
-                {usingItem === item.id ? (isPowerUp ? 'Using...' : 'Equipping...') : (isPowerUp ? 'Use Item' : 'Equip')}
-              </button>
+
+              {!isV2Item && (
+                <button
+                  onClick={() => handleUseItem(item)}
+                  disabled={usingItem === item.id}
+                  className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
+                    usingItem !== item.id
+                      ? `${isPowerUp ? 'bg-green-600 hover:bg-green-700' : 'bg-pink-600 hover:bg-pink-700'} text-white hover:scale-105 active:scale-95`
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  {usingItem === item.id ? (isPowerUp ? 'Using...' : 'Equipping...') : (isPowerUp ? 'Use Item' : 'Equip')}
+                </button>
+              )}
             </div>
 
             {/* Swipe Context Message */}

@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Lock, CheckCircle, Star, Trophy, Sparkles, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket, BookOpen } from 'lucide-react'
+import { Lock, CheckCircle, Star, Trophy, Target, ShoppingBag, User, MoreHorizontal, Home, Flame, Gem, Heart, Zap, Rocket, BookOpen } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import BottomNav from '@/components/BottomNav'
 import Logo from '@/components/Logo'
@@ -277,7 +277,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             {level.title}
           </h3>
           <p className={`text-xs sm:text-sm ${config.textColor} opacity-90 relative z-10 flex items-center gap-1`}>
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
             {level.xp} XP
           </p>
           {level.status === 'completed' && (
