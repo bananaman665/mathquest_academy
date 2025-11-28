@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target, Lightbulb } from 'lucide-react'
 import { Question, GameMode } from '@/data/questions'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
@@ -625,11 +624,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       <div className="min-h-screen bg-white">
         <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4 pt-16 sm:pt-6">
-              <Link href="/learn" className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors group">
-                <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
-                <span className="font-semibold">Back to Path</span>
-              </Link>
+            <div className="flex justify-center items-center py-4 pt-16 sm:pt-6">
               <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl">
                 <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-md">
                   <BookOpen className="w-5 h-5 text-white" />
