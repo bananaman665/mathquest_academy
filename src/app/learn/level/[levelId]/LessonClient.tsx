@@ -1183,7 +1183,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
           {currentQuestion.type === 'match-equation' && currentQuestion.equations && (
             <div className="mb-8">
               <p className="text-center text-3xl font-bold text-black mb-8">Drag each equation to its answer</p>
-              <div className="flex gap-12 justify-center items-start flex-wrap">
+              <div className="flex gap-12 justify-center items-start">
                 <DragDropContext
                   onDragEnd={result => {
                     if (!result.destination || result.destination.droppableId === 'equations') return;
