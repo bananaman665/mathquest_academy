@@ -290,7 +290,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
                 disabled={!canAfford || isPurchasing || isV2Item}
                 className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
                   isV2Item
-                    ? 'bg-gradient-to-r from-orange-400 to-pink-400 text-white cursor-not-allowed'
+                    ? 'bg-orange-500 text-white cursor-not-allowed'
                     : canAfford && !isPurchasing
                     ? `${isPowerUp ? 'bg-blue-600 hover:bg-blue-700' : 'bg-purple-600 hover:bg-purple-700'} text-white hover:scale-105 active:scale-95`
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
