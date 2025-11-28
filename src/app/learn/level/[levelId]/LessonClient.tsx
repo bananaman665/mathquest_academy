@@ -2087,6 +2087,15 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                       Hint
                     </button>
                   )}
+
+                  {/* Free Skip Button - Testing only */}
+                  <button
+                    onClick={() => setShowSkipConfirm(true)}
+                    className="px-4 py-3 rounded-xl font-bold text-white bg-gray-500 hover:bg-gray-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                  >
+                    <FastForward size={20} />
+                    Skip
+                  </button>
                 </div>
 
                 {/* Bottom row on mobile: Check button full width */}
