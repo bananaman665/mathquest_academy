@@ -138,7 +138,7 @@ export default function BlockStackingQuestion({
                 </div>
               )}
             </Droppable>
-            <div className="text-sm sm:text-base font-semibold text-gray-300">
+            <div className="text-sm sm:text-base font-semibold text-black">
               {trashBlocks.length} {operation === 'add' ? 'to add' : 'removed'}
             </div>
           </div>
