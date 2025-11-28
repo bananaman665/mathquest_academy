@@ -128,9 +128,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       const timer = setInterval(() => {
         setGameTimer(prev => {
           if (prev <= 1) {
-            // Time's up!
-            setIsProcessing(true)
-            router.push(`/learn/level/${levelId}/complete?xp=${earnedXP}&correct=${correctCount}&total=${currentQuestionIndex + 1}&mode=speed-round`)
+            // Time's up! Set hearts to 0 to trigger game over modal
+            setHearts(0)
+            setShowGameOverModal(true)
             return 0
           }
           return prev - 1
@@ -138,7 +138,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       }, 1000)
       return () => clearInterval(timer)
     }
-  }, [gameMode, phase, gameTimer, router, levelId, earnedXP, correctCount, currentQuestionIndex])
+  }, [gameMode, phase, gameTimer])
 
   // Timer effects for Lightning Mode
   useEffect(() => {
