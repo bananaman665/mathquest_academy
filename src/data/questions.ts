@@ -194,7 +194,7 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       content: [
         "Numbers help us count things around us!",
         "Each number represents a quantity - how many of something we have.",
-        "We start counting at 1 (one) and go up in order: 1, 2, 3, 4, 5...",
+        "We start counting at 1 and go up in order: 1, 2, 3, 4, 5...",
         "The dots below show exactly how many each number represents!",
         "Count the dots carefully for each number - this helps you understand what each number means!"
       ],
@@ -218,7 +218,7 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       title: "Let's Learn Addition!",
       content: [
         "Addition means putting groups of things together!",
-        "When we add, we combine two or more numbers to get a total.",
+        "When we add, we combine 2 or more numbers to get a total.",
         "The + symbol means 'plus' or 'add' - it tells us to put things together.",
         "Example: If you have 2 apples and get 3 more, you ADD them: 2 + 3 = 5 apples total!",
         "The = symbol means 'equals' - it shows us the answer!",
@@ -243,7 +243,7 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "When we subtract, we remove some items and count what's left.",
         "The − symbol means 'minus' or 'subtract' - it tells us to take away.",
         "Example: If you have 5 cookies and eat 2, you SUBTRACT: 5 − 2 = 3 cookies left!",
-        "The answer is always smaller than the first number (unless you subtract 0).",
+        "The answer is always smaller than the 1st number (unless you subtract 0).",
         "Watch how we take dots away:"
       ],
       examples: [
@@ -263,7 +263,7 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       content: [
         "Now we're ready to work with numbers all the way up to 20!",
         "These are bigger numbers, but we use the same addition and subtraction skills.",
-        "A helpful strategy: Break numbers into tens and ones.",
+        "A helpful strategy: Break numbers into 10s and 1s.",
         "Example: 13 is 10 + 3. So 13 + 4 = 10 + 3 + 4 = 10 + 7 = 17",
         "Another strategy: Count on or count back in your head.",
         "For 15 − 3, start at 15 and count back: 14, 13, 12. Answer is 12!"
@@ -284,8 +284,8 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       title: "Understanding Place Value!",
       content: [
         "Every digit in a number has a 'place' that tells us its value!",
-        "In a two-digit number, the first digit is the TENS place, the second is the ONES place.",
-        "Example: In the number 42, the 4 is in the tens place (worth 40) and 2 is in the ones place (worth 2).",
+        "In a 2-digit number, the 1st digit is the TENS place, the 2nd is the ONES place.",
+        "Example: In the number 42, the 4 is in the 10s place (worth 40) and 2 is in the 1s place (worth 2).",
         "So 42 = 40 + 2 = 4 tens and 2 ones!",
         "This is super important for understanding bigger numbers and doing math!",
         "The position of a digit changes its value - that's why we call it 'place value'!"
@@ -350,7 +350,7 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       title: "Let's Learn Fractions!",
       content: [
         "Fractions represent parts of a whole - like slices of a pizza!",
-        "A fraction has two numbers: the top (numerator) and bottom (denominator).",
+        "A fraction has 2 numbers: the top (numerator) and bottom (denominator).",
         "The bottom number tells us how many equal parts the whole is divided into.",
         "The top number tells us how many of those parts we have.",
         "Example: ½ means the whole is divided into 2 equal parts, and we have 1 of them.",

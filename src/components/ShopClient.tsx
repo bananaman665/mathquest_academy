@@ -97,7 +97,9 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
     }
   }
 
-  const handlePurchase = async (item: ShopItem) => {
+  const handlePurchase = async (item: ShopItem, e?: React.MouseEvent) => {
+    e?.stopPropagation() // Prevent card swipe when clicking button
+
     if (balance < item.price) {
       setErrorMessage(`Not enough gems! You need ${item.price - balance} more.`)
       playIncorrect()
@@ -140,7 +142,9 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
     }
   }
 
-  const handleUseItem = async (item: ShopItem) => {
+  const handleUseItem = async (item: ShopItem, e?: React.MouseEvent) => {
+    e?.stopPropagation() // Prevent card swipe when clicking button
+
     setUsingItem(item.id)
     setErrorMessage(null)
     setSuccessMessage(null)
@@ -286,7 +290,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
               </div>
 
               <button
-                onClick={() => !isV2Item && handlePurchase(item)}
+                onClick={(e) => !isV2Item && handlePurchase(item, e)}
                 disabled={!canAfford || isPurchasing || isV2Item}
                 className={`w-full font-bold py-3 rounded-xl transition-all duration-300 ${
                   isV2Item
@@ -301,7 +305,7 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
 
               {!isV2Item && (
                 <button
-                  onClick={() => handleUseItem(item)}
+                  onClick={(e) => handleUseItem(item, e)}
                   disabled={usingItem === item.id}
                   className={`w-full font-bold py-3 rounded-xl transition-all duration-300 mt-2 ${
                     usingItem !== item.id
