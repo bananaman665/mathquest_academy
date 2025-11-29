@@ -84,83 +84,41 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 pt-3 px-3 pb-24 overflow-hidden">
+      <div className="flex flex-col items-center gap-6 pt-4 px-4 pb-24">
         {/* Instruction */}
         <div className="text-center mb-2">
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+          <p className="text-2xl sm:text-3xl font-bold text-black">
             {operation === 'add'
-              ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from down to up`
-              : `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from up to down`}
+              ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from bottom to top`
+              : `Remove ${secondNumber} token${secondNumber !== 1 ? 's' : ''} by dragging down`}
           </p>
         </div>
 
         {/* Main workspace */}
-        <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch justify-center w-full max-w-2xl px-2">
-          {/* Blocks to Add Zone - Show first on mobile for clarity */}
-          <div className="flex flex-col items-center gap-2 flex-1 order-2 md:order-1">
-            <div className="text-white font-bold text-sm sm:text-base text-center">
-              {operation === 'add' ? 'Drag From Here' : 'Trash'}
-            </div>
-            <Droppable droppableId="trash">
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={`flex flex-wrap content-start gap-1.5 p-2.5 rounded-xl border-2 ${
-                    snapshot.isDraggingOver
-                      ? 'border-amber-400 bg-amber-500/10'
-                      : 'border-slate-600 bg-slate-700/50'
-                  } w-full min-h-24 transition-colors`}
-                >
-                  {trashBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-5 text-xs">Empty</div>
-                  ) : (
-                    trashBlocks.map((blockId, idx) => (
-                      <Draggable key={blockId} draggableId={blockId} index={idx}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full border-2 border-amber-200 cursor-grab transition-all flex items-center justify-center ${
-                              snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-12'
-                                : 'hover:shadow-xl hover:scale-105'
-                            }`}
-                          >
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white/40 rounded-full"></div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))
-                  )}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-            <div className="text-sm sm:text-base font-semibold text-black">
-              {trashBlocks.length} {operation === 'add' ? 'to add' : 'removed'}
-            </div>
-          </div>
-
-          {/* Block Stack */}
-          <div className="flex flex-col items-center gap-2 flex-1 order-1 md:order-2">
-            <div className="text-white font-bold text-sm sm:text-base text-center">
-              {operation === 'add' ? 'Your Stack' : 'Your Stack'}
+        <div className="flex flex-col gap-6 items-center w-full max-w-4xl">
+          {/* Your Stack - Top Zone */}
+          <div className="w-full">
+            <div className="text-center mb-3">
+              <h3 className="text-lg font-bold text-black mb-1">Your Stack</h3>
+              <div className="inline-block bg-blue-500 text-white px-6 py-2 rounded-xl font-bold text-2xl border-4 border-black">
+                {stackBlocks.length}
+              </div>
             </div>
             <Droppable droppableId="stack">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-start justify-center gap-1.5 p-2.5 rounded-xl border-2 ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-3 p-6 rounded-2xl border-4 transition-all min-h-[200px] bg-white ${
                     snapshot.isDraggingOver
-                      ? 'border-green-400 bg-green-500/10'
-                      : 'border-slate-600 bg-slate-700/50'
-                  } min-h-24 w-full transition-colors`}
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-black'
+                  }`}
                 >
                   {stackBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center py-5 w-full text-xs">No tokens</div>
+                    <div className="text-gray-400 text-center w-full py-12 text-lg font-semibold">
+                      Empty Stack
+                    </div>
                   ) : (
                     stackBlocks.map((blockId, idx) => (
                       <Draggable key={blockId} draggableId={blockId} index={idx}>
@@ -169,13 +127,16 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-200 cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-2xl border-4 border-black cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-12'
-                                : 'hover:shadow-xl hover:scale-105'
+                                ? 'opacity-70 scale-110 rotate-6'
+                                : 'hover:scale-105 active:scale-95'
                             }`}
+                            style={{
+                              ...provided.draggableProps.style,
+                            }}
                           >
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white/40 rounded-full"></div>
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
@@ -185,9 +146,65 @@ export default function BlockStackingQuestion({
                 </div>
               )}
             </Droppable>
-            <div className="text-lg sm:text-xl font-bold text-white bg-slate-700 px-4 py-1.5 rounded-lg min-w-[50px] text-center">
-              {stackBlocks.length}
+          </div>
+
+          {/* Divider */}
+          <div className="w-full max-w-md">
+            <div className="h-1 bg-black rounded-full"></div>
+          </div>
+
+          {/* Tokens Zone - Bottom Zone */}
+          <div className="w-full">
+            <div className="text-center mb-3">
+              <h3 className="text-lg font-bold text-black mb-1">
+                {operation === 'add' ? 'Tokens to Add' : 'Removed Tokens'}
+              </h3>
+              <div className="inline-block bg-green-500 text-white px-6 py-2 rounded-xl font-bold text-2xl border-4 border-black">
+                {trashBlocks.length}
+              </div>
             </div>
+            <Droppable droppableId="trash">
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={`flex flex-wrap content-start items-center justify-center gap-3 p-6 rounded-2xl border-4 transition-all min-h-[200px] bg-white ${
+                    snapshot.isDraggingOver
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-black'
+                  }`}
+                >
+                  {trashBlocks.length === 0 ? (
+                    <div className="text-gray-400 text-center w-full py-12 text-lg font-semibold">
+                      {operation === 'add' ? 'No tokens yet' : 'No removed tokens'}
+                    </div>
+                  ) : (
+                    trashBlocks.map((blockId, idx) => (
+                      <Draggable key={blockId} draggableId={blockId} index={idx}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-2xl border-4 border-black cursor-grab transition-all flex items-center justify-center ${
+                              snapshot.isDragging
+                                ? 'opacity-70 scale-110 rotate-6'
+                                : 'hover:scale-105 active:scale-95'
+                            }`}
+                            style={{
+                              ...provided.draggableProps.style,
+                            }}
+                          >
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full"></div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
           </div>
         </div>
       </div>
