@@ -84,9 +84,9 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-1.5 px-3 pb-24">
+      <div className="flex flex-col items-center gap-3 px-3 pb-24">
         {/* Main workspace */}
-        <div className="flex flex-col gap-1.5 items-center w-full max-w-7xl">
+        <div className="flex flex-col gap-3 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
           <div className="w-full">
             <div className="text-center mb-1">
@@ -100,7 +100,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-1.5 p-1.5 rounded-xl border-2 transition-all min-h-[90px] bg-white ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-4 rounded-xl border-2 transition-all min-h-[180px] bg-white ${
                     snapshot.isDraggingOver
                       ? 'border-green-500 bg-green-50'
                       : 'border-black'
@@ -159,7 +159,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-1.5 p-1.5 rounded-xl border-2 transition-all min-h-[90px] bg-white ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-4 rounded-xl border-2 transition-all min-h-[180px] bg-white ${
                     snapshot.isDraggingOver
                       ? 'border-green-500 bg-green-50'
                       : 'border-black'
