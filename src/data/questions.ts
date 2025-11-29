@@ -199,16 +199,16 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Count the dots carefully for each number - this helps you understand what each number means!"
       ],
       examples: [
-        { number: "1", visual: "●", word: "one" },
-        { number: "2", visual: "●●", word: "two" },
-        { number: "3", visual: "●●●", word: "three" },
-        { number: "4", visual: "●●●●", word: "four" },
-        { number: "5", visual: "●●●●●", word: "five" },
-        { number: "6", visual: "●●●●●●", word: "six" },
-        { number: "7", visual: "●●●●●●●", word: "seven" },
-        { number: "8", visual: "●●●●●●●●", word: "eight" },
-        { number: "9", visual: "●●●●●●●●●", word: "nine" },
-        { number: "10", visual: "●●●●●●●●●●", word: "ten" }
+        { number: "1", visual: "●", word: "1" },
+        { number: "2", visual: "●●", word: "2" },
+        { number: "3", visual: "●●●", word: "3" },
+        { number: "4", visual: "●●●●", word: "4" },
+        { number: "5", visual: "●●●●●", word: "5" },
+        { number: "6", visual: "●●●●●●", word: "6" },
+        { number: "7", visual: "●●●●●●●", word: "7" },
+        { number: "8", visual: "●●●●●●●●", word: "8" },
+        { number: "9", visual: "●●●●●●●●●", word: "9" },
+        { number: "10", visual: "●●●●●●●●●●", word: "10" }
       ]
     }
   },
@@ -225,12 +225,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Let's see how addition works with dots:"
       ],
       examples: [
-        { number: "1 + 1 = 2", visual: "● + ● = ●●", word: "one plus one equals two" },
-        { number: "2 + 1 = 3", visual: "●● + ● = ●●●", word: "two plus one equals three" },
-        { number: "2 + 2 = 4", visual: "●● + ●● = ●●●●", word: "two plus two equals four" },
-        { number: "3 + 2 = 5", visual: "●●● + ●● = ●●●●●", word: "three plus two equals five" },
-        { number: "4 + 3 = 7", visual: "●●●● + ●●● = ●●●●●●●", word: "four plus three equals seven" },
-        { number: "5 + 5 = 10", visual: "●●●●● + ●●●●● = ●●●●●●●●●●", word: "five plus five equals ten" }
+        { number: "1 + 1 = 2", visual: "● + ● = ●●", word: "1 plus 1 equals 2" },
+        { number: "2 + 1 = 3", visual: "●● + ● = ●●●", word: "2 plus 1 equals 3" },
+        { number: "2 + 2 = 4", visual: "●● + ●● = ●●●●", word: "2 plus 2 equals 4" },
+        { number: "3 + 2 = 5", visual: "●●● + ●● = ●●●●●", word: "3 plus 2 equals 5" },
+        { number: "4 + 3 = 7", visual: "●●●● + ●●● = ●●●●●●●", word: "4 plus 3 equals 7" },
+        { number: "5 + 5 = 10", visual: "●●●●● + ●●●●● = ●●●●●●●●●●", word: "5 plus 5 equals 10" }
       ]
     }
   },
@@ -247,12 +247,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Watch how we take dots away:"
       ],
       examples: [
-        { number: "2 − 1 = 1", visual: "●● → ●", word: "two minus one equals one" },
-        { number: "3 − 1 = 2", visual: "●●● → ●●", word: "three minus one equals two" },
-        { number: "4 − 2 = 2", visual: "●●●● → ●●", word: "four minus two equals two" },
-        { number: "5 − 2 = 3", visual: "●●●●● → ●●●", word: "five minus two equals three" },
-        { number: "6 − 3 = 3", visual: "●●●●●● → ●●●", word: "six minus three equals three" },
-        { number: "10 − 4 = 6", visual: "●●●●●●●●●● → ●●●●●●", word: "ten minus four equals six" }
+        { number: "2 − 1 = 1", visual: "●● → ●", word: "2 minus 1 equals 1" },
+        { number: "3 − 1 = 2", visual: "●●● → ●●", word: "3 minus 1 equals 2" },
+        { number: "4 − 2 = 2", visual: "●●●● → ●●", word: "4 minus 2 equals 2" },
+        { number: "5 − 2 = 3", visual: "●●●●● → ●●●", word: "5 minus 2 equals 3" },
+        { number: "6 − 3 = 3", visual: "●●●●●● → ●●●", word: "6 minus 3 equals 3" },
+        { number: "10 − 4 = 6", visual: "●●●●●●●●●● → ●●●●●●", word: "10 minus 4 equals 6" }
       ]
     }
   },
@@ -269,12 +269,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "For 15 − 3, start at 15 and count back: 14, 13, 12. Answer is 12!"
       ],
       examples: [
-        { number: "10 + 1 = 11", visual: "●●●●●●●●●● + ● = 11", word: "ten plus one equals eleven" },
-        { number: "10 + 5 = 15", visual: "●●●●●●●●●● + ●●●●● = 15", word: "ten plus five equals fifteen" },
-        { number: "12 + 3 = 15", visual: "12 + 3", word: "twelve plus three equals fifteen" },
-        { number: "15 − 3 = 12", visual: "15 − 3", word: "fifteen minus three equals twelve" },
-        { number: "18 − 5 = 13", visual: "18 − 5", word: "eighteen minus five equals thirteen" },
-        { number: "11 + 9 = 20", visual: "11 + 9", word: "eleven plus nine equals twenty" }
+        { number: "10 + 1 = 11", visual: "●●●●●●●●●● + ● = 11", word: "10 plus 1 equals 11" },
+        { number: "10 + 5 = 15", visual: "●●●●●●●●●● + ●●●●● = 15", word: "10 plus 5 equals 15" },
+        { number: "12 + 3 = 15", visual: "12 + 3", word: "12 plus 3 equals 15" },
+        { number: "15 − 3 = 12", visual: "15 − 3", word: "15 minus 3 equals 12" },
+        { number: "18 − 5 = 13", visual: "18 − 5", word: "18 minus 5 equals 13" },
+        { number: "11 + 9 = 20", visual: "11 + 9", word: "11 plus 9 equals 20" }
       ]
     }
   },
@@ -291,12 +291,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "The position of a digit changes its value - that's why we call it 'place value'!"
       ],
       examples: [
-        { number: "23", visual: "2 tens, 3 ones (●●●●●●●●●● + ●●●●●●●●●● + ●●●)", word: "twenty-three" },
-        { number: "35", visual: "3 tens, 5 ones (30 + 5)", word: "thirty-five" },
-        { number: "42", visual: "4 tens, 2 ones (40 + 2)", word: "forty-two" },
-        { number: "57", visual: "5 tens, 7 ones (50 + 7)", word: "fifty-seven" },
-        { number: "68", visual: "6 tens, 8 ones (60 + 8)", word: "sixty-eight" },
-        { number: "91", visual: "9 tens, 1 one (90 + 1)", word: "ninety-one" }
+        { number: "23", visual: "2 tens, 3 ones (●●●●●●●●●● + ●●●●●●●●●● + ●●●)", word: "23" },
+        { number: "35", visual: "3 tens, 5 ones (30 + 5)", word: "35" },
+        { number: "42", visual: "4 tens, 2 ones (40 + 2)", word: "42" },
+        { number: "57", visual: "5 tens, 7 ones (50 + 7)", word: "57" },
+        { number: "68", visual: "6 tens, 8 ones (60 + 8)", word: "68" },
+        { number: "91", visual: "9 tens, 1 one (90 + 1)", word: "91" }
       ]
     }
   },
@@ -313,12 +313,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Multiplication makes math easier when working with groups or repeated addition!"
       ],
       examples: [
-        { number: "2 × 3 = 6", visual: "●● + ●● + ●● = ●●●●●●", word: "two times three equals six" },
-        { number: "3 × 3 = 9", visual: "●●● + ●●● + ●●● = 9", word: "three times three equals nine" },
-        { number: "4 × 2 = 8", visual: "●●●● + ●●●● = 8", word: "four times two equals eight" },
-        { number: "3 × 4 = 12", visual: "●●●● + ●●●● + ●●●● = 12", word: "three times four equals twelve" },
-        { number: "5 × 2 = 10", visual: "●●●●● + ●●●●● = 10", word: "five times two equals ten" },
-        { number: "2 × 10 = 20", visual: "2 groups of 10", word: "two times ten equals twenty" }
+        { number: "2 × 3 = 6", visual: "●● + ●● + ●● = ●●●●●●", word: "2 times 3 equals 6" },
+        { number: "3 × 3 = 9", visual: "●●● + ●●● + ●●● = 9", word: "3 times 3 equals 9" },
+        { number: "4 × 2 = 8", visual: "●●●● + ●●●● = 8", word: "4 times 2 equals 8" },
+        { number: "3 × 4 = 12", visual: "●●●● + ●●●● + ●●●● = 12", word: "3 times 4 equals 12" },
+        { number: "5 × 2 = 10", visual: "●●●●● + ●●●●● = 10", word: "5 times 2 equals 10" },
+        { number: "2 × 10 = 20", visual: "2 groups of 10", word: "2 times 10 equals 20" }
       ]
     }
   },
@@ -335,12 +335,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Division helps us share things fairly and solve real-world problems!"
       ],
       examples: [
-        { number: "6 ÷ 2 = 3", visual: "●●● | ●●●", word: "six divided by two equals three" },
-        { number: "8 ÷ 2 = 4", visual: "●●●● | ●●●●", word: "eight divided by two equals four" },
-        { number: "9 ÷ 3 = 3", visual: "●●● | ●●● | ●●●", word: "nine divided by three equals three" },
-        { number: "10 ÷ 2 = 5", visual: "●●●●● | ●●●●●", word: "ten divided by two equals five" },
-        { number: "12 ÷ 3 = 4", visual: "●●●● | ●●●● | ●●●●", word: "twelve divided by three equals four" },
-        { number: "15 ÷ 5 = 3", visual: "3 groups of 5", word: "fifteen divided by five equals three" }
+        { number: "6 ÷ 2 = 3", visual: "●●● | ●●●", word: "6 divided by 2 equals 3" },
+        { number: "8 ÷ 2 = 4", visual: "●●●● | ●●●●", word: "8 divided by 2 equals 4" },
+        { number: "9 ÷ 3 = 3", visual: "●●● | ●●● | ●●●", word: "9 divided by 3 equals 3" },
+        { number: "10 ÷ 2 = 5", visual: "●●●●● | ●●●●●", word: "10 divided by 2 equals 5" },
+        { number: "12 ÷ 3 = 4", visual: "●●●● | ●●●● | ●●●●", word: "12 divided by 3 equals 4" },
+        { number: "15 ÷ 5 = 3", visual: "3 groups of 5", word: "15 divided by 5 equals 3" }
       ]
     }
   },
@@ -357,12 +357,12 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         "Fractions help us share things fairly and measure amounts that aren't whole numbers!"
       ],
       examples: [
-        { number: "½", visual: "◐ (1 out of 2 equal parts)", word: "one half" },
-        { number: "¼", visual: "◔ (1 out of 4 equal parts)", word: "one quarter" },
-        { number: "¾", visual: "◕ (3 out of 4 equal parts)", word: "three quarters" },
-        { number: "⅓", visual: "1 out of 3 equal parts", word: "one third" },
-        { number: "⅔", visual: "2 out of 3 equal parts", word: "two thirds" },
-        { number: "⅕", visual: "1 out of 5 equal parts", word: "one fifth" }
+        { number: "½", visual: "◐ (1 out of 2 equal parts)", word: "1 half" },
+        { number: "¼", visual: "◔ (1 out of 4 equal parts)", word: "1 quarter" },
+        { number: "¾", visual: "◕ (3 out of 4 equal parts)", word: "3 quarters" },
+        { number: "⅓", visual: "1 out of 3 equal parts", word: "1 third" },
+        { number: "⅔", visual: "2 out of 3 equal parts", word: "2 thirds" },
+        { number: "⅕", visual: "1 out of 5 equal parts", word: "1 fifth" }
       ]
     }
   }
