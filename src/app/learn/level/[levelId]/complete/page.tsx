@@ -121,31 +121,6 @@ export default function LevelCompletePage() {
             </div>
           </div>
 
-          {/* Performance Message */}
-          <div className="mb-6 sm:mb-8">
-            {accuracy === 100 ? (
-              <div className="bg-green-50 rounded-xl p-6 border-2 border-green-300 shadow-md">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Perfect Score!</h3>
-                <p className="text-sm sm:text-base text-gray-700">You got every question right! You&apos;re a math star!</p>
-              </div>
-            ) : accuracy >= 80 ? (
-              <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-300 shadow-md">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Great Job!</h3>
-                <p className="text-sm sm:text-base text-gray-700">You did really well! Keep up the awesome work!</p>
-              </div>
-            ) : accuracy >= 60 ? (
-              <div className="bg-green-50 rounded-xl p-6 border-2 border-green-300 shadow-md">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Good Work!</h3>
-                <p className="text-sm sm:text-base text-gray-700">You&apos;re learning! Practice makes perfect!</p>
-              </div>
-            ) : (
-              <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-300 shadow-md">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Keep Trying!</h3>
-                <p className="text-sm sm:text-base text-gray-700">Don&apos;t give up! You&apos;ll get better with practice!</p>
-              </div>
-            )}
-          </div>
-
           {/* Next Level Preview - New Feature */}
           {hasNextLevel && nextLevel && (
             <div className="bg-indigo-50 border-2 border-indigo-300 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
