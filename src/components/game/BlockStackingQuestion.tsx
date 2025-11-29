@@ -84,9 +84,9 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 px-3 pb-24 pt-4">
+      <div className="flex flex-col items-center gap-2 px-3 pb-24 pt-4">
         {/* Main workspace */}
-        <div className="flex flex-col gap-3 items-center w-full max-w-7xl">
+        <div className="flex flex-col gap-2 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
           <div className="w-full">
             <div className="text-center mb-2">
@@ -139,12 +139,12 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
           </div>
 
           {/* Divider */}
-          <div className="w-full max-w-md py-3">
+          <div className="w-full max-w-md py-1">
             <div className="h-0.5 bg-black rounded-full"></div>
           </div>
 
           {/* Tokens Zone - Bottom Zone */}
-          <div className="w-full mt-2">
+          <div className="w-full">
             <div className="text-center mb-2">
               <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
                 {trashBlocks.length}
