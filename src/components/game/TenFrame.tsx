@@ -119,9 +119,8 @@ export default function TenFrame({
         </div>
         <p className="text-sm text-gray-500 mt-2">
           {dotsPlaced === 0 ? 'Tap to start filling' :
-           dotsPlaced === correctPosition ? 'Perfect! Click Check to submit' :
            dotsPlaced < correctPosition ? `${correctPosition - dotsPlaced} more to go` :
-           'Too many dots selected!'}
+           dotsPlaced > correctPosition ? 'Too many dots selected!' : ''}
         </p>
       </div>
 
