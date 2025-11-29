@@ -139,12 +139,12 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
           </div>
 
           {/* Divider */}
-          <div className="w-full max-w-md py-0.5">
+          <div className="w-full max-w-md py-3">
             <div className="h-0.5 bg-black rounded-full"></div>
           </div>
 
           {/* Tokens Zone - Bottom Zone */}
-          <div className="w-full">
+          <div className="w-full mt-2">
             <div className="text-center mb-2">
               <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
                 {trashBlocks.length}
