@@ -74,7 +74,7 @@ const BalanceScale = React.memo(function BalanceScale({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-3 sm:p-6 overflow-hidden">
+    <div className="w-full max-w-3xl mx-auto p-3 sm:p-6 overflow-visible">
       {/* Number Input */}
       <div className="flex justify-center mb-6">
         <input
