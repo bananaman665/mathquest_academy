@@ -82,7 +82,7 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4 sm:p-6 pt-safe pb-safe">
+    <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4 sm:p-6 pt-safe pb-safe">
       {/* Loading Spinner Overlay */}
       {saving && (
         <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
@@ -98,7 +98,7 @@ export default function LevelCompletePage() {
         <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 text-center">
           {/* Trophy Icon */}
           <div className="mb-6">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-green-500 rounded-full flex items-center justify-center mx-auto">
               <Trophy className="w-12 h-12 sm:w-14 sm:h-14 text-white" strokeWidth={2} />
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function LevelCompletePage() {
           {/* Stats Grid */}
           <div className="mb-8 sm:mb-10">
             {/* Accuracy - Full Width */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 sm:p-10">
+            <div className="bg-blue-100 rounded-2xl p-8 sm:p-10">
               <Trophy className="w-12 h-12 text-blue-600 mx-auto mb-4" strokeWidth={2} />
               <div className="text-5xl sm:text-6xl font-bold text-blue-600 mb-2">{accuracy}%</div>
               <div className="text-lg text-blue-600/80 font-medium">Accuracy</div>
@@ -123,9 +123,9 @@ export default function LevelCompletePage() {
 
           {/* Next Level Preview - New Feature */}
           {hasNextLevel && nextLevel && (
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8 sm:mb-10">
+            <div className="bg-blue-50 rounded-2xl p-6 mb-8 sm:mb-10">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Unlock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
                 <div className="flex-1 text-left">
@@ -164,7 +164,7 @@ export default function LevelCompletePage() {
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
               >
                 <span className="flex items-center justify-center gap-2 text-lg">
                   Continue to Next Level
@@ -174,7 +174,7 @@ export default function LevelCompletePage() {
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
               >
                 <span className="flex items-center justify-center gap-2 text-lg">
                   Back to Learn
