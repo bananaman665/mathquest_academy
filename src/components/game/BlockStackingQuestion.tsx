@@ -86,7 +86,7 @@ export default function BlockStackingQuestion({
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex flex-col items-center gap-2 px-3 pb-24">
         {/* Main workspace */}
-        <div className="flex flex-col gap-2 items-center w-full max-w-5xl">
+        <div className="flex flex-col gap-2 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
           <div className="w-full">
             <div className="text-center mb-1.5">
