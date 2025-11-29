@@ -118,7 +118,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-blue-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
                                 ? 'opacity-70 scale-110 rotate-6'
                                 : 'hover:scale-105 active:scale-95'
@@ -127,7 +127,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                               ...provided.draggableProps.style,
                             }}
                           >
-                            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full"></div>
+                            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
@@ -177,7 +177,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-green-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
                                 ? 'opacity-70 scale-110 rotate-6'
                                 : 'hover:scale-105 active:scale-95'
@@ -186,7 +186,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                               ...provided.draggableProps.style,
                             }}
                           >
-                            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full"></div>
+                            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
