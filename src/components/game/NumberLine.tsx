@@ -162,7 +162,7 @@ export default function NumberLine({
               >
                 <div className="flex flex-col items-center">
                   {/* Marker dot */}
-                  <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-300 shadow-lg shadow-blue-500/50 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-300/50 flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full" />
                   </div>
                   {/* Value display */}
@@ -182,7 +182,7 @@ export default function NumberLine({
                 <div className="flex flex-col items-center">
                   {isCorrect ? (
                     <>
-                      <div className="w-6 h-6 bg-green-500 rounded-full border-2 border-green-300 shadow-lg shadow-green-500/50 flex items-center justify-center">
+                      <div className="w-6 h-6 bg-green-500 rounded-full border-2 border-green-300/50 flex items-center justify-center">
                         <span className="text-white font-bold">✓</span>
                       </div>
                       <div className="mt-2 bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-bold">
@@ -191,7 +191,7 @@ export default function NumberLine({
                     </>
                   ) : (
                     <>
-                      <div className="w-6 h-6 bg-red-500 rounded-full border-2 border-red-300 shadow-lg shadow-red-500/50 flex items-center justify-center">
+                      <div className="w-6 h-6 bg-red-500 rounded-full border-2 border-red-300/50 flex items-center justify-center">
                         <span className="text-white font-bold text-lg">✓</span>
                       </div>
                       <div className="mt-2 bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-bold">

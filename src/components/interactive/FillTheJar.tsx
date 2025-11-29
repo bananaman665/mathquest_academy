@@ -125,10 +125,10 @@ export default function FillTheJar({
         {/* Jar Container */}
         <div className="relative w-64 h-80">
           {/* Jar Lid */}
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-48 h-8 bg-gradient-to-b from-amber-700 to-amber-800 rounded-t-lg border-4 border-amber-900 shadow-lg z-20" />
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-48 h-8 bg-gradient-to-b from-amber-700 to-amber-800 rounded-t-lg border-4 border-amber-900 z-20" />
           
           {/* Jar Body */}
-          <div className="relative w-full h-full bg-gradient-to-b from-blue-100/50 to-blue-50/30 rounded-3xl border-8 border-blue-300/60 shadow-2xl overflow-hidden backdrop-blur-sm">
+          <div className="relative w-full h-full bg-gradient-to-b from-blue-100/50 to-blue-50/30 rounded-3xl border-8 border-blue-300/60 overflow-hidden backdrop-blur-sm">
             {/* Fill Level Indicator */}
             <motion.div
               className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-200/40 to-transparent pointer-events-none"
@@ -185,7 +185,7 @@ export default function FillTheJar({
 
           {/* Counter Badge */}
           <motion.div
-            className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-2xl rounded-full shadow-lg border-4 border-white"
+            className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-2xl rounded-full border-4 border-white"
             animate={{ 
               scale: items.length === targetNumber && !hasSubmitted ? [1, 1.2, 1] : 1,
             }}
@@ -202,7 +202,7 @@ export default function FillTheJar({
           <motion.button
             onClick={addItem}
             disabled={hasSubmitted}
-            className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-xl rounded-2xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl"
+            className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-xl rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: hasSubmitted ? 1 : 1.05 }}
             whileTap={{ scale: hasSubmitted ? 1 : 0.95 }}
           >

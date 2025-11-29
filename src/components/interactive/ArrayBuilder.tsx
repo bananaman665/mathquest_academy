@@ -75,7 +75,7 @@ export default function ArrayBuilder({
       </div>
 
       {/* Array Grid */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-xl p-8 mb-6">
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 mb-6">
         <div className="flex justify-center">
           <div className="inline-block">
             <div 
@@ -139,7 +139,7 @@ export default function ArrayBuilder({
       </div>
 
       {/* Count Display */}
-      <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-white rounded-2xl p-6 mb-6">
         <div className="text-center">
           <p className="text-lg text-gray-600 mb-2">Items in Array:</p>
           <p className={`text-5xl font-bold transition-colors duration-300 ${
@@ -191,7 +191,7 @@ export default function ArrayBuilder({
           className={`px-8 py-3 rounded-full font-bold text-white text-lg transition-all ${
             hasSubmitted
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 shadow-lg'
+              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95'
           }`}
         >
           Submit Answer
@@ -200,7 +200,7 @@ export default function ArrayBuilder({
 
       {/* Visual Multiplication Breakdown */}
       {showMultiplication && currentCount > 0 && (
-        <div className="bg-yellow-50 rounded-2xl shadow-xl p-6 mb-6">
+        <div className="bg-yellow-50 rounded-2xl p-6 mb-6">
           <h4 className="text-lg font-bold text-gray-800 mb-3 text-center">
             📊 What You&apos;re Building:
           </h4>

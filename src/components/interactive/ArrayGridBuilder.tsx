@@ -185,7 +185,7 @@ export default function ArrayGridBuilder({
 
       {/* Array Grid */}
       <motion.div
-        className="relative bg-white rounded-2xl shadow-lg p-8 border-4 border-purple-200"
+        className="relative bg-white rounded-2xl p-8 border-4 border-purple-200"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
       >

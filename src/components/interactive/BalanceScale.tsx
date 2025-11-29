@@ -101,7 +101,7 @@ export default function BalanceScale({
       </div>
 
       {/* Balance Scale Visualization - Adjusted for mobile */}
-      <div className="bg-blue-50 rounded-2xl shadow-lg p-4 sm:p-8 overflow-visible">
+      <div className="bg-blue-50 rounded-2xl p-4 sm:p-8 overflow-visible">
         <div className="relative h-64 sm:h-80">
           {/* Scale Base - Smaller */}
           <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-full">
@@ -110,7 +110,7 @@ export default function BalanceScale({
 
           {/* Scale Beam - Responsive width */}
           <motion.div
-            className="absolute bottom-36 sm:bottom-52 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-3 sm:h-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full shadow-2xl origin-center"
+            className="absolute bottom-36 sm:bottom-52 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-3 sm:h-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full origin-center"
             animate={{
               rotate: hasSubmitted 
                 ? isBalanced ? 0 : (leftTotal > rightTotal ? -8 : 8)
@@ -119,11 +119,11 @@ export default function BalanceScale({
             transition={{ type: 'spring', stiffness: 100, damping: 10 }}
           >
             {/* Center Pivot Point */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 sm:w-6 h-4 sm:h-6 bg-yellow-500 rounded-full border-2 sm:border-4 border-yellow-600 shadow-lg"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 sm:w-6 h-4 sm:h-6 bg-yellow-500 rounded-full border-2 sm:border-4 border-yellow-600"></div>
 
             {/* Left Pan - Responsive */}
             <motion.div
-              className="absolute top-3 sm:top-4 -left-12 sm:-left-16 w-32 sm:w-40 h-24 sm:h-32 bg-gradient-to-br from-amber-200 to-amber-400 rounded-t-3xl border-2 sm:border-4 border-amber-500 shadow-xl"
+              className="absolute top-3 sm:top-4 -left-12 sm:-left-16 w-32 sm:w-40 h-24 sm:h-32 bg-gradient-to-br from-amber-200 to-amber-400 rounded-t-3xl border-2 sm:border-4 border-amber-500"
               animate={{
                 y: hasSubmitted
                   ? isBalanced ? 0 : (leftTotal > rightTotal ? -20 : 20)
@@ -145,7 +145,7 @@ export default function BalanceScale({
                     className={`relative ${
                       idx === missingValue && value === 0
                         ? 'w-12 sm:w-16 h-12 sm:h-16 border-2 sm:border-4 border-dashed border-blue-400 bg-blue-100 rounded-xl flex items-center justify-center'
-                        : 'w-10 sm:w-14 h-10 sm:h-14 bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg'
+                        : 'w-10 sm:w-14 h-10 sm:h-14 bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-xl flex items-center justify-center'
                     }`}
                   >
                     <span className="text-lg sm:text-2xl font-bold">
@@ -162,7 +162,7 @@ export default function BalanceScale({
 
             {/* Right Pan - Responsive */}
             <motion.div
-              className="absolute top-3 sm:top-4 -right-12 sm:-right-16 w-32 sm:w-40 h-24 sm:h-32 bg-gradient-to-br from-amber-200 to-amber-400 rounded-t-3xl border-2 sm:border-4 border-amber-500 shadow-xl"
+              className="absolute top-3 sm:top-4 -right-12 sm:-right-16 w-32 sm:w-40 h-24 sm:h-32 bg-gradient-to-br from-amber-200 to-amber-400 rounded-t-3xl border-2 sm:border-4 border-amber-500"
               animate={{
                 y: hasSubmitted
                   ? isBalanced ? 0 : (leftTotal > rightTotal ? 20 : -20)
@@ -181,7 +181,7 @@ export default function BalanceScale({
                     initial={{ scale: 0, y: -50 }}
                     animate={{ scale: 1, y: 0 }}
                     transition={{ delay: (leftSide.length + idx) * 0.1, type: 'spring' }}
-                    className="w-10 sm:w-14 h-10 sm:h-14 bg-gradient-to-br from-red-400 to-red-600 text-white rounded-xl flex items-center justify-center shadow-lg"
+                    className="w-10 sm:w-14 h-10 sm:h-14 bg-gradient-to-br from-red-400 to-red-600 text-white rounded-xl flex items-center justify-center"
                   >
                     <span className="text-lg sm:text-2xl font-bold">{value}</span>
                   </motion.div>

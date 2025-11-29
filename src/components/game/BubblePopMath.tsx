@@ -105,7 +105,7 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
   }, [poppedCorrect, poppedWrong, correctAnswers, hasSubmitted, onAnswer])
 
   return (
-    <div className="relative w-full h-[600px] bg-gradient-to-b from-blue-400 via-cyan-300 to-blue-200 rounded-3xl border-4 border-blue-300 overflow-hidden shadow-2xl">
+    <div className="relative w-full h-[600px] bg-gradient-to-b from-blue-400 via-cyan-300 to-blue-200 rounded-3xl border-4 border-blue-300 overflow-hidden">
       {/* Decorative bubbles in background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full blur-xl"></div>
@@ -115,8 +115,8 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
       </div>
 
       {/* Question at top - Enhanced */}
-      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-white p-6 text-center shadow-2xl z-10 border-b-4 border-white/30">
-        <h3 className="text-2xl sm:text-3xl font-bold mb-2 drop-shadow-lg">{question}</h3>
+      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-white p-6 text-center z-10 border-b-4 border-white/30">
+        <h3 className="text-2xl sm:text-3xl font-bold mb-2">{question}</h3>
         <p className="text-sm sm:text-base font-semibold opacity-95 flex items-center justify-center gap-2">
           <span className="text-2xl">👆</span>
           <span>Tap the bubbles with correct answers!</span>
@@ -173,10 +173,10 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
                 >
                   {/* Main bubble circle - Enhanced */}
                   <div 
-                    className={`w-full h-full rounded-full flex items-center justify-center shadow-2xl border-[6px] transition-transform hover:scale-105 active:scale-95 ${
+                    className={`w-full h-full rounded-full flex items-center justify-center border-[6px] transition-transform hover:scale-105 active:scale-95 ${
                       isCorrect 
-                        ? 'bg-gradient-to-br from-green-300 via-emerald-400 to-green-300 border-green-400 shadow-green-500/50' 
-                        : 'bg-gradient-to-br from-blue-300 via-cyan-400 to-blue-300 border-blue-400 shadow-blue-500/50'
+                        ? 'bg-gradient-to-br from-green-300 via-emerald-400 to-green-300 border-green-400/50' 
+                        : 'bg-gradient-to-br from-blue-300 via-cyan-400 to-blue-300 border-blue-400/50'
                     }`}
                   >
                     {/* Multiple shine effects for depth */}
@@ -185,7 +185,7 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
                     <div className="absolute bottom-8 right-8 w-8 h-8 bg-white/30 rounded-full blur-lg pointer-events-none"></div>
                     
                     {/* Number display - Bigger and bolder */}
-                    <span className="text-6xl font-black text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] relative z-10" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.2)' }}>
+                    <span className="text-6xl font-black text-white[0_4px_8px_rgba(0,0,0,0.3)] relative z-10" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.2)' }}>
                       {bubble.value}
                     </span>
                   </div>
@@ -247,7 +247,7 @@ export default function BubblePopMath({ question, numbers, correctAnswers, onAns
             <div className="text-9xl mb-4">
               {poppedWrong.size === 0 ? '🎉' : '😅'}
             </div>
-            <div className="bg-white rounded-2xl px-8 py-4 shadow-2xl">
+            <div className="bg-white rounded-2xl px-8 py-4">
               <div className="text-2xl font-bold text-gray-800">
                 {poppedWrong.size === 0 ? 'Perfect!' : 'Good Try!'}
               </div>

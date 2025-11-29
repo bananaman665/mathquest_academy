@@ -95,10 +95,10 @@ export default function LevelCompletePage() {
 
       <div className="max-w-2xl w-full my-auto">
         {/* Success Card */}
-        <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6 md:p-10 text-center border-2 border-green-200">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 text-center border-2 border-green-200">
           {/* Trophy Icon */}
           <div className="mb-4 sm:mb-6">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-lg border-4 border-green-400">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-green-500 rounded-full flex items-center justify-center mx-auto border-4 border-green-400">
               <Trophy className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-white" strokeWidth={2.5} />
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function LevelCompletePage() {
           {/* Stats Grid */}
           <div className="mb-6 sm:mb-8">
             {/* Accuracy - Full Width */}
-            <div className="bg-blue-100 rounded-xl p-6 sm:p-8 border-2 border-blue-300 shadow-md">
+            <div className="bg-blue-100 rounded-xl p-6 sm:p-8 border-2 border-blue-300">
               <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 mx-auto mb-3" />
               <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-blue-700 mb-2">{accuracy}%</div>
               <div className="text-base sm:text-lg text-blue-600 font-medium">Accuracy</div>
@@ -125,7 +125,7 @@ export default function LevelCompletePage() {
           {hasNextLevel && nextLevel && (
             <div className="bg-indigo-50 border-2 border-indigo-300 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
               <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Unlock className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
                 <div className="flex-1 text-left">
@@ -164,7 +164,7 @@ export default function LevelCompletePage() {
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl shadow-lg transform transition-all duration-200 border-2 border-green-400"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transform transition-all duration-200 border-2 border-green-400"
               >
                 <span className="flex items-center justify-center gap-2 text-base sm:text-lg">
                   Continue to Next Level
@@ -174,7 +174,7 @@ export default function LevelCompletePage() {
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl shadow-lg transform transition-all duration-200 border-2 border-green-400"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transform transition-all duration-200 border-2 border-green-400"
               >
                 <span className="flex items-center justify-center gap-2 text-base sm:text-lg">
                   Back to Learn
@@ -185,7 +185,7 @@ export default function LevelCompletePage() {
 
             <Link
               href="/learn"
-              className="block w-full bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transition-all duration-200 text-base sm:text-lg shadow-md"
+              className="block w-full bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transition-all duration-200 text-base sm:text-lg"
             >
               Back to Home
             </Link>

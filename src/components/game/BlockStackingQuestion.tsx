@@ -122,9 +122,9 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full shadow-lg border-2 border-amber-200 cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full border-2 border-amber-200 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-70 shadow-2xl scale-110 rotate-12'
+                                ? 'opacity-70 scale-110 rotate-12'
                                 : 'hover:shadow-xl hover:scale-105'
                             }`}
                           >
@@ -169,9 +169,9 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full shadow-lg border-2 border-blue-200 cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-200 cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-70 shadow-2xl scale-110 rotate-12'
+                                ? 'opacity-70 scale-110 rotate-12'
                                 : 'hover:shadow-xl hover:scale-105'
                             }`}
                           >
@@ -185,7 +185,7 @@ export default function BlockStackingQuestion({
                 </div>
               )}
             </Droppable>
-            <div className="text-lg sm:text-xl font-bold text-white bg-slate-700 px-4 py-1.5 rounded-lg shadow-lg min-w-[50px] text-center">
+            <div className="text-lg sm:text-xl font-bold text-white bg-slate-700 px-4 py-1.5 rounded-lg min-w-[50px] text-center">
               {stackBlocks.length}
             </div>
           </div>

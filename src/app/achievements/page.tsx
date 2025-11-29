@@ -109,7 +109,7 @@ export default async function AchievementsPage() {
                   return (
                     <div
                       key={achievement.id}
-                      className={`border-2 rounded-xl p-5 ${getCategoryColor(achievement.category)} relative overflow-hidden shadow-md`}
+                      className={`border-2 rounded-xl p-5 ${getCategoryColor(achievement.category)} relative overflow-hidden`}
                     >
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200">
@@ -179,7 +179,7 @@ export default async function AchievementsPage() {
           )}
 
           {/* Badge Categories Info */}
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-white rounded-xl p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Badge Categories</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">

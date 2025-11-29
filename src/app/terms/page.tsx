@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl p-8 md:p-12">
         <Link 
           href="/"
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"

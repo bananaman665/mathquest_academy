@@ -9,7 +9,7 @@ export function CustomSignIn() {
       appearance={{
         elements: {
           rootBox: "w-full",
-          card: "bg-white shadow-2xl rounded-2xl border-2 border-blue-100",
+          card: "bg-white rounded-2xl border-2 border-blue-100",
           
           // Header customization
           headerTitle: "text-3xl font-bold text-gray-900 mb-2",
@@ -17,7 +17,7 @@ export function CustomSignIn() {
           
           // Form elements
           formButtonPrimary: 
-            "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg",
+            "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200",
           
           formFieldInput: 
             "border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all",

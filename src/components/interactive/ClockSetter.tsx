@@ -250,7 +250,7 @@ export default function ClockSetter({
         <div className="text-center">
           <button
             onClick={handleSubmit}
-            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-xl rounded-full transform hover:scale-105 transition-all duration-200"
           >
             Submit Time
           </button>

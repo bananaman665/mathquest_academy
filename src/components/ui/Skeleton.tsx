@@ -17,7 +17,7 @@ export function DashboardSkeleton() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
       {/* Header Skeleton */}
-      <header className="relative backdrop-blur-xl bg-white/5 border-b border-white/10 shadow-2xl">
+      <header className="relative backdrop-blur-xl bg-white/5 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
@@ -46,7 +46,7 @@ export function DashboardSkeleton() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-2xl"
+              className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-1">
@@ -60,7 +60,7 @@ export function DashboardSkeleton() {
         </div>
 
         {/* Main CTA */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-10 shadow-2xl mb-12">
+        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-10 mb-12">
           <div className="flex items-center justify-between gap-8">
             <div className="flex-1">
               <Skeleton className="w-64 h-8 mb-4 rounded-lg" />
@@ -74,7 +74,7 @@ export function DashboardSkeleton() {
         </div>
 
         {/* Coming Soon Section */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-10 shadow-2xl">
+        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-10">
           <Skeleton className="w-64 h-8 mb-8 rounded-lg" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
@@ -159,7 +159,7 @@ export function LessonSkeleton() {
         <Skeleton className="w-full h-3 mb-8 rounded-full" />
 
         {/* Question Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+        <div className="bg-white rounded-3xl p-8 mb-8">
           <Skeleton className="w-48 h-8 mb-6 rounded-lg mx-auto" />
           <Skeleton className="w-full h-64 mb-8 rounded-2xl" />
           
@@ -184,7 +184,7 @@ export function CardSkeleton({ count = 1 }: { count?: number }) {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg"
+          className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6"
         >
           <Skeleton className="w-full h-48 mb-4 rounded-xl" />
           <Skeleton className="w-3/4 h-6 mb-2 rounded" />

@@ -113,7 +113,7 @@ export default function Tutorial({ onComplete, onSkip }: TutorialProps) {
           ? 'bottom-28 left-1/2 -translate-x-1/2'
           : 'top-24 left-1/2 -translate-x-1/2'
       }`}>
-        <div className="bg-white rounded-2xl shadow-2xl p-6 relative">
+        <div className="bg-white rounded-2xl p-6 relative">
           {/* Close button */}
           <button
             onClick={onSkip}

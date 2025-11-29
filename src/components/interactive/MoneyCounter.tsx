@@ -126,7 +126,7 @@ export default function MoneyCounter({
       </div>
 
       {/* Current Total */}
-      <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-white rounded-2xl p-6 mb-6">
         <div className="text-center">
           <p className="text-lg text-gray-600 mb-2">Your Total:</p>
           <p className={`text-5xl font-bold transition-colors duration-300 ${
@@ -149,7 +149,7 @@ export default function MoneyCounter({
       </div>
 
       {/* Coin Selection Area */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 mb-6">
         <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">
           💰 Select Coins and Bills
         </h4>
@@ -162,10 +162,10 @@ export default function MoneyCounter({
             if (available === 0) return null
 
             return (
-              <div key={coinType} className="bg-white rounded-xl p-4 shadow-lg">
+              <div key={coinType} className="bg-white rounded-xl p-4">
                 {/* Coin Display */}
                 <div className="text-center mb-3">
-                  <div className={`w-20 h-20 mx-auto rounded-full ${COIN_COLORS[coinType]} shadow-lg flex items-center justify-center mb-2`}>
+                  <div className={`w-20 h-20 mx-auto rounded-full ${COIN_COLORS[coinType]} flex items-center justify-center mb-2`}>
                     <div className="text-white font-bold text-center">
                       <div className="text-xs">{COIN_NAMES[coinType]}</div>
                       <div className="text-lg">{formatMoney(COIN_VALUES[coinType])}</div>
@@ -212,7 +212,7 @@ export default function MoneyCounter({
 
       {/* Selected Coins Display */}
       {Object.values(selectedCoins).some(count => count > 0) && (
-        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+        <div className="bg-white rounded-2xl p-6 mb-6">
           <h4 className="text-lg font-bold text-gray-800 mb-4">Your Coins:</h4>
           <div className="flex flex-wrap gap-2">
             {(Object.entries(selectedCoins) as [CoinType, number][]).map(([coinType, count]) => {
@@ -225,7 +225,7 @@ export default function MoneyCounter({
                       initial={{ scale: 0, rotate: 0 }}
                       animate={{ scale: 1, rotate: 360 }}
                       transition={{ type: 'spring', stiffness: 300, delay: idx * 0.05 }}
-                      className={`w-12 h-12 rounded-full ${COIN_COLORS[coinType]} shadow-md flex items-center justify-center text-white text-xs font-bold`}
+                      className={`w-12 h-12 rounded-full ${COIN_COLORS[coinType]} flex items-center justify-center text-white text-xs font-bold`}
                     >
                       {formatMoney(COIN_VALUES[coinType])}
                     </motion.div>
@@ -257,7 +257,7 @@ export default function MoneyCounter({
           className={`px-8 py-3 rounded-full font-bold text-white text-lg transition-all ${
             hasSubmitted || currentTotal === 0
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 shadow-lg'
+              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95'
           }`}
         >
           Submit Answer

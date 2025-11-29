@@ -101,7 +101,7 @@ export default async function LeaderboardsPage() {
       <aside className="hidden md:flex w-40 lg:w-64 bg-white border-r border-gray-200 fixed h-full flex-col text-xs lg:text-base">
         <div className="p-6">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-black text-green-600">Mathly</span>
@@ -191,7 +191,7 @@ export default async function LeaderboardsPage() {
 
         <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 pb-24 md:pb-8">
           {/* Your Rank Card */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-6 mb-8 transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className={`w-16 h-16 ${getAvatarColor(user.id)} rounded-full flex items-center justify-center`}>
@@ -208,7 +208,7 @@ export default async function LeaderboardsPage() {
           </div>
 
           {/* Leaderboard List */}
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
             <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-black text-gray-900">Top Learners</h2>
             </div>

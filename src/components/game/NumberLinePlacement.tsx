@@ -105,7 +105,7 @@ export default function NumberLinePlacement({
             {/* Placed indicator circle */}
             {placedNumber !== null && (
               <div
-                className="absolute w-10 h-10 bg-yellow-400 rounded-full shadow-lg border-2 border-yellow-300 -top-4 -left-5 transition-all duration-300 flex items-center justify-center"
+                className="absolute w-10 h-10 bg-yellow-400 rounded-full border-2 border-yellow-300 -top-4 -left-5 transition-all duration-300 flex items-center justify-center"
                 style={{
                   left: `calc(2rem + (${getPositionPercentage(placedNumber)}% - 1.25rem))`,
                 }}
@@ -117,7 +117,7 @@ export default function NumberLinePlacement({
             {/* Correct position marker (hidden until feedback) */}
             {showFeedback && !isCorrect && (
               <div
-                className="absolute w-8 h-8 bg-green-400 rounded-full shadow-lg border-2 border-green-300 -top-3 -left-4 opacity-60 flex items-center justify-center animate-pulse"
+                className="absolute w-8 h-8 bg-green-400 rounded-full border-2 border-green-300 -top-3 -left-4 opacity-60 flex items-center justify-center animate-pulse"
                 style={{
                   left: `calc(2rem + (${getPositionPercentage(correctPosition)}% - 1rem))`,
                 }}

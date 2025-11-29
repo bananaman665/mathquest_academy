@@ -6,7 +6,7 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col oauth-page-wrapper">
       {/* Header */}
-      <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50 pt-safe">
+      <header className="bg-white fixed top-0 left-0 right-0 z-50 pt-safe">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link href="/" className="flex items-center space-x-2">
@@ -84,7 +84,7 @@ export default function SignUpPage() {
           </div>
 
           {/* Features */}
-          <div className="mt-8 bg-white rounded-lg p-6 shadow-lg">
+          <div className="mt-8 bg-white rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
               What you&apos;ll get:
             </h3>

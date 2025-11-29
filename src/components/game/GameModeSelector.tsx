@@ -69,7 +69,7 @@ const gameModes = [
 export default function GameModeSelector({ onSelectMode, onCancel }: GameModeSelectorProps) {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500 p-8 text-center">
           <h2 className="text-3xl font-black text-white mb-2">Choose Your Challenge</h2>
@@ -90,7 +90,7 @@ export default function GameModeSelector({ onSelectMode, onCancel }: GameModeSel
                 className={`w-full text-left transition-all duration-200 ${
                   isLocked 
                     ? 'opacity-50 cursor-not-allowed' 
-                    : 'hover:scale-105 hover:shadow-xl cursor-pointer'
+                    : 'hover:scale-105 cursor-pointer'
                 }`}
               >
                 <div className={`${gameMode.bgColor} ${gameMode.borderColor} border-2 rounded-2xl p-5 relative overflow-hidden`}>
@@ -99,7 +99,7 @@ export default function GameModeSelector({ onSelectMode, onCancel }: GameModeSel
                   
                   <div className="relative flex items-start gap-4">
                     {/* Icon */}
-                    <div className={`w-16 h-16 bg-gradient-to-br ${gameMode.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                    <div className={`w-16 h-16 bg-gradient-to-br ${gameMode.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
                       <Icon className="w-8 h-8 text-white" />
                     </div>
 

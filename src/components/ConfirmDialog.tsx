@@ -71,7 +71,7 @@ export default function ConfirmDialog({
       {/* Dialog */}
       <div className="fixed inset-0 z-[101] flex items-center justify-center p-4">
         <div 
-          className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-slideUp"
+          className="bg-white rounded-2xl max-w-md w-full animate-slideUp"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -105,7 +105,7 @@ export default function ConfirmDialog({
             </button>
             <button
               onClick={handleConfirm}
-              className={`flex-1 px-6 py-3 rounded-xl font-bold text-white transition-all duration-200 shadow-lg hover:shadow-xl ${style.confirmButton}`}
+              className={`flex-1 px-6 py-3 rounded-xl font-bold text-white transition-all duration-200 ${style.confirmButton}`}
             >
               {confirmText}
             </button>

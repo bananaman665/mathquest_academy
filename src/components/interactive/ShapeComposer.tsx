@@ -83,7 +83,7 @@ export default function ShapeComposer({
             initial={{ scale: 0, rotate: 0 }}
             animate={{ scale: 1, rotate: 360 }}
             transition={{ type: 'spring', delay: index * 0.05 }}
-            className={`${commonClasses} rounded-lg shadow-lg`}
+            className={`${commonClasses} rounded-lg`}
             style={{ width: baseSize, height: baseSize }}
           />
         )
@@ -94,7 +94,7 @@ export default function ShapeComposer({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: index * 0.05 }}
-            className={`${commonClasses} rounded-full shadow-lg`}
+            className={`${commonClasses} rounded-full`}
             style={{ width: baseSize, height: baseSize }}
           />
         )
@@ -109,7 +109,7 @@ export default function ShapeComposer({
             style={{ width: baseSize, height: baseSize }}
           >
             <div
-              className={`${commonClasses} shadow-lg`}
+              className={`${commonClasses}`}
               style={{
                 width: 0,
                 height: 0,
@@ -127,7 +127,7 @@ export default function ShapeComposer({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: index * 0.05 }}
-            className={`${commonClasses} rounded-lg shadow-lg`}
+            className={`${commonClasses} rounded-lg`}
             style={{ width: baseSize * 1.5, height: baseSize }}
           />
         )
@@ -140,9 +140,9 @@ export default function ShapeComposer({
     const size = 120
     switch (targetShape) {
       case 'square':
-        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl shadow-2xl" style={{ width: size, height: size }} />
+        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl" style={{ width: size, height: size }} />
       case 'circle':
-        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-full shadow-2xl" style={{ width: size, height: size }} />
+        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-full" style={{ width: size, height: size }} />
       case 'triangle':
         return (
           <div style={{ width: size, height: size }} className="relative">
@@ -159,7 +159,7 @@ export default function ShapeComposer({
           </div>
         )
       case 'rectangle':
-        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl shadow-2xl" style={{ width: size * 1.5, height: size }} />
+        return <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl" style={{ width: size * 1.5, height: size }} />
     }
   }
 
@@ -169,7 +169,7 @@ export default function ShapeComposer({
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-4">{question}</h3>
         <div className="flex justify-center mb-2">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl p-8">
             <p className="text-lg text-gray-600 mb-4">Target Shape:</p>
             {getTargetShapeDisplay()}
           </div>
@@ -177,7 +177,7 @@ export default function ShapeComposer({
       </div>
 
       {/* Available Pieces */}
-      <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6">
         <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">
           🎨 Available Pieces (Click to Select):
         </h4>
@@ -190,8 +190,8 @@ export default function ShapeComposer({
               <div
                 key={index}
                 onClick={() => togglePiece(piece)}
-                className={`p-4 bg-white rounded-xl shadow-lg transition-all ${
-                  hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:shadow-2xl'
+                className={`p-4 bg-white rounded-xl transition-all ${
+                  hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 } ${isSelected ? 'ring-4 ring-blue-500 scale-110' : ''}`}
               >
                 {renderShape(piece, index, isSelected)}
@@ -206,7 +206,7 @@ export default function ShapeComposer({
 
       {/* Selected Pieces Display */}
       {selectedPieces.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+        <div className="bg-white rounded-2xl p-6 mb-6">
           <h4 className="text-lg font-bold text-gray-800 mb-4 text-center">
             Your Selected Pieces:
           </h4>
@@ -225,7 +225,7 @@ export default function ShapeComposer({
 
       {/* Composition Area */}
       {showGrid && (
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-xl p-8 mb-6">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 mb-6">
           <h4 className="text-lg font-bold text-gray-800 mb-4 text-center">
             📐 Composition Area:
           </h4>
@@ -272,7 +272,7 @@ export default function ShapeComposer({
           className={`px-8 py-3 rounded-full font-bold text-white text-lg transition-all ${
             hasSubmitted || selectedPieces.length === 0
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 shadow-lg'
+              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95'
           }`}
         >
           Submit Answer

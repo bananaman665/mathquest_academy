@@ -75,7 +75,7 @@ export default function PlacementTestClient() {
   if (phase === 'intro') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-        <header className="bg-white shadow-sm">
+        <header className="bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link href="/learn" className="text-blue-600 hover:underline flex items-center gap-2">
               <ArrowRight className="w-4 h-4 rotate-180" />
@@ -85,7 +85,7 @@ export default function PlacementTestClient() {
         </header>
 
         <main className="max-w-2xl mx-auto px-4 py-12">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl p-8">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Target className="w-10 h-10 text-white" />
@@ -146,7 +146,7 @@ export default function PlacementTestClient() {
 
             <button
               onClick={() => setPhase('test')}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl transform transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
             >
               Start Placement Test
               <ArrowRight className="w-5 h-5" />
@@ -171,7 +171,7 @@ export default function PlacementTestClient() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
         <div className="max-w-2xl w-full">
-          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
+          <div className="bg-white rounded-3xl p-8 md:p-12 text-center">
             <div className="text-8xl mb-6">{feedback.emoji}</div>
             
             <h1 className="text-4xl font-bold text-gray-900 mb-4">{feedback.title}</h1>
@@ -202,7 +202,7 @@ export default function PlacementTestClient() {
             <div className="space-y-4">
               <button
                 onClick={handleAcceptPlacement}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl transform transition-all duration-200 hover:scale-105"
               >
                 Start at Level {recommendedLevel}
               </button>
@@ -269,7 +269,7 @@ export default function PlacementTestClient() {
                       className={`
                         aspect-square rounded-xl border-4 transition-all duration-200
                         ${isSelected
-                          ? 'bg-blue-500 border-blue-600 scale-110 shadow-lg'
+                          ? 'bg-blue-500 border-blue-600 scale-110'
                           : 'bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50'
                         }
                         ${showExplanation && boxNumber.toString() === currentQuestion.correctAnswer
@@ -313,15 +313,15 @@ export default function PlacementTestClient() {
 
               if (showExplanation) {
                 if (isCorrectOption) {
-                  cardClass += "bg-green-50 border-green-500 shadow-lg"
+                  cardClass += "bg-green-50 border-green-500"
                 } else if (isSelected && !isCorrect) {
-                  cardClass += "bg-red-50 border-red-500 shadow-lg"
+                  cardClass += "bg-red-50 border-red-500"
                 } else {
                   cardClass += "bg-gray-50 border-gray-200 opacity-50"
                 }
               } else {
                 if (isSelected) {
-                  cardClass += "bg-blue-50 border-blue-500 shadow-lg"
+                  cardClass += "bg-blue-50 border-blue-500"
                 } else {
                   cardClass += "bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50"
                 }
@@ -335,14 +335,14 @@ export default function PlacementTestClient() {
                   <div className="text-4xl font-bold text-gray-900 text-center">{option}</div>
                   {showExplanation && isCorrectOption && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
                         <Check className="w-10 h-10 text-green-600" />
                       </div>
                     </div>
                   )}
                   {showExplanation && isSelected && !isCorrect && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
                         <X className="w-10 h-10 text-red-600" />
                       </div>
                     </div>
@@ -376,13 +376,13 @@ export default function PlacementTestClient() {
                 Skip
               </button>
               <button onClick={handleSubmit} disabled={!selectedAnswer} className={`px-12 py-4 rounded-xl font-bold text-white uppercase tracking-wide transition-all ${
-                selectedAnswer ? 'bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl' : 'bg-gray-300 cursor-not-allowed opacity-50'
+                selectedAnswer ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed opacity-50'
               }`}>
                 Check
               </button>
             </>
           ) : (
-            <button onClick={handleNext} className="w-full px-12 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl uppercase tracking-wide transition-all shadow-lg hover:shadow-xl">
+            <button onClick={handleNext} className="w-full px-12 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl uppercase tracking-wide transition-all">
               {currentQuestionIndex < placementTestQuestions.length - 1 ? 'Continue' : 'See Results'}
             </button>
           )}

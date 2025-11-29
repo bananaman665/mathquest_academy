@@ -776,11 +776,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   if (phase === 'intro') {
     return (
       <div className="min-h-screen bg-white">
-        <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
+        <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center items-center py-4 pt-16 sm:pt-6">
               <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-md">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <span className="font-bold text-gray-900">Level {levelId}</span>
@@ -987,14 +987,14 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     <div className="text-4xl font-bold text-gray-800 text-center">{option}</div>
                     {showExplanation && isCorrectOption && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
                           <Check className="w-10 h-10 text-green-600" />
                         </div>
                       </div>
                     )}
                     {showExplanation && isSelected && !isCorrect && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
                           <X className="w-10 h-10 text-red-600" />
                         </div>
                       </div>
@@ -1016,17 +1016,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
                 if (showExplanation) {
                   if (isCorrectOption) {
-                    cardClass += "bg-green-600 border-4 border-green-500 shadow-lg"
+                    cardClass += "bg-green-600 border-4 border-green-500"
                   } else if (isSelected && !isCorrect) {
-                    cardClass += "bg-red-500 border-4 border-red-400 shadow-lg"
+                    cardClass += "bg-red-500 border-4 border-red-400"
                   } else {
                     cardClass += "bg-green-100 border-4 border-green-200 opacity-50"
                   }
                 } else {
                   if (isSelected) {
-                    cardClass += "bg-green-500 border-4 border-green-400 shadow-xl scale-105"
+                    cardClass += "bg-green-500 border-4 border-green-400 scale-105"
                   } else {
-                    cardClass += "bg-green-100 hover:bg-green-200 border-4 border-green-300 shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
+                    cardClass += "bg-green-100 hover:bg-green-200 border-4 border-green-300 hover:scale-105 active:scale-95"
                   }
                 }
 
@@ -1085,7 +1085,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg cursor-grab text-xl font-bold"
+                                className="bg-blue-500 text-white px-6 py-3 rounded-lg cursor-grab text-xl font-bold"
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
                               >
                                 {num}
@@ -2031,7 +2031,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 pb-12 shadow-lg z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 px-4 py-4 md:py-6 pb-12 z-50">
         <div className="max-w-5xl mx-auto">
           {!showExplanation ? (
             <>
@@ -2043,7 +2043,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {inventoryHook.getItemQuantity('freebie') > 0 && !freebieUsedOnQuestion && (
                     <button
                       onClick={handleUseFreebie}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
                     >
                       <Gift size={20} />
                       Freebie
@@ -2054,7 +2054,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {inventoryHook.getItemQuantity('skip-token') > 0 && !skipUsedOnQuestion && (
                     <button
                       onClick={handleUseSkipToken}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
                     >
                       <FastForward size={20} />
                       Skip
@@ -2065,7 +2065,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {inventoryHook.getItemQuantity('mega-brain') > 0 && !megaBrainUsed && currentQuestion.options && currentQuestion.options.length > 2 && (
                     <button
                       onClick={handleUseMegaBrain}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
                     >
                       <Brain size={20} />
                       Mega Brain
@@ -2081,7 +2081,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           setHintsUsed(prev => prev + 1)
                         }
                       }}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
                     >
                       <Lightbulb size={20} className="opacity-90" />
                       Hint
@@ -2091,7 +2091,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   {/* Free Skip Button - Testing only */}
                   <button
                     onClick={() => setShowSkipConfirm(true)}
-                    className="px-4 py-3 rounded-xl font-bold text-white bg-gray-500 hover:bg-gray-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm shadow-lg"
+                    className="px-4 py-3 rounded-xl font-bold text-white bg-gray-500 hover:bg-gray-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
                   >
                     <FastForward size={20} />
                     Skip
@@ -2152,7 +2152,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'ten-frame'
                       ? !!interactiveSubmitFn // Enabled when component provides submit function
                       : !!selectedAnswer)
-                      ? 'bg-green-500 hover:bg-green-600 shadow-lg'
+                      ? 'bg-green-500 hover:bg-green-600'
                       : 'bg-gray-300 cursor-not-allowed'
                   }`}
                 >
@@ -2201,7 +2201,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
 
               {/* Continue Button */}
-              <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200 shadow-lg">
+              <button onClick={handleNext} className="w-full px-12 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl uppercase tracking-wide transition-all duration-200">
                 {currentQuestionIndex < questions.length - 1 ? 'Continue' : 'Complete'}
               </button>
             </div>
@@ -2212,7 +2212,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       {/* Game Over Modal - Ran Out of Hearts */}
       {showGameOverModal && (
         <div className="fixed inset-0 bg-white/95 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border-4 border-red-400 relative overflow-hidden">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full border-4 border-red-400 relative overflow-hidden">
             {/* Animated background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute top-10 left-10 w-32 h-32 bg-red-100 rounded-full blur-2xl opacity-50 animate-pulse"></div>
@@ -2225,7 +2225,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               {/* Broken Heart Animation */}
               <div className="mb-6 flex justify-center">
                 <div className="relative animate-bounce">
-                  <Heart className="w-32 h-32 text-red-500 fill-red-500 drop-shadow-2xl" strokeWidth={2} />
+                  <Heart className="w-32 h-32 text-red-500 fill-red-500" strokeWidth={2} />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-1 h-40 bg-white rotate-45 absolute"></div>
                   </div>
@@ -2238,7 +2238,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <p className="text-gray-700 text-lg mb-6 font-semibold">Don&apos;t give up! You&apos;re learning!</p>
 
               {/* Progress Display */}
-              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6 border-2 border-orange-200 shadow-lg">
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6 border-2 border-orange-200">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-gray-700 font-bold text-sm uppercase tracking-wide">Your Progress</span>
                   <Target className="w-5 h-5 text-orange-500" />
@@ -2259,7 +2259,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
               {/* Extra Hearts Available */}
               {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 mb-6 border-2 border-green-300 shadow-md">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 mb-6 border-2 border-green-300">
                   <div className="flex items-center justify-center gap-2">
                     <Heart className="w-6 h-6 fill-green-500 text-green-500 animate-pulse" />
                     <p className="text-green-700 text-base font-bold">
@@ -2275,7 +2275,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
                   <button
                     onClick={handleUseExtraHearts}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-lg rounded-xl transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 uppercase tracking-wide flex items-center justify-center gap-3 group"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-lg rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide flex items-center justify-center gap-3 group"
                   >
                     <Heart className="w-6 h-6 fill-current group-hover:animate-pulse" />
                     Refill Hearts & Continue
@@ -2285,7 +2285,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {/* Exit Button */}
                 <button
                   onClick={handleExitLevel}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-black text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl uppercase tracking-wide flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-black text-lg rounded-xl transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2"
                 >
                   Exit Level
                   <ArrowRight className="w-5 h-5" />
@@ -2307,7 +2307,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       {/* Streak Milestone Celebration Modal */}
       {showStreakMilestone && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in">
-          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl border-4 border-orange-400 animate-scale-up relative overflow-hidden">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full border-4 border-orange-400 animate-scale-up relative overflow-hidden">
             {/* Animated background sparkles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute top-10 left-10 w-20 h-20 bg-orange-100 rounded-full blur-xl animate-pulse"></div>
@@ -2319,7 +2319,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             <div className="text-center relative z-10">
               {/* Modern Fire Icon */}
               <div className="mb-6 flex justify-center animate-bounce">
-                <Flame className="w-32 h-32 text-orange-500 drop-shadow-2xl" strokeWidth={2} />
+                <Flame className="w-32 h-32 text-orange-500" strokeWidth={2} />
               </div>
               
               <h2 className="text-4xl font-black text-gray-900 mb-2">

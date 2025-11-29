@@ -199,7 +199,7 @@ export default function NumberLineDrag({
           <div className={`relative ${hasSubmitted ? 'pointer-events-none' : ''}`}>
             {/* Current Position Display - Above Marker */}
             <div
-              className={`absolute -top-16 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl font-bold text-white text-xl shadow-lg border-2 ${
+              className={`absolute -top-16 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl font-bold text-white text-xl border-2 ${
                 hasSubmitted
                   ? Math.round(currentPosition) === correctAnswer
                     ? 'bg-green-600 border-green-500'
@@ -237,7 +237,7 @@ export default function NumberLineDrag({
         <div className="text-center">
           <motion.button
             onClick={handleSubmit}
-            className="px-10 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-xl rounded-xl shadow-lg transition-colors"
+            className="px-10 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-xl rounded-xl transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

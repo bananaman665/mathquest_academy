@@ -56,7 +56,7 @@ export default function NumberKeyboard({
   return (
     <div className="w-full max-w-md mx-auto">
       {/* Display */}
-      <div className="mb-6 bg-white rounded-2xl border-4 border-gray-300 shadow-lg">
+      <div className="mb-6 bg-white rounded-2xl border-4 border-gray-300">
         <div className="px-6 py-8 text-center">
           <div className="text-5xl font-black text-gray-900 min-h-[60px] flex items-center justify-center">
             {value || (
@@ -89,8 +89,8 @@ export default function NumberKeyboard({
                     ${disabled 
                       ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
                       : isBackspace
-                        ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl active:shadow-md'
-                        : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl active:shadow-md'
+                        ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white active:shadow-md'
+                        : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white active:shadow-md'
                     }
                   `}
                 >

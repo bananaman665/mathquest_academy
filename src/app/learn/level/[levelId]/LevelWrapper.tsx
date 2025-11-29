@@ -62,7 +62,7 @@ export default function LevelWrapper({ levelId, introduction, questions, gameMod
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center p-4">
         <div className="max-w-sm w-full">
-          <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 shadow-2xl border-2 border-red-500 text-center">
+          <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 border-2 border-red-500 text-center">
             <div className="mb-6 text-6xl">💔</div>
             
             <h2 className="text-3xl font-black text-white mb-2">Not Enough Hearts</h2>
@@ -80,7 +80,7 @@ export default function LevelWrapper({ levelId, introduction, questions, gameMod
             {/* Back Button */}
             <Link
               href="/learn"
-              className="inline-block w-full px-6 py-4 bg-white text-red-600 font-bold text-lg rounded-xl hover:bg-red-50 transition-all duration-200 shadow-lg uppercase tracking-wide"
+              className="inline-block w-full px-6 py-4 bg-white text-red-600 font-bold text-lg rounded-xl hover:bg-red-50 transition-all duration-200 uppercase tracking-wide"
             >
               <ArrowRight className="w-5 h-5 inline mr-2" />
               Back to Learning Path

@@ -274,7 +274,7 @@ export default function GraphPlotter({
       </div>
 
       {/* Graph Container */}
-      <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-white rounded-2xl p-6 mb-6">
         <div className="flex justify-center">
           <svg
             width={width}
@@ -425,7 +425,7 @@ export default function GraphPlotter({
           className={`px-8 py-3 rounded-full font-bold text-white text-lg transition-all duration-200 ${
             hasSubmitted || plottedPoints.length === 0
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 shadow-lg'
+              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95'
           }`}
         >
           Submit Answer

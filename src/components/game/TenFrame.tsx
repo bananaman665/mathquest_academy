@@ -126,7 +126,7 @@ export default function TenFrame({
       </div>
 
       {/* Ten Frame */}
-      <div className="bg-white rounded-2xl p-6 border-4 border-gray-300 shadow-lg">
+      <div className="bg-white rounded-2xl p-6 border-4 border-gray-300">
         <div className="grid grid-cols-5 gap-3">
           {Array.from({ length: 10 }).map((_, index) => (
             <button
@@ -134,7 +134,7 @@ export default function TenFrame({
               onClick={() => handleFrameClick(index)}
               className={`w-16 h-16 rounded-lg border-4 transition-all transform hover:scale-105 ${
                 placedDots[index]
-                  ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-300 shadow-lg'
+                  ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-300'
                   : 'bg-gray-100 border-gray-300 hover:border-gray-400 hover:bg-gray-200'
               }`}
             >

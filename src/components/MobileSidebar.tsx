@@ -26,7 +26,7 @@ export default function MobileSidebar({ currentPage }: MobileSidebarProps) {
       {/* Mobile Menu Button - Only visible on mobile */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-2 border-gray-200 rounded-xl shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+        className="lg:hidden fixed top-4 left-4 z-[60] w-12 h-12 bg-white border-2 border-gray-200 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
         aria-label="Toggle menu"
       >
         {isOpen ? (

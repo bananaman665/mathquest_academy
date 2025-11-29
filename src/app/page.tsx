@@ -22,7 +22,7 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-lg flex items-center justify-center">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <div>
@@ -40,7 +40,7 @@ export default async function Home() {
               </Link>
               <Link 
                 href="/signup" 
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-xl text-sm font-bold shadow-lg shadow-purple-500/30 transition-all duration-300 hover:shadow-purple-500/50 hover:scale-105"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-xl text-sm font-bold/30 transition-all duration-300/50 hover:scale-105"
               >
                 Get Started
               </Link>
@@ -71,7 +71,7 @@ export default async function Home() {
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/signup" 
-              className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white px-10 py-5 rounded-2xl text-lg font-bold shadow-xl shadow-purple-500/30 transition-all duration-300 hover:shadow-purple-500/50 hover:scale-105"
+              className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white px-10 py-5 rounded-2xl text-lg font-bold/30 transition-all duration-300/50 hover:scale-105"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 Start Learning Free
@@ -80,7 +80,7 @@ export default async function Home() {
             </Link>
             <Link 
               href="/signin" 
-              className="bg-white hover:bg-gray-50 text-gray-900 px-10 py-5 rounded-2xl text-lg font-bold border-2 border-gray-300 hover:border-gray-400 transition-all duration-300 hover:scale-105 shadow-lg"
+              className="bg-white hover:bg-gray-50 text-gray-900 px-10 py-5 rounded-2xl text-lg font-bold border-2 border-gray-300 hover:border-gray-400 transition-all duration-300 hover:scale-105"
             >
               Sign In
             </Link>
@@ -89,8 +89,8 @@ export default async function Home() {
 
         {/* Features */}
         <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:rotate-12 transition-transform duration-500">
+          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-3xl p-8 transition-all duration-500 hover:scale-105">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
               <Zap className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Earn XP & Level Up</h3>
@@ -99,8 +99,8 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:rotate-12 transition-transform duration-500">
+          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-3xl p-8 transition-all duration-500 hover:scale-105">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
               <Trophy className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Unlock Achievements</h3>
@@ -109,8 +109,8 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group bg-white border-2 border-pink-200 hover:border-pink-400 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-            <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:rotate-12 transition-transform duration-500">
+          <div className="group bg-white border-2 border-pink-200 hover:border-pink-400 rounded-3xl p-8 transition-all duration-500 hover:scale-105">
+            <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
               <Target className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Adaptive Learning</h3>
@@ -121,7 +121,7 @@ export default async function Home() {
         </div>
 
         {/* Stats Preview */}
-        <div className="mt-32 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-3xl shadow-2xl p-12">
+        <div className="mt-32 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-3xl p-12">
           <div className="flex items-center justify-center gap-3 mb-12">
             <Star className="w-8 h-8 text-yellow-500" />
             <h3 className="text-3xl font-black text-center text-gray-900">
@@ -146,7 +146,7 @@ export default async function Home() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-32 text-center bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-16 shadow-2xl">
+        <div className="mt-32 text-center bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-16">
           <h3 className="text-4xl font-black text-white mb-6 leading-tight">
             Ready to Transform Math Learning?
           </h3>
@@ -155,7 +155,7 @@ export default async function Home() {
           </p>
           <Link 
             href="/signup" 
-            className="group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-purple-600 px-12 py-6 rounded-2xl text-xl font-bold shadow-2xl transition-all duration-300 hover:scale-105"
+            className="group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-purple-600 px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-300 hover:scale-105"
           >
             Start Your Math Adventure
             <Rocket className="w-6 h-6 group-hover:translate-x-1 transition-transform" />

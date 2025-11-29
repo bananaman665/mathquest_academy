@@ -75,7 +75,7 @@ export default function InventoryClient() {
           return (
             <div
               key={item.id}
-              className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all"
+              className="bg-white border-2 border-gray-200 rounded-2xl p-6 transition-all"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">

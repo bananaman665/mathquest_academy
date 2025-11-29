@@ -191,7 +191,7 @@ export default function SkipCounter({
             whileTap={{ scale: 0.95 }}
             onClick={handleJump}
             disabled={currentJumps >= numJumps + 2}
-            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg disabled:bg-gray-300 transition-colors"
+            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold rounded-xl disabled:bg-gray-300 transition-colors"
           >
             Jump! (+{skipBy})
           </motion.button>

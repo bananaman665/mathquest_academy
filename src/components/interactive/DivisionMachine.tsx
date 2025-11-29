@@ -93,7 +93,7 @@ export default function DivisionMachine({
       </div>
 
       {/* Input Area */}
-      <div className="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl p-6 border-4 border-blue-400 shadow-lg min-w-[300px]">
+      <div className="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl p-6 border-4 border-blue-400 min-w-[300px]">
         <div className="text-sm font-bold text-gray-700 mb-3 text-center">
           Input ({inputItems.length}/{dividend})
         </div>
@@ -120,7 +120,7 @@ export default function DivisionMachine({
 
       {/* Machine */}
       <motion.div
-        className="relative bg-gradient-to-br from-gray-700 to-gray-900 rounded-3xl p-8 border-8 border-gray-800 shadow-2xl"
+        className="relative bg-gradient-to-br from-gray-700 to-gray-900 rounded-3xl p-8 border-8 border-gray-800"
         animate={{
           scale: isProcessing ? [1, 1.05, 1] : 1,
         }}
@@ -172,7 +172,7 @@ export default function DivisionMachine({
       </motion.div>
 
       {/* Output Area */}
-      <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-6 border-4 border-green-400 shadow-lg min-w-[300px]">
+      <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-6 border-4 border-green-400 min-w-[300px]">
         <div className="text-sm font-bold text-gray-700 mb-3 text-center">
           Output ({outputGroups.length} groups)
         </div>
@@ -180,7 +180,7 @@ export default function DivisionMachine({
           {outputGroups.map((group, groupIdx) => (
             <div
               key={groupIdx}
-              className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-xl p-3 border-3 shadow-md`}
+              className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-xl p-3 border-3`}
             >
               <div className="text-xs font-bold text-gray-700 mb-1 text-center">
                 Group {groupIdx + 1}
@@ -222,7 +222,7 @@ export default function DivisionMachine({
             whileTap={{ scale: 0.95 }}
             onClick={handleSubmit}
             disabled={!userAnswer}
-            className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-full shadow-lg disabled:from-gray-300 disabled:to-gray-400"
+            className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-full disabled:from-gray-300 disabled:to-gray-400"
           >
             Submit Answer
           </motion.button>

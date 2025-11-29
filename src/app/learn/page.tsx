@@ -256,9 +256,9 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
             ${config.opacity}
             rounded-xl sm:rounded-2xl p-3 sm:p-5
             border-3 sm:border-4 ${specialLevel ? 'border-yellow-400' : config.borderColor}
-            shadow-lg sm:shadow-xl ${config.shadowColor}
+            sm:shadow-xl ${config.shadowColor}
             transform transition-all duration-300 ease-in-out
-            hover:scale-105 sm:hover:scale-110 hover:shadow-2xl hover:-translate-y-1
+            hover:scale-105 sm:hover:scale-110 hover:-translate-y-1
             active:scale-95
             ${config.animate || specialLevel ? 'animate-pulse' : ''}
             overflow-hidden
@@ -293,7 +293,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           ${config.opacity}
           rounded-xl sm:rounded-2xl p-3 sm:p-5
           border-3 sm:border-4 ${config.borderColor}
-          shadow-lg
+         
         `}>
           <div className="flex items-center justify-between mb-2">
             <span className={`text-base sm:text-lg font-bold ${config.textColor}`}>
@@ -423,26 +423,26 @@ export default async function LearnPage() {
       {/* Main Content - Responsive margin */}
       <div className="flex-1 md:ml-40 lg:ml-64 ml-0 w-full">
         {/* Top Header - FIXED position for always visible with safe area padding */}
-        <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50 shadow-sm">
+        <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 fixed top-0 left-0 right-0 md:left-40 lg:left-64 z-50">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-safe pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 sm:gap-6 flex-wrap">
-                <div className="flex items-center gap-2 bg-orange-100 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-orange-100 px-3 sm:px-4 py-2 rounded-xl border border-orange-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Flame className="w-4 sm:w-5 h-4 sm:h-5 text-orange-600 animate-pulse" />
                   <span className="font-bold text-orange-600 text-sm sm:text-base">{dbUser.streak || 0}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-blue-100 px-3 sm:px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-blue-100 px-3 sm:px-4 py-2 rounded-xl border border-blue-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Gem className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600" />
                   <span className="font-bold text-blue-600 text-sm sm:text-base">{dbUser.totalXP || 0}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-red-100 px-3 sm:px-4 py-2 rounded-xl border border-red-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md cursor-pointer">
+                <div className="flex items-center gap-2 bg-red-100 px-3 sm:px-4 py-2 rounded-xl border border-red-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Heart className="w-4 sm:w-5 h-4 sm:h-5 text-red-600 fill-red-600 animate-pulse" />
                   <span className="font-bold text-red-600 text-sm sm:text-base">5</span>
                 </div>
               </div>
               
               {/* Profile Button */}
-              <Link href="/profile" className="flex items-center gap-2 bg-purple-100 px-3 sm:px-4 py-2 rounded-xl border border-purple-200 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+              <Link href="/profile" className="flex items-center gap-2 bg-purple-100 px-3 sm:px-4 py-2 rounded-xl border border-purple-200 transition-all duration-300 hover:scale-105">
                 <User className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
                 <span className="hidden sm:inline font-bold text-purple-600 text-sm">Profile</span>
               </Link>
@@ -453,14 +453,14 @@ export default async function LearnPage() {
         {/* Learning Path Content - Responsive padding with bottom space for mobile nav and TOP space for fixed header + safe area */}
         <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-32 sm:pt-28 py-6 sm:py-8 pb-20 md:pb-8">
           {/* Welcome Banner - Responsive */}
-          <div className="relative overflow-hidden bg-green-50 border-2 border-green-200 rounded-2xl p-3 sm:p-6 md:p-8 mb-8 sm:mb-12 shadow-lg">
+          <div className="relative overflow-hidden bg-green-50 border-2 border-green-200 rounded-2xl p-3 sm:p-6 md:p-8 mb-8 sm:mb-12">
             {/* Decorative background elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-200/30 rounded-full blur-2xl"></div>
             
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-blue-500 p-2 rounded-xl shadow-md">
+                <div className="bg-blue-500 p-2 rounded-xl">
                   <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">Welcome, {user.firstName || 'Student'}!</h2>
@@ -470,11 +470,11 @@ export default async function LearnPage() {
               </p>
               {/* Level progress indicator */}
               <div className="flex items-center gap-2 mb-4 sm:mb-6">
-                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm">
+                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full">
                   <Trophy className="w-4 h-4 text-purple-600" />
                   <span className="text-sm font-bold text-gray-900">Level {dbUser.currentLevel}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm">
+                <div className="flex items-center gap-1 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full">
                   <Zap className="w-4 h-4 text-yellow-600" />
                   <span className="text-sm font-bold text-gray-900">{dbUser.totalXP} XP</span>
                 </div>
@@ -484,7 +484,7 @@ export default async function LearnPage() {
               {dbUser.currentLevel === 1 && (
                 <Link
                   href="/placement-test"
-                  className="inline-flex items-center gap-2 sm:gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 sm:gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 hover:scale-105 text-sm sm:text-base"
                 >
                   <Target className="w-5 h-5 sm:w-6 sm:h-6" />
                   <div>
@@ -500,7 +500,7 @@ export default async function LearnPage() {
         {units.map((unit) => (
           <div key={unit.id} className="mb-12 sm:mb-16">
             {/* Unit Header */}
-            <div className={`relative overflow-hidden ${unit.color} rounded-2xl p-6 sm:p-8 text-white mb-6 sm:mb-8 shadow-2xl border-3 border-white/30 text-center`}>
+            <div className={`relative overflow-hidden ${unit.color} rounded-2xl p-6 sm:p-8 text-white mb-6 sm:mb-8 border-3 border-white/30 text-center`}>
               {/* Decorative corner elements */}
               <div className="absolute top-0 left-0 w-20 h-20 bg-white/10 rounded-full -translate-x-10 -translate-y-10"></div>
               <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-x-12 translate-y-12"></div>
@@ -509,7 +509,7 @@ export default async function LearnPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
               
               <div className="relative z-10">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-black mb-2 drop-shadow-lg">Unit {unit.id}: {unit.title}</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black mb-2">Unit {unit.id}: {unit.title}</h2>
                 <p className="text-white/95 text-sm sm:text-base md:text-lg font-medium drop-shadow">{unit.description}</p>
               </div>
             </div>
@@ -540,7 +540,7 @@ export default async function LearnPage() {
         ))}
 
         {/* Coming Soon */}
-        <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-xl sm:rounded-2xl shadow-sm border border-gray-200">
+        <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200">
           <div className="flex justify-center mb-3 sm:mb-4">
             <Rocket className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-purple-600" />
           </div>

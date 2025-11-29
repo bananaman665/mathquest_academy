@@ -143,7 +143,7 @@ export default function GroupMaker({
               damping: 15,
               delay: groupIdx * 0.1
             }}
-            className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-2xl p-4 border-4 shadow-lg min-w-[120px]`}
+            className={`bg-gradient-to-br ${colors[groupIdx % colors.length]} rounded-2xl p-4 border-4 min-w-[120px]`}
           >
             <div className="text-xs font-bold text-gray-700 mb-2 text-center">
               Group {groupIdx + 1}

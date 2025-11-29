@@ -97,8 +97,8 @@ export default function QuestsClient() {
             <div
               key={quest.id}
               className={`
-                bg-white rounded-2xl shadow-lg border-3 p-6 transition-all duration-300
-                ${isComplete ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:shadow-xl hover:scale-105'}
+                bg-white rounded-2xl border-3 p-6 transition-all duration-300
+                ${isComplete ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:scale-105'}
               `}
             >
               {/* Quest Icon */}

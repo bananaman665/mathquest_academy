@@ -55,7 +55,7 @@ export default async function ProfilePage() {
       <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 fixed h-full flex-col">
         <div className="p-6">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-black text-green-600">Mathly</span>
@@ -117,7 +117,7 @@ export default async function ProfilePage() {
           {/* Profile Header */}
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-5 md:p-7 mb-8 text-white">
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center">
                 <User className="w-10 h-10 md:w-12 md:h-12 text-blue-600" />
               </div>
               <div className="flex-1 text-center md:text-left">
@@ -195,7 +195,7 @@ export default async function ProfilePage() {
                     key={achievement.id}
                     className={`border-2 rounded-2xl p-6 transition-all ${
                       achievement.unlocked
-                        ? 'bg-white border-green-300 shadow-md'
+                        ? 'bg-white border-green-300'
                         : 'bg-gray-50 border-gray-200 opacity-60'
                     }`}
                   >

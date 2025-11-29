@@ -53,11 +53,11 @@ async function DashboardContent() {
       </div>
 
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4 pt-safe-header">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-xl flex items-center justify-center">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
@@ -92,13 +92,13 @@ async function DashboardContent() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 mb-12">
-          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-blue-200 hover:border-blue-400 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Current Level</p>
                 <p className="text-4xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{dbUser.currentLevel}</p>
               </div>
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Target className="w-7 h-7 text-white" />
               </div>
             </div>
@@ -110,37 +110,37 @@ async function DashboardContent() {
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-purple-200 hover:border-purple-400 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Total XP</p>
                 <p className="text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{dbUser.totalXP}</p>
               </div>
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Zap className="w-7 h-7 text-white" />
               </div>
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-orange-200 hover:border-orange-400 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Current Streak</p>
                 <p className="text-4xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">{dbUser.streak}</p>
               </div>
-              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Flame className="w-8 h-8 text-white animate-pulse" />
               </div>
             </div>
           </div>
 
-          <div className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="group bg-white border-2 border-green-200 hover:border-green-400 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 font-semibold">Achievements</p>
                 <p className="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">0</p>
               </div>
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Trophy className="w-7 h-7 text-white" />
               </div>
             </div>
@@ -148,7 +148,7 @@ async function DashboardContent() {
         </div>
 
         {/* Main CTA */}
-        <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-10 text-white shadow-2xl mb-12">
+        <div className="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl p-10 text-white mb-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -162,7 +162,7 @@ async function DashboardContent() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/placement-test"
-                className="group bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white/50 hover:border-white px-8 py-4 rounded-xl font-bold shadow-lg transition-all duration-300 hover:scale-105 text-center"
+                className="group bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white/50 hover:border-white px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-center"
               >
                 <span className="flex items-center gap-2 justify-center">
                   <Target className="w-5 h-5" />
@@ -171,7 +171,7 @@ async function DashboardContent() {
               </Link>
               <Link
                 href="/learn"
-                className="group bg-white hover:bg-gray-50 text-purple-600 px-10 py-4 rounded-xl font-bold shadow-xl transition-all duration-300 hover:scale-105 text-center"
+                className="group bg-white hover:bg-gray-50 text-purple-600 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-center"
               >
                 <span className="flex items-center gap-2 justify-center">
                   View Learning Path
@@ -183,13 +183,13 @@ async function DashboardContent() {
         </div>
 
         {/* Coming Soon Features */}
-        <div className="bg-white border-2 border-gray-200 rounded-3xl p-10 shadow-xl">
+        <div className="bg-white border-2 border-gray-200 rounded-3xl p-10">
           <h3 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
             <Rocket className="w-8 h-8 text-blue-600" />
             Coming Soon Features
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-lg">
+            <div className="bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-blue-400">
               <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-blue-600" />
                 Learning Path
@@ -198,7 +198,7 @@ async function DashboardContent() {
                 Interactive math lessons with instant feedback
               </p>
             </div>
-            <div className="bg-purple-50 border-2 border-purple-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:shadow-lg">
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-purple-400">
               <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
                 <Gift className="w-5 h-5 text-purple-600" />
                 Bonus Rounds
@@ -207,7 +207,7 @@ async function DashboardContent() {
                 Special challenges for extra XP and rewards
               </p>
             </div>
-            <div className="bg-pink-50 border-2 border-pink-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-pink-400 hover:shadow-lg">
+            <div className="bg-pink-50 border-2 border-pink-300 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:border-pink-400">
               <h4 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-pink-600" />
                 Achievements

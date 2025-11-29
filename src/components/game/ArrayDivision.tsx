@@ -144,7 +144,7 @@ export default function ArrayDivision({
             onClick={handleConfigSelect}
             className={`w-full p-6 rounded-xl border-2 ${
               selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
-                ? 'border-blue-500 bg-blue-50 shadow-lg'
+                ? 'border-blue-500 bg-blue-50'
                 : 'border-gray-300 bg-white hover:border-gray-400 hover:shadow'
             }`}
           >
@@ -188,7 +188,7 @@ export default function ArrayDivision({
           className={`p-3 rounded-full transition-all ${
             currentConfigIndex === 0
               ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95 shadow-lg'
+              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95'
           }`}
         >
           <ChevronLeft className="w-6 h-6" />
@@ -204,7 +204,7 @@ export default function ArrayDivision({
           className={`p-3 rounded-full transition-all ${
             currentConfigIndex === configurations.length - 1
               ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95 shadow-lg'
+              : 'bg-purple-500 text-white hover:bg-purple-600 active:scale-95'
           }`}
         >
           <ChevronRight className="w-6 h-6" />
