@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 import { useRouter } from 'next/navigation'
 import { BookOpen, ArrowRight, Check, X, Heart, Sparkles, Zap, Clock, Flame, Target, Lightbulb, Shield, Gift, FastForward, Brain } from 'lucide-react'
@@ -108,13 +108,28 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   const [showSkipConfirm, setShowSkipConfirm] = useState(false)
   const [showQuitConfirm, setShowQuitConfirm] = useState(false)
 
-  const currentQuestion = questions[currentQuestionIndex]
-  
+  // Memoize expensive computations to prevent unnecessary re-renders
+  const currentQuestion = useMemo(() => questions[currentQuestionIndex], [questions, currentQuestionIndex])
+
   // Get answer boxes dynamically based on current question
-  const answerBoxes = currentQuestion?.type === 'match-equation' && currentQuestion?.equations 
-    ? currentQuestion.equations.map(e => e.answer) 
-    : []
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100
+  const answerBoxes = useMemo(() =>
+    currentQuestion?.type === 'match-equation' && currentQuestion?.equations
+      ? currentQuestion.equations.map(e => e.answer)
+      : [],
+    [currentQuestion]
+  )
+
+  const progress = useMemo(() => ((currentQuestionIndex + 1) / questions.length) * 100, [currentQuestionIndex, questions.length])
+
+  // Memoize inventory quantities to prevent excessive lookups
+  const freebieCount = useMemo(() => inventoryHook.getItemQuantity('freebie'), [inventoryHook.inventory])
+  const skipTokenCount = useMemo(() => inventoryHook.getItemQuantity('skip-token'), [inventoryHook.inventory])
+  const megaBrainCount = useMemo(() => inventoryHook.getItemQuantity('mega-brain'), [inventoryHook.inventory])
+  const extraHeartsCount = useMemo(() => inventoryHook.getItemQuantity('extra-hearts'), [inventoryHook.inventory])
+  const hasActiveShield = useMemo(() =>
+    inventoryHook.inventory.find(item => item.itemId === 'shield' && item.isActive),
+    [inventoryHook.inventory]
+  )
 
   // Cleanup effect to restore scroll on unmount
   useEffect(() => {
@@ -888,7 +903,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             )}
 
             {/* Shield Active Indicator */}
-            {inventoryHook.inventory.find(item => item.itemId === 'shield' && item.isActive) && (
+            {hasActiveShield && (
               <div className="flex items-center gap-1 sm:gap-2 bg-blue-100 px-2 sm:px-3 py-1 sm:py-2 rounded-xl border-2 border-blue-400">
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                 <span className="text-blue-600 font-bold text-xs sm:text-sm">Shield</span>
@@ -906,7 +921,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <div className="flex items-center gap-1 sm:gap-2 bg-red-100 px-2 sm:px-4 py-1 sm:py-2 rounded-xl">
                 <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 fill-red-500" />
                 <span className="text-red-500 font-bold text-lg sm:text-xl">
-                  {hearts + (inventoryHook.getItemQuantity('extra-hearts') * 5)}
+                  {hearts + (extraHeartsCount * 5)}
                 </span>
               </div>
             )}
@@ -2041,7 +2056,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 {/* Top row on mobile: Power-ups and actions */}
                 <div className="flex gap-2 flex-wrap justify-between md:justify-start">
                   {/* Freebie Button */}
-                  {inventoryHook.getItemQuantity('freebie') > 0 && !freebieUsedOnQuestion && (
+                  {freebieCount > 0 && !freebieUsedOnQuestion && (
                     <button
                       onClick={handleUseFreebie}
                       className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
@@ -2052,7 +2067,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   )}
 
                   {/* Skip Token Button */}
-                  {inventoryHook.getItemQuantity('skip-token') > 0 && !skipUsedOnQuestion && (
+                  {skipTokenCount > 0 && !skipUsedOnQuestion && (
                     <button
                       onClick={handleUseSkipToken}
                       className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
@@ -2063,7 +2078,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                   )}
 
                   {/* Mega Brain Button - Only for multiple choice questions */}
-                  {inventoryHook.getItemQuantity('mega-brain') > 0 && !megaBrainUsed && currentQuestion.options && currentQuestion.options.length > 2 && (
+                  {megaBrainCount > 0 && !megaBrainUsed && currentQuestion.options && currentQuestion.options.length > 2 && (
                     <button
                       onClick={handleUseMegaBrain}
                       className="px-4 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
@@ -2261,12 +2276,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               </div>
 
               {/* Extra Hearts Available */}
-              {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
+              {extraHeartsCount > 0 && (
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 mb-6 border-2 border-green-300">
                   <div className="flex items-center justify-center gap-2">
                     <Heart className="w-6 h-6 fill-green-500 text-green-500 animate-pulse" />
                     <p className="text-green-700 text-base font-bold">
-                      {inventoryHook.getItemQuantity('extra-hearts')} Extra Heart{inventoryHook.getItemQuantity('extra-hearts') !== 1 ? 's' : ''} Available!
+                      {extraHeartsCount} Extra Heart{extraHeartsCount !== 1 ? 's' : ''} Available!
                     </p>
                   </div>
                 </div>
@@ -2275,7 +2290,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               {/* Action Buttons */}
               <div className="space-y-3">
                 {/* Use Extra Hearts Button - Only show if available */}
-                {inventoryHook.getItemQuantity('extra-hearts') > 0 && (
+                {extraHeartsCount > 0 && (
                   <button
                     onClick={handleUseExtraHearts}
                     className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-lg rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide flex items-center justify-center gap-3 group"

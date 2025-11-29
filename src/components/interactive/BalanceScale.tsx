@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 interface BalanceScaleProps {
@@ -14,7 +14,7 @@ interface BalanceScaleProps {
   onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
-export default function BalanceScale({
+const BalanceScale = React.memo(function BalanceScale({
   question,
   leftSide,
   rightSide,
@@ -188,4 +188,6 @@ export default function BalanceScale({
       </div>
     </div>
   )
-}
+})
+
+export default BalanceScale

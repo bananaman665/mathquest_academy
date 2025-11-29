@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 
 interface BlockStackingQuestionProps {
@@ -14,7 +14,7 @@ interface BlockStackingQuestionProps {
   disabled?: boolean
 }
 
-export default function BlockStackingQuestion({
+const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
   firstNumber,
   secondNumber,
   operation,
@@ -201,4 +201,6 @@ export default function BlockStackingQuestion({
       </div>
     </DragDropContext>
   )
-}
+})
+
+export default BlockStackingQuestion
