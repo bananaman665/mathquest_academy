@@ -1230,7 +1230,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className={`bg-blue-500 text-white px-3 py-3 sm:px-6 sm:py-4 rounded-xl cursor-grab text-lg sm:text-xl font-bold border-4 border-black transition-all ${
+                                className={`bg-blue-500 text-white px-3 py-3 sm:px-6 sm:py-4 rounded-xl cursor-grab text-lg sm:text-xl font-bold transition-all ${
                                   snapshot.isDragging ? 'scale-110' : 'hover:scale-105'
                                 }`}
                                 style={{ userSelect: 'none', ...provided.draggableProps.style }}
@@ -1257,9 +1257,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`px-3 py-3 sm:px-6 sm:py-4 rounded-xl text-lg sm:text-xl font-bold min-h-[60px] sm:min-h-[72px] flex items-center justify-between gap-2 border-4 transition-all ${
-                              snapshot.isDraggingOver && !equationMatched[idx] ? 'bg-white text-black border-blue-500 scale-105' :
-                              equationMatched[idx] ? 'bg-green-500 text-white border-black' : 'bg-white text-black border-black'
+                            className={`px-3 py-3 sm:px-6 sm:py-4 rounded-xl text-lg sm:text-xl font-bold min-h-[60px] sm:min-h-[72px] flex items-center justify-between gap-2 transition-all ${
+                              snapshot.isDraggingOver && !equationMatched[idx] ? 'bg-white text-black scale-105' :
+                              equationMatched[idx] ? 'bg-green-500 text-white' : 'bg-white text-black'
                             }`}
                           >
                             {equationMatched[idx] ? (
