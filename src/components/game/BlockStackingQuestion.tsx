@@ -84,16 +84,7 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-2 pt-1 px-3 pb-24">
-        {/* Instruction */}
-        <div className="text-center">
-          <p className="text-lg sm:text-xl font-bold text-black">
-            {operation === 'add'
-              ? `Drag ${secondNumber} token${secondNumber !== 1 ? 's' : ''} from bottom to top`
-              : `Remove ${secondNumber} token${secondNumber !== 1 ? 's' : ''} by dragging down`}
-          </p>
-        </div>
-
+      <div className="flex flex-col items-center gap-2 px-3 pb-24">
         {/* Main workspace */}
         <div className="flex flex-col gap-2 items-center w-full max-w-4xl">
           {/* Your Stack - Top Zone */}
