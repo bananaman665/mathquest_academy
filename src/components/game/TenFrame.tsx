@@ -114,8 +114,8 @@ export default function TenFrame({
           }`}>
             {dotsPlaced}
           </span>
-          <span className="text-2xl text-gray-400 font-bold">/</span>
-          <span className="text-2xl text-gray-500 font-bold">{correctPosition}</span>
+          <span className="text-4xl text-gray-400 font-bold">/</span>
+          <span className="text-4xl text-gray-500 font-bold">{correctPosition}</span>
         </div>
         <p className="text-sm text-gray-500 mt-2">
           {dotsPlaced === 0 ? 'Tap to start filling' :
