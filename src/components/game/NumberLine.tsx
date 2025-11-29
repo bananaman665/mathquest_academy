@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { PartyPopper, X } from 'lucide-react'
 
 interface NumberLineProps {
@@ -10,6 +10,7 @@ interface NumberLineProps {
   correctAnswer: number
   labelInterval?: number
   onAnswer: (isCorrect: boolean) => void
+  onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
 export default function NumberLine({
@@ -19,12 +20,24 @@ export default function NumberLine({
   correctAnswer,
   labelInterval = 1,
   onAnswer,
+  onSubmitReady,
 }: NumberLineProps) {
   const [markedPosition, setMarkedPosition] = useState<number | null>(null)
   const [showFeedback, setShowFeedback] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const lineRef = useRef<HTMLDivElement>(null)
   const tolerance = 1 // Within 1 unit
+
+  // Provide submit function to parent
+  useEffect(() => {
+    if (onSubmitReady) {
+      if (markedPosition !== null && !showFeedback) {
+        onSubmitReady(() => handleSubmit)
+      } else {
+        onSubmitReady(null)
+      }
+    }
+  }, [markedPosition, showFeedback, onSubmitReady])
 
   // Smart label interval calculation to avoid overcrowding
   const range = max - min
@@ -217,21 +230,6 @@ export default function NumberLine({
           </div>
         )}
       </div>
-
-      {/* Submit Button */}
-      {!showFeedback && (
-        <button
-          onClick={handleSubmit}
-          disabled={markedPosition === null}
-          className={`px-8 py-3 rounded-lg font-bold text-lg transition-colors ${
-            markedPosition !== null
-              ? 'bg-purple-500 hover:bg-purple-600 text-white'
-              : 'bg-gray-400 cursor-not-allowed text-gray-600'
-          }`}
-        >
-          Check Answer
-        </button>
-      )}
 
       {/* Feedback */}
       {showFeedback && (

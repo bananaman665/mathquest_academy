@@ -1175,6 +1175,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 correctAnswer={currentQuestion.correctPosition}
                 labelInterval={('numberLineLabelInterval' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineLabelInterval : 1) || 1}
                 onAnswer={handleNumberLineAnswer}
+                onSubmitReady={setInteractiveSubmitFn}
               />
             </div>
           )}
@@ -2123,7 +2124,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'fill-the-jar' ||
                         currentQuestion.type === 'balance-scale' ||
                         currentQuestion.type === 'block-stacking' ||
-                        currentQuestion.type === 'ten-frame'
+                        currentQuestion.type === 'ten-frame' ||
+                        currentQuestion.type === 'number-line-placement'
                       ? !interactiveSubmitFn // Enabled when component provides submit function
                       : !selectedAnswer
                   }
@@ -2149,7 +2151,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                         currentQuestion.type === 'fill-the-jar' ||
                         currentQuestion.type === 'balance-scale' ||
                         currentQuestion.type === 'block-stacking' ||
-                        currentQuestion.type === 'ten-frame'
+                        currentQuestion.type === 'ten-frame' ||
+                        currentQuestion.type === 'number-line-placement'
                       ? !!interactiveSubmitFn // Enabled when component provides submit function
                       : !!selectedAnswer)
                       ? 'bg-green-500 hover:bg-green-600'
