@@ -84,14 +84,14 @@ export default function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-2 px-3 pb-24">
+      <div className="flex flex-col items-center gap-1.5 px-3 pb-24">
         {/* Main workspace */}
-        <div className="flex flex-col gap-2 items-center w-full max-w-7xl">
+        <div className="flex flex-col gap-1.5 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
           <div className="w-full">
-            <div className="text-center mb-1.5">
-              <h3 className="text-xs font-bold text-black mb-1">Your Stack</h3>
-              <div className="inline-block bg-blue-500 text-white px-3 py-0.5 rounded-lg font-bold text-lg">
+            <div className="text-center mb-1">
+              <h3 className="text-xs font-bold text-black mb-0.5">Your Stack</h3>
+              <div className="inline-block bg-blue-500 text-white px-2.5 py-0.5 rounded-lg font-bold text-base border-2 border-black">
                 {stackBlocks.length}
               </div>
             </div>
@@ -100,14 +100,14 @@ export default function BlockStackingQuestion({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-2 rounded-xl border-2 transition-all min-h-[110px] bg-white ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-1.5 p-1.5 rounded-xl border-2 transition-all min-h-[90px] bg-white ${
                     snapshot.isDraggingOver
                       ? 'border-green-500 bg-green-50'
                       : 'border-black'
                   }`}
                 >
                   {stackBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-6 text-sm font-semibold">
+                    <div className="text-gray-400 text-center w-full py-4 text-xs font-semibold">
                       Empty Stack
                     </div>
                   ) : (
@@ -118,7 +118,7 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-12 h-12 sm:w-14 sm:h-14 bg-blue-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-blue-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
                                 ? 'opacity-70 scale-110 rotate-6'
                                 : 'hover:scale-105 active:scale-95'
@@ -127,7 +127,7 @@ export default function BlockStackingQuestion({
                               ...provided.draggableProps.style,
                             }}
                           >
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full"></div>
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full"></div>
                           </div>
                         )}
                       </Draggable>
@@ -140,17 +140,17 @@ export default function BlockStackingQuestion({
           </div>
 
           {/* Divider */}
-          <div className="w-full max-w-md py-1">
+          <div className="w-full max-w-md py-0.5">
             <div className="h-0.5 bg-black rounded-full"></div>
           </div>
 
           {/* Tokens Zone - Bottom Zone */}
           <div className="w-full">
-            <div className="text-center mb-1.5">
-              <h3 className="text-xs font-bold text-black mb-1">
+            <div className="text-center mb-1">
+              <h3 className="text-xs font-bold text-black mb-0.5">
                 {operation === 'add' ? 'Tokens to Add' : 'Removed Tokens'}
               </h3>
-              <div className="inline-block bg-green-500 text-white px-3 py-0.5 rounded-lg font-bold text-lg">
+              <div className="inline-block bg-green-500 text-white px-2.5 py-0.5 rounded-lg font-bold text-base border-2 border-black">
                 {trashBlocks.length}
               </div>
             </div>
@@ -159,14 +159,14 @@ export default function BlockStackingQuestion({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-2 rounded-xl border-2 transition-all min-h-[110px] bg-white ${
+                  className={`flex flex-wrap content-start items-center justify-center gap-1.5 p-1.5 rounded-xl border-2 transition-all min-h-[90px] bg-white ${
                     snapshot.isDraggingOver
                       ? 'border-green-500 bg-green-50'
                       : 'border-black'
                   }`}
                 >
                   {trashBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-6 text-sm font-semibold">
+                    <div className="text-gray-400 text-center w-full py-4 text-xs font-semibold">
                       {operation === 'add' ? 'No tokens yet' : 'No removed tokens'}
                     </div>
                   ) : (
@@ -177,7 +177,7 @@ export default function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-12 h-12 sm:w-14 sm:h-14 bg-green-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-11 h-11 sm:w-12 sm:h-12 bg-green-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
                               snapshot.isDragging
                                 ? 'opacity-70 scale-110 rotate-6'
                                 : 'hover:scale-105 active:scale-95'
@@ -186,7 +186,7 @@ export default function BlockStackingQuestion({
                               ...provided.draggableProps.style,
                             }}
                           >
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full"></div>
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full"></div>
                           </div>
                         )}
                       </Draggable>

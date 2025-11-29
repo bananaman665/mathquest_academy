@@ -116,32 +116,32 @@ export default function NumberLine({
   const correctPixelPosition = getPixelPosition(correctAnswer)
 
   return (
-    <div className="flex flex-col items-center gap-8 py-8">
+    <div className="flex flex-col items-center gap-3 py-2">
       {/* Question */}
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-white mb-4">{question}</h3>
-        <p className="text-gray-300 text-lg">
+        <h3 className="text-xl font-bold text-white mb-2">{question}</h3>
+        <p className="text-gray-300 text-base">
           Click or tap on the number line to place <span className="font-bold text-blue-400">{correctAnswer}</span>
         </p>
       </div>
 
       {/* Number Line Container */}
-      <div className="w-full max-w-4xl bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-12 border-2 border-purple-500/50">
+      <div className="w-full max-w-4xl bg-gradient-to-br from-purple-900 to-slate-900 rounded-xl p-4 border-2 border-purple-500/50">
         {/* Title showing range */}
-        <div className="text-center mb-8">
-          <p className="text-gray-300 font-semibold">
+        <div className="text-center mb-3">
+          <p className="text-gray-300 font-semibold text-sm">
             From <span className="text-blue-400 font-bold">{min}</span> to <span className="text-blue-400 font-bold">{max}</span>
           </p>
         </div>
 
         {/* The Number Line */}
-        <div className="relative mb-12">
+        <div className="relative mb-6">
           {/* Line container and interactive area */}
           <div
             ref={lineRef}
             onClick={handleLineClick}
             onTouchStart={handleLineTouchStart}
-            className="relative h-16 bg-slate-700 rounded-lg cursor-pointer hover:bg-slate-600 transition-colors border-2 border-slate-600"
+            className="relative h-12 bg-slate-700 rounded-lg cursor-pointer hover:bg-slate-600 transition-colors border-2 border-slate-600"
           >
             {/* Main line */}
             <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-500 -translate-y-1/2" />
@@ -159,7 +159,7 @@ export default function NumberLine({
                       } w-1 rounded-full -translate-x-0.5`}
                     />
                     {/* Label */}
-                    <div className="absolute -bottom-8 text-slate-300 font-bold text-sm whitespace-nowrap">
+                    <div className="absolute -bottom-6 text-slate-300 font-bold text-xs whitespace-nowrap">
                       {label}
                     </div>
                   </div>
@@ -175,11 +175,11 @@ export default function NumberLine({
               >
                 <div className="flex flex-col items-center">
                   {/* Marker dot */}
-                  <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-300/50 flex items-center justify-center">
-                    <div className="w-2 h-2 bg-white rounded-full" />
+                  <div className="w-5 h-5 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full border-2 border-blue-300/50 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full" />
                   </div>
                   {/* Value display */}
-                  <div className="mt-2 bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-bold whitespace-nowrap">
+                  <div className="mt-1 bg-blue-600 text-white px-2 py-0.5 rounded-lg text-xs font-bold whitespace-nowrap">
                     {markedPosition}
                   </div>
                 </div>
@@ -195,19 +195,19 @@ export default function NumberLine({
                 <div className="flex flex-col items-center">
                   {isCorrect ? (
                     <>
-                      <div className="w-6 h-6 bg-green-500 rounded-full border-2 border-green-300/50 flex items-center justify-center">
-                        <span className="text-white font-bold">✓</span>
+                      <div className="w-5 h-5 bg-green-500 rounded-full border-2 border-green-300/50 flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">✓</span>
                       </div>
-                      <div className="mt-2 bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-bold">
+                      <div className="mt-1 bg-green-600 text-white px-2 py-0.5 rounded-lg text-xs font-bold">
                         {correctAnswer}
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="w-6 h-6 bg-red-500 rounded-full border-2 border-red-300/50 flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">✓</span>
+                      <div className="w-5 h-5 bg-red-500 rounded-full border-2 border-red-300/50 flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">✓</span>
                       </div>
-                      <div className="mt-2 bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-bold">
+                      <div className="mt-1 bg-red-600 text-white px-2 py-0.5 rounded-lg text-xs font-bold">
                         {correctAnswer}
                       </div>
                     </>
@@ -218,14 +218,14 @@ export default function NumberLine({
           </div>
 
           {/* Spacing for labels */}
-          <div className="h-12" />
+          <div className="h-8" />
         </div>
 
         {/* Current selection display */}
         {markedPosition !== null && !showFeedback && (
-          <div className="text-center mb-6">
-            <p className="text-gray-300 text-lg">
-              You selected: <span className="text-blue-400 font-bold text-2xl">{markedPosition}</span>
+          <div className="text-center mb-2">
+            <p className="text-gray-300 text-sm">
+              You selected: <span className="text-blue-400 font-bold text-lg">{markedPosition}</span>
             </p>
           </div>
         )}
@@ -235,7 +235,7 @@ export default function NumberLine({
       {showFeedback && (
         <div className="w-full max-w-md">
           <div
-            className={`p-6 rounded-lg text-center font-bold text-lg ${
+            className={`p-4 rounded-lg text-center font-bold text-base ${
               isCorrect
                 ? 'bg-green-500/20 text-green-300 border-2 border-green-500'
                 : 'bg-red-500/20 text-red-300 border-2 border-red-500'
@@ -243,19 +243,19 @@ export default function NumberLine({
           >
             {isCorrect ? (
               <div>
-                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
-                  <PartyPopper className="w-6 h-6" />
+                <div className="text-xl mb-1 flex items-center justify-center gap-2">
+                  <PartyPopper className="w-5 h-5" />
                   Perfect!
                 </div>
-                <div>You found {correctAnswer} on the number line!</div>
+                <div className="text-sm">You found {correctAnswer} on the number line!</div>
               </div>
             ) : (
               <div>
-                <div className="text-2xl mb-2 flex items-center justify-center gap-2">
-                  <X className="w-6 h-6" />
+                <div className="text-xl mb-1 flex items-center justify-center gap-2">
+                  <X className="w-5 h-5" />
                   Not quite
                 </div>
-                <div>You marked {markedPosition}, but the correct answer is {correctAnswer}</div>
+                <div className="text-sm">You marked {markedPosition}, but the correct answer is {correctAnswer}</div>
               </div>
             )}
           </div>
@@ -263,7 +263,7 @@ export default function NumberLine({
           {!isCorrect && (
             <button
               onClick={handleReset}
-              className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              className="w-full mt-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm"
             >
               Try Again
             </button>
