@@ -82,69 +82,69 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pt-safe pb-safe">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4 sm:p-6 pt-safe pb-safe">
       {/* Loading Spinner Overlay */}
       {saving && (
-        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-700 font-semibold">Saving progress...</p>
+            <div className="w-16 h-16 border-4 border-blue-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-700 font-medium">Saving progress...</p>
           </div>
         </div>
       )}
 
       <div className="max-w-2xl w-full my-auto">
         {/* Success Card */}
-        <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 text-center border-2 border-green-200">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 text-center">
           {/* Trophy Icon */}
-          <div className="mb-4 sm:mb-6">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-green-500 rounded-full flex items-center justify-center mx-auto border-4 border-green-400">
-              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-white" strokeWidth={2.5} />
+          <div className="mb-6">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto">
+              <Trophy className="w-12 h-12 sm:w-14 sm:h-14 text-white" strokeWidth={2} />
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2 sm:mb-3">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
             Level Complete!
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 px-2">
+          <p className="text-lg sm:text-xl text-gray-500 mb-8 sm:mb-10">
             Amazing work! You&apos;re getting better at math!
           </p>
 
           {/* Stats Grid */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-8 sm:mb-10">
             {/* Accuracy - Full Width */}
-            <div className="bg-blue-100 rounded-xl p-6 sm:p-8 border-2 border-blue-300">
-              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 mx-auto mb-3" />
-              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-blue-700 mb-2">{accuracy}%</div>
-              <div className="text-base sm:text-lg text-blue-600 font-medium">Accuracy</div>
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 sm:p-10">
+              <Trophy className="w-12 h-12 text-blue-600 mx-auto mb-4" strokeWidth={2} />
+              <div className="text-5xl sm:text-6xl font-bold text-blue-600 mb-2">{accuracy}%</div>
+              <div className="text-lg text-blue-600/80 font-medium">Accuracy</div>
             </div>
           </div>
 
           {/* Next Level Preview - New Feature */}
           {hasNextLevel && nextLevel && (
-            <div className="bg-indigo-50 border-2 border-indigo-300 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 md:mb-8">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Unlock className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8 sm:mb-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Unlock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
                 <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs sm:text-sm font-semibold text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-full">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
                       UP NEXT
                     </span>
                   </div>
-                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-1">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
                     Level {nextLevel.levelId}: {nextLevel.unit}
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
+                  <p className="text-sm text-gray-500 mb-3">
                     Ready to continue your math journey?
                   </p>
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    <span className="text-[10px] sm:text-xs px-2 py-1 bg-white rounded-full text-indigo-600 font-medium border border-indigo-200">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs px-3 py-1.5 bg-white rounded-full text-blue-600 font-medium">
                       {nextLevel.totalQuestions} Questions
                     </span>
-                    <span className="text-[10px] sm:text-xs px-2 py-1 bg-white rounded-full text-indigo-600 font-medium border border-indigo-200 flex items-center gap-1">
+                    <span className="text-xs px-3 py-1.5 bg-white rounded-full text-blue-600 font-medium flex items-center gap-1">
                       {nextLevel.difficulty === 'easy' ? (
                         <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Easy</>
                       ) : nextLevel.difficulty === 'medium' ? (
@@ -160,32 +160,32 @@ export default function LevelCompletePage() {
           )}
 
           {/* Action Buttons */}
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-3">
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transform transition-all duration-200 border-2 border-green-400"
+                className="block w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
               >
-                <span className="flex items-center justify-center gap-2 text-base sm:text-lg">
+                <span className="flex items-center justify-center gap-2 text-lg">
                   Continue to Next Level
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <ArrowRight className="w-5 h-5" />
                 </span>
               </Link>
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transform transition-all duration-200 border-2 border-green-400"
+                className="block w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
               >
-                <span className="flex items-center justify-center gap-2 text-base sm:text-lg">
+                <span className="flex items-center justify-center gap-2 text-lg">
                   Back to Learn
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <ArrowRight className="w-5 h-5" />
                 </span>
               </Link>
             )}
 
             <Link
               href="/learn"
-              className="block w-full bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-xl transition-all duration-200 text-base sm:text-lg"
+              className="block w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold py-4 px-6 rounded-xl transition-all duration-200 text-lg"
             >
               Back to Home
             </Link>
