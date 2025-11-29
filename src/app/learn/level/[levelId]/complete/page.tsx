@@ -112,26 +112,12 @@ export default function LevelCompletePage() {
           </p>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-            {/* XP Earned */}
-            <div className="bg-blue-100 rounded-xl p-4 sm:p-6 border-2 border-blue-300 shadow-md">
-              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl sm:text-3xl font-bold text-blue-700">{xp}</div>
-              <div className="text-xs sm:text-sm text-blue-600 font-medium">XP Earned</div>
-            </div>
-
-            {/* Correct Answers */}
-            <div className="bg-green-100 rounded-xl p-4 sm:p-6 border-2 border-green-300 shadow-md">
-              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl sm:text-3xl font-bold text-green-700">{correct}/{total}</div>
-              <div className="text-xs sm:text-sm text-green-600 font-medium">Correct</div>
-            </div>
-
-            {/* Accuracy */}
-            <div className="bg-blue-100 rounded-xl p-4 sm:p-6 border-2 border-blue-300 shadow-md">
-              <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl sm:text-3xl font-bold text-blue-700">{accuracy}%</div>
-              <div className="text-xs sm:text-sm text-blue-600 font-medium">Accuracy</div>
+          <div className="mb-6 sm:mb-8">
+            {/* Accuracy - Full Width */}
+            <div className="bg-blue-100 rounded-xl p-6 sm:p-8 border-2 border-blue-300 shadow-md">
+              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 mx-auto mb-3" />
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-blue-700 mb-2">{accuracy}%</div>
+              <div className="text-base sm:text-lg text-blue-600 font-medium">Accuracy</div>
             </div>
           </div>
 
