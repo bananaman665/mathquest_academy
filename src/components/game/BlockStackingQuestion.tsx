@@ -84,14 +84,13 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-3 px-3 pb-24">
+      <div className="flex flex-col items-center gap-3 px-3 pb-24 pt-4">
         {/* Main workspace */}
         <div className="flex flex-col gap-3 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
           <div className="w-full">
-            <div className="text-center mb-1">
-              <h3 className="text-xs font-bold text-black mb-0.5">Your Stack</h3>
-              <div className="inline-block bg-blue-500 text-white px-2.5 py-0.5 rounded-lg font-bold text-base border-2 border-black">
+            <div className="text-center mb-2">
+              <div className="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
                 {stackBlocks.length}
               </div>
             </div>
@@ -146,11 +145,8 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
           {/* Tokens Zone - Bottom Zone */}
           <div className="w-full">
-            <div className="text-center mb-1">
-              <h3 className="text-xs font-bold text-black mb-0.5">
-                {operation === 'add' ? 'Tokens to Add' : 'Removed Tokens'}
-              </h3>
-              <div className="inline-block bg-green-500 text-white px-2.5 py-0.5 rounded-lg font-bold text-base border-2 border-black">
+            <div className="text-center mb-2">
+              <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
                 {trashBlocks.length}
               </div>
             </div>
