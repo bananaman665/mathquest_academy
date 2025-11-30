@@ -365,6 +365,79 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         { number: "⅕", visual: "1 out of 5 equal parts", word: "1 fifth" }
       ]
     }
+  },
+  42: {
+    title: "Comparing Fractions",
+    introduction: {
+      title: "Compare Fractions!",
+      content: [
+        "We can compare fractions to see which is bigger!",
+        "When fractions have the same bottom number (denominator), compare the top numbers.",
+        "The fraction with the larger numerator is greater.",
+        "Example: ¾ is greater than ½ because 3 parts out of 4 is more than 2 parts out of 4.",
+        "Visual comparison helps - imagine two identical pizzas, one with more slices eaten!"
+      ],
+      examples: [
+        { number: "½ vs ¼", visual: "◐ > ◔", word: "1 half is greater than 1 quarter" },
+        { number: "¾ vs ½", visual: "◕ > ◐", word: "3 quarters is greater than 1 half" },
+        { number: "⅔ vs ⅓", visual: "2/3 > 1/3", word: "2 thirds is greater than 1 third" }
+      ]
+    }
+  },
+  43: {
+    title: "Adding Fractions",
+    introduction: {
+      title: "Add Fractions!",
+      content: [
+        "We can add fractions when they have the same denominator (bottom number)!",
+        "Just add the numerators (top numbers) and keep the denominator the same.",
+        "Example: ¼ + ¼ = 2/4 (we add 1 + 1 = 2, keep the 4)",
+        "Think of it like combining slices of the same-sized pizza!",
+        "Remember: Only add the top numbers, the bottom number stays the same!"
+      ],
+      examples: [
+        { number: "¼ + ¼ = ½", visual: "1/4 + 1/4 = 2/4", word: "one quarter plus one quarter equals two quarters" },
+        { number: "⅓ + ⅓ = ⅔", visual: "1/3 + 1/3 = 2/3", word: "one third plus one third equals two thirds" },
+        { number: "⅕ + ⅕ = ⅖", visual: "1/5 + 1/5 = 2/5", word: "one fifth plus one fifth equals two fifths" }
+      ]
+    }
+  },
+  44: {
+    title: "Subtracting Fractions",
+    introduction: {
+      title: "Subtract Fractions!",
+      content: [
+        "We can subtract fractions when they have the same denominator!",
+        "Just subtract the numerators (top numbers) and keep the denominator the same.",
+        "Example: ¾ − ¼ = 2/4 (we subtract 3 − 1 = 2, keep the 4)",
+        "Think of it like taking away slices from a pizza!",
+        "Remember: Only subtract the top numbers, the bottom number stays the same!"
+      ],
+      examples: [
+        { number: "¾ − ¼ = ½", visual: "3/4 - 1/4 = 2/4", word: "three quarters minus one quarter equals two quarters" },
+        { number: "⅔ − ⅓ = ⅓", visual: "2/3 - 1/3 = 1/3", word: "two thirds minus one third equals one third" },
+        { number: "⅘ − ⅕ = ⅗", visual: "4/5 - 1/5 = 3/5", word: "four fifths minus one fifth equals three fifths" }
+      ]
+    }
+  },
+  45: {
+    title: "Fraction Practice",
+    introduction: {
+      title: "Practice Fractions!",
+      content: [
+        "Time to practice everything you've learned about fractions!",
+        "Remember: Fractions show parts of a whole.",
+        "When adding or subtracting, keep the denominator the same.",
+        "When comparing, look at the numerators if denominators match.",
+        "Take your time and visualize the fractions - you've got this!"
+      ],
+      examples: [
+        { number: "½", visual: "◐ (1 out of 2)", word: "one half" },
+        { number: "¾", visual: "◕ (3 out of 4)", word: "three quarters" },
+        { number: "⅓ + ⅓ = ⅔", visual: "1/3 + 1/3 = 2/3", word: "adding fractions" },
+        { number: "¾ − ¼ = ½", visual: "3/4 - 1/4 = 2/4", word: "subtracting fractions" }
+      ]
+    }
   }
 }
 

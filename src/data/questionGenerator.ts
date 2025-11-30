@@ -497,7 +497,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Introduction to Fractions",
     operation: 'fractions',
     numberRange: { min: 1, max: 8 },
-    questionTypes: ['fraction-builder', 'multiple-choice', 'balance-scale'],
+    questionTypes: ['fraction-builder', 'multiple-choice'],
     totalQuestions: 10,
     difficulty: 'medium'
   },
