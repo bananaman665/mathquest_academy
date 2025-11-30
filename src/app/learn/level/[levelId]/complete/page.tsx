@@ -138,34 +138,26 @@ export default function LevelCompletePage() {
           {/* Next Level Preview */}
           {hasNextLevel && nextLevel && (
             <div className="bg-green-100 rounded-xl p-4 mb-5">
-              <div className="flex gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Unlock className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
-                <div className="flex-1">
-                  <div className="flex gap-1.5">
-                    <div className="flex-1">
-                      <div className="text-xs font-bold text-green-700 mb-1">UP NEXT</div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-2">
-                        Level {nextLevel.levelId}
-                      </h3>
-                      <span className="inline-block text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
-                        {nextLevel.totalQuestions} Questions
-                      </span>
-                    </div>
-                    <div className="flex items-end">
-                      <span className="text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
-                        {nextLevel.difficulty === 'easy' ? (
-                          <>Easy</>
-                        ) : nextLevel.difficulty === 'medium' ? (
-                          <>Medium</>
-                        ) : (
-                          <>Hard</>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <div className="text-xs font-bold text-green-700">UP NEXT</div>
+                <h3 className="text-sm font-bold text-gray-900">
+                  Level {nextLevel.levelId}
+                </h3>
+                <span className="text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
+                  {nextLevel.totalQuestions} Questions
+                </span>
+                <span className="text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
+                  {nextLevel.difficulty === 'easy' ? (
+                    <>Easy</>
+                  ) : nextLevel.difficulty === 'medium' ? (
+                    <>Medium</>
+                  ) : (
+                    <>Hard</>
+                  )}
+                </span>
               </div>
             </div>
           )}
