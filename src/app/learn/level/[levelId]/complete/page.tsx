@@ -149,15 +149,6 @@ export default function LevelCompletePage() {
                 <span className="text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
                   {nextLevel.totalQuestions} Questions
                 </span>
-                <span className="text-xs px-2 py-1 bg-white rounded-lg text-gray-700 font-medium">
-                  {nextLevel.difficulty === 'easy' ? (
-                    <>Easy</>
-                  ) : nextLevel.difficulty === 'medium' ? (
-                    <>Medium</>
-                  ) : (
-                    <>Hard</>
-                  )}
-                </span>
               </div>
             </div>
           )}
