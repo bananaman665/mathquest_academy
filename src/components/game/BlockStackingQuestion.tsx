@@ -59,6 +59,9 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
     if (!destination) return
 
+    // Prevent reordering within the same container - no shuffle animation
+    if (source.droppableId === destination.droppableId) return
+
     // If dragging from stack to trash (for subtraction)
     if (source.droppableId === 'stack' && destination.droppableId === 'trash') {
       if (operation === 'subtract' || operation === 'add') {
@@ -117,13 +120,14 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-xl cursor-grab flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-6'
-                                : 'hover:scale-105 active:scale-95'
+                                ? 'opacity-70 scale-110 rotate-6 transition-transform'
+                                : 'hover:scale-105 active:scale-95 transition-transform'
                             }`}
                             style={{
                               ...provided.draggableProps.style,
+                              transition: snapshot.isDragging ? 'transform 0.2s' : 'transform 0.1s',
                             }}
                           >
                             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
@@ -173,13 +177,14 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-xl cursor-grab transition-all flex items-center justify-center ${
+                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-xl cursor-grab flex items-center justify-center ${
                               snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-6'
-                                : 'hover:scale-105 active:scale-95'
+                                ? 'opacity-70 scale-110 rotate-6 transition-transform'
+                                : 'hover:scale-105 active:scale-95 transition-transform'
                             }`}
                             style={{
                               ...provided.draggableProps.style,
+                              transition: snapshot.isDragging ? 'transform 0.2s' : 'transform 0.1s',
                             }}
                           >
                             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
