@@ -774,15 +774,16 @@ function generateQuestion(
         answer = rng.nextInt(1, num2 - 1) // second numerator to compare
       } else if (levelId === 43) {
         // Level 43: Adding Fractions (same denominator)
-        num2 = rng.nextInt(2, 8) // denominator
-        num1 = rng.nextInt(1, num2 - 1) // first numerator
-        const num3 = rng.nextInt(1, num2 - num1) // second numerator
+        num2 = rng.nextInt(3, 8) // denominator (at least 3 to have room for addition)
+        num1 = rng.nextInt(1, Math.floor(num2 / 2)) // first numerator (max half of denominator)
+        const maxNum3 = num2 - num1 - 1 // ensure sum doesn't exceed denominator
+        const num3 = rng.nextInt(1, Math.max(1, maxNum3)) // second numerator
         answer = num1 + num3 // sum of numerators
       } else if (levelId === 44) {
         // Level 44: Subtracting Fractions (same denominator)
-        num2 = rng.nextInt(2, 8) // denominator
-        answer = rng.nextInt(1, num2 - 1) // result numerator
-        num1 = rng.nextInt(answer + 1, num2) // starting numerator (must be larger)
+        num2 = rng.nextInt(3, 8) // denominator
+        answer = rng.nextInt(1, num2 - 2) // result numerator (leave room for subtraction)
+        num1 = rng.nextInt(answer + 1, Math.min(num2 - 1, answer + 3)) // starting numerator (must be larger)
       } else {
         // Level 45: Mixed fraction practice
         num2 = rng.nextInt(2, 8) // denominator
