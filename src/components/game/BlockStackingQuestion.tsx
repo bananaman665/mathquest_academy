@@ -136,7 +136,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                       </Draggable>
                     ))
                   )}
-                  {provided.placeholder}
+                  <div style={{ display: 'none' }}>{provided.placeholder}</div>
                 </div>
               )}
             </Droppable>
@@ -193,7 +193,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
                       </Draggable>
                     ))
                   )}
-                  {provided.placeholder}
+                  <div style={{ display: 'none' }}>{provided.placeholder}</div>
                 </div>
               )}
             </Droppable>
