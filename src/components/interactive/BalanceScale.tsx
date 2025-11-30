@@ -139,11 +139,13 @@ const BalanceScale = React.memo(function BalanceScale({
                     transition={{ delay: idx * 0.1, type: 'spring' }}
                     className={`relative ${
                       idx === missingValue && value === 0
-                        ? 'w-10 sm:w-12 h-10 sm:h-12 border-2 border-dashed border-blue-400 bg-blue-100 rounded-lg flex items-center justify-center'
+                        ? 'w-10 sm:w-12 h-10 sm:h-12 border-2 border-dashed border-blue-400 bg-blue-500 rounded-lg flex items-center justify-center'
                         : 'w-9 sm:w-11 h-9 sm:h-11 bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-lg flex items-center justify-center'
                     }`}
                   >
-                    <span className="text-base sm:text-lg font-bold">
+                    <span className={`text-base sm:text-lg font-bold ${
+                      idx === missingValue && value === 0 ? 'text-white' : ''
+                    }`}>
                       {idx === missingValue && value === 0 ? (
                         userAnswer || '?'
                       ) : (
