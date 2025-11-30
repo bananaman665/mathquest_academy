@@ -137,19 +137,58 @@ function randomizeQuestionTypes(questions: Question[]): Question[] {
 }
 
 export default async function LevelPage({ params }: { params: Promise<{ levelId: string }> }) {
-  const { levelId: levelIdString } = await params
-  const levelId = parseInt(levelIdString)
-  const introduction = getIntroductionForLevel(levelId)
-  const baseQuestions = getQuestionsForLevel(levelId)
-  
-  // Randomize 10% of questions to new types
-  const questions = randomizeQuestionTypes(baseQuestions)
+  try {
+    const { levelId: levelIdString } = await params
+    const levelId = parseInt(levelIdString)
 
-  if (!introduction || questions.length === 0) {
+    console.log(`[Level ${levelId}] Loading level...`)
+
+    const introduction = getIntroductionForLevel(levelId)
+    console.log(`[Level ${levelId}] Introduction loaded:`, !!introduction)
+
+    const baseQuestions = getQuestionsForLevel(levelId)
+    console.log(`[Level ${levelId}] Base questions generated:`, baseQuestions.length)
+
+    // Skip randomization for fraction levels (41-45) to prevent issues
+    const questions = (levelId >= 41 && levelId <= 45)
+      ? baseQuestions
+      : randomizeQuestionTypes(baseQuestions)
+
+    console.log(`[Level ${levelId}] Questions after randomization:`, questions.length)
+
+    if (!introduction || questions.length === 0) {
+      console.error(`[Level ${levelId}] Missing data - intro: ${!!introduction}, questions: ${questions.length}`)
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Level Not Found</h1>
+            <Link href="/learn" className="text-blue-600 hover:underline">
+              Back to Learning Path
+            </Link>
+          </div>
+        </div>
+      )
+    }
+
+    // Automatically determine game mode based on level number (Duolingo-style)
+    const gameMode = getGameModeForLevel(levelId)
+    console.log(`[Level ${levelId}] Rendering with game mode:`, gameMode)
+
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Level Not Found</h1>
+      <LevelWrapper
+        levelId={levelId}
+        introduction={introduction}
+        questions={questions}
+        gameMode={gameMode}
+      />
+    )
+  } catch (error) {
+    console.error('[LevelPage] Error:', error)
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+        <div className="text-center max-w-md">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Error Loading Level</h1>
+          <p className="text-red-600 mb-4">{error instanceof Error ? error.message : 'Unknown error'}</p>
           <Link href="/learn" className="text-blue-600 hover:underline">
             Back to Learning Path
           </Link>
@@ -157,16 +196,4 @@ export default async function LevelPage({ params }: { params: Promise<{ levelId:
       </div>
     )
   }
-
-  // Automatically determine game mode based on level number (Duolingo-style)
-  const gameMode = getGameModeForLevel(levelId)
-
-  return (
-    <LevelWrapper 
-      levelId={levelId} 
-      introduction={introduction} 
-      questions={questions}
-      gameMode={gameMode}
-    />
-  )
 }
