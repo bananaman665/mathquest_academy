@@ -158,7 +158,7 @@ export default function LevelCompletePage() {
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
               >
                 <span className="flex items-center justify-center gap-2 text-base">
                   Continue
@@ -168,7 +168,7 @@ export default function LevelCompletePage() {
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
               >
                 <span className="flex items-center justify-center gap-2 text-base">
                   Back to Learn
