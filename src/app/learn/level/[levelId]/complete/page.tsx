@@ -2,7 +2,7 @@
 
 import { useSearchParams, useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Trophy, Star, Target, ArrowRight, Unlock, Zap } from 'lucide-react'
+import { Trophy, ArrowRight, Unlock } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useSoundEffects } from '@/hooks/useSoundEffects'
 import { levelConfigs } from '@/data/questionGenerator'
@@ -82,110 +82,103 @@ export default function LevelCompletePage() {
   }, [levelId, xp, correct, total])
 
   return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4 sm:p-6 pt-safe pb-safe">
+    <div className="min-h-screen bg-white flex items-center justify-center p-3 overflow-y-auto">
       {/* Loading Spinner Overlay */}
       {saving && (
-        <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-blue-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-700 font-medium">Saving progress...</p>
+            <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-3"></div>
+            <p className="text-gray-700 font-medium text-sm">Saving progress...</p>
           </div>
         </div>
       )}
 
-      <div className="max-w-2xl w-full my-auto">
+      <div className="max-w-md w-full py-4">
         {/* Success Card */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 text-center">
+        <div className="bg-white border-2 border-black rounded-2xl p-5 text-center">
           {/* Trophy Icon */}
-          <div className="mb-6">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-green-500 rounded-full flex items-center justify-center mx-auto">
-              <Trophy className="w-12 h-12 sm:w-14 sm:h-14 text-white" strokeWidth={2} />
+          <div className="mb-4">
+            <div className="w-16 h-16 bg-yellow-400 border-2 border-black rounded-full flex items-center justify-center mx-auto">
+              <Trophy className="w-8 h-8 text-black" strokeWidth={2.5} />
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Level Complete!
           </h1>
-          <p className="text-lg sm:text-xl text-gray-500 mb-8 sm:mb-10">
-            Amazing work! You&apos;re getting better at math!
+          <p className="text-base text-gray-600 mb-6">
+            Great job! Keep it up!
           </p>
 
-          {/* Stats Grid */}
-          <div className="mb-8 sm:mb-10">
-            {/* Accuracy - Full Width */}
-            <div className="bg-blue-100 rounded-2xl p-8 sm:p-10">
-              <Trophy className="w-12 h-12 text-blue-600 mx-auto mb-4" strokeWidth={2} />
-              <div className="text-5xl sm:text-6xl font-bold text-blue-600 mb-2">{accuracy}%</div>
-              <div className="text-lg text-blue-600/80 font-medium">Accuracy</div>
-            </div>
+          {/* Accuracy Card */}
+          <div className="bg-blue-500 border-2 border-black rounded-xl p-6 mb-5">
+            <div className="text-5xl font-bold text-white mb-1">{accuracy}%</div>
+            <div className="text-sm text-white font-semibold">Accuracy</div>
+            <div className="text-xs text-white/80 mt-1">{correct} of {total} correct</div>
           </div>
 
-          {/* Next Level Preview - New Feature */}
+          {/* Next Level Preview */}
           {hasNextLevel && nextLevel && (
-            <div className="bg-blue-50 rounded-2xl p-6 mb-8 sm:mb-10">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Unlock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+            <div className="bg-green-100 border-2 border-black rounded-xl p-4 mb-5">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-green-500 border-2 border-black rounded-full flex items-center justify-center flex-shrink-0">
+                  <Unlock className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
-                      UP NEXT
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
-                    Level {nextLevel.levelId}: {nextLevel.unit}
+                <div className="text-left flex-1">
+                  <div className="text-xs font-bold text-green-700 mb-1">UP NEXT</div>
+                  <h3 className="text-sm font-bold text-gray-900">
+                    Level {nextLevel.levelId}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-3">
-                    Ready to continue your math journey?
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs px-3 py-1.5 bg-white rounded-full text-blue-600 font-medium">
-                      {nextLevel.totalQuestions} Questions
-                    </span>
-                    <span className="text-xs px-3 py-1.5 bg-white rounded-full text-blue-600 font-medium flex items-center gap-1">
-                      {nextLevel.difficulty === 'easy' ? (
-                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Easy</>
-                      ) : nextLevel.difficulty === 'medium' ? (
-                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Medium</>
-                      ) : (
-                        <><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /><Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Hard</>
-                      )}
-                    </span>
-                  </div>
                 </div>
+              </div>
+              <p className="text-xs text-gray-700 text-left mb-2">
+                {nextLevel.unit}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                <span className="text-xs px-2 py-1 bg-white border border-black rounded-lg text-gray-700 font-medium">
+                  {nextLevel.totalQuestions} Questions
+                </span>
+                <span className="text-xs px-2 py-1 bg-white border border-black rounded-lg text-gray-700 font-medium flex items-center gap-1">
+                  {nextLevel.difficulty === 'easy' ? (
+                    <>Easy</>
+                  ) : nextLevel.difficulty === 'medium' ? (
+                    <>Medium</>
+                  ) : (
+                    <>Hard</>
+                  )}
+                </span>
               </div>
             </div>
           )}
 
           {/* Action Buttons */}
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
+                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-3.5 px-5 rounded-xl transition-colors"
               >
-                <span className="flex items-center justify-center gap-2 text-lg">
-                  Continue to Next Level
-                  <ArrowRight className="w-5 h-5" />
+                <span className="flex items-center justify-center gap-2">
+                  Continue
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </span>
               </Link>
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200"
+                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-3.5 px-5 rounded-xl transition-colors"
               >
-                <span className="flex items-center justify-center gap-2 text-lg">
+                <span className="flex items-center justify-center gap-2">
                   Back to Learn
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </span>
               </Link>
             )}
 
             <Link
               href="/learn"
-              className="block w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold py-4 px-6 rounded-xl transition-all duration-200 text-lg"
+              className="block w-full bg-white border-2 border-black hover:bg-gray-100 text-gray-900 font-semibold py-3.5 px-5 rounded-xl transition-colors"
             >
               Back to Home
             </Link>
