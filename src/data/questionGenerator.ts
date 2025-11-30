@@ -926,10 +926,13 @@ function generateQuestionByType(
   // Generate wrong answers for multiple choice
   const generateWrongAnswers = (correct: number, count: number = 3, isFraction: boolean = false, denominator?: number, isDecimal: boolean = false): string[] => {
     const wrong = new Set<string>()
-    
+    const MAX_ATTEMPTS = 100 // Prevent infinite loops
+
     if (isFraction && denominator) {
       // For fractions, generate wrong numerators
-      while (wrong.size < count) {
+      let attempts = 0
+      while (wrong.size < count && attempts < MAX_ATTEMPTS) {
+        attempts++
         const offset = rng.nextInt(-3, 3)
         const wrongNumerator = correct + offset
         if (wrongNumerator !== correct && wrongNumerator > 0 && wrongNumerator < denominator) {
@@ -937,18 +940,32 @@ function generateQuestionByType(
         }
       }
       // Ensure we have enough wrong answers
-      while (wrong.size < count) {
-        const randomNum = rng.nextInt(1, denominator)
+      attempts = 0
+      while (wrong.size < count && attempts < MAX_ATTEMPTS) {
+        attempts++
+        const randomNum = rng.nextInt(1, denominator - 1)
         if (randomNum !== correct) {
           wrong.add(`${randomNum}/${denominator}`)
+        }
+      }
+      // If still not enough, pad with different denominators
+      if (wrong.size < count) {
+        const paddingDenominators = [2, 3, 4, 5, 6, 8]
+        for (const d of paddingDenominators) {
+          if (wrong.size >= count) break
+          if (d !== denominator) {
+            wrong.add(`${Math.min(correct, d - 1)}/${d}`)
+          }
         }
       }
     } else if (isDecimal) {
       // For decimals, generate wrong answers with same precision
       const precision = correct.toString().split('.')[1]?.length || 1
       const multiplier = Math.pow(10, precision)
-      
-      while (wrong.size < count) {
+
+      let attempts = 0
+      while (wrong.size < count && attempts < MAX_ATTEMPTS) {
+        attempts++
         const offset = rng.nextInt(-5, 5) / multiplier
         const wrongAnswer = Math.round((correct + offset) * multiplier) / multiplier
         if (wrongAnswer !== correct && wrongAnswer >= 0) {
@@ -957,7 +974,9 @@ function generateQuestionByType(
       }
     } else {
       // Regular number wrong answers
-      while (wrong.size < count) {
+      let attempts = 0
+      while (wrong.size < count && attempts < MAX_ATTEMPTS) {
+        attempts++
         const offset = rng.nextInt(-5, 5)
         const wrongAnswer = correct + offset
         if (wrongAnswer !== correct && wrongAnswer >= 0) {
