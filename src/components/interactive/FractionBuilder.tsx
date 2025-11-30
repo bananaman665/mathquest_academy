@@ -106,36 +106,27 @@ export default function FractionBuilder({
       </div>
 
       {/* Control Buttons */}
-      <div className="flex justify-center gap-4">
-        {!hasSubmitted ? (
-          <>
-            <button
-              onClick={handleReset}
-              className="px-6 py-3 bg-gray-500 text-white font-bold text-lg rounded-full transform hover:scale-105 transition-all duration-200"
-            >
-              Clear All
-            </button>
-            <button
-              onClick={handleSubmit}
-              disabled={numerator === 0}
-              className={`px-8 py-3 font-bold text-lg rounded-full transition-all duration-200 ${
-                numerator === 0
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white transform hover:scale-105'
-              }`}
-            >
-              Submit Answer
-            </button>
-          </>
-        ) : (
+      {!hasSubmitted && (
+        <div className="flex justify-center gap-4">
           <button
-            onClick={() => onAnswer(numerator === correctNumerator, `${numerator}/${denominator}`)}
-            className="px-8 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold text-lg rounded-full transform hover:scale-105 transition-all duration-200"
+            onClick={handleReset}
+            className="px-6 py-3 bg-gray-500 text-white font-bold text-lg rounded-full transform hover:scale-105 transition-all duration-200"
           >
-            Continue
+            Clear All
           </button>
-        )}
-      </div>
+          <button
+            onClick={handleSubmit}
+            disabled={numerator === 0}
+            className={`px-8 py-3 font-bold text-lg rounded-full transition-all duration-200 ${
+              numerator === 0
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white transform hover:scale-105'
+            }`}
+          >
+            Submit Answer
+          </button>
+        </div>
+      )}
 
       {/* Result */}
       {hasSubmitted && (
