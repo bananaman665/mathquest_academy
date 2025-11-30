@@ -93,43 +93,43 @@ export default function LevelCompletePage() {
         </div>
       )}
 
-      <div className="max-w-md w-full py-4">
+      <div className="max-w-md w-full py-6">
         {/* Success Card */}
-        <div className="bg-white rounded-2xl p-5 text-center">
+        <div className="bg-white rounded-2xl p-6 text-center">
           {/* Trophy Icon */}
-          <div className="mb-4">
-            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto">
-              <Trophy className="w-8 h-8 text-white" strokeWidth={2.5} />
+          <div className="mb-6">
+            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto">
+              <Trophy className="w-10 h-10 text-white" strokeWidth={2.5} />
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">
             Level Complete!
           </h1>
-          <p className="text-base text-gray-600 mb-6">
+          <p className="text-lg text-gray-600 mb-8">
             Great job! Keep it up!
           </p>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             {/* Accuracy */}
-            <div className="bg-blue-500 rounded-xl p-4 col-span-2">
+            <div className="bg-blue-500 rounded-xl p-6 col-span-2">
               <div className="text-5xl font-bold text-white mb-1">{accuracy}%</div>
               <div className="text-sm text-white font-semibold">Accuracy</div>
               <div className="text-xs text-white/80 mt-1">{correct} of {total} correct</div>
             </div>
 
             {/* XP Earned */}
-            <div className="bg-purple-500 rounded-xl p-4">
-              <Zap className="w-5 h-5 text-white mx-auto mb-1" strokeWidth={2.5} />
+            <div className="bg-purple-500 rounded-xl p-5">
+              <Zap className="w-6 h-6 text-white mx-auto mb-2" strokeWidth={2.5} />
               <div className="text-2xl font-bold text-white">{xp}</div>
               <div className="text-xs text-white/90 font-medium">XP Earned</div>
             </div>
 
             {/* Questions */}
-            <div className="bg-orange-500 rounded-xl p-4">
-              <Target className="w-5 h-5 text-white mx-auto mb-1" strokeWidth={2.5} />
+            <div className="bg-orange-500 rounded-xl p-5">
+              <Target className="w-6 h-6 text-white mx-auto mb-2" strokeWidth={2.5} />
               <div className="text-2xl font-bold text-white">{total}</div>
               <div className="text-xs text-white/90 font-medium">Questions</div>
             </div>
@@ -137,7 +137,7 @@ export default function LevelCompletePage() {
 
           {/* Next Level Preview */}
           {hasNextLevel && nextLevel && (
-            <div className="bg-green-100 rounded-xl p-4 mb-5">
+            <div className="bg-green-100 rounded-xl p-5 mb-6">
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Unlock className="w-5 h-5 text-white" strokeWidth={2.5} />
@@ -154,32 +154,32 @@ export default function LevelCompletePage() {
           )}
 
           {/* Action Buttons */}
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {hasNextLevel ? (
               <Link
                 href={`/learn/level/${levelId + 1}`}
-                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-3.5 px-5 rounded-xl transition-colors"
+                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
               >
-                <span className="flex items-center justify-center gap-2">
+                <span className="flex items-center justify-center gap-2 text-base">
                   Continue
-                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                  <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
                 </span>
               </Link>
             ) : (
               <Link
                 href="/learn"
-                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-3.5 px-5 rounded-xl transition-colors"
+                className="block w-full bg-green-500 border-2 border-black hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-colors"
               >
-                <span className="flex items-center justify-center gap-2">
+                <span className="flex items-center justify-center gap-2 text-base">
                   Back to Learn
-                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                  <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
                 </span>
               </Link>
             )}
 
             <Link
               href="/learn"
-              className="block w-full bg-white border-2 border-black hover:bg-gray-100 text-gray-900 font-semibold py-3.5 px-5 rounded-xl transition-colors"
+              className="block w-full bg-white border-2 border-black hover:bg-gray-100 text-gray-900 font-semibold py-4 px-6 rounded-xl transition-colors text-base"
             >
               Back to Home
             </Link>
