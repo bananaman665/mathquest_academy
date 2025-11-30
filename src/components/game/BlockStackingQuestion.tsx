@@ -87,7 +87,7 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-1.5 px-3 pb-24">
+      <div className="flex flex-col items-center gap-1.5 px-3 pb-2">
         {/* Main workspace */}
         <div className="flex flex-col gap-1.5 items-center w-full max-w-7xl">
           {/* Your Stack - Top Zone */}
