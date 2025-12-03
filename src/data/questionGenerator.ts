@@ -1020,16 +1020,30 @@ function generateQuestionByType(
       
       if (isFraction && levelId === 42) {
         // Level 42: Comparison - provide the two fractions as options
-        const fraction1 = `${num1}/${num2}`
-        const fraction2 = `${answer}/${num2}`
-        const greater = num1 > answer ? fraction1 : fraction2
-        correctAnswerString = greater
-        wrongAnswers = [num1 > answer ? fraction2 : fraction1] // The other fraction
-        // Add some other fractions as distractors
-        const distractor1 = `${Math.max(1, num1 - 1)}/${num2}`
-        const distractor2 = `${Math.min(num2 - 1, answer + 1)}/${num2}`
-        if (distractor1 !== fraction1 && distractor1 !== fraction2) wrongAnswers.push(distractor1)
-        if (distractor2 !== fraction1 && distractor2 !== fraction2 && wrongAnswers.length < 3) wrongAnswers.push(distractor2)
+        const greaterNum = Math.max(num1, answer) // The larger numerator
+        const lesserNum = Math.min(num1, answer)  // The smaller numerator
+        correctAnswerString = `${greaterNum}/${num2}`
+
+        // Wrong answers must all be SMALLER than the correct answer
+        wrongAnswers = [`${lesserNum}/${num2}`] // The smaller fraction from the comparison
+
+        // Add distractors that are smaller than the correct answer
+        if (greaterNum > 2) {
+          const distractor1 = `${greaterNum - 2}/${num2}`
+          if (distractor1 !== `${lesserNum}/${num2}` && parseInt(distractor1.split('/')[0]) > 0) {
+            wrongAnswers.push(distractor1)
+          }
+        }
+        if (greaterNum > 1 && wrongAnswers.length < 3) {
+          const distractor2 = `${greaterNum - 1}/${num2}`
+          if (!wrongAnswers.includes(distractor2) && parseInt(distractor2.split('/')[0]) > 0) {
+            wrongAnswers.push(distractor2)
+          }
+        }
+        // If still need more wrong answers, add smaller fractions
+        if (wrongAnswers.length < 3 && lesserNum > 1) {
+          wrongAnswers.push(`${Math.max(1, lesserNum - 1)}/${num2}`)
+        }
       } else if (isFraction && (levelId === 41 || levelId === 45)) {
         // Levels 41, 45: Identify fractions
         wrongAnswers = generateWrongAnswers(answer, 3, true, num2, false)
