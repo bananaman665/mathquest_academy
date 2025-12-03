@@ -51,15 +51,15 @@ export default function FractionBuilder({
   const numerator = filledSegments.size
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full max-w-2xl mx-auto px-4 py-2">
       {/* Question */}
-      <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">{question}</h3>
-        <p className="text-lg text-gray-600">Tap the segments to fill them</p>
+      <div className="text-center mb-4">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">{question}</h3>
+        <p className="text-sm sm:text-base text-gray-600">Tap segments to fill them</p>
       </div>
 
       {/* Shape Display */}
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-center mb-4">
         {shape === 'circle' ? (
           <CircleShape
             segments={segments}
@@ -80,10 +80,10 @@ export default function FractionBuilder({
       </div>
 
       {/* Fraction Display */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-4">
         <div className="inline-block">
           <div className="text-center">
-            <div className={`text-6xl font-bold transition-colors duration-300 ${
+            <div className={`text-4xl sm:text-5xl font-bold transition-colors duration-300 ${
               hasSubmitted
                 ? numerator === correctNumerator
                   ? 'text-green-600'
@@ -92,14 +92,14 @@ export default function FractionBuilder({
             }`}>
               {numerator}
             </div>
-            <div className="w-full h-1 bg-gray-800 my-2"></div>
-            <div className="text-6xl font-bold text-gray-800">{denominator}</div>
+            <div className="w-full h-1 bg-gray-800 my-1"></div>
+            <div className="text-4xl sm:text-5xl font-bold text-gray-800">{denominator}</div>
           </div>
         </div>
 
         {/* Fraction Name */}
-        <div className="mt-4 text-xl text-gray-700">
-          {numerator === 0 ? 'None selected' : 
+        <div className="mt-2 text-base sm:text-lg text-gray-700">
+          {numerator === 0 ? 'None selected' :
            numerator === denominator ? 'One whole' :
            `${numerator} out of ${denominator}`}
         </div>
@@ -107,17 +107,17 @@ export default function FractionBuilder({
 
       {/* Control Buttons */}
       {!hasSubmitted && (
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-3">
           <button
             onClick={handleReset}
-            className="px-6 py-3 bg-gray-500 text-white font-bold text-lg rounded-full transform hover:scale-105 transition-all duration-200"
+            className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-500 text-white font-bold text-base sm:text-lg rounded-full transform hover:scale-105 transition-all duration-200"
           >
             Clear All
           </button>
           <button
             onClick={handleSubmit}
             disabled={numerator === 0}
-            className={`px-8 py-3 font-bold text-lg rounded-full transition-all duration-200 ${
+            className={`px-5 py-2 sm:px-8 sm:py-3 font-bold text-base sm:text-lg rounded-full transition-all duration-200 ${
               numerator === 0
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white transform hover:scale-105'
@@ -131,24 +131,24 @@ export default function FractionBuilder({
       {/* Result */}
       {hasSubmitted && (
         <motion.div
-          className="mt-8 text-center"
+          className="mt-4 text-center"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', duration: 0.5 }}
         >
           {numerator === correctNumerator ? (
-            <div className="bg-green-100 border-4 border-green-500 rounded-2xl p-6">
-              <div className="text-6xl mb-2">🎉</div>
-              <div className="text-2xl font-bold text-green-700">Excellent!</div>
-              <div className="text-lg text-green-600 mt-2">
+            <div className="bg-green-100 border-4 border-green-500 rounded-2xl p-4">
+              <div className="text-4xl sm:text-5xl mb-2">🎉</div>
+              <div className="text-xl sm:text-2xl font-bold text-green-700">Excellent!</div>
+              <div className="text-base sm:text-lg text-green-600 mt-1">
                 You built {correctNumerator}/{denominator} perfectly!
               </div>
             </div>
           ) : (
-            <div className="bg-red-100 border-4 border-red-500 rounded-2xl p-6">
-              <div className="text-6xl mb-2">🤔</div>
-              <div className="text-2xl font-bold text-red-700">Not quite!</div>
-              <div className="text-lg text-red-600 mt-2">
+            <div className="bg-red-100 border-4 border-red-500 rounded-2xl p-4">
+              <div className="text-4xl sm:text-5xl mb-2">🤔</div>
+              <div className="text-xl sm:text-2xl font-bold text-red-700">Not quite!</div>
+              <div className="text-base sm:text-lg text-red-600 mt-1">
                 You made {numerator}/{denominator}, but the answer is {correctNumerator}/{denominator}
               </div>
             </div>

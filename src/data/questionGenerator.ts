@@ -769,9 +769,20 @@ function generateQuestion(
         answer = num1 // for fraction identification
       } else if (levelId === 42) {
         // Level 42: Comparing Fractions (same denominator)
-        num2 = rng.nextInt(2, 8) // denominator
-        num1 = rng.nextInt(1, num2 - 1) // numerator
-        answer = rng.nextInt(1, num2 - 1) // second numerator to compare
+        num2 = rng.nextInt(3, 8) // denominator (at least 3 to have room for different fractions)
+        num1 = rng.nextInt(1, num2 - 1) // first numerator
+        // Generate second numerator that's different from first
+        let tempAnswer = rng.nextInt(1, num2 - 1)
+        let attempts = 0
+        while (tempAnswer === num1 && attempts < 50) {
+          tempAnswer = rng.nextInt(1, num2 - 1)
+          attempts++
+        }
+        // If still same after attempts, just add/subtract 1
+        if (tempAnswer === num1) {
+          tempAnswer = num1 === 1 ? num1 + 1 : num1 - 1
+        }
+        answer = tempAnswer // second numerator to compare
       } else if (levelId === 43) {
         // Level 43: Adding Fractions (same denominator)
         num2 = rng.nextInt(3, 8) // denominator (at least 3 to have room for addition)
@@ -1062,26 +1073,26 @@ function generateQuestionByType(
         // Fraction questions
         if (levelId === 41) {
           // Level 41: Identify fractions
-          questionText = `What fraction is shown?`
-          explanationText = `The fraction is ${num1}/${num2} (${num1} out of ${num2} parts)`
+          questionText = `What fraction represents ${num1} out of ${num2} equal parts?`
+          explanationText = `${num1} out of ${num2} equal parts is ${num1}/${num2}`
         } else if (levelId === 42) {
           // Level 42: Compare fractions
-          questionText = `Which is greater: ${num1}/${num2} or ${answer}/${num2}?`
+          questionText = `Which fraction is greater?`
           const greater = num1 > answer ? num1 : answer
-          explanationText = `${greater}/${num2} is greater because ${greater} parts is more than ${num1 === greater ? answer : num1} parts`
+          explanationText = `${greater}/${num2} is greater than ${num1 === greater ? answer : num1}/${num2}`
         } else if (levelId === 43) {
           // Level 43: Add fractions
           const num3 = answer - num1 // second addend
-          questionText = `${num1}/${num2} + ${num3}/${num2} = ?`
+          questionText = `Add these fractions: ${num1}/${num2} + ${num3}/${num2}`
           explanationText = `${num1}/${num2} + ${num3}/${num2} = ${answer}/${num2}`
         } else if (levelId === 44) {
           // Level 44: Subtract fractions
           const subtrahend = num1 - answer
-          questionText = `${num1}/${num2} − ${subtrahend}/${num2} = ?`
+          questionText = `Subtract: ${num1}/${num2} − ${subtrahend}/${num2}`
           explanationText = `${num1}/${num2} − ${subtrahend}/${num2} = ${answer}/${num2}`
         } else {
           // Level 45: Mixed
-          questionText = `What fraction is ${num1} out of ${num2}?`
+          questionText = `What fraction represents ${num1} out of ${num2}?`
           explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
         }
       } else if (operation === 'decimals') {
@@ -1206,27 +1217,28 @@ function generateQuestionByType(
           const fraction1 = `${num1}/${num2}`
           const fraction2 = `${answer}/${num2}`
           const greater = num1 > answer ? fraction1 : fraction2
-          questionText = `Which is greater: ${fraction1} or ${fraction2}? (Type the larger fraction)`
-          explanationText = `${greater} is greater because ${num1 > answer ? num1 : answer} parts is more than ${num1 > answer ? answer : num1} parts`
+          const lesser = num1 > answer ? fraction2 : fraction1
+          questionText = `Which fraction is greater? Type your answer as a fraction (e.g., 3/4)`
+          explanationText = `${greater} is greater than ${lesser}`
           correctAnswerString = greater
           acceptableAnswersList = [greater]
         } else if (levelId === 43) {
           // Addition
           const num3 = answer - num1
-          questionText = `${num1}/${num2} + ${num3}/${num2} = ? (Type as fraction like 3/4)`
+          questionText = `Add: ${num1}/${num2} + ${num3}/${num2} (Type as fraction)`
           explanationText = `${num1}/${num2} + ${num3}/${num2} = ${answer}/${num2}`
           correctAnswerString = `${answer}/${num2}`
           acceptableAnswersList = [`${answer}/${num2}`]
         } else if (levelId === 44) {
           // Subtraction
           const subtrahend = num1 - answer
-          questionText = `${num1}/${num2} − ${subtrahend}/${num2} = ? (Type as fraction like 2/5)`
+          questionText = `Subtract: ${num1}/${num2} − ${subtrahend}/${num2} (Type as fraction)`
           explanationText = `${num1}/${num2} − ${subtrahend}/${num2} = ${answer}/${num2}`
           correctAnswerString = `${answer}/${num2}`
           acceptableAnswersList = [`${answer}/${num2}`]
         } else {
           // Default fraction identification
-          questionText = `What fraction is ${num1} out of ${num2}? (Type as fraction)`
+          questionText = `Type the fraction for ${num1} out of ${num2}`
           explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
           correctAnswerString = `${num1}/${num2}`
           acceptableAnswersList = [`${num1}/${num2}`]
@@ -1464,32 +1476,32 @@ function generateQuestionByType(
       let explanationText: string
       
       if (levelId === 41) {
-        // Introduction: "What fraction is shown?"
-        questionText = `What fraction is shown?`
+        // Introduction: Build the fraction by clicking segments
+        questionText = `Build the fraction ${numerator}/${denominator}`
         correctAnswer = `${numerator}/${denominator}`
-        explanationText = `The fraction shows ${numerator} out of ${denominator} parts: ${numerator}/${denominator}`
+        explanationText = `Tap ${numerator} out of ${denominator} segments to make ${numerator}/${denominator}`
       } else if (levelId === 42) {
         // Comparing: Show two fractions
-        questionText = `Which fraction is larger?`
-        correctAnswer = numerator > answer ? `${numerator}/${denominator}` : `${answer}/${denominator}`
-        explanationText = `${correctAnswer} is larger because it has more shaded parts`
+        questionText = `Build the fraction ${numerator}/${denominator}`
+        correctAnswer = `${numerator}/${denominator}`
+        explanationText = `You built ${numerator}/${denominator} correctly!`
       } else if (levelId === 43) {
-        // Adding: Calculate sum
+        // Adding: Build the result
         const num3 = answer - numerator
-        questionText = `${numerator}/${denominator} + ${num3}/${denominator} = ?`
+        questionText = `Build ${numerator}/${denominator} + ${num3}/${denominator}`
         correctAnswer = `${answer}/${denominator}`
         explanationText = `${numerator}/${denominator} + ${num3}/${denominator} = ${answer}/${denominator}`
       } else if (levelId === 44) {
-        // Subtracting: Calculate difference
+        // Subtracting: Build the result
         const subtrahend = numerator - answer
-        questionText = `${numerator}/${denominator} − ${subtrahend}/${denominator} = ?`
+        questionText = `Build ${numerator}/${denominator} − ${subtrahend}/${denominator}`
         correctAnswer = `${answer}/${denominator}`
         explanationText = `${numerator}/${denominator} − ${subtrahend}/${denominator} = ${answer}/${denominator}`
       } else {
         // Level 45: Mixed practice
-        questionText = `What fraction is shown?`
+        questionText = `Build the fraction ${numerator}/${denominator}`
         correctAnswer = `${numerator}/${denominator}`
-        explanationText = `The fraction is ${numerator}/${denominator}`
+        explanationText = `You built ${numerator}/${denominator} correctly!`
       }
       
       return {
