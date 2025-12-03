@@ -1232,27 +1232,27 @@ function generateQuestionByType(
           const fraction2 = `${answer}/${num2}`
           const greater = num1 > answer ? fraction1 : fraction2
           const lesser = num1 > answer ? fraction2 : fraction1
-          questionText = `Which fraction is greater? Type your answer as a fraction (e.g., 3/4)`
+          questionText = `${fraction1} or ${fraction2}?`
           explanationText = `${greater} is greater than ${lesser}`
           correctAnswerString = greater
           acceptableAnswersList = [greater]
         } else if (levelId === 43) {
           // Addition
           const num3 = answer - num1
-          questionText = `Add: ${num1}/${num2} + ${num3}/${num2} (Type as fraction)`
+          questionText = `${num1}/${num2} + ${num3}/${num2} = ?`
           explanationText = `${num1}/${num2} + ${num3}/${num2} = ${answer}/${num2}`
           correctAnswerString = `${answer}/${num2}`
           acceptableAnswersList = [`${answer}/${num2}`]
         } else if (levelId === 44) {
           // Subtraction
           const subtrahend = num1 - answer
-          questionText = `Subtract: ${num1}/${num2} − ${subtrahend}/${num2} (Type as fraction)`
+          questionText = `${num1}/${num2} − ${subtrahend}/${num2} = ?`
           explanationText = `${num1}/${num2} − ${subtrahend}/${num2} = ${answer}/${num2}`
           correctAnswerString = `${answer}/${num2}`
           acceptableAnswersList = [`${answer}/${num2}`]
         } else {
           // Default fraction identification
-          questionText = `Type the fraction for ${num1} out of ${num2}`
+          questionText = `${num1} out of ${num2} = ?`
           explanationText = `${num1} out of ${num2} is ${num1}/${num2}`
           correctAnswerString = `${num1}/${num2}`
           acceptableAnswersList = [`${num1}/${num2}`]

@@ -9,15 +9,17 @@ interface NumberKeyboardProps {
   maxLength?: number
   allowNegative?: boolean
   allowDecimal?: boolean
+  allowFraction?: boolean
   disabled?: boolean
 }
 
-export default function NumberKeyboard({ 
-  value, 
-  onChange, 
+export default function NumberKeyboard({
+  value,
+  onChange,
   maxLength = 10,
   allowNegative = false,
   allowDecimal = false,
+  allowFraction = false,
   disabled = false
 }: NumberKeyboardProps) {
   const handleKeyPress = (key: string) => {
@@ -37,6 +39,10 @@ export default function NumberKeyboard({
       if (!value.includes('.')) {
         newValue = value + '.'
       }
+    } else if (key === '/' && allowFraction) {
+      if (!value.includes('/')) {
+        newValue = value + '/'
+      }
     } else if (key >= '0' && key <= '9') {
       if (value.length < maxLength) {
         newValue = value + key
@@ -50,7 +56,7 @@ export default function NumberKeyboard({
     ['1', '2', '3'],
     ['4', '5', '6'],
     ['7', '8', '9'],
-    [allowNegative ? '-' : '', '0', 'backspace']
+    [allowFraction ? '/' : (allowNegative ? '-' : ''), '0', 'backspace']
   ]
 
   return (

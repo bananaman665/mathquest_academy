@@ -1145,8 +1145,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 value={typedAnswer}
                 onChange={setTypedAnswer}
                 disabled={showExplanation}
-                allowNegative={true}
+                allowNegative={levelId < 41 || levelId > 45}
                 allowDecimal={false}
+                allowFraction={levelId >= 41 && levelId <= 45}
                 maxLength={10}
               />
             </div>
