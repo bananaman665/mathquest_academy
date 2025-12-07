@@ -225,8 +225,8 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         const isPurchasing = purchasingItem === item.id
         const isPowerUp = item.category === 'power-ups'
 
-        // V2 items that aren't available yet
-        const v2Items = ['mega-brain', 'time-warp', 'combo-master', 'lucky-charm']
+        // V2 items that aren't available yet - ALL POWER-UPS DISABLED FOR NOW
+        const v2Items = ['freebie', 'skip-token', 'mega-brain', 'time-warp', 'combo-master', 'lucky-charm', 'shield']
         const isV2Item = v2Items.includes(item.id)
 
         return (

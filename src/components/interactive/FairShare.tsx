@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Circle } from 'lucide-react';
 
 interface FairShareProps {
   totalItems: number;
@@ -67,59 +65,76 @@ export default function FairShare({
   }, [groupCounts, remainingItems, submitted, itemsPerGroup, remainder]);
 
   return (
-    <div className="flex flex-col items-center gap-3 p-3 pb-24">
-      {/* Instructions */}
-      <div className="text-center">
-        <div className="text-lg font-bold text-black">
-          Share {totalItems} dots equally among {numGroups} groups
+    <div className="flex flex-col items-center w-full max-w-lg mx-auto px-4 pb-24">
+      {/* Available Items Section */}
+      <div className="w-full mb-6">
+        <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 text-center">
+          Available
+        </div>
+        <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200">
+          <div className="flex flex-wrap gap-2 justify-center min-h-[48px]">
+            {remainingItems > 0 ? (
+              Array.from({ length: remainingItems }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-blue-500 rounded-full shadow-sm"
+                />
+              ))
+            ) : (
+              <div className="text-gray-400 text-sm py-2">All distributed</div>
+            )}
+          </div>
+          <div className="text-center mt-3 text-2xl font-bold text-gray-900">
+            {remainingItems}
+          </div>
         </div>
       </div>
 
-      {/* Remaining Items */}
-      <div className="bg-white rounded-xl p-3 border-2 border-black">
-        <div className="flex flex-wrap gap-1 justify-center max-w-md">
-          {Array.from({ length: remainingItems }).map((_, i) => (
-            <Circle key={i} className="w-6 h-6 fill-blue-500 text-blue-500" />
+      {/* Groups Section */}
+      <div className="w-full mb-6">
+        <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 text-center">
+          Tap a group to add
+        </div>
+        <div className={`grid gap-3 ${numGroups <= 2 ? 'grid-cols-2' : numGroups <= 4 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+          {groupCounts.map((count, groupIdx) => (
+            <button
+              key={groupIdx}
+              onClick={() => handleDistribute(groupIdx)}
+              disabled={remainingItems === 0}
+              className={`
+                rounded-2xl p-4 transition-all
+                ${remainingItems === 0
+                  ? 'bg-gray-100 border-2 border-gray-200 cursor-not-allowed'
+                  : 'bg-white border-2 border-gray-200 hover:border-blue-400 hover:shadow-md active:scale-[0.98]'
+                }
+              `}
+            >
+              <div className="text-xs font-medium text-gray-400 mb-2">
+                Group {groupIdx + 1}
+              </div>
+              <div className="flex flex-wrap gap-1.5 justify-center min-h-[40px] mb-2">
+                {Array.from({ length: count }).map((_, itemIdx) => (
+                  <div
+                    key={itemIdx}
+                    className="w-6 h-6 bg-emerald-500 rounded-full"
+                  />
+                ))}
+              </div>
+              <div className="text-2xl font-bold text-gray-900">
+                {count}
+              </div>
+            </button>
           ))}
         </div>
-        <div className="text-center mt-1 text-lg font-bold text-black">
-          {remainingItems} left
-        </div>
       </div>
 
-      {/* Groups */}
-      <div className="flex flex-wrap gap-2 justify-center max-w-4xl">
-        {groupCounts.map((count, groupIdx) => (
-          <button
-            key={groupIdx}
-            onClick={() => handleDistribute(groupIdx)}
-            disabled={remainingItems === 0}
-            className="bg-green-500 text-white rounded-xl p-3 border-2 border-green-500 min-w-[100px] cursor-pointer disabled:cursor-not-allowed"
-          >
-            <div className="text-xs font-bold text-white mb-1 text-center">
-              Group {groupIdx + 1}
-            </div>
-            <div className="flex flex-wrap gap-0.5 justify-center mb-1 min-h-[40px]">
-              {Array.from({ length: count }).map((_, itemIdx) => (
-                <Circle key={itemIdx} className="w-5 h-5 fill-white text-white" />
-              ))}
-            </div>
-            <div className="text-center text-sm font-bold text-white">
-              {count}
-            </div>
-          </button>
-        ))}
-      </div>
-
-      {/* Controls */}
-      <div className="flex gap-2">
-        <button
-          onClick={handleAutoDistribute}
-          className="px-4 py-2 bg-blue-500 text-white text-sm font-bold rounded-full"
-        >
-          Auto Share
-        </button>
-      </div>
+      {/* Auto Share Button */}
+      <button
+        onClick={handleAutoDistribute}
+        className="px-6 py-3 bg-gray-900 text-white text-sm font-semibold rounded-full hover:bg-gray-800 transition-colors"
+      >
+        Auto Distribute
+      </button>
     </div>
   );
 }

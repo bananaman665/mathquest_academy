@@ -148,9 +148,10 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
       const timer = setInterval(() => {
         setGameTimer(prev => {
           if (prev <= 1) {
-            // Time's up! Set hearts to 0 to trigger game over modal
-            setHearts(0)
-            setShowGameOverModal(true)
+            // Time's up! End speed round
+            // DISABLED: Infinite hearts mode - no game over
+            // setHearts(0)
+            // setShowGameOverModal(true)
             return 0
           }
           return prev - 1
@@ -190,11 +191,12 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
   }, [currentQuestionIndex, gameMode, showExplanation])
 
   // Game Over Effect - Check if hearts reach 0
-  useEffect(() => {
+  // DISABLED: Infinite hearts mode - no game over
+  /* useEffect(() => {
     if (hearts === 0 && phase === 'practice') {
       setShowGameOverModal(true)
     }
-  }, [hearts, phase])
+  }, [hearts, phase]) */
 
   const handleStartPractice = () => {
     setPhase('practice')
@@ -400,10 +402,11 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
 
   const handleSubmit = () => {
     // Prevent submitting if no hearts left
-    if (hearts === 0) {
+    // DISABLED: Infinite hearts mode
+    /* if (hearts === 0) {
       setShowGameOverModal(true)
       return
-    }
+    } */
 
     // Handle interactive components with their own submit logic
     if (interactiveSubmitFn && (
@@ -610,7 +613,8 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
     }
 
     // No shield - lose a heart normally
-    setHearts(prev => Math.max(0, prev - 1))
+    // DISABLED: Infinite hearts mode
+    // setHearts(prev => Math.max(0, prev - 1))
   }
 
   // Handle using Freebie power-up
@@ -921,7 +925,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
               <div className="flex items-center gap-1 sm:gap-2 bg-red-100 px-2 sm:px-4 py-1 sm:py-2 rounded-xl">
                 <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 fill-red-500" />
                 <span className="text-red-500 font-bold text-lg sm:text-xl">
-                  {hearts + (extraHeartsCount * 5)}
+                  ∞
                 </span>
               </div>
             )}

@@ -30,11 +30,9 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
   // Initialize blocks based on operation
   useEffect(() => {
     if (operation === 'add') {
-      // For addition: start with firstNumber in stack, secondNumber in trash to add
       setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `stack-block-${i}`))
       setTrashBlocks(Array.from({ length: secondNumber }, (_, i) => `trash-block-${i}`))
     } else {
-      // For subtraction: start with firstNumber in stack, remove secondNumber
       setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `block-${i}`))
       setTrashBlocks([])
     }
@@ -58,21 +56,14 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
     const { source, destination, draggableId } = result
 
     if (!destination) return
-
-    // Prevent reordering within the same container - no shuffle animation
     if (source.droppableId === destination.droppableId) return
 
-    // If dragging from stack to trash (for subtraction)
     if (source.droppableId === 'stack' && destination.droppableId === 'trash') {
-      if (operation === 'subtract' || operation === 'add') {
-        const newStack = stackBlocks.filter((_, idx) => idx !== source.index)
-        const newTrash = [...trashBlocks, draggableId]
-        setStackBlocks(newStack)
-        setTrashBlocks(newTrash)
-      }
-    }
-    // If dragging from trash back to stack
-    else if (source.droppableId === 'trash' && destination.droppableId === 'stack') {
+      const newStack = stackBlocks.filter((_, idx) => idx !== source.index)
+      const newTrash = [...trashBlocks, draggableId]
+      setStackBlocks(newStack)
+      setTrashBlocks(newTrash)
+    } else if (source.droppableId === 'trash' && destination.droppableId === 'stack') {
       const newTrash = trashBlocks.filter((_, idx) => idx !== source.index)
       const newStack = [...stackBlocks, draggableId]
       setStackBlocks(newStack)
@@ -87,117 +78,122 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col items-center gap-1.5 px-3 pb-2">
-        {/* Main workspace */}
-        <div className="flex flex-col gap-1.5 items-center w-full max-w-7xl">
-          {/* Your Stack - Top Zone */}
-          <div className="w-full">
-            <div className="text-center mb-1.5">
-              <div className="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
-                {stackBlocks.length}
+      <div className="flex flex-col w-full max-w-md mx-auto px-4 pb-24">
+        {/* Answer Zone */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+              Answer
+            </span>
+            <span className="text-2xl font-bold text-gray-900">
+              {stackBlocks.length}
+            </span>
+          </div>
+          <Droppable droppableId="stack">
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={`
+                  flex flex-wrap content-start gap-2 p-4 rounded-2xl min-h-[140px] transition-all
+                  ${snapshot.isDraggingOver
+                    ? 'bg-blue-50 border-2 border-blue-400'
+                    : 'bg-gray-50 border-2 border-gray-200'
+                  }
+                `}
+              >
+                {stackBlocks.length === 0 ? (
+                  <div className="w-full flex items-center justify-center text-gray-400 text-sm">
+                    Drag blocks here
+                  </div>
+                ) : (
+                  stackBlocks.map((blockId, idx) => (
+                    <Draggable key={blockId} draggableId={blockId} index={idx}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`
+                            w-12 h-12 bg-blue-500 rounded-xl cursor-grab
+                            flex items-center justify-center
+                            ${snapshot.isDragging ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm hover:shadow-md'}
+                            transition-shadow
+                          `}
+                          style={provided.draggableProps.style}
+                        >
+                          <div className="w-5 h-5 bg-white/30 rounded-full" />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))
+                )}
+                <div className="hidden">{provided.placeholder}</div>
               </div>
-            </div>
-            <Droppable droppableId="stack">
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all min-h-[150px] bg-white ${
-                    snapshot.isDraggingOver
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-black'
-                  }`}
-                >
-                  {stackBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-4 text-xs font-semibold">
-                      Empty Stack
-                    </div>
-                  ) : (
-                    stackBlocks.map((blockId, idx) => (
-                      <Draggable key={blockId} draggableId={blockId} index={idx}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-xl cursor-grab flex items-center justify-center ${
-                              snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-6 transition-transform'
-                                : 'hover:scale-105 active:scale-95 transition-transform'
-                            }`}
-                            style={{
-                              ...provided.draggableProps.style,
-                              transition: snapshot.isDragging ? 'transform 0.2s' : 'transform 0.1s',
-                            }}
-                          >
-                            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))
-                  )}
-                  <div style={{ display: 'none' }}>{provided.placeholder}</div>
-                </div>
-              )}
-            </Droppable>
-          </div>
+            )}
+          </Droppable>
+        </div>
 
-          {/* Divider */}
-          <div className="w-full max-w-md py-0.5">
-            <div className="h-0.5 bg-black rounded-full"></div>
-          </div>
+        {/* Divider */}
+        <div className="flex items-center gap-3 my-2">
+          <div className="flex-1 h-px bg-gray-200" />
+          <span className="text-xs font-medium text-gray-400">DRAG TO MOVE</span>
+          <div className="flex-1 h-px bg-gray-200" />
+        </div>
 
-          {/* Tokens Zone - Bottom Zone */}
-          <div className="w-full">
-            <div className="text-center mb-1.5">
-              <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-lg font-bold text-lg border-2 border-black">
-                {trashBlocks.length}
+        {/* Available Zone */}
+        <div className="mt-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+              {operation === 'add' ? 'Add these' : 'Removed'}
+            </span>
+            <span className="text-2xl font-bold text-gray-900">
+              {trashBlocks.length}
+            </span>
+          </div>
+          <Droppable droppableId="trash">
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={`
+                  flex flex-wrap content-start gap-2 p-4 rounded-2xl min-h-[140px] transition-all
+                  ${snapshot.isDraggingOver
+                    ? 'bg-emerald-50 border-2 border-emerald-400'
+                    : 'bg-gray-50 border-2 border-gray-200'
+                  }
+                `}
+              >
+                {trashBlocks.length === 0 ? (
+                  <div className="w-full flex items-center justify-center text-gray-400 text-sm">
+                    {operation === 'add' ? 'All added' : 'Drag blocks here to remove'}
+                  </div>
+                ) : (
+                  trashBlocks.map((blockId, idx) => (
+                    <Draggable key={blockId} draggableId={blockId} index={idx}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`
+                            w-12 h-12 bg-emerald-500 rounded-xl cursor-grab
+                            flex items-center justify-center
+                            ${snapshot.isDragging ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm hover:shadow-md'}
+                            transition-shadow
+                          `}
+                          style={provided.draggableProps.style}
+                        >
+                          <div className="w-5 h-5 bg-white/30 rounded-full" />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))
+                )}
+                <div className="hidden">{provided.placeholder}</div>
               </div>
-            </div>
-            <Droppable droppableId="trash">
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={`flex flex-wrap content-start items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all min-h-[150px] bg-white ${
-                    snapshot.isDraggingOver
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-black'
-                  }`}
-                >
-                  {trashBlocks.length === 0 ? (
-                    <div className="text-gray-400 text-center w-full py-3 text-xs font-semibold">
-                      {operation === 'add' ? 'No tokens yet' : 'No removed tokens'}
-                    </div>
-                  ) : (
-                    trashBlocks.map((blockId, idx) => (
-                      <Draggable key={blockId} draggableId={blockId} index={idx}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={`w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-xl cursor-grab flex items-center justify-center ${
-                              snapshot.isDragging
-                                ? 'opacity-70 scale-110 rotate-6 transition-transform'
-                                : 'hover:scale-105 active:scale-95 transition-transform'
-                            }`}
-                            style={{
-                              ...provided.draggableProps.style,
-                              transition: snapshot.isDragging ? 'transform 0.2s' : 'transform 0.1s',
-                            }}
-                          >
-                            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full"></div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))
-                  )}
-                  <div style={{ display: 'none' }}>{provided.placeholder}</div>
-                </div>
-              )}
-            </Droppable>
-          </div>
+            )}
+          </Droppable>
         </div>
       </div>
     </DragDropContext>

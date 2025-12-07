@@ -36,7 +36,8 @@ export default function PlacementTestClient() {
       setCorrectAnswers(prev => [...prev, currentQuestionIndex])
     } else {
       playIncorrect() // Play error sound
-      setHearts(prev => Math.max(0, prev - 1))
+      // DISABLED: Infinite hearts mode
+      // setHearts(prev => Math.max(0, prev - 1))
     }
   }
 
@@ -235,7 +236,7 @@ export default function PlacementTestClient() {
           </Link>
           <div className="flex items-center gap-2 bg-red-50 px-3 py-1.5 rounded-xl">
             <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-            <span className="text-red-600 font-bold text-xl">{hearts}</span>
+            <span className="text-red-600 font-bold text-xl">∞</span>
           </div>
         </div>
       </header>
