@@ -160,15 +160,7 @@ async function DashboardContent() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/placement-test"
-                className="group bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-2 border-white/50 hover:border-white px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-center"
-              >
-                <span className="flex items-center gap-2 justify-center">
-                  <Target className="w-5 h-5" />
-                  Take Placement Test
-                </span>
-              </Link>
+              {/* Placement Test Button - REMOVED */}
               <Link
                 href="/learn"
                 className="group bg-white hover:bg-gray-50 text-purple-600 px-10 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-center"

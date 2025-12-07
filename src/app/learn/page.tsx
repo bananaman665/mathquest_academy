@@ -232,7 +232,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
       bgColor: 'bg-gray-300',
       textColor: 'text-gray-600',
       borderColor: 'border-gray-400',
-      clickable: true, // Allow testing locked lessons
+      clickable: false, // Block locked lessons
       opacity: 'opacity-60',
       animate: false,
       shadowColor: 'shadow-gray-400/30'
@@ -293,7 +293,7 @@ function LevelTile({ level, position }: { level: Level, position: 'left' | 'cent
           ${config.opacity}
           rounded-xl sm:rounded-2xl p-3 sm:p-5
           border-3 sm:border-4 ${config.borderColor}
-         
+          cursor-not-allowed
         `}>
           <div className="flex items-center justify-between mb-2">
             <span className={`text-base sm:text-lg font-bold ${config.textColor}`}>
@@ -480,19 +480,7 @@ export default async function LearnPage() {
                 </div>
               </div>
               
-              {/* Placement Test Button - Only show if user is at level 1 */}
-              {dbUser.currentLevel === 1 && (
-                <Link
-                  href="/placement-test"
-                  className="inline-flex items-center gap-2 sm:gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-200 hover:scale-105 text-sm sm:text-base"
-                >
-                  <Target className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <div>
-                    <div>Take Placement Test</div>
-                    <div className="text-xs sm:text-sm opacity-90">(Find your perfect level)</div>
-                  </div>
-                </Link>
-              )}
+              {/* Placement Test Button - REMOVED */}
             </div>
           </div>
 
