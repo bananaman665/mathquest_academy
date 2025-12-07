@@ -226,7 +226,21 @@ export default function ShopClient({ items, userBalance }: ShopClientProps) {
         const isPowerUp = item.category === 'power-ups'
 
         // V2 items that aren't available yet - ALL POWER-UPS DISABLED FOR NOW
-        const v2Items = ['freebie', 'skip-token', 'mega-brain', 'time-warp', 'combo-master', 'lucky-charm', 'shield']
+        const v2Items = [
+          // Original power-ups
+          'extra-hearts',
+          'streak-freeze',
+          'xp-boost',
+          'hint-pack',
+          // New power-ups
+          'freebie',
+          'skip-token',
+          'mega-brain',
+          'time-warp',
+          'combo-master',
+          'lucky-charm',
+          'shield'
+        ]
         const isV2Item = v2Items.includes(item.id)
 
         return (
