@@ -156,15 +156,16 @@ export default function ArrayDivision({
 
           {/* Array Grid */}
           <div
-            className="inline-grid gap-1.5 mx-auto"
+            className="inline-grid gap-2 sm:gap-3 mx-auto"
             style={{
-              gridTemplateColumns: `repeat(${currentConfig.cols}, minmax(0, 1fr))`
+              gridTemplateColumns: `repeat(${currentConfig.cols}, minmax(0, 1fr))`,
+              maxWidth: '100%'
             }}
           >
             {Array.from({ length: totalItems }).map((_, starIdx) => (
               <Star
                 key={starIdx}
-                className={`w-7 h-7 sm:w-8 sm:h-8 ${
+                className={`w-6 h-6 sm:w-7 sm:h-7 ${
                   selectedRows === currentConfig.rows && selectedCols === currentConfig.cols
                     ? 'text-blue-500 fill-blue-500'
                     : 'text-yellow-500 fill-yellow-500'

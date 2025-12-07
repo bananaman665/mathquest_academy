@@ -76,11 +76,7 @@ export default function FairShare({
       </div>
 
       {/* Remaining Items */}
-      <motion.div
-        className="bg-white rounded-xl p-3 border-2 border-black"
-        animate={{ scale: remainingItems > 0 ? [1, 1.05, 1] : 1 }}
-        transition={{ repeat: remainingItems > 0 ? Infinity : 0, duration: 1 }}
-      >
+      <div className="bg-white rounded-xl p-3 border-2 border-black">
         <div className="flex flex-wrap gap-1 justify-center max-w-md">
           {Array.from({ length: remainingItems }).map((_, i) => (
             <Circle key={i} className="w-6 h-6 fill-blue-500 text-blue-500" />
@@ -89,7 +85,7 @@ export default function FairShare({
         <div className="text-center mt-1 text-lg font-bold text-black">
           {remainingItems} left
         </div>
-      </motion.div>
+      </div>
 
       {/* Groups */}
       <div className="flex flex-wrap gap-2 justify-center max-w-4xl">

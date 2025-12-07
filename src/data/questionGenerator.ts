@@ -375,7 +375,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     operation: 'division',
     numberRange: { min: 3, max: 50 },
     answerRange: { min: 1, max: 12 },
-    questionTypes: ['multiple-choice', 'type-answer', 'remainder-boxes'],
+    questionTypes: ['multiple-choice', 'type-answer'],
     totalQuestions: 10,
     difficulty: 'hard',
     allowRemainders: true
