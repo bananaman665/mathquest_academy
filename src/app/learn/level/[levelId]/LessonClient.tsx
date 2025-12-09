@@ -1167,7 +1167,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 correctAnswer={currentQuestion.correctAnswer ? parseInt(currentQuestion.correctAnswer.toString()) : 0}
                 onAnswer={handleBlockStackingAnswer}
                 question={currentQuestion.question}
-                onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 disabled={showExplanation}
               />
             </div>
@@ -1180,7 +1180,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 question={currentQuestion.question}
                 correctPosition={currentQuestion.correctPosition}
                 onAnswer={handleTenFrameAnswer}
-                onSubmitReady={(fn) => setInteractiveSubmitFn(fn)}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
               />
             </div>
           )}
@@ -1195,7 +1195,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 correctAnswer={currentQuestion.correctPosition}
                 labelInterval={('numberLineLabelInterval' in currentQuestion ? (currentQuestion as unknown as Record<string, number>).numberLineLabelInterval : 1) || 1}
                 onAnswer={handleNumberLineAnswer}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
               />
             </div>
           )}
@@ -1622,7 +1622,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 missingValue={1}
                 correctAnswer={parseInt(currentQuestion.correctAnswer || '0')}
                 showEquals={true}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect, userAnswer) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1731,7 +1731,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 targetRows={currentQuestion.arrayRows || 3}
                 targetCols={currentQuestion.arrayColumns || 4}
                 emoji={currentQuestion.arrayEmoji || '⭐'}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1764,7 +1764,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 targetGroups={currentQuestion.numberOfGroups || 4}
                 itemsPerGroup={currentQuestion.groupSize || 3}
                 emoji={currentQuestion.groupEmoji || '⭐'}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1797,7 +1797,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 key={`skip-counter-${currentQuestionIndex}-${currentQuestion.id}`}
                 skipBy={currentQuestion.skipCountBy ?? 5}
                 numJumps={currentQuestion.skipCountJumps ?? 4}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1861,7 +1861,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 totalItems={currentQuestion.arrayDivisionTotal || 15}
                 divisor={currentQuestion.arrayDivisionDivisor || 5}
                 question={currentQuestion.question}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect: boolean) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
@@ -1894,7 +1894,7 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                 totalItems={currentQuestion.remainderTotal || 17}
                 itemsPerBox={currentQuestion.remainderPerBox || 5}
                 question={currentQuestion.question}
-                onSubmitReady={setInteractiveSubmitFn}
+                onSubmitReady={(fn) => setInteractiveSubmitFn(() => fn)}
                 onAnswer={(isCorrect: boolean) => {
                   setIsCorrect(isCorrect)
                   setShowExplanation(true)
