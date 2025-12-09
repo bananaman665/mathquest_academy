@@ -13,16 +13,16 @@ interface TenFrameProps {
  * TenFrame Component - Interactive ten-frame counting exercise
  *
  * Displays a 5x2 grid of boxes where users tap to toggle dots on/off,
- * then submit their answer to check if they placed the correct number of dots.
+ * then click Check to submit their answer.
  *
  * CRITICAL: This component uses refs extensively to prevent auto-submit bugs.
  * DO NOT convert refs to direct state/callback usage without understanding why.
  *
- * Auto-submit bug prevention strategy:
+ * Manual submit strategy:
  * 1. Uses refs for placedDots, correctPosition, and onAnswer
- * 2. Registers submit function ONCE on mount (not on every render)
+ * 2. Registers submit function when dots are placed (enables Check button)
  * 3. Submit function closure captures refs (always has latest values)
- * 4. Prevents infinite re-render loops caused by parent callback changes
+ * 4. User must click Check to submit - no auto-submit on correct answer
  */
 export default function TenFrame({
   question,
@@ -79,15 +79,21 @@ export default function TenFrame({
     // Calculate new dot count
     const newDotsPlaced = newPlaced.filter(d => d).length
 
-    // Enable check button AND auto-submit when user reaches the correct number of dots
-    if (newDotsPlaced === correctPositionRef.current && onSubmitReadyRef.current) {
-      if (!hasSubmittedRef.current) {
-        hasSubmittedRef.current = true
-        // They have the correct number! Answer is always correct when count matches
-        onAnswerRef.current(true)
-      }
-    } else if (newDotsPlaced !== correctPositionRef.current && onSubmitReadyRef.current) {
-      // Disable check button if they remove dots and no longer have correct amount
+    // Enable check button when user has placed any dots (let them check whenever they want)
+    if (newDotsPlaced > 0 && onSubmitReadyRef.current) {
+      // Register the submit function so user can click Check
+      // Use ref to get the latest placedDots value when submit is actually called
+      onSubmitReadyRef.current(() => {
+        if (!hasSubmittedRef.current) {
+          hasSubmittedRef.current = true
+          // Check if the count matches the correct answer using refs for latest values
+          const currentDotsPlaced = placedDotsRef.current.filter(d => d).length
+          const isCorrect = currentDotsPlaced === correctPositionRef.current
+          onAnswerRef.current(isCorrect)
+        }
+      })
+    } else if (newDotsPlaced === 0 && onSubmitReadyRef.current) {
+      // Disable check button if no dots are placed
       onSubmitReadyRef.current(null)
     }
   }
