@@ -1,9 +1,59 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { Trophy, Star, Flame, Award, CheckCircle, Lock, Target, BookOpen, Zap } from 'lucide-react'
+import { Trophy, Star, Flame, Award, CheckCircle, Lock, Target, BookOpen, Zap, TrendingUp, Crown, Timer, Sun, Moon, Rocket } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
 import Link from 'next/link'
+
+// Map icon names from database to Lucide components
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Star,
+  Target,
+  TrendingUp,
+  Crown,
+  CheckCircle,
+  Award,
+  Trophy,
+  Flame,
+  Zap,
+  Rocket,
+  Sun,
+  Moon,
+  Timer,
+  BookOpen,
+}
+
+// Parse achievement requirement
+function parseRequirement(requirement: string): { type: string; value: number; operator: string } {
+  try {
+    return JSON.parse(requirement)
+  } catch {
+    return { type: 'xp', operator: '>=', value: 0 }
+  }
+}
+
+// Check if user meets a requirement
+function checkRequirement(user: { totalXP: number; currentLevel: number; streak: number; longestStreak: number; questionsAnswered: number; correctAnswers: number }, requirement: { type: string; value: number; operator: string }): boolean {
+  const propertyMap: Record<string, keyof typeof user> = {
+    'xp': 'totalXP',
+    'level': 'currentLevel',
+    'streak': 'streak',
+    'questions': 'questionsAnswered',
+    'correct_answers': 'correctAnswers',
+    'longest_streak': 'longestStreak'
+  }
+
+  const propertyName = propertyMap[requirement.type]
+  if (!propertyName) return false
+  const userValue = Number(user[propertyName]) || 0
+
+  switch (requirement.operator) {
+    case '>=': return userValue >= requirement.value
+    case '==': return userValue === requirement.value
+    case '<=': return userValue <= requirement.value
+    default: return false
+  }
+}
 
 export default async function AchievementsPage() {
   const user = await currentUser()
@@ -26,21 +76,53 @@ export default async function AchievementsPage() {
     })
   }
 
-  // Calculate stats
-  const levelsCompleted = dbUser.currentLevel - 1
+  // Fetch all achievements from database
+  const allAchievements = await prisma.achievement.findMany({
+    orderBy: [
+      { category: 'asc' },
+      { xpReward: 'asc' }
+    ]
+  })
 
-  // Define achievements (same as profile page)
-  const achievements = [
-    { id: 1, name: 'First Steps', description: 'Complete your first lesson', icon: Target, iconColor: 'text-purple-500', category: 'PROGRESS', unlocked: levelsCompleted >= 1 },
-    { id: 2, name: 'Week Warrior', description: 'Maintain a 7-day streak', icon: Flame, iconColor: 'text-orange-500', category: 'STREAK', unlocked: (dbUser.streak || 0) >= 7 },
-    { id: 3, name: 'Math Master', description: 'Complete 10 lessons', icon: BookOpen, iconColor: 'text-blue-500', category: 'PROGRESS', unlocked: levelsCompleted >= 10 },
-    { id: 4, name: 'XP Hunter', description: 'Earn 1000 XP', icon: Zap, iconColor: 'text-yellow-500', category: 'SKILL', unlocked: dbUser.totalXP >= 1000 },
-    { id: 5, name: 'Perfect Score', description: 'Get 100% on a lesson', icon: Star, iconColor: 'text-amber-500', category: 'SKILL', unlocked: levelsCompleted >= 5 },
-    { id: 6, name: 'Dedicated Learner', description: 'Complete 25 lessons', icon: Trophy, iconColor: 'text-yellow-600', category: 'SPECIAL', unlocked: levelsCompleted >= 25 },
-  ]
+  // Get user's earned achievements
+  const userAchievements = await prisma.userAchievement.findMany({
+    where: { userId: user.id },
+    select: { achievementId: true, earnedAt: true }
+  })
+  const earnedIds = new Set(userAchievements.map(ua => ua.achievementId))
 
-  const earnedAchievements = achievements.filter(a => a.unlocked)
-  const lockedAchievements = achievements.filter(a => !a.unlocked)
+  // Check for new achievements and award them
+  const newlyEarned: string[] = []
+  for (const achievement of allAchievements) {
+    if (earnedIds.has(achievement.id)) continue
+    
+    const requirement = parseRequirement(achievement.requirement)
+    if (checkRequirement(dbUser, requirement)) {
+      // Award the achievement
+      await prisma.userAchievement.create({
+        data: {
+          userId: user.id,
+          achievementId: achievement.id,
+          xpEarned: achievement.xpReward
+        }
+      })
+      
+      // Award XP
+      if (achievement.xpReward > 0) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { totalXP: { increment: achievement.xpReward } }
+        })
+      }
+      
+      earnedIds.add(achievement.id)
+      newlyEarned.push(achievement.id)
+    }
+  }
+
+  // Separate earned and locked achievements
+  const earnedAchievements = allAchievements.filter(a => earnedIds.has(a.id))
+  const lockedAchievements = allAchievements.filter(a => !earnedIds.has(a.id))
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -68,12 +150,12 @@ export default async function AchievementsPage() {
               <h1 className="text-3xl font-black text-gray-900">Badges</h1>
             </div>
             <p className="text-gray-600 text-base">
-              {earnedAchievements.length} of {achievements.length} unlocked
+              {earnedAchievements.length} of {allAchievements.length} unlocked
             </p>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-3">
               <div
                 className="bg-gradient-to-r from-purple-600 to-blue-600 h-2.5 rounded-full transition-all duration-500"
-                style={{ width: `${achievements.length > 0 ? (earnedAchievements.length / achievements.length) * 100 : 0}%` }}
+                style={{ width: `${allAchievements.length > 0 ? (earnedAchievements.length / allAchievements.length) * 100 : 0}%` }}
               ></div>
             </div>
           </div>
@@ -105,7 +187,11 @@ export default async function AchievementsPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {earnedAchievements.map((achievement) => {
-                  const BadgeIcon = achievement.icon
+                  const BadgeIcon = iconMap[achievement.icon] || Star
+                  const iconColor = achievement.category === 'PROGRESS' ? 'text-blue-500' :
+                                   achievement.category === 'SKILL' ? 'text-green-500' :
+                                   achievement.category === 'STREAK' ? 'text-orange-500' :
+                                   'text-purple-500'
                   return (
                     <div
                       key={achievement.id}
@@ -113,7 +199,7 @@ export default async function AchievementsPage() {
                     >
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200">
-                          <BadgeIcon className={`w-8 h-8 ${achievement.iconColor}`} />
+                          <BadgeIcon className={`w-8 h-8 ${iconColor}`} />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-bold text-gray-900 mb-1">{achievement.name}</h3>
@@ -124,7 +210,7 @@ export default async function AchievementsPage() {
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-xs font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full flex items-center gap-1">
                           <CheckCircle className="w-3 h-3" />
-                          Unlocked
+                          +{achievement.xpReward} XP
                         </span>
                         <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
                           {achievement.category}
@@ -146,7 +232,7 @@ export default async function AchievementsPage() {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {lockedAchievements.map((achievement) => {
-                  const BadgeIcon = achievement.icon
+                  const BadgeIcon = iconMap[achievement.icon] || Star
                   return (
                     <div
                       key={achievement.id}
@@ -163,9 +249,9 @@ export default async function AchievementsPage() {
                         <Lock className="w-6 h-6 text-gray-400 flex-shrink-0" />
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full flex items-center gap-1">
-                          <Lock className="w-3 h-3" />
-                          Locked
+                        <span className="text-xs font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full flex items-center gap-1">
+                          <Zap className="w-3 h-3" />
+                          +{achievement.xpReward} XP
                         </span>
                         <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
                           {achievement.category}
