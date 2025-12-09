@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, Trophy, Award, ShoppingBag, User } from 'lucide-react'
+import { Home, Trophy, Award, ShoppingBag } from 'lucide-react'
 
 interface BottomNavProps {
-  currentPage: 'learn' | 'leaderboards' | 'achievements' | 'shop' | 'profile' | 'dashboard'
+  currentPage: 'learn' | 'leaderboards' | 'achievements' | 'shop' | 'dashboard'
 }
 
 export default function BottomNav({ currentPage }: BottomNavProps) {
@@ -13,7 +13,6 @@ export default function BottomNav({ currentPage }: BottomNavProps) {
     { href: '/leaderboards', icon: Trophy, label: 'Ranks', id: 'leaderboards' },
     { href: '/achievements', icon: Award, label: 'Badges', id: 'achievements' },
     { href: '/shop', icon: ShoppingBag, label: 'Shop', id: 'shop' },
-    { href: '/profile', icon: User, label: 'Profile', id: 'profile' },
   ]
 
   return (

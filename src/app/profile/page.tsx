@@ -334,7 +334,7 @@ export default async function ProfilePage() {
       </div>
 
       {/* Bottom Navigation for Mobile */}
-      <BottomNav currentPage="profile" />
+      <BottomNav currentPage="learn" />
     </div>
   )
 }
