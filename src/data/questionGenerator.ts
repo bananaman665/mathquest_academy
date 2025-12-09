@@ -178,7 +178,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Subtraction 1-5",
     operation: 'subtraction',
     numberRange: { min: 1, max: 5 },
-    answerRange: { min: 0, max: 5 },
+    answerRange: { min: 1, max: 5 },
     questionTypes: ['ten-frame', 'multiple-choice', 'number-line-drag', 'balance-scale', 'block-stacking'],
     totalQuestions: 10,
     difficulty: 'easy',
@@ -189,7 +189,7 @@ export const levelConfigs: { [levelId: number]: LevelConfig } = {
     unit: "Subtraction 1-10",
     operation: 'subtraction',
     numberRange: { min: 1, max: 10 },
-    answerRange: { min: 0, max: 10 },
+    answerRange: { min: 1, max: 10 },
     questionTypes: ['multiple-choice', 'number-line-drag', 'block-stacking', 'balance-scale'],
     totalQuestions: 10,
     difficulty: 'easy',
@@ -1433,14 +1433,17 @@ function generateQuestionByType(
     }
 
     case 'ten-frame': {
+      // Ten-frame can only show 1-10 dots (it's a 2x5 grid)
+      // Clamp the answer to valid range
+      const tenFrameAnswer = Math.max(1, Math.min(10, answer))
       return {
         id,
         levelId,
         type,
         question: `Count the dots`,
-        correctPosition: answer,
-        correctAnswer: String(answer),
-        explanation: `There are ${answer} dots in the ten frame!`,
+        correctPosition: tenFrameAnswer,
+        correctAnswer: String(tenFrameAnswer),
+        explanation: `There are ${tenFrameAnswer} dots in the ten frame!`,
         hints: [
           `Count the dots in each row`,
           `Each row can hold 5 dots`
