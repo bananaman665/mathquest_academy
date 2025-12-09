@@ -924,9 +924,9 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
             {gameMode === 'normal' && (
               <div className="flex items-center gap-1 sm:gap-2 bg-red-100 px-2 sm:px-4 py-1 sm:py-2 rounded-xl">
                 <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 fill-red-500" />
-                <span className="text-red-500 font-bold text-lg sm:text-xl">
-                  ∞
-                </span>
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>
+                </svg>
               </div>
             )}
           </div>

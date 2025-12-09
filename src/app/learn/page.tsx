@@ -437,7 +437,9 @@ export default async function LearnPage() {
                 </div>
                 <div className="flex items-center gap-2 bg-red-100 px-3 sm:px-4 py-2 rounded-xl border border-red-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Heart className="w-4 sm:w-5 h-4 sm:h-5 text-red-600 fill-red-600 animate-pulse" />
-                  <span className="font-bold text-red-600 text-sm sm:text-base">∞</span>
+                  <svg className="w-4 sm:w-5 h-4 sm:h-5 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>
+                  </svg>
                 </div>
               </div>
               

@@ -236,7 +236,9 @@ export default function PlacementTestClient() {
           </Link>
           <div className="flex items-center gap-2 bg-red-50 px-3 py-1.5 rounded-xl">
             <Heart className="w-6 h-6 text-red-500 fill-red-500" />
-            <span className="text-red-600 font-bold text-xl">∞</span>
+            <svg className="w-5 h-5 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>
+            </svg>
           </div>
         </div>
       </header>
