@@ -8,7 +8,6 @@ import { ArrowLeft, ChevronRight, ChevronLeft } from 'lucide-react'
 import BlockStackingQuestion from '@/components/game/BlockStackingQuestion'
 import NumberLinePlacement from '@/components/game/NumberLinePlacement'
 import TenFrame from '@/components/game/TenFrame'
-import FillTheJar from '@/components/interactive/FillTheJar'
 import ArrayGridBuilder from '@/components/interactive/ArrayGridBuilder'
 import GroupMaker from '@/components/interactive/GroupMaker'
 import SkipCounter from '@/components/interactive/SkipCounter'
@@ -126,20 +125,6 @@ export default function ExamplesPage() {
           min={0}
           max={20}
           onAnswer={(correct) => handleAnswer(correct, 'Number Line Drag')}
-        />
-      )
-    },
-    {
-      name: 'Fill The Jar',
-      description: 'Tap to add items to a jar for counting',
-      component: (
-        <FillTheJar
-          question="Add 3 apples to make 8 total"
-          targetNumber={8}
-          startingNumber={5}
-          itemEmoji="🍎"
-          mode="add"
-          onAnswer={(correct) => handleAnswer(correct, 'Fill The Jar')}
         />
       )
     },
