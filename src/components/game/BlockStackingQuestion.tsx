@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 
 interface BlockStackingQuestionProps {
@@ -14,6 +14,13 @@ interface BlockStackingQuestionProps {
   disabled?: boolean
 }
 
+/**
+ * BlockStackingQuestion Component - Interactive drag-and-drop block stacking
+ *
+ * CRITICAL: Uses refs to prevent stale closure issues with onSubmitReady.
+ * The submit function registered via onSubmitReady uses refs to always
+ * access the latest state values when Check button is clicked.
+ */
 const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
   firstNumber,
   secondNumber,
@@ -27,8 +34,33 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
   const [stackBlocks, setStackBlocks] = useState<string[]>([])
   const [trashBlocks, setTrashBlocks] = useState<string[]>([])
 
+  // Refs to prevent stale closure issues
+  const stackBlocksRef = useRef(stackBlocks)
+  const correctAnswerRef = useRef(correctAnswer)
+  const onAnswerRef = useRef(onAnswer)
+  const hasSubmittedRef = useRef(false)
+  const onSubmitReadyRef = useRef(onSubmitReady)
+
+  // Keep refs in sync
+  useEffect(() => {
+    stackBlocksRef.current = stackBlocks
+  }, [stackBlocks])
+
+  useEffect(() => {
+    correctAnswerRef.current = correctAnswer
+  }, [correctAnswer])
+
+  useEffect(() => {
+    onAnswerRef.current = onAnswer
+  }, [onAnswer])
+
+  useEffect(() => {
+    onSubmitReadyRef.current = onSubmitReady
+  }, [onSubmitReady])
+
   // Initialize blocks based on operation
   useEffect(() => {
+    hasSubmittedRef.current = false
     if (operation === 'add') {
       setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `stack-block-${i}`))
       setTrashBlocks(Array.from({ length: secondNumber }, (_, i) => `trash-block-${i}`))
@@ -36,19 +68,17 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
       setStackBlocks(Array.from({ length: firstNumber }, (_, i) => `block-${i}`))
       setTrashBlocks([])
     }
+    // Register submit function immediately
+    if (onSubmitReadyRef.current) {
+      onSubmitReadyRef.current(() => {
+        if (!hasSubmittedRef.current) {
+          hasSubmittedRef.current = true
+          const correct = stackBlocksRef.current.length === correctAnswerRef.current
+          onAnswerRef.current(correct)
+        }
+      })
+    }
   }, [operation, firstNumber, secondNumber])
-
-  // Register submit function with parent
-  useEffect(() => {
-    if (onSubmitReady) {
-      onSubmitReady(() => handleSubmit)
-    }
-    return () => {
-      if (onSubmitReady) {
-        onSubmitReady(null)
-      }
-    }
-  }, [onSubmitReady, stackBlocks])
 
   const handleDragEnd = (result: DropResult) => {
     if (disabled) return
@@ -58,22 +88,31 @@ const BlockStackingQuestion = React.memo(function BlockStackingQuestion({
     if (!destination) return
     if (source.droppableId === destination.droppableId) return
 
-    if (source.droppableId === 'stack' && destination.droppableId === 'trash') {
-      const newStack = stackBlocks.filter((_, idx) => idx !== source.index)
-      const newTrash = [...trashBlocks, draggableId]
-      setStackBlocks(newStack)
-      setTrashBlocks(newTrash)
-    } else if (source.droppableId === 'trash' && destination.droppableId === 'stack') {
-      const newTrash = trashBlocks.filter((_, idx) => idx !== source.index)
-      const newStack = [...stackBlocks, draggableId]
-      setStackBlocks(newStack)
-      setTrashBlocks(newTrash)
-    }
-  }
+    let newStackBlocks = stackBlocks
+    let newTrashBlocks = trashBlocks
 
-  const handleSubmit = () => {
-    const correct = stackBlocks.length === correctAnswer
-    onAnswer(correct)
+    if (source.droppableId === 'stack' && destination.droppableId === 'trash') {
+      newStackBlocks = stackBlocks.filter((_, idx) => idx !== source.index)
+      newTrashBlocks = [...trashBlocks, draggableId]
+      setStackBlocks(newStackBlocks)
+      setTrashBlocks(newTrashBlocks)
+    } else if (source.droppableId === 'trash' && destination.droppableId === 'stack') {
+      newTrashBlocks = trashBlocks.filter((_, idx) => idx !== source.index)
+      newStackBlocks = [...stackBlocks, draggableId]
+      setStackBlocks(newStackBlocks)
+      setTrashBlocks(newTrashBlocks)
+    }
+
+    // Re-register submit function with updated ref values after drag
+    if (onSubmitReadyRef.current) {
+      onSubmitReadyRef.current(() => {
+        if (!hasSubmittedRef.current) {
+          hasSubmittedRef.current = true
+          const correct = stackBlocksRef.current.length === correctAnswerRef.current
+          onAnswerRef.current(correct)
+        }
+      })
+    }
   }
 
   return (

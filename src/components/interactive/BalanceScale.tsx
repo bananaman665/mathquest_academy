@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 interface BalanceScaleProps {
@@ -14,6 +14,13 @@ interface BalanceScaleProps {
   onSubmitReady?: (submitFn: (() => void) | null) => void
 }
 
+/**
+ * BalanceScale Component - Interactive balance scale for algebra-style problems
+ *
+ * CRITICAL: Uses refs to prevent stale closure issues with onSubmitReady.
+ * The submit function registered via onSubmitReady uses refs to always
+ * access the latest state values when Check button is clicked.
+ */
 const BalanceScale = React.memo(function BalanceScale({
   question,
   leftSide,
@@ -27,22 +34,44 @@ const BalanceScale = React.memo(function BalanceScale({
   const [userAnswer, setUserAnswer] = useState<number>(0)
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
+  // Refs to prevent stale closure issues
+  const userAnswerRef = useRef(userAnswer)
+  const correctAnswerRef = useRef(correctAnswer)
+  const onAnswerRef = useRef(onAnswer)
+  const hasSubmittedRef = useRef(hasSubmitted)
+  const onSubmitReadyRef = useRef(onSubmitReady)
+
+  // Keep refs in sync
+  useEffect(() => {
+    userAnswerRef.current = userAnswer
+  }, [userAnswer])
+
+  useEffect(() => {
+    correctAnswerRef.current = correctAnswer
+  }, [correctAnswer])
+
+  useEffect(() => {
+    onAnswerRef.current = onAnswer
+  }, [onAnswer])
+
+  useEffect(() => {
+    hasSubmittedRef.current = hasSubmitted
+  }, [hasSubmitted])
+
+  useEffect(() => {
+    onSubmitReadyRef.current = onSubmitReady
+  }, [onSubmitReady])
+
   // Reset state when question changes
   useEffect(() => {
     setUserAnswer(0)
     setHasSubmitted(false)
-  }, [question, correctAnswer])
-
-  // Register submit function with parent
-  useEffect(() => {
-    if (onSubmitReady && !hasSubmitted) {
-      if (userAnswer > 0) {
-        onSubmitReady(() => handleSubmit)
-      } else {
-        onSubmitReady(null)
-      }
+    hasSubmittedRef.current = false
+    // Clear submit function on new question
+    if (onSubmitReadyRef.current) {
+      onSubmitReadyRef.current(null)
     }
-  }, [userAnswer, hasSubmitted, onSubmitReady])
+  }, [question, correctAnswer])
 
   const calculateSideTotal = (side: number[], includeUser: boolean = false) => {
     const values = side.map((val, idx) => 
@@ -58,19 +87,27 @@ const BalanceScale = React.memo(function BalanceScale({
   const tiltAngle = hasSubmitted ? 0 : Math.max(-15, Math.min(15, (leftTotal - rightTotal) * 2))
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (hasSubmitted) return
+    if (hasSubmittedRef.current) return
     const value = e.target.value
     // Only allow positive integers
     if (value === '' || /^[0-9]+$/.test(value)) {
-      setUserAnswer(value === '' ? 0 : parseInt(value))
-    }
-  }
+      const newAnswer = value === '' ? 0 : parseInt(value)
+      setUserAnswer(newAnswer)
 
-  const handleSubmit = () => {
-    if (hasSubmitted || userAnswer === 0) return
-    const isCorrect = userAnswer === correctAnswer
-    setHasSubmitted(true)
-    onAnswer(isCorrect, userAnswer)
+      // Register/update submit function when user has entered a value
+      if (newAnswer > 0 && onSubmitReadyRef.current) {
+        onSubmitReadyRef.current(() => {
+          if (!hasSubmittedRef.current && userAnswerRef.current > 0) {
+            hasSubmittedRef.current = true
+            setHasSubmitted(true)
+            const isCorrect = userAnswerRef.current === correctAnswerRef.current
+            onAnswerRef.current(isCorrect, userAnswerRef.current)
+          }
+        })
+      } else if (newAnswer === 0 && onSubmitReadyRef.current) {
+        onSubmitReadyRef.current(null)
+      }
+    }
   }
 
   return (

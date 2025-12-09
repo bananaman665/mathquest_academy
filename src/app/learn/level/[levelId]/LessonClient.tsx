@@ -2093,19 +2093,17 @@ export default function LessonClient({ levelId, introduction, questions, gameMod
                     </button>
                   )}
 
-                  {/* Hint Button */}
+                  {/* Hint Button - Disabled */}
                   {currentQuestion.hints && currentQuestion.hints.length > 0 && (
                     <button
-                      onClick={() => {
-                        setShowHints(!showHints)
-                        if (!showHints) {
-                          setHintsUsed(prev => prev + 1)
-                        }
-                      }}
-                      className="px-4 py-3 rounded-xl font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all uppercase tracking-wide flex items-center gap-2 text-sm"
+                      disabled
+                      className="px-4 py-3 rounded-xl font-bold text-white bg-gray-400 cursor-not-allowed transition-all uppercase tracking-wide flex items-center gap-2 text-sm opacity-70"
                     >
                       <Lightbulb size={20} className="opacity-90" />
-                      Hint
+                      <span className="flex flex-col items-start leading-tight">
+                        <span>Hint</span>
+                        <span className="text-[10px] normal-case tracking-normal opacity-80">Coming Soon in V2</span>
+                      </span>
                     </button>
                   )}
 
