@@ -279,28 +279,6 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
     }
   },
   21: {
-    title: "Place Value",
-    introduction: {
-      title: "Understanding Place Value!",
-      content: [
-        "Every digit in a number has a 'place' that tells us its value!",
-        "In a 2-digit number, the 1st digit is the TENS place, the 2nd is the ONES place.",
-        "Example: In the number 42, the 4 is in the 10s place (worth 40) and 2 is in the 1s place (worth 2).",
-        "So 42 = 40 + 2 = 4 tens and 2 ones!",
-        "This is super important for understanding bigger numbers and doing math!",
-        "The position of a digit changes its value - that's why we call it 'place value'!"
-      ],
-      examples: [
-        { number: "23", visual: "2 tens, 3 ones (●●●●●●●●●● + ●●●●●●●●●● + ●●●)", word: "23" },
-        { number: "35", visual: "3 tens, 5 ones (30 + 5)", word: "35" },
-        { number: "42", visual: "4 tens, 2 ones (40 + 2)", word: "42" },
-        { number: "57", visual: "5 tens, 7 ones (50 + 7)", word: "57" },
-        { number: "68", visual: "6 tens, 8 ones (60 + 8)", word: "68" },
-        { number: "91", visual: "9 tens, 1 one (90 + 1)", word: "91" }
-      ]
-    }
-  },
-  31: {
     title: "Multiplication Basics",
     introduction: {
       title: "Let's Learn Multiplication!",
@@ -322,7 +300,29 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
       ]
     }
   },
-  36: {
+  31: {
+    title: "Addition & Subtraction Within 20",
+    introduction: {
+      title: "Review: Adding & Subtracting to 20!",
+      content: [
+        "Let's practice our addition and subtraction skills with numbers up to 20!",
+        "Remember: Addition means putting groups together to find the total.",
+        "Subtraction means taking away to find what's left.",
+        "A helpful strategy: Break numbers into 10s and 1s.",
+        "Example: 13 + 4 = 10 + 3 + 4 = 10 + 7 = 17",
+        "For 15 − 3, count back from 15: 14, 13, 12. The answer is 12!"
+      ],
+      examples: [
+        { number: "10 + 1 = 11", visual: "●●●●●●●●●● + ● = 11", word: "10 plus 1 equals 11" },
+        { number: "10 + 5 = 15", visual: "●●●●●●●●●● + ●●●●● = 15", word: "10 plus 5 equals 15" },
+        { number: "12 + 3 = 15", visual: "12 + 3", word: "12 plus 3 equals 15" },
+        { number: "15 − 3 = 12", visual: "15 − 3", word: "15 minus 3 equals 12" },
+        { number: "18 − 5 = 13", visual: "18 − 5", word: "18 minus 5 equals 13" },
+        { number: "11 + 9 = 20", visual: "11 + 9", word: "11 plus 9 equals 20" }
+      ]
+    }
+  },
+  26: {
     title: "Division Basics",
     introduction: {
       title: "Let's Learn Division!",
@@ -341,6 +341,28 @@ const levelIntroductions: { [levelId: number]: { title: string; introduction: { 
         { number: "10 ÷ 2 = 5", visual: "●●●●● | ●●●●●", word: "10 divided by 2 equals 5" },
         { number: "12 ÷ 3 = 4", visual: "●●●● | ●●●● | ●●●●", word: "12 divided by 3 equals 4" },
         { number: "15 ÷ 5 = 3", visual: "3 groups of 5", word: "15 divided by 5 equals 3" }
+      ]
+    }
+  },
+  36: {
+    title: "Place Value",
+    introduction: {
+      title: "Understanding Place Value!",
+      content: [
+        "Every digit in a number has a 'place' that tells us its value!",
+        "In a 2-digit number, the 1st digit is the TENS place, the 2nd is the ONES place.",
+        "Example: In the number 42, the 4 is in the 10s place (worth 40) and 2 is in the 1s place (worth 2).",
+        "So 42 = 40 + 2 = 4 tens and 2 ones!",
+        "This is super important for understanding bigger numbers and doing math!",
+        "The position of a digit changes its value - that's why we call it 'place value'!"
+      ],
+      examples: [
+        { number: "23", visual: "2 tens, 3 ones (●●●●●●●●●● + ●●●●●●●●●● + ●●●)", word: "23" },
+        { number: "35", visual: "3 tens, 5 ones (30 + 5)", word: "35" },
+        { number: "42", visual: "4 tens, 2 ones (40 + 2)", word: "42" },
+        { number: "57", visual: "5 tens, 7 ones (50 + 7)", word: "57" },
+        { number: "68", visual: "6 tens, 8 ones (60 + 8)", word: "68" },
+        { number: "91", visual: "9 tens, 1 one (90 + 1)", word: "91" }
       ]
     }
   },
