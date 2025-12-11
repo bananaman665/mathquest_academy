@@ -10,8 +10,8 @@ const devUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
 const serverUrl = productionUrl; // Changed from: process.env.CAPACITOR_DEV === 'true' ? devUrl : productionUrl;
 
 const config: CapacitorConfig = {
-  appId: 'com.mathly.app',
-  appName: 'Mathly',
+  appId: 'com.mathlify.app',
+  appName: 'Mathlify',
   webDir: 'out',
   server: {
     url: serverUrl,
