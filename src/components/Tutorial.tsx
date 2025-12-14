@@ -12,7 +12,7 @@ interface TutorialStep {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    title: "Welcome to Mathly! 🎉",
+    title: "Welcome to Mathlified! 🎉",
     description: "Let&apos;s take a quick tour to help you get started. This will only take 30 seconds!",
     target: null,
     position: "center"

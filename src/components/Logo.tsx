@@ -27,7 +27,7 @@ export default function Logo({
       <div className="relative" style={{ width: image, height: image }}>
         <Image
           src="/logo.png"
-          alt="Mathly Logo"
+          alt="Mathlified Logo"
           width={image}
           height={image}
           className="object-contain"
@@ -36,7 +36,7 @@ export default function Logo({
       </div>
       {showText && (
         <span className={`${text} font-black text-green-600`}>
-          Mathly
+          Mathlified
         </span>
       )}
     </div>

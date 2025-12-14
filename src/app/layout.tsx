@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mathly - Learn Math Through Adventure",
+  title: "Mathlified - Learn Math Through Adventure",
   description: "An interactive math learning platform with gamification",
   icons: {
     icon: '/icon.png',

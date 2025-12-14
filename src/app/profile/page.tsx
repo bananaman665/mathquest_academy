@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prisma'
 import BottomNav from '@/components/BottomNav'
 import ProfileEditor from '@/components/ProfileEditor'
 import SignOutButton from '@/components/SignOutButton'
+import DeleteAccountButton from '@/components/DeleteAccountButton'
 
 export default async function ProfilePage() {
   const user = await currentUser()
@@ -58,7 +59,7 @@ export default async function ProfilePage() {
             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-black text-green-600">Mathly</span>
+            <span className="text-2xl font-black text-green-600">Mathlified</span>
           </Link>
         </div>
 
@@ -326,6 +327,15 @@ export default async function ProfilePage() {
                     <p className="text-sm text-gray-600">Control who can see your profile</p>
                   </div>
                   <span className="text-sm text-gray-500 italic">Coming soon</span>
+                </div>
+
+                {/* Delete Account Section */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-gray-200 gap-2">
+                  <div>
+                    <p className="font-bold text-red-600">Delete Account</p>
+                    <p className="text-sm text-gray-600">Permanently delete your account and all data</p>
+                  </div>
+                  <DeleteAccountButton />
                 </div>
               </div>
             </div>

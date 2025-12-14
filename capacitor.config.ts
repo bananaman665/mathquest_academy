@@ -10,8 +10,8 @@ const devUrl = process.env.CAPACITOR_SERVER_URL || 'http://10.200.1.36:3000';
 const serverUrl = productionUrl; // Changed from: process.env.CAPACITOR_DEV === 'true' ? devUrl : productionUrl;
 
 const config: CapacitorConfig = {
-  appId: 'com.mathlify.app',
-  appName: 'Mathlify',
+  appId: 'com.mathlified.app',
+  appName: 'Mathlified',
   webDir: 'out',
   server: {
     url: serverUrl,
@@ -22,7 +22,7 @@ const config: CapacitorConfig = {
     contentInset: 'never',
     scrollEnabled: true,
     // Add a proper user agent to satisfy Google's security requirements
-    appendUserAgent: 'Mathlify/1.0 Safari/605.1.15'
+    appendUserAgent: 'Mathlified/1.0 Safari/605.1.15'
   }
 };
 

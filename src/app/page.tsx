@@ -27,7 +27,7 @@ export default async function Home() {
               </div>
               <div>
                 <h1 className="text-3xl font-black text-green-600">
-                  Mathly
+                  Mathlified
                 </h1>
               </div>
             </div>
@@ -172,10 +172,10 @@ export default async function Home() {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                Mathly
+                Mathlified
               </span>
             </div>
-            <p className="text-gray-600 mb-4">&copy; 2025 Mathly. Making math learning epic and fun.</p>
+            <p className="text-gray-600 mb-4">&copy; 2025 Mathlified. Making math learning epic and fun.</p>
             <div className="flex items-center justify-center gap-6 text-sm">
               <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
                 Privacy Policy
@@ -185,7 +185,7 @@ export default async function Home() {
                 Terms of Service
               </Link>
               <span className="text-gray-400">·</span>
-              <a href="mailto:support@mathly.app" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="mailto:support@mathlified.app" className="text-gray-600 hover:text-gray-900 transition-colors">
                 Contact
               </a>
             </div>

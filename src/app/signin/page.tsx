@@ -13,7 +13,7 @@ export default function SignInPage() {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">Mathly</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Mathlified</h1>
             </Link>
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function SignInPage() {
             </div>
                                 <div className="text-center mb-8">
           <h1 className="text-3xl font-black text-green-600 mb-2">
-            Sign in to Mathly
+            Sign in to Mathlified
           </h1>
           <p className="text-gray-600">Continue your math adventure!</p>
           <div className="mt-4">
