@@ -1,8 +1,51 @@
-import { SignIn } from '@clerk/nextjs'
+'use client'
+
+import { SignIn, useAuth } from '@clerk/nextjs'
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
+  const { isLoaded, isSignedIn } = useAuth()
+  const router = useRouter()
+
+  // Watch for auth state changes and redirect when signed in
+  // This is critical for OAuth flows in Capacitor WebView
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push('/learn')
+    }
+  }, [isLoaded, isSignedIn, router])
+
+  // Show loading while checking auth state
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <BookOpen className="w-7 h-7 text-white" />
+          </div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // If already signed in, show loading while redirecting
+  if (isSignedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <BookOpen className="w-7 h-7 text-white" />
+          </div>
+          <p className="text-gray-600">Signing you in...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col oauth-page-wrapper">
       {/* Header */}
