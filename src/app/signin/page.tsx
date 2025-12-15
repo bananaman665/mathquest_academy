@@ -3,19 +3,12 @@
 import { SignIn, useAuth } from '@clerk/nextjs'
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Capacitor } from '@capacitor/core'
 
 export default function SignInPage() {
   const { isLoaded, isSignedIn } = useAuth()
   const router = useRouter()
-  const [isNative, setIsNative] = useState(false)
-
-  // Check if running in Capacitor native app
-  useEffect(() => {
-    setIsNative(Capacitor.isNativePlatform())
-  }, [])
 
   // Watch for auth state changes and redirect when signed in
   // This is critical for OAuth flows in Capacitor WebView
@@ -104,15 +97,9 @@ export default function SignInPage() {
                   card: "shadow-xl border-2 border-gray-100",
                   headerTitle: "hidden",
                   headerSubtitle: "hidden",
-                  // Hide OAuth buttons in native app (they don't work in WebView)
-                  socialButtonsBlockButton: isNative
-                    ? "hidden"
-                    : "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
-                  socialButtonsBlockButtonText: isNative ? "hidden" : "font-semibold",
-                  socialButtonsProviderIcon: isNative ? "hidden" : "",
-                  dividerRow: isNative ? "hidden" : "",
-                  dividerText: isNative ? "hidden" : "",
-                  dividerLine: isNative ? "hidden" : "",
+                  socialButtonsBlockButton:
+                    "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
+                  socialButtonsBlockButtonText: "font-semibold",
                   formButtonPrimary:
                     "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700",
                   footerActionLink: "text-blue-600 hover:text-blue-700",
