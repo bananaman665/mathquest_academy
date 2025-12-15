@@ -3,12 +3,20 @@
 import { SignIn, useAuth } from '@clerk/nextjs'
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Capacitor } from '@capacitor/core'
+import { CapacitorOAuthButtons } from '@/components/CapacitorOAuthButtons'
 
 export default function SignInPage() {
   const { isLoaded, isSignedIn } = useAuth()
   const router = useRouter()
+  const [isNative, setIsNative] = useState(false)
+
+  // Check if running in Capacitor native app
+  useEffect(() => {
+    setIsNative(Capacitor.isNativePlatform())
+  }, [])
 
   // Watch for auth state changes and redirect when signed in
   // This is critical for OAuth flows in Capacitor WebView
@@ -88,41 +96,92 @@ export default function SignInPage() {
         </div>
           </div>
 
-          {/* Clerk Sign In Component */}
+          {/* OAuth Buttons - Custom for native, Clerk for web */}
           <div className="mt-8 flex justify-center">
-            <SignIn 
-              appearance={{
-                elements: {
-                  rootBox: "mx-auto",
-                  card: "shadow-xl border-2 border-gray-100",
-                  headerTitle: "hidden", // Hide Clerk's default title since we have our own
-                  headerSubtitle: "hidden", // Hide default subtitle
-                  socialButtonsBlockButton: 
-                    "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
-                  socialButtonsBlockButtonText: "font-semibold",
-                  formButtonPrimary: 
-                    "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700",
-                  footerActionLink: "text-blue-600 hover:text-blue-700",
-                  footerActionText: "text-gray-600",
-                  formFieldInput: "border-gray-300 focus:border-blue-500 focus:ring-blue-500",
-                  formFieldLabel: "text-gray-700 font-medium",
-                  identityPreviewText: "text-gray-700",
-                  identityPreviewEditButton: "text-blue-600 hover:text-blue-700",
-                },
-                variables: {
-                  colorPrimary: "#2563eb",
-                  borderRadius: "0.75rem",
-                },
-                layout: {
-                  socialButtonsPlacement: "top",
-                  socialButtonsVariant: "blockButton",
-                }
-              }}
-              routing="path"
-              path="/signin"
-              signUpUrl="/signup"
-              fallbackRedirectUrl="/learn"
-            />
+            {isNative ? (
+              <div className="w-full max-w-sm bg-white shadow-xl border-2 border-gray-100 rounded-xl p-6">
+                <CapacitorOAuthButtons mode="signin" redirectUrl="/learn" />
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-200" />
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-4 bg-white text-gray-500">or</span>
+                  </div>
+                </div>
+                <SignIn
+                  appearance={{
+                    elements: {
+                      rootBox: "mx-auto w-full",
+                      card: "shadow-none border-0 p-0",
+                      headerTitle: "hidden",
+                      headerSubtitle: "hidden",
+                      socialButtonsBlockButton: "hidden",
+                      socialButtonsProviderIcon: "hidden",
+                      socialButtonsBlockButtonText: "hidden",
+                      dividerRow: "hidden",
+                      dividerText: "hidden",
+                      dividerLine: "hidden",
+                      formButtonPrimary:
+                        "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700",
+                      footerActionLink: "text-blue-600 hover:text-blue-700",
+                      footerActionText: "text-gray-600",
+                      formFieldInput: "border-gray-300 focus:border-blue-500 focus:ring-blue-500",
+                      formFieldLabel: "text-gray-700 font-medium",
+                      identityPreviewText: "text-gray-700",
+                      identityPreviewEditButton: "text-blue-600 hover:text-blue-700",
+                      footer: "hidden",
+                    },
+                    variables: {
+                      colorPrimary: "#2563eb",
+                      borderRadius: "0.75rem",
+                    },
+                    layout: {
+                      socialButtonsPlacement: "top",
+                      socialButtonsVariant: "blockButton",
+                    }
+                  }}
+                  routing="path"
+                  path="/signin"
+                  signUpUrl="/signup"
+                  fallbackRedirectUrl="/learn"
+                />
+              </div>
+            ) : (
+              <SignIn
+                appearance={{
+                  elements: {
+                    rootBox: "mx-auto",
+                    card: "shadow-xl border-2 border-gray-100",
+                    headerTitle: "hidden",
+                    headerSubtitle: "hidden",
+                    socialButtonsBlockButton:
+                      "border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all",
+                    socialButtonsBlockButtonText: "font-semibold",
+                    formButtonPrimary:
+                      "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700",
+                    footerActionLink: "text-blue-600 hover:text-blue-700",
+                    footerActionText: "text-gray-600",
+                    formFieldInput: "border-gray-300 focus:border-blue-500 focus:ring-blue-500",
+                    formFieldLabel: "text-gray-700 font-medium",
+                    identityPreviewText: "text-gray-700",
+                    identityPreviewEditButton: "text-blue-600 hover:text-blue-700",
+                  },
+                  variables: {
+                    colorPrimary: "#2563eb",
+                    borderRadius: "0.75rem",
+                  },
+                  layout: {
+                    socialButtonsPlacement: "top",
+                    socialButtonsVariant: "blockButton",
+                  }
+                }}
+                routing="path"
+                path="/signin"
+                signUpUrl="/signup"
+                fallbackRedirectUrl="/learn"
+              />
+            )}
           </div>
 
           {/* Benefits */}

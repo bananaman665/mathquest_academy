@@ -54,5 +54,16 @@
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.mathlified.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mathlified</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
