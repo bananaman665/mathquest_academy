@@ -320,25 +320,42 @@ export default async function LearnPage() {
     redirect('/signin')
   }
 
-  // Get or create user progress
-  let dbUser = await prisma.user.findUnique({
-    where: { id: user.id }
-  })
-
-  if (!dbUser) {
-    dbUser = await prisma.user.create({
-      data: {
-        id: user.id,
-        currentLevel: 1,
-        totalXP: 0,
-      }
+  // Get or create user progress with error handling
+  let dbUser;
+  try {
+    dbUser = await prisma.user.findUnique({
+      where: { id: user.id }
     })
-  }
 
-  // Check and update streak expiration
-  const updatedUser = await checkStreakExpiration(user.id)
-  if (updatedUser) {
-    dbUser = updatedUser
+    if (!dbUser) {
+      dbUser = await prisma.user.create({
+        data: {
+          id: user.id,
+          currentLevel: 1,
+          totalXP: 0,
+        }
+      })
+    }
+
+    // Check and update streak expiration
+    const updatedUser = await checkStreakExpiration(user.id)
+    if (updatedUser) {
+      dbUser = updatedUser
+    }
+  } catch (error) {
+    console.error('Database error in LearnPage:', error)
+    // Create a default user object if database fails
+    dbUser = {
+      id: user.id,
+      currentLevel: 1,
+      totalXP: 0,
+      streak: 0,
+      gems: 0,
+      hearts: 5,
+      lastActiveAt: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
   }
 
   // For now, we'll consider levels < currentLevel as completed
