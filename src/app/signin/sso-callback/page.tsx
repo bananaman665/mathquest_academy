@@ -13,7 +13,10 @@ export default function SSOCallback() {
         <p className="text-gray-600 text-lg font-medium">Signing you in...</p>
         <p className="text-gray-500 text-sm mt-2">Please wait</p>
       </div>
-      <AuthenticateWithRedirectCallback />
+      <AuthenticateWithRedirectCallback 
+        signInFallbackRedirectUrl="/learn"
+        signUpFallbackRedirectUrl="/learn"
+      />
     </div>
   )
 }
