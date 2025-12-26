@@ -2,13 +2,14 @@
 
 import { SignIn, useAuth } from '@clerk/nextjs'
 import Link from "next/link"
-import { BookOpen } from "lucide-react"
-import { useEffect } from 'react'
+import { BookOpen, AlertCircle } from "lucide-react"
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
   const { isLoaded, isSignedIn } = useAuth()
   const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
 
   // Watch for auth state changes and redirect when signed in
   // This is critical for OAuth flows in Capacitor WebView
@@ -17,6 +18,19 @@ export default function SignInPage() {
       router.push('/learn')
     }
   }, [isLoaded, isSignedIn, router])
+
+  // Listen for OAuth errors from window messages
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.error) {
+        console.error('OAuth Error:', event.data.error)
+        setError(`Sign-in failed: ${event.data.error}`)
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 
   // Show loading while checking auth state
   if (!isLoaded) {
@@ -48,6 +62,22 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col oauth-page-wrapper">
+      {/* Error Alert */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 m-4 flex gap-3 fixed top-20 left-4 right-4 z-40 max-w-md mx-auto">
+          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h3 className="font-semibold text-red-900">Sign-in Error</h3>
+            <p className="text-red-700 text-sm mt-1">{error}</p>
+          </div>
+          <button
+            onClick={() => setError(null)}
+            className="text-red-600 hover:text-red-900 flex-shrink-0"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       {/* Header */}
       <header className="bg-white fixed top-0 left-0 right-0 z-50 pt-safe">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
