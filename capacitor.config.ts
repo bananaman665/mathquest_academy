@@ -15,23 +15,16 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     url: serverUrl,
-    cleartext: process.env.CAPACITOR_DEV === 'true', // Only allow cleartext in dev mode
-    allowNavigation: [
-      'https://mathquest-academy.vercel.app',
-      'https://*.clerk.com',
-      'https://*.clerkstatic.com',
-      'https://appleid.apple.com',
-      'mathlified://',
-      'mathlified-auth://',
-    ]
+    cleartext: process.env.CAPACITOR_DEV === 'true',
+    hostname: 'localhost',
+    allowNavigation: ['*']
   },
   ios: {
     contentInset: 'never',
     scrollEnabled: true,
-    // Add a proper user agent to satisfy Google's security requirements
     appendUserAgent: 'Mathlified/1.0 Safari/605.1.15',
-    // Optimize for OAuth flows
-    limitsNavigationsToAppBoundDomains: true,
+    limitsNavigationsToAppBoundDomains: false,
+    scheme: 'ionic',
   }
 };
 
