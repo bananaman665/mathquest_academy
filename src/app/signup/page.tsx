@@ -133,7 +133,7 @@ export default function SignUpPage() {
             <div className="space-y-3 text-sm text-gray-700">
               <div className="flex items-start gap-3">
                 <span className="text-green-600 text-lg">✓</span>
-                <span>Personalized learning path from elementary through middle school</span>
+                <span>Personalized learning path tailored to your level</span>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-green-600 text-lg">✓</span>
